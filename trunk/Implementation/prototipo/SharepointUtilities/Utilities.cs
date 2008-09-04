@@ -12,33 +12,19 @@ using System.Xml;
 using System.ServiceModel.Description;
 using System.ServiceModel.Security;
 using System.Security.Principal;
+using SharepointUtilities.SP.List;
+using System.IO;
+using System.Xml;
 
 namespace SharepointUtilities
 {
     public class Utilities
     {
 
-        public static XmlNode GetListCollection()
+        public static ListItems<IssueListItem> GetIssues()
         {
-            return Client.GetListCollection();
-        }
-
-        public static void AddListItems(string listName, XmlElement items)
-        {/*
-            string xmlIssue = issue.ToXml();
-            string sBatch = string.Empty; 
-            sBatch += "<Batch>"; 
-            sBatch += "<Method ID=\"1\" Cmd=\"Update\">"; 
-            sBatch += issue.ToXml();
-            sBatch += "</Method>"; 
-            sBatch += "</Batch>";
-            XmlTextReader xmlReader = new XmlTextReader(new StringReader(sBatch));
-            XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(xmlReader);
-            XmlNode node = (XmlNode)xmlDocument;
-           // Client.UpdateListItems("Issues", node);
-
-            Client.UpdateListItems(listName, items);*/
+            XmlNode xml = Client.GetListItems("Issues", string.Empty, null, null, string.Empty, null);
+            return ListItems<IssueListItem>.FromXml(xml.OuterXml);
         }
 
         private static void OpIssues(IssueListItem issue, string op)
@@ -72,22 +58,17 @@ namespace SharepointUtilities
             OpIssues(issue, "Delete");
         }
 
-        private static void GetClientCredentials(ClientCredentials clientCredentials)
-        {
-            clientCredentials.Windows.AllowedImpersonationLevel = TokenImpersonationLevel.Impersonation;
-        }
-
         public static string UserName { get; set; }
         public static string Password { get; set; }
-        private static ListsSoapClient _client;
-        public static ListsSoapClient Client
+        private static Lists _client;
+        public static Lists Client
         {
             get
             {
                 if (_client == null)
                 {
-                    _client = new ListsSoapClient();
-                    GetClientCredentials(_client.ClientCredentials); ;
+                    _client = new Lists();
+                    _client.Credentials = System.Net.CredentialCache.DefaultCredentials;
                 }
 
                 return _client;
