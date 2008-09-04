@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:s0="http://schemas.microsoft.com/sharepoint/soap/2002/1/alerts/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://schemas.microsoft.com/sharepoint/soap/2002/1/alerts/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/sharepoint/soap/2002/1/alerts/">
+      <s:element name="DeleteAlerts">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IDs" type="s0:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DeleteAlertsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteAlertsResult" type="s0:ArrayOfDeleteFailure" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDeleteFailure">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DeleteFailure" type="s0:DeleteFailure" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DeleteFailure">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ID" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Error" type="s0:ErrorType" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="ErrorType">
+        <s:restriction base="s:string">
+          <s:enumeration value="None" />
+          <s:enumeration value="AccessDenied" />
+          <s:enumeration value="ServerError" />
+          <s:enumeration value="TooManyErrors" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetAlerts">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAlertsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetAlertsResult" type="s0:AlertInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="AlertInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="CurrentUser" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AlertServerName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AlertServerUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AlertServerType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AlertsManagementUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AlertWebTitle" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NewAlertUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AlertWebId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Alerts" type="s0:ArrayOfAlert" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfAlert">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Alert" type="s0:Alert" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Alert">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="EventType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AlertForTitle" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AlertForUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EditAlertUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeliveryChannels" type="s0:ArrayOfDeliveryChannel" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDeliveryChannel">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DeliveryChannel" nillable="true" type="s0:DeliveryChannel" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DeliveryChannel" abstract="true" />
+      <s:complexType name="EmailChannel">
+        <s:complexContent mixed="false">
+          <s:extension base="s0:DeliveryChannel">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Frequency" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </types>
+  <message name="DeleteAlertsSoapIn">
+    <part name="parameters" element="s0:DeleteAlerts" />
+  </message>
+  <message name="DeleteAlertsSoapOut">
+    <part name="parameters" element="s0:DeleteAlertsResponse" />
+  </message>
+  <message name="GetAlertsSoapIn">
+    <part name="parameters" element="s0:GetAlerts" />
+  </message>
+  <message name="GetAlertsSoapOut">
+    <part name="parameters" element="s0:GetAlertsResponse" />
+  </message>
+  <portType name="AlertsSoap">
+    <operation name="DeleteAlerts">
+      <input message="s0:DeleteAlertsSoapIn" />
+      <output message="s0:DeleteAlertsSoapOut" />
+    </operation>
+    <operation name="GetAlerts">
+      <input message="s0:GetAlertsSoapIn" />
+      <output message="s0:GetAlertsSoapOut" />
+    </operation>
+  </portType>
+  <binding name="AlertsSoap" type="s0:AlertsSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="DeleteAlerts">
+      <soap:operation soapAction="http://schemas.microsoft.com/sharepoint/soap/2002/1/alerts/DeleteAlerts" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetAlerts">
+      <soap:operation soapAction="http://schemas.microsoft.com/sharepoint/soap/2002/1/alerts/GetAlerts" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="Alerts">
+    <port name="AlertsSoap" binding="s0:AlertsSoap">
+      <soap:address location="http://localhost/_vti_bin/Alerts.asmx" />
+    </port>
+  </service>
+</definitions>
