@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:s0="http://schemas.microsoft.com/sharepoint/soap/directory/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://schemas.microsoft.com/sharepoint/soap/directory/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/sharepoint/soap/directory/">
+      <s:import namespace="http://www.w3.org/2001/XMLSchema" />
+      <s:element name="RemovePermissionCollection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objectName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="objectType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="memberIdsXml">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemovePermissionCollectionResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="RemovePermission">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objectName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="objectType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="permissionIdentifier" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="permissionType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemovePermissionResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="UpdatePermission">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objectName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="objectType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="permissionIdentifier" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="permissionType" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="permissionMask" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePermissionResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="AddPermissionCollection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objectName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="objectType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="permissionsInfoXml">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddPermissionCollectionResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="AddPermission">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objectName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="objectType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="permissionIdentifier" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="permissionType" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="permissionMask" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddPermissionResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetPermissionCollection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objectName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="objectType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPermissionCollectionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPermissionCollectionResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </types>
+  <message name="RemovePermissionCollectionSoapIn">
+    <part name="parameters" element="s0:RemovePermissionCollection" />
+  </message>
+  <message name="RemovePermissionCollectionSoapOut">
+    <part name="parameters" element="s0:RemovePermissionCollectionResponse" />
+  </message>
+  <message name="RemovePermissionSoapIn">
+    <part name="parameters" element="s0:RemovePermission" />
+  </message>
+  <message name="RemovePermissionSoapOut">
+    <part name="parameters" element="s0:RemovePermissionResponse" />
+  </message>
+  <message name="UpdatePermissionSoapIn">
+    <part name="parameters" element="s0:UpdatePermission" />
+  </message>
+  <message name="UpdatePermissionSoapOut">
+    <part name="parameters" element="s0:UpdatePermissionResponse" />
+  </message>
+  <message name="AddPermissionCollectionSoapIn">
+    <part name="parameters" element="s0:AddPermissionCollection" />
+  </message>
+  <message name="AddPermissionCollectionSoapOut">
+    <part name="parameters" element="s0:AddPermissionCollectionResponse" />
+  </message>
+  <message name="AddPermissionSoapIn">
+    <part name="parameters" element="s0:AddPermission" />
+  </message>
+  <message name="AddPermissionSoapOut">
+    <part name="parameters" element="s0:AddPermissionResponse" />
+  </message>
+  <message name="GetPermissionCollectionSoapIn">
+    <part name="parameters" element="s0:GetPermissionCollection" />
+  </message>
+  <message name="GetPermissionCollectionSoapOut">
+    <part name="parameters" element="s0:GetPermissionCollectionResponse" />
+  </message>
+  <portType name="PermissionsSoap">
+    <operation name="RemovePermissionCollection">
+      <input message="s0:RemovePermissionCollectionSoapIn" />
+      <output message="s0:RemovePermissionCollectionSoapOut" />
+    </operation>
+    <operation name="RemovePermission">
+      <input message="s0:RemovePermissionSoapIn" />
+      <output message="s0:RemovePermissionSoapOut" />
+    </operation>
+    <operation name="UpdatePermission">
+      <input message="s0:UpdatePermissionSoapIn" />
+      <output message="s0:UpdatePermissionSoapOut" />
+    </operation>
+    <operation name="AddPermissionCollection">
+      <input message="s0:AddPermissionCollectionSoapIn" />
+      <output message="s0:AddPermissionCollectionSoapOut" />
+    </operation>
+    <operation name="AddPermission">
+      <input message="s0:AddPermissionSoapIn" />
+      <output message="s0:AddPermissionSoapOut" />
+    </operation>
+    <operation name="GetPermissionCollection">
+      <input message="s0:GetPermissionCollectionSoapIn" />
+      <output message="s0:GetPermissionCollectionSoapOut" />
+    </operation>
+  </portType>
+  <binding name="PermissionsSoap" type="s0:PermissionsSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="RemovePermissionCollection">
+      <soap:operation soapAction="http://schemas.microsoft.com/sharepoint/soap/directory/RemovePermissionCollection" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="RemovePermission">
+      <soap:operation soapAction="http://schemas.microsoft.com/sharepoint/soap/directory/RemovePermission" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="UpdatePermission">
+      <soap:operation soapAction="http://schemas.microsoft.com/sharepoint/soap/directory/UpdatePermission" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="AddPermissionCollection">
+      <soap:operation soapAction="http://schemas.microsoft.com/sharepoint/soap/directory/AddPermissionCollection" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="AddPermission">
+      <soap:operation soapAction="http://schemas.microsoft.com/sharepoint/soap/directory/AddPermission" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetPermissionCollection">
+      <soap:operation soapAction="http://schemas.microsoft.com/sharepoint/soap/directory/GetPermissionCollection" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="Permissions">
+    <port name="PermissionsSoap" binding="s0:PermissionsSoap">
+      <soap:address location="http://localhost/_vti_bin/Permissions.asmx" />
+    </port>
+  </service>
+</definitions>
