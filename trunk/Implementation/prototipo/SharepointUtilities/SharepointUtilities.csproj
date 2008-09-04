@@ -61,11 +61,6 @@
     <Compile Include="Datatypes\RowData.cs" />
     <Compile Include="Datatypes\StockListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\SP.Lists\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -73,20 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Service References\SP.Lists\Lists.wsdl" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\SP.Lists\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\SP.Lists\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\DataSources\System.Xml.XmlElement.datasource" />
-    <None Include="Service References\SP.Lists\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
