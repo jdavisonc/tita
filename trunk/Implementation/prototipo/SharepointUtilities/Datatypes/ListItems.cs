@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace ConsoleApplication1
+namespace SharepointUtilities
 {
     [XmlRoot(ElementName = "listitems", Namespace = "http://schemas.microsoft.com/sharepoint/soap/")]
     public class ListItems<T> where T : StockListItem
