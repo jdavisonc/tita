@@ -29,8 +29,21 @@ namespace SharepointUtilities
         }
 
         public static void AddListItems(string listName, XmlElement items)
-        {
-            Client.UpdateListItems(listName, items);
+        {/*
+            string xmlIssue = issue.ToXml();
+            string sBatch = string.Empty; 
+            sBatch += "<Batch>"; 
+            sBatch += "<Method ID=\"1\" Cmd=\"Update\">"; 
+            sBatch += issue.ToXml();
+            sBatch += "</Method>"; 
+            sBatch += "</Batch>";
+            XmlTextReader xmlReader = new XmlTextReader(new StringReader(sBatch));
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(xmlReader);
+            XmlNode node = (XmlNode)xmlDocument;
+           // Client.UpdateListItems("Issues", node);
+
+            Client.UpdateListItems(listName, items);*/
         }
 
         private static void GetClientCredentials(ClientCredentials clientCredentials)
