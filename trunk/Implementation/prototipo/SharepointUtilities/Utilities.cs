@@ -10,7 +10,6 @@ using System.Web.Configuration;
 using System.Web.Security;
 using System.Xml;
 using System.ServiceModel.Description;
-using SharepointUtilities.SP.Lists;
 using System.ServiceModel.Security;
 using System.Security.Principal;
 
@@ -22,10 +21,6 @@ namespace SharepointUtilities
         public static XmlNode GetListCollection()
         {
             return Client.GetListCollection();
-        }
-
-        public static void DeleteListItems(string listName, string id)
-        {
         }
 
         public static void AddListItems(string listName, XmlElement items)
@@ -46,12 +41,12 @@ namespace SharepointUtilities
             Client.UpdateListItems(listName, items);*/
         }
 
-        public static void AddIssue(IssueListItem issue)
+        private static void OpIssues(IssueListItem issue, string op)
         {
             string xmlIssue = issue.ToXml();
             string sBatch = string.Empty;
             sBatch += "<Batch>";
-            sBatch += "<Method ID=\"1\" Cmd=\"New\">";
+            sBatch += "<Method ID=\"1\" Cmd=\"" + op +"\">";
             sBatch += issue.ToXml();
             sBatch += "</Method>";
             sBatch += "</Batch>";
@@ -60,6 +55,21 @@ namespace SharepointUtilities
             xmlDocument.Load(xmlReader);
             XmlNode node = (XmlNode)xmlDocument;
             Client.UpdateListItems("Issues", node);
+        }
+
+        public static void AddIssue(IssueListItem issue)
+        {
+            OpIssues(issue, "New");
+        }
+
+        public static void UpdateIssue(IssueListItem issue)
+        {
+            OpIssues(issue, "Update");
+        }
+
+        public static void DeleteIssue(IssueListItem issue)
+        {
+            OpIssues(issue, "Delete");
         }
 
         private static void GetClientCredentials(ClientCredentials clientCredentials)
