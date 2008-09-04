@@ -46,6 +46,22 @@ namespace SharepointUtilities
             Client.UpdateListItems(listName, items);*/
         }
 
+        public static void AddIssue(IssueListItem issue)
+        {
+            string xmlIssue = issue.ToXml();
+            string sBatch = string.Empty;
+            sBatch += "<Batch>";
+            sBatch += "<Method ID=\"1\" Cmd=\"New\">";
+            sBatch += issue.ToXml();
+            sBatch += "</Method>";
+            sBatch += "</Batch>";
+            XmlTextReader xmlReader = new XmlTextReader(new StringReader(sBatch));
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(xmlReader);
+            XmlNode node = (XmlNode)xmlDocument;
+            Client.UpdateListItems("Issues", node);
+        }
+
         private static void GetClientCredentials(ClientCredentials clientCredentials)
         {
             clientCredentials.Windows.AllowedImpersonationLevel = TokenImpersonationLevel.Impersonation;

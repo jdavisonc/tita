@@ -6,7 +6,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Globalization;
 
-namespace ConsoleApplication1
+namespace SharepointUtilities
 {
     public class IssueListItem : StockListItem
     {
