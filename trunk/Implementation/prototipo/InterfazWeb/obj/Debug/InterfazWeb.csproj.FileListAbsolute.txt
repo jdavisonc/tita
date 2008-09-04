@@ -1,5 +1,0 @@
-C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\Prototipo\Implementation\prototipo\InterfazWeb\bin\InterfazWeb.dll
-C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\Prototipo\Implementation\prototipo\InterfazWeb\bin\InterfazWeb.pdb
-C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\Prototipo\Implementation\prototipo\InterfazWeb\obj\Debug\ResolveAssemblyReference.cache
-C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\Prototipo\Implementation\prototipo\InterfazWeb\obj\Debug\InterfazWeb.dll
-C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\Prototipo\Implementation\prototipo\InterfazWeb\obj\Debug\InterfazWeb.pdb
