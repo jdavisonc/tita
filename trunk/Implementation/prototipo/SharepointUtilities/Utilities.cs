@@ -27,6 +27,21 @@ namespace SharepointUtilities
             return ListItems<IssueListItem>.FromXml(xml.OuterXml);
         }
 
+        public static IssueListItem GetIssue(string ID)
+        {
+            int id = int.Parse(ID);
+            XmlNode xml = Client.GetListItems("Issues", string.Empty, null, null, string.Empty, null);
+            RowData<IssueListItem> rowData = ListItems<IssueListItem>.FromXml(xml.OuterXml).RowData;
+            for (int i = 0; i < rowData.ItemCount; i++)
+            {
+                if (rowData.ListItems[i].ID == id)
+                {
+                    return rowData.ListItems[i];
+                }
+            }
+            return null;
+        }
+
         private static void OpIssues(IssueListItem issue, string op)
         {
             string xmlIssue = issue.ToXml();
