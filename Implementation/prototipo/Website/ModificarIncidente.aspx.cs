@@ -67,4 +67,8 @@ public partial class ModificarIncidente : System.Web.UI.Page
         Utilities.UpdateIssue(issue);
         Response.Redirect("ModificarIncidente.aspx?id=" + issue.ID.ToString());
     }
+    protected void ButtonCancel_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ListaIncidentes.aspx");
+    }
 }

@@ -163,9 +163,10 @@
             <tr>
                 <td class="style1" style="text-align: left">
                     &nbsp;</td>
-                <td style="text-align: left">
+                <td >
                     <br />
-&nbsp;                      <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" onclick="Button1_Click" />
+                    <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" onclick="Button1_Click" />&nbsp;
+                    <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" onclick="ButtonCancel_Click" />
                 </td>
                 
             </tr>
