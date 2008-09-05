@@ -113,6 +113,8 @@
                 </td>
                 <td class="style4">
                     <asp:TextBox ID="txtPriorityOrder" runat="server" Height="24px" Width="139px"></asp:TextBox>
+                    <asp:RangeValidator ID="RangeValidator2" runat="server" Text="*" ErrorMessage="Debe ingresar un entero" ControlToValidate="txtPriorityOrder" Type="Integer"></asp:RangeValidator>
+                    
                 </td>
                 
             </tr>
