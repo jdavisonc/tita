@@ -53,9 +53,20 @@ namespace SharepointUtilities
             OpIssues(issue, "Update");
         }
 
-        public static void DeleteIssue(IssueListItem issue)
+        public static void DeleteIssue(string id)
         {
-            OpIssues(issue, "Delete");
+
+            string sBatch = string.Empty;
+            sBatch += "<Batch>";
+            sBatch += "<Method ID=\"1\" Cmd=\"Delete\">";
+            sBatch += "<Field Name=\"ID\">" + id + "</Field>";
+            sBatch += "</Method>";
+            sBatch += "</Batch>";
+            XmlTextReader xmlReader = new XmlTextReader(new StringReader(sBatch));
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(xmlReader);
+            XmlNode node = (XmlNode)xmlDocument;
+            Client.UpdateListItems("Issues", node);
         }
 
         public static string UserName { get; set; }

@@ -26,7 +26,7 @@ namespace SharepointUtilities.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost/_vti_bin/Lists.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost/infocorp/_vti_bin/Lists.asmx")]
         public string SharepointUtilities_SP_List_Lists {
             get {
                 return ((string)(this["SharepointUtilities_SP_List_Lists"]));
