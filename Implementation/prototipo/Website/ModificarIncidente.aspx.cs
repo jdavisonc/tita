@@ -65,7 +65,8 @@ public partial class ModificarIncidente : System.Web.UI.Page
         issue.Resolution = txtResolucion.Text;
         issue.LinkIssueIdNoMenu = Convert.ToInt32(txtAsociado.Text);
         Utilities.UpdateIssue(issue);
-        Response.Redirect("ModificarIncidente.aspx?id=" + issue.ID.ToString());
+        //Response.Redirect("ModificarIncidente.aspx?id=" + issue.ID.ToString());
+        Response.Redirect("ListaIncidentes.aspx");
     }
     protected void ButtonCancel_Click(object sender, EventArgs e)
     {
