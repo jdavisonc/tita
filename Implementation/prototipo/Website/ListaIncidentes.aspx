@@ -52,6 +52,10 @@
                 </asp:GridView>
                 <br />
                 <br />
+               
+                    <asp:Button ID="btnNuevo" runat="server" Text="Nuevo" onclick="Button1_Click" />&nbsp;
+                    
+                
             </div>
         </asp:Panel>
     </div>

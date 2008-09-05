@@ -44,4 +44,8 @@ public partial class ListaIncidentes : System.Web.UI.Page
         this.BindGV();
     }
 
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("AgregarIncidente.aspx");
+    }
 }
