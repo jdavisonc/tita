@@ -27,8 +27,32 @@ namespace SharepointUtilities
             return ListItems<IssueListItem>.FromXml(xml.OuterXml);
         }
 
+        public static XmlNode StringToXmlNode(string str)
+        {
+            XmlTextReader xmlReader = new XmlTextReader(new StringReader(str));
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(xmlReader);
+            return (XmlNode)xmlDocument;
+        }
+
         public static IssueListItem GetIssue(string ID)
         {
+            
+            string sQuery = String.Empty;
+            sQuery += "<Query>";
+            sQuery += "<Where>";
+            sQuery += "<Eq>";
+            sQuery += "<FieldRef Name=\"ID\" />";
+            sQuery += "<Value Type=\"Number\">" + ID + "</Value>";
+            sQuery += "</Eq>";
+            sQuery += "</Where>";
+            sQuery += "</Query>";
+
+            XmlNode node = StringToXmlNode(sQuery);
+            XmlNode xml = Client.GetListItems("Issues", string.Empty, node, null, string.Empty, null);
+            return ListItems<IssueListItem>.FromXml(xml.OuterXml).RowData.ListItems[0];
+            
+            /*
             int id = int.Parse(ID);
             XmlNode xml = Client.GetListItems("Issues", string.Empty, null, null, string.Empty, null);
             RowData<IssueListItem> rowData = ListItems<IssueListItem>.FromXml(xml.OuterXml).RowData;
@@ -39,7 +63,7 @@ namespace SharepointUtilities
                     return rowData.ListItems[i];
                 }
             }
-            return null;
+            return null;*/
         }
 
         private static void OpIssues(IssueListItem issue, string op)
@@ -51,10 +75,7 @@ namespace SharepointUtilities
             sBatch += issue.ToXml();
             sBatch += "</Method>";
             sBatch += "</Batch>";
-            XmlTextReader xmlReader = new XmlTextReader(new StringReader(sBatch));
-            XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(xmlReader);
-            XmlNode node = (XmlNode)xmlDocument;
+            XmlNode node = StringToXmlNode(sBatch);
             Client.UpdateListItems("Issues", node);
         }
 
@@ -70,17 +91,13 @@ namespace SharepointUtilities
 
         public static void DeleteIssue(string id)
         {
-
             string sBatch = string.Empty;
             sBatch += "<Batch>";
             sBatch += "<Method ID=\"1\" Cmd=\"Delete\">";
             sBatch += "<Field Name=\"ID\">" + id + "</Field>";
             sBatch += "</Method>";
             sBatch += "</Batch>";
-            XmlTextReader xmlReader = new XmlTextReader(new StringReader(sBatch));
-            XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(xmlReader);
-            XmlNode node = (XmlNode)xmlDocument;
+            XmlNode node = StringToXmlNode(sBatch);
             Client.UpdateListItems("Issues", node);
         }
 
