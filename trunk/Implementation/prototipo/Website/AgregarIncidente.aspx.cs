@@ -24,9 +24,12 @@ public partial class AgregarIncidente : System.Web.UI.Page
 
         RangeValidator1.MinimumValue = int.MinValue.ToString();
         RangeValidator1.MaximumValue = int.MaxValue.ToString();
+        RangeValidator2.MinimumValue = int.MinValue.ToString();
+        RangeValidator2.MaximumValue = int.MaxValue.ToString();
+        
         ListItems<IssueListItem> incidente = Utilities.GetIssues();
         IssueListItem[] lista = incidente.RowData.ListItems;
-        this.ddlReported.Items.Add("Alejamdro Bouvier");
+        this.ddlReported.Items.Add("Alejandro Bouvier");
         this.ddlReported.Items.Add("Phillip Powe");
         this.ddlReported.Items.Add("Abigail Moncrieffe");
         this.ddlPriority.Items.Add("Normal");
