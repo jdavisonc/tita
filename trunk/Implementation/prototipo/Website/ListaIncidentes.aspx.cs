@@ -16,17 +16,32 @@ public partial class ListaIncidentes : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        gvIncidentes.DataSource = Utilities.GetIssues();
-        gvIncidentes.DataBind();
-    }
-    protected void gvIncidentes_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow) 
+        if (!Page.IsPostBack)
         {
-            Label l = e.Row.FindControl("lblTitle") as Label;
-            l.Text = (e.Row.DataItem as IssueListItem).Title;
-
-
+            BindGV();
         }
     }
+
+    private void BindGV()
+    {
+        gvIncidentes.DataSource = Utilities.GetIssues().RowData.ListItems;
+        gvIncidentes.DataBind();
+    }
+
+    protected void gvIncidentes_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Delete")
+        {
+            Utilities.DeleteIssue(e.CommandArgument.ToString());
+        }
+        else if (e.CommandName == "Select")
+        {
+            Response.Redirect("ModificarIncidente.aspx?id=" + e.CommandArgument.ToString());
+        }
+    }
+    protected void gvIncidentes_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        this.BindGV();
+    }
+
 }

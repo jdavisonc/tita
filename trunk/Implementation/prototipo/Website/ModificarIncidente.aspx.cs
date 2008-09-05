@@ -15,6 +15,15 @@ public partial class ModificarIncidente : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!Page.IsPostBack)
+        {
+            string issueId = Request.QueryString["id"];
+            LoadFields(issueId);
+        }
 
+    }
+    protected void LoadFields(string issueId)
+    {
+        
     }
 }
