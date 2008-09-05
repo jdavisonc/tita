@@ -5,6 +5,32 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharepointUtilities", "Shar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "ConsoleTest\ConsoleTest.csproj", "{186D2C11-DDEA-49A8-BBCD-FB493DE38E17}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Website", "Website\", "{C910657F-6A6E-4A56-A758-B3A5D7AE8A2C}"
+	ProjectSection(WebsiteProperties) = preProject
+		SccProjectName = "Svn"
+		SccAuxPath = "Svn"
+		SccLocalPath = "Svn"
+		SccProvider = "SubversionScc"
+		TargetFramework = "3.5"
+		ProjectReferences = "{419029AB-2A09-4EBC-8031-D5D2A04054A8}|SharepointUtilities.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/Website"
+		Debug.AspNetCompiler.PhysicalPath = "Website\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Website\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/Website"
+		Release.AspNetCompiler.PhysicalPath = "Website\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Website\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "1112"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -39,6 +65,16 @@ Global
 		{186D2C11-DDEA-49A8-BBCD-FB493DE38E17}.Release|Any CPU.Build.0 = Release|Any CPU
 		{186D2C11-DDEA-49A8-BBCD-FB493DE38E17}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{186D2C11-DDEA-49A8-BBCD-FB493DE38E17}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C910657F-6A6E-4A56-A758-B3A5D7AE8A2C}.Debug|.NET.ActiveCfg = Debug|.NET
+		{C910657F-6A6E-4A56-A758-B3A5D7AE8A2C}.Debug|.NET.Build.0 = Debug|.NET
+		{C910657F-6A6E-4A56-A758-B3A5D7AE8A2C}.Debug|Any CPU.ActiveCfg = Debug|.NET
+		{C910657F-6A6E-4A56-A758-B3A5D7AE8A2C}.Debug|Mixed Platforms.ActiveCfg = Debug|.NET
+		{C910657F-6A6E-4A56-A758-B3A5D7AE8A2C}.Debug|Mixed Platforms.Build.0 = Debug|.NET
+		{C910657F-6A6E-4A56-A758-B3A5D7AE8A2C}.Release|.NET.ActiveCfg = Debug|.NET
+		{C910657F-6A6E-4A56-A758-B3A5D7AE8A2C}.Release|.NET.Build.0 = Debug|.NET
+		{C910657F-6A6E-4A56-A758-B3A5D7AE8A2C}.Release|Any CPU.ActiveCfg = Debug|.NET
+		{C910657F-6A6E-4A56-A758-B3A5D7AE8A2C}.Release|Mixed Platforms.ActiveCfg = Debug|.NET
+		{C910657F-6A6E-4A56-A758-B3A5D7AE8A2C}.Release|Mixed Platforms.Build.0 = Debug|.NET
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
