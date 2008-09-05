@@ -58,7 +58,7 @@ public partial class ModificarIncidente : System.Web.UI.Page
         issue.Title = txtTitulo.Text;
         issue.Description = txtDescripcion.Text;
         issue.ReportedBy = dropDownReportado.SelectedValue;
-        issue.ReportedDate = calendar2.SelectedDate.ToString();
+        issue.ReportedDate = calendar2.SelectedDate.ToString("yyyy-MM-dd hh:mm:ss");
         issue.Priority = dropDownPrioridad.SelectedValue;
         issue.Ord = Convert.ToInt32(txtOrden.Text);
         issue.Status = dropDownEstado.SelectedValue;
