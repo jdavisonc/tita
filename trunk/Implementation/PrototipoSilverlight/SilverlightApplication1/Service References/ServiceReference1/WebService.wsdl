@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="HelloWorld">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="texto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetIssues">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetIssuesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetIssuesResult" type="tns:ArrayOfIssueListItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfIssueListItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="IssueListItem" nillable="true" type="tns:IssueListItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="IssueListItem">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:StockListItem">
+            <s:attribute name="ows_LinkIssueIDNoMenu" type="s:int" use="required" />
+            <s:attribute name="ows_Description" type="s:string" />
+            <s:attribute name="ows_Status" type="s:string" />
+            <s:attribute name="ows_Priority" type="s:string" />
+            <s:attribute name="ows_Ord" type="s:float" use="required" />
+            <s:attribute name="ows_Category" type="s:string" />
+            <s:attribute name="ows_Reported_x0020_Date" type="s:string" />
+            <s:attribute name="ows_WP" type="s:string" />
+            <s:attribute name="ows_Reported_x0020_by" type="s:string" />
+            <s:attribute name="ows_Resolution" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="StockListItem">
+        <s:attribute name="ows_Title" type="s:string" />
+        <s:attribute name="ows_Attachments" type="s:int" use="required" />
+        <s:attribute name="ows_hiddenversion" type="s:int" use="required" />
+        <s:attribute name="ows_ID" type="s:int" use="required" />
+        <s:attribute name="ows_LinkTitle" type="s:string" />
+      </s:complexType>
+      <s:element name="UpdateIssue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="issue" type="tns:IssueListItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateIssueResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateIssueResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddIssue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="issue" type="tns:IssueListItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddIssueResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddIssueResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteIssue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteIssueResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteIssueResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetIssuesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetIssues" />
+  </wsdl:message>
+  <wsdl:message name="GetIssuesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetIssuesResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateIssueSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateIssue" />
+  </wsdl:message>
+  <wsdl:message name="UpdateIssueSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateIssueResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddIssueSoapIn">
+    <wsdl:part name="parameters" element="tns:AddIssue" />
+  </wsdl:message>
+  <wsdl:message name="AddIssueSoapOut">
+    <wsdl:part name="parameters" element="tns:AddIssueResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteIssueSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteIssue" />
+  </wsdl:message>
+  <wsdl:message name="DeleteIssueSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteIssueResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WebServiceSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIssues">
+      <wsdl:input message="tns:GetIssuesSoapIn" />
+      <wsdl:output message="tns:GetIssuesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateIssue">
+      <wsdl:input message="tns:UpdateIssueSoapIn" />
+      <wsdl:output message="tns:UpdateIssueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddIssue">
+      <wsdl:input message="tns:AddIssueSoapIn" />
+      <wsdl:output message="tns:AddIssueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteIssue">
+      <wsdl:input message="tns:DeleteIssueSoapIn" />
+      <wsdl:output message="tns:DeleteIssueSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WebServiceSoap" type="tns:WebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIssues">
+      <soap:operation soapAction="http://tempuri.org/GetIssues" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateIssue">
+      <soap:operation soapAction="http://tempuri.org/UpdateIssue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddIssue">
+      <soap:operation soapAction="http://tempuri.org/AddIssue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteIssue">
+      <soap:operation soapAction="http://tempuri.org/DeleteIssue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WebServiceSoap12" type="tns:WebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIssues">
+      <soap12:operation soapAction="http://tempuri.org/GetIssues" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateIssue">
+      <soap12:operation soapAction="http://tempuri.org/UpdateIssue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddIssue">
+      <soap12:operation soapAction="http://tempuri.org/AddIssue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteIssue">
+      <soap12:operation soapAction="http://tempuri.org/DeleteIssue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WebService">
+    <wsdl:port name="WebServiceSoap" binding="tns:WebServiceSoap">
+      <soap:address location="http://localhost:2063/PrototipoSilverlight/WebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WebServiceSoap12" binding="tns:WebServiceSoap12">
+      <soap12:address location="http://localhost:2063/PrototipoSilverlight/WebService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
