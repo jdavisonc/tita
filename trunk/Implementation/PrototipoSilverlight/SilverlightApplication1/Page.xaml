@@ -1,0 +1,80 @@
+﻿<UserControl xmlns:my="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"  x:Class="SilverlightApplication1.Page"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+    <Grid>
+            <my:DataGrid x:Name="grdDatos" RowBackground="White" SelectionChanged="grdDatos_SelectionChanged"/>
+
+            <Canvas x:Name="BtnNuevo"  Height="25.456" Width="99" Cursor="Hand" MouseLeftButtonDown="BtnNuevo_MouseLeftButtonDown">
+                <Rectangle Height="24" Width="99" Canvas.Top="0.618" RadiusX="3.697" RadiusY="3.697" Stroke="SkyBlue">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="White"/>
+                            <GradientStop Color="SkyBlue" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock Height="25.456" Text="Nuevo" TextWrapping="Wrap" FontFamily="Fonts/ArialRoundedMTBold.TTF#Arial Rounded MT Bold" FontSize="18" x:Name="TxtEntrar" Foreground="Black" Width="67.664" Canvas.Left="16.658" FontWeight="Normal"/>
+			</Canvas>
+            <Canvas x:Name="BtnModificar" Height="25.456" Width="99" MouseLeftButtonDown="BtnModificar_MouseLeftButtonDown" Cursor="Hand">
+                <Rectangle Height="24" Width="99" RadiusX="3.697" RadiusY="3.697" Stroke="SkyBlue" Canvas.Top="0.618" Canvas.Left="110">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="White"/>
+                            <GradientStop Color="SkyBlue" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock Height="25.456" Text="Modificar" TextWrapping="Wrap" FontFamily="Fonts/ArialRoundedMTBold.TTF#Arial Rounded MT Bold" FontSize="18" x:Name="TxtSalir" Foreground="Black" Width="90.000" FontWeight="Normal" Canvas.Left="110"/>
+			</Canvas>
+            <Canvas x:Name="BtnEliminar" Height="25.456" Width="99" MouseLeftButtonDown="BtnEliminar_MouseLeftButtonDown" Cursor="Hand">
+                <Rectangle Height="24" Width="99" RadiusX="3.697" RadiusY="3.697" Stroke="SkyBlue" Canvas.Top="0.618" Canvas.Left="220">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="White"/>
+                            <GradientStop Color="SkyBlue" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock Height="25.456" Text="Eliminar" TextWrapping="Wrap" FontFamily="Fonts/ArialRoundedMTBold.TTF#Arial Rounded MT Bold" FontSize="18" x:Name="txtEliminar" Foreground="Black" Width="90.000" FontWeight="Normal" Canvas.Left="220"/>
+			</Canvas>
+
+        <Canvas x:Name="pnlNuevo" Visibility="Collapsed" Height="10.456" Margin="280">
+            <TextBlock Text="Title:" Width="160" Height="30"></TextBlock><TextBox x:Name="txtTitle" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130"></TextBox>
+            <TextBlock Text="ReportedBy:" Width="160" Height="30" Canvas.Top="50"></TextBlock><TextBox x:Name="txtReportedBy" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130" Canvas.Top="50"></TextBox>
+            <TextBlock Text="ReportedDate:" Width="160" Height="30" Canvas.Top="100"></TextBlock><TextBox x:Name="txtReportedDate" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130" Canvas.Top="100"></TextBox>
+            <TextBlock Text="WP:" Width="160" Height="30" Canvas.Top="150"></TextBlock><TextBox x:Name="txtWP" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130" Canvas.Top="150"></TextBox>
+            <TextBlock Text="Ord:" Width="160" Height="30" Canvas.Top="200"></TextBlock><TextBox x:Name="txtOrd" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130" Canvas.Top="200"></TextBox>
+            
+            <TextBlock Text="Priority:" Width="160" Height="30" Canvas.Left="330"></TextBlock><TextBox x:Name="txtPriority" Width="160" Height="30" Background="SkyBlue" Canvas.Left="420"></TextBox>
+            <TextBlock Text="Category:" Width="160" Height="30" Canvas.Left="330" Canvas.Top="50"></TextBlock><TextBox x:Name="txtCategory" Width="160" Height="30" Background="SkyBlue" Canvas.Left="420" Canvas.Top="50"></TextBox>
+            <TextBlock Text="Status:" Width="160" Height="30" Canvas.Top="100" Canvas.Left="330"></TextBlock><TextBox x:Name="txtStatus" Width="160" Height="30" Background="SkyBlue" Canvas.Left="420" Canvas.Top="100"></TextBox>
+            <TextBlock Text="Resolution:" Width="160"  Height="30" Canvas.Top="150" Canvas.Left="330"></TextBlock><TextBox x:Name="txtResolution" Width="160" Height="30" Background="SkyBlue" Canvas.Left="420" Canvas.Top="150"></TextBox>
+            <TextBlock Text="NroMenu:" Width="160" Height="30" Canvas.Top="200" Canvas.Left="330"></TextBlock><TextBox x:Name="txtLinkIssueIdNoMenu" Width="160" Height="30" Background="SkyBlue" Canvas.Left="420" Canvas.Top="200"></TextBox>
+            
+            <Canvas MouseLeftButtonDown="BtnAceptar_MouseLeftButtonDown" x:Name="btnAceptar">
+            <Rectangle Height="24" Width="99" Canvas.Top="250" Canvas.Left="150" RadiusX="3.697" RadiusY="3.697" Stroke="SkyBlue">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="White"/>
+                        <GradientStop Color="SkyBlue" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock Height="25.456" Text="Aceptar" TextWrapping="Wrap" FontFamily="Fonts/ArialRoundedMTBold.TTF#Arial Rounded MT Bold" FontSize="18" x:Name="txtAceptar" Foreground="Black" Width="67.664" Canvas.Left="150" Canvas.Top="250" FontWeight="Normal"/>
+            </Canvas>
+            <Canvas MouseLeftButtonDown="BtnCancelar_MouseLeftButtonDown" x:Name="btnCancelar" >
+            <Rectangle Height="24" Width="99" RadiusX="3.697" RadiusY="3.697" Stroke="SkyBlue" Canvas.Top="250" Canvas.Left="300" >
+                    <Rectangle.Fill>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="White"/>
+                            <GradientStop Color="SkyBlue" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock Height="25.456" Text="Cancelar" TextWrapping="Wrap" FontFamily="Fonts/ArialRoundedMTBold.TTF#Arial Rounded MT Bold" FontSize="18" x:Name="txtCancelar" Foreground="Black" Width="90.000" FontWeight="Normal" Canvas.Top="250" Canvas.Left="300"/>
+            </Canvas>
+        </Canvas>
+
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,17 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="WebServiceSoap" maxBufferSize="65536" maxReceivedMessageSize="65536">
+                    <security mode="None" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://localhost:2063/PrototipoSilverlight/WebService.asmx"
+                binding="basicHttpBinding" bindingConfiguration="WebServiceSoap"
+                contract="SilverlightApplication1.ServiceReference1.WebServiceSoap"
+                name="WebServiceSoap" />
+        </client>
+    </system.serviceModel>
+</configuration>
