@@ -1,0 +1,135 @@
+﻿<UserControl xmlns:my="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"  x:Class="Infocorp.TITA.SilverlightUI.Page"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    Width="400" Height="300">
+    <Grid x:Name="GridPrincipal" Background="White" Width="781">
+
+        <!--MENU-->
+        <Rectangle HorizontalAlignment="Left" Margin="-1,0,0,0" VerticalAlignment="Stretch" Fill="#FF168BCC" Stroke="#FF000000" Width="139" x:Name="RectangleMenu"/>
+        <Button Height="26" HorizontalAlignment="Left" Margin="18,102,0,0" VerticalAlignment="Top" Width="112" Click="ButtonContract_Click" Content="Contrato" x:Name="ButtonContract" Background="#FF099BF5"/>
+        <Button HorizontalAlignment="Left" Margin="18,132,0,0" VerticalAlignment="Top" Content="Incidente" Width="112" Height="26" x:Name="ButtonIncident" Click="ButtonIncident_Click" Background="#FF1297F5"/>
+        <Button HorizontalAlignment="Left" Margin="18,196,0,184" VerticalAlignment="Top" Content="Reportes" Width="112" Height="26" x:Name="ButtonReports" Background="#FF0994F5"/>
+        <Button Margin="18,166,0,0"  VerticalAlignment="Top" Click="ButtonWP_Click" Content="WorkPackage" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonWP" Background="#FF0B97F9"/>
+
+        <!--WP-->
+        <Canvas Margin="138,0,0,0" x:Name="CanvasWP" Background="White" Width="auto" Visibility="Collapsed">
+            <ListBox Height="49" Width="631" Canvas.Left="4" Canvas.Top="8" x:Name="ListBoxWP" SelectionChanged="ListBoxWP_SelectionChanged">
+                <!--<ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Width="800" Height="50" Background="Black" HorizontalAlignment="Center" Orientation="Horizontal" x:Name="StackPanelWP">
+                            <TextBlock Text="{Binding Nombre}" TextWrapping="NoWrap" Foreground="#FFFFFFFF" FontSize="12" FontFamily="Arial"/>
+                            <TextBlock Text="{Binding Url}" TextWrapping="NoWrap" Foreground="#FFFFFFFF" FontSize="12" FontFamily="Arial"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>-->
+            </ListBox>
+            <Button Height="26" Width="112" Canvas.Left="523" Click="ButtonNewWP_Click" Canvas.Top="81" Content="Nuevo WP" x:Name="ButtonNewWP" Background="#FF0994F5"/>
+            <Canvas Height="295" Width="639" Visibility="Collapsed" Background="White" Canvas.Left="4" Canvas.Top="111" x:Name="CanvasNewWP">
+                <TextBox Height="24" Width="151" Canvas.Left="106" Canvas.Top="20" TextWrapping="Wrap" x:Name="TextBoxName"/>
+                <TextBlock Height="24" Width="99" Canvas.Top="20" Text="Nombre" TextWrapping="Wrap"  x:Name="TextBlockName"/>
+    			<TextBlock Height="24" Width="119" Canvas.Top="67.611" Text="Fecha Creación" TextWrapping="Wrap" x:Name="TextBlockDateCreate"/>
+			</Canvas>
+        </Canvas>
+
+        <!--CONTRATO -->
+        <Canvas x:Name="pnl_Contrato" Margin="128,102,0,0" VerticalAlignment="Top" Visibility="Collapsed">
+
+            <ListBox x:Name="lstContratos" Background="#00000000"
+                  SelectionChanged="lstItems_SelectionChanged" Width="800" Height="auto" Margin="18,0,0,0" >
+                <ListBox.ItemTemplate >
+                    <DataTemplate>
+                        <StackPanel Width="800" Height="50" Background="Black" HorizontalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock Text="{Binding Nombre}" TextWrapping="NoWrap" Foreground="#FFFFFFFF" FontSize="12" FontFamily="Arial"/>
+                        <TextBlock Text="{Binding Url}" TextWrapping="NoWrap" Foreground="#FFFFFFFF" FontSize="12" FontFamily="Arial"/>
+                   
+                        <Canvas x:Name="BtnModificarContrato" Height="25.456" Width="99" MouseLeftButtonDown="BtnModificarContrato_MouseLeftButtonDown" Cursor="Hand">
+                            <Rectangle Height="24" Width="99" RadiusX="3.697" RadiusY="3.697" Stroke="SkyBlue">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="White"/>
+                                        <GradientStop Color="SkyBlue" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <TextBlock Height="25.456" Text="Modificar" TextWrapping="Wrap" FontFamily="Fonts/ArialRoundedMTBold.TTF#Arial Rounded MT Bold" FontSize="18" x:Name="TxtSalir" Foreground="Black" Width="90.000" FontWeight="Normal"/>
+			            </Canvas>
+                        <Canvas x:Name="BtnEliminarContrato" Height="25.456" Width="99" MouseLeftButtonDown="BtnEliminarContrato_MouseLeftButtonDown" Cursor="Hand">
+                            <Rectangle Height="24" Width="99" RadiusX="3.697" RadiusY="3.697" Stroke="SkyBlue">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="White"/>
+                                        <GradientStop Color="SkyBlue" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <TextBlock Height="25.456" Text="Eliminar" TextWrapping="Wrap" FontFamily="Fonts/ArialRoundedMTBold.TTF#Arial Rounded MT Bold" FontSize="18" x:Name="txtEliminar" Foreground="Black" Width="90.000" FontWeight="Normal"/>
+			            </Canvas>   
+                    </StackPanel>
+
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Canvas x:Name="BtnNuevoContrato"  Margin="328,132,0,0" Cursor="Hand" MouseLeftButtonDown="BtnNuevoContrato_MouseLeftButtonDown">
+                <Rectangle Height="24" Width="99" Canvas.Top="0.618" RadiusX="3.697" RadiusY="3.697" Stroke="SkyBlue">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="White"/>
+                            <GradientStop Color="SkyBlue" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock Height="25.456" Text="Nuevo" TextWrapping="Wrap" FontFamily="Fonts/ArialRoundedMTBold.TTF#Arial Rounded MT Bold" FontSize="18" x:Name="TxtEntrar" Foreground="Black" Width="67.664" Canvas.Left="16.658" FontWeight="Normal"/>
+			</Canvas>
+            <Canvas x:Name="pnlEditContrato" Visibility="Collapsed" Height="10.456" Margin="280">
+
+                <TextBlock Text="Nombre:" Width="160" Height="30"></TextBlock>
+                <TextBox x:Name="txtNombre" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130"></TextBox>
+                <TextBlock Text="Url:" Width="160" Height="30" Canvas.Top="50"></TextBlock>
+                <TextBox x:Name="txtUrl" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130" Canvas.Top="50"></TextBox>
+
+                <Canvas MouseLeftButtonDown="BtnAceptarContrato_MouseLeftButtonDown" x:Name="btnAceptarContrato">
+                    <Rectangle Height="24" Width="99" RadiusX="3.697" RadiusY="3.697" Stroke="SkyBlue" Canvas.Top="90.456">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="White"/>
+                                <GradientStop Color="SkyBlue" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Height="25.456" Text="Aceptar" TextWrapping="Wrap" FontFamily="Fonts/ArialRoundedMTBold.TTF#Arial Rounded MT Bold" FontSize="18" x:Name="txtAceptar" Foreground="Black" Width="67.664" FontWeight="Normal" Canvas.Top="90.456"/>
+                </Canvas>
+                <Canvas MouseLeftButtonDown="BtnCancelarContrato_MouseLeftButtonDown" x:Name="btnCancelar" Canvas.Top="90.456" Canvas.Left="120">
+                    <Rectangle Height="24" Width="99" RadiusX="3.697" RadiusY="3.697" Stroke="SkyBlue">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="White"/>
+                                <GradientStop Color="SkyBlue" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Height="25.456" Text="Cancelar" TextWrapping="Wrap" FontFamily="Fonts/ArialRoundedMTBold.TTF#Arial Rounded MT Bold" FontSize="18" x:Name="txtCancelar" Foreground="Black" Width="90.000" FontWeight="Normal"  />
+                </Canvas>
+
+            </Canvas>
+
+        </Canvas>
+
+        <!--INCIDENTE -->
+        <Canvas Margin="138,0,0,0" x:Name="CanvasIncident" Background="White" Width="auto" Visibility="Collapsed">
+
+            <my:DataGrid RowBackground="White" x:Name="grdIncident" Width="500" Height="250" 
+                     Margin="10" AutoGenerateColumns="False">
+           
+                <my:DataGrid.Columns>
+
+                </my:DataGrid.Columns>
+</my:DataGrid>
+
+
+
+        </Canvas>
+
+
+
+    </Grid >
+</UserControl>
