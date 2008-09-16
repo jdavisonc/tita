@@ -22,99 +22,6 @@ namespace TestSharePoint
     {
         private string SiteUrl = "http://localhost/infocorp";
 
-        public List<DTField> GetFieldsCollection()
-        {
-            
-            List<DTField> fieldsCollection = new List<DTField>();
-            /*
-            using (SPSite site = new SPSite(SiteUrl))
-            {
-                using (SPWeb web = site.OpenWeb())
-                {
-                    SPList list = web.Lists["Issues"];
-                    SPFieldCollection fields = list.Fields;
-                    for (int i = 0; i < fields.Count; i++)
-                    {
-                        string name = fields[i].Title;
-                        bool required = fields[i].Required;
-                        SPFieldType type = fields[i].Type;
-                        StringCollection choices;
-                        
-                        if (type == SPFieldType.Choice)
-                        {
-                            choices = ((SPFieldChoice)fields[i]).Choices;
-                        }
-                        else
-                        {
-                             choices = new StringCollection();
-                        }
-                        switch (SPFieldType)
-                        {
-                            case SPFieldType.Attachments:
-                                break;
-                            case SPFieldType.Boolean:
-                                break;
-                            case SPFieldType.Calculated:
-                                break;
-                            case SPFieldType.Choice:
-                                break;
-                            case SPFieldType.Computed:
-                                break;
-                            case SPFieldType.Counter:
-                                break;
-                            case SPFieldType.CrossProjectLink:
-                                break;
-                            case SPFieldType.Currency:
-                                break;
-                            case SPFieldType.DateTime:
-                                break;
-                            case SPFieldType.Error:
-                                break;
-                            case SPFieldType.File:
-                                break;
-                            case SPFieldType.GridChoice:
-                                break;
-                            case SPFieldType.Guid:
-                                break;
-                            case SPFieldType.Integer:
-                                break;
-                            case SPFieldType.Invalid:
-                                break;
-                            case SPFieldType.Lookup:
-                                break;
-                            case SPFieldType.MaxItems:
-                                break;
-                            case SPFieldType.ModStat:
-                                break;
-                            case SPFieldType.MultiChoice:
-                                break;
-                            case SPFieldType.Note:
-                                break;
-                            case SPFieldType.Number:
-                                break;
-                            case SPFieldType.Recurrence:
-                                break;
-                            case SPFieldType.Text:
-                                break;
-                            case SPFieldType.Threading:
-                                break;
-                            case SPFieldType.URL:
-                                break;
-                            case SPFieldType.User:
-                                break;
-                            default:
-                                break;
-                        }
-                        if (type != SPFieldType.Computed)
-                        {
-                            fieldsCollection.Add(new DTField(name, type,required, choices));
-                        }
-                    }
-                }
-            }*/
-            return fieldsCollection;
-        }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack)
@@ -165,14 +72,15 @@ namespace TestSharePoint
                     }
                 }*/
                 #endregion
-                /*List<DTField> list = GetFieldsCollection();
-                Webs.Text = "";
-                for (int i = 0; i < list.Count; i++)
-                {
-                    Webs.Text += list[i].Name + "(" + list[i].Type + ")" + "<br>";
-                }*/
+
                 IOutlookSharePoint iop = new OutlookSharePoint2003();
-                iop.AddIssue("http://localhost/infocorp");
+                //iop.AddIssue("http://localhost/infocorp");
+                List<DTField> fieldsCollection = iop.GetFieldsIssue(SiteUrl);
+                Webs.Text = "";
+                foreach (DTField field in fieldsCollection)
+                {
+                    Webs.Text += field.Name + "(" + field.Type.ToString() + ")<br>";
+                }
             }
 
         }

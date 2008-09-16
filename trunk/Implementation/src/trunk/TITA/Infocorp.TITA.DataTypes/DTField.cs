@@ -16,9 +16,9 @@ namespace Infocorp.TITA.DataTypes
             Integer = 0,
             String = 1,
             Choice = 2,
-            Attachments = 3,
-            Boolean = 4,
-            DateTime = 5
+            Boolean = 3,
+            DateTime = 4,
+            Note = 5
         }
 
         public DTField()
@@ -30,29 +30,21 @@ namespace Infocorp.TITA.DataTypes
             _choices = new List<string>();
         }
 
-        public DTField(string Name, Types Type, bool Required, StringCollection Choices)
+        public DTField(string Name, Types Type, bool Required, List<string> Choices)
         {
             _name = Name;
             _type = Type;
             _required = Required;
-            _choices = new List<string>();
-            for (int i = 0; i < Choices.Count; i++)
-            {
-                _choices.Add(Choices[i]);
-            }
+            _choices = new List<string>(Choices);
         }
 
-        public DTField(string Name, Types Type, bool Required, StringCollection Choices, string Value)
+        public DTField(string Name, Types Type, bool Required, List<string> Choices, string Value)
         {
             _name = Name;
             _type = Type;
             _required = Required;
             _value = Value;
-            _choices = new List<string>();
-            for (int i = 0; i < Choices.Count; i++)
-            {
-                _choices.Add(Choices[i]);
-            }
+            _choices = new List<string>(Choices);
         }
 
         public string Name

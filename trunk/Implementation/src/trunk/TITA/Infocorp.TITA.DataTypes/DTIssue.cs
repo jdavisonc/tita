@@ -18,7 +18,7 @@ namespace Infocorp.TITA.DataTypes
             _attachments = new List<DTAttachment>(Attachments);
         }
 
-        private List<DTAttachment> Attachments
+        public List<DTAttachment> Attachments
         {
             get { return _attachments; }
             //set { _attachments = value; }
