@@ -75,11 +75,25 @@ namespace TestSharePoint
 
                 IOutlookSharePoint iop = new OutlookSharePoint2003();
                 //iop.AddIssue("http://localhost/infocorp");
-                List<DTField> fieldsCollection = iop.GetFieldsIssue(SiteUrl);
+                /*List<DTField> fieldsCollection = iop.GetFieldsIssue(SiteUrl);
                 Webs.Text = "";
                 foreach (DTField field in fieldsCollection)
                 {
                     Webs.Text += field.Name + "(" + field.Type.ToString() + ")<br>";
+                }*/
+                List<DTField> fields = new List<DTField>();
+                fields.Add(new DTField("Title",DTField.Types.String,false,new List<string>(),"KRONOS 444444"));
+                fields.Add(new DTField("Priority",DTField.Types.Integer,false,new List<string>(),"2"));
+                fields.Add(new DTField("Category", DTField.Types.Choice, false, new List<string>(), "Change"));
+                //fields.Add(new DTField("Assigned To", DTField.Types.Choice, false, new List<string>(), "tita"));
+                DTIssue issue = new DTIssue(fields, new List<DTAttachment>());
+                if (iop.AddIssue(SiteUrl, issue))
+                {
+                    Webs.Text = "Bien";
+                }
+                else
+                {
+                    Webs.Text = "Mal";
                 }
             }
 
