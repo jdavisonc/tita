@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.Test", "TestSharePoint\Infocorp.TITA.Test.csproj", "{2BC819FC-C780-47C9-93B9-C463726447EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.OutlookSharePoint", "Infocorp.TITA.OutlookSharePoint\Infocorp.TITA.OutlookSharePoint.csproj", "{BB917604-4669-4C42-90CD-B919E80EC0AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.SharePointUtilities", "Infocorp.TITA.SharePointUtilities\Infocorp.TITA.SharePointUtilities.csproj", "{B221BE03-AFBF-4A2A-A1D6-EE0302AA55A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.DataTypes", "Infocorp.TITA.DataTypes\Infocorp.TITA.DataTypes.csproj", "{FC4C3770-4D7F-4B3F-A9F1-6E541B3AEE72}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BC819FC-C780-47C9-93B9-C463726447EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BC819FC-C780-47C9-93B9-C463726447EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BC819FC-C780-47C9-93B9-C463726447EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BC819FC-C780-47C9-93B9-C463726447EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB917604-4669-4C42-90CD-B919E80EC0AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB917604-4669-4C42-90CD-B919E80EC0AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB917604-4669-4C42-90CD-B919E80EC0AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB917604-4669-4C42-90CD-B919E80EC0AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B221BE03-AFBF-4A2A-A1D6-EE0302AA55A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B221BE03-AFBF-4A2A-A1D6-EE0302AA55A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B221BE03-AFBF-4A2A-A1D6-EE0302AA55A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B221BE03-AFBF-4A2A-A1D6-EE0302AA55A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC4C3770-4D7F-4B3F-A9F1-6E541B3AEE72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC4C3770-4D7F-4B3F-A9F1-6E541B3AEE72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC4C3770-4D7F-4B3F-A9F1-6E541B3AEE72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC4C3770-4D7F-4B3F-A9F1-6E541B3AEE72}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
