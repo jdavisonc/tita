@@ -29,9 +29,27 @@ namespace Infocorp.TITA.OutlookSharePoint
                         SPList list = web.Lists["Issues"];
                         SPListItem listItem = list.Items.Add();
                         List<DTField> fieldCollection = issue.Fields;
-                        foreach (var field in fieldCollection)
+                        foreach (DTField field in fieldCollection)
                         {
-                            listItem[field.Name] = field.Value;
+                            if (field.Type != DTField.Types.User)
+                            {
+                                listItem[field.Name] = field.Value;
+                            }
+                            else
+                            {
+                                SPUserCollection userCollection = web.AllUsers;
+                                bool stop = false;
+                                int i = 0;
+                                while (!stop)
+                                {
+                                    if (userCollection[i].Name.CompareTo(field.Value) == 0)
+                                    {
+                                        listItem[field.Name] = string.Format("{0};#{1}", userCollection[i].ID.ToString(), userCollection[i].Name);
+                                        stop = true;
+                                    }
+                                    i++;
+                                }
+                            }
                         }
                         SPAttachmentCollection listItemAttachmentCollection = listItem.Attachments;
                         List<DTAttachment> attachmentCollection = issue.Attachments;
@@ -65,13 +83,21 @@ namespace Infocorp.TITA.OutlookSharePoint
                         bool required = field.Required;
                         SPFieldType type = field.Type;
                         List<string> choices = new List<string>();
-                        
+
                         if (type == SPFieldType.Choice)
                         {
                             StringCollection choicesCollection = ((SPFieldChoice)field).Choices;
                             foreach (var choice in choicesCollection)
                             {
                                 choices.Add(choice);
+                            }
+                        }
+                        else if (type == SPFieldType.User)
+                        {
+                            SPUserCollection userCollection = web.AllUsers;
+                            foreach (SPUser user in userCollection)
+                            {
+                                choices.Add(user.Name);
                             }
                         }
                         switch (type)
@@ -133,6 +159,7 @@ namespace Infocorp.TITA.OutlookSharePoint
                             case SPFieldType.URL:
                                 break;
                             case SPFieldType.User:
+                                fieldsCollection.Add(new DTField(name, DTField.Types.User, required, choices));
                                 break;
                             default:
                                 break;
