@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Services;
 using System.Web.Services.Protocols;
 using System.Xml.Linq;
+using System.Collections.Generic;
+using Infocorp.TITA.DataTypes;
 
 /// <summary>
 /// Summary description for WSTita
@@ -23,10 +25,20 @@ public class WSTita : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
+
     [WebMethod]
-    public string HelloWorld()
+    public List<DTIssue> GetIssues()
     {
-        return "Hello World";
+        //List<DTIssue> lst = GetIssues();
+        //return lst;
+        DTField DTF = new DTField("EMILIA",0,true,new List<string>());
+        List<DTField> fields = new List<DTField>();
+        fields.Add(DTF);
+        DTIssue dt = new DTIssue(fields, new List<DTAttachment>());
+            
+        List<DTIssue> lst = new List<DTIssue>();
+        lst.Add(dt);
+        return lst;
     }
 
 }
