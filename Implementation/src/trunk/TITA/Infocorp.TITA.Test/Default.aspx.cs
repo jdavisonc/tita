@@ -82,10 +82,10 @@ namespace TestSharePoint
                     Webs.Text += field.Name + "(" + field.Type.ToString() + ")<br>";
                 }*/
                 List<DTField> fields = new List<DTField>();
-                fields.Add(new DTField("Title",DTField.Types.String,false,new List<string>(),"KRONOS 444444"));
-                fields.Add(new DTField("Priority",DTField.Types.Integer,false,new List<string>(),"2"));
-                fields.Add(new DTField("Category", DTField.Types.Choice, false, new List<string>(), "Change"));
-                //fields.Add(new DTField("Assigned To", DTField.Types.Choice, false, new List<string>(), "tita"));
+                fields.Add(new DTField("Title",DTField.Types.String,false,new List<string>(),"Soy buzzzz"));
+                fields.Add(new DTField("Priority",DTField.Types.Integer,false,new List<string>(),"8"));
+                fields.Add(new DTField("Category", DTField.Types.Choice, false, new List<string>(), "Error"));
+                fields.Add(new DTField("Assigned To", DTField.Types.User, false, new List<string>(), "TITAVM\\administrator"));
                 DTIssue issue = new DTIssue(fields, new List<DTAttachment>());
                 if (iop.AddIssue(SiteUrl, issue))
                 {
