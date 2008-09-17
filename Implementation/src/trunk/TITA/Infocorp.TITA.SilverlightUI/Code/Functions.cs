@@ -8,11 +8,19 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
+using Infocorp.TITA.SilverlightUI.WSTitaReference;
+
 
 namespace Infocorp.TITA.SilverlightUI.Code
 {
     public class Functions
     {
+        public Functions() 
+        {
+        }
+
+        #region Contrat
         public void AddContrato(Contrato cont)
         {
 
@@ -26,5 +34,8 @@ namespace Infocorp.TITA.SilverlightUI.Code
         {
 
         }
+        #endregion
+       
+
     }
 }
