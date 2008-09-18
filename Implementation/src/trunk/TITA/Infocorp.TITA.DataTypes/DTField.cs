@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
+using System;
 
 namespace Infocorp.TITA.DataTypes
 {
+    [Serializable]
     public class DTField
     {
         private string _name;
