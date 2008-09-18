@@ -7,11 +7,11 @@ namespace Infocorp.TITA.DataTypes
     [Serializable]
     public class DTField
     {
-        private string _name;
-        private Types _type;
-        private bool _required;
-        private string _value;
-        private List<string> _choices;
+        private string _name = string.Empty;
+        private Types _type = Types.Integer;
+        private bool _required = false;
+        private string _value = string.Empty;
+        private List<string> _choices = null;
 
         public enum Types
         {
@@ -22,15 +22,6 @@ namespace Infocorp.TITA.DataTypes
             DateTime = 4,
             Note = 5,
             User = 6
-        }
-
-        public DTField()
-        {
-            _name = string.Empty;
-            _type = Types.Integer;
-            _required = false;
-            _value = string.Empty;
-            _choices = new List<string>();
         }
 
         public DTField(string Name, Types Type, bool Required, List<string> Choices)
@@ -53,25 +44,21 @@ namespace Infocorp.TITA.DataTypes
         public string Name
         {
             get { return _name; }
-            //set { _name = value; }
         }
 
         public Types Type
         {
             get { return _type; }
-            //set { _type = value; }
         }
         
         public bool Required
         {
             get { return _required; }
-            //set { _required = value; }
         }
 
         public List<string> Choices
         {
             get { return _choices; }
-            //set { _choices = value; }
         }
 
         public string Value
