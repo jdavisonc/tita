@@ -6,13 +6,8 @@ namespace Infocorp.TITA.DataTypes
     [Serializable]
     public class DTIssue
     {
-        private List<DTField> _fields;
-        private List<DTAttachment> _attachments;
-
-        public DTIssue()
-        {
-            _fields = new List<DTField>();
-        }
+        private List<DTField> _fields = null;
+        private List<DTAttachment> _attachments = null;
 
         public DTIssue(List<DTField> Fields, List<DTAttachment> Attachments)
         {
@@ -23,13 +18,21 @@ namespace Infocorp.TITA.DataTypes
         public List<DTAttachment> Attachments
         {
             get { return _attachments; }
-            //set { _attachments = value; }
         }
 
         public List<DTField> Fields
         {
             get { return _fields; }
-            //set { _fields = value; }
+        }
+
+        public DTField GetField(string nameField)
+        {
+            foreach (DTField field in _fields)
+            {
+                if (nameField.ToUpper().CompareTo(field.Name.ToUpper()) == 0)
+                    return field;
+            }
+            return null;
         }
     }
 }
