@@ -9,15 +9,15 @@ namespace Infocorp.TITA.DataTypes
     [DataContract]
     public class DTField
     {
-        [DataMember]
+      
         private string _name = string.Empty;
-        [DataMember]
+        
         private Types _type = Types.Integer;
-        [DataMember]
+        
         private bool _required = false;
-        [DataMember]
+        
         private string _value = string.Empty;
-        [DataMember]
+       
         private List<string> _choices = null;
 
         public enum Types
@@ -30,7 +30,7 @@ namespace Infocorp.TITA.DataTypes
             Note = 5,
             User = 6
         }
-
+       
         public DTField(string Name, Types Type, bool Required, List<string> Choices)
         {
             _name = Name;
@@ -39,6 +39,8 @@ namespace Infocorp.TITA.DataTypes
             _choices = new List<string>(Choices);
         }
 
+        public DTField() { }
+      
         public DTField(string Name, Types Type, bool Required, List<string> Choices, string Value)
         {
             _name = Name;
@@ -47,31 +49,31 @@ namespace Infocorp.TITA.DataTypes
             _value = Value;
             _choices = new List<string>(Choices);
         }
-
+        [DataMember]
         public string Name
         {
             get { return _name; }
             set { _name = value; }
         }
-
+        [DataMember]
         public Types Type
         {
             get { return _type; }
             set { _type = value; }
         }
-        
+        [DataMember]
         public bool Required
         {
             get { return _required; }
             set { _required = value; }
         }
-
+        [DataMember]
         public List<string> Choices
         {
             get { return _choices; }
             set { _choices = value; }
         }
-
+        [DataMember]
         public string Value
         {
             get { return _value; }
