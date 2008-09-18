@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Infocorp.TITA.SilverlightUI.Code;
+using Infocorp.TITA.SilverlightUI.WSTitaReference;
 
 namespace Infocorp.TITA.SilverlightUI
 {
@@ -214,33 +215,55 @@ namespace Infocorp.TITA.SilverlightUI
         private void ButtonIncident_Click(object sender, RoutedEventArgs e)
         {
             EnableOption(Option.INCIDENT);
-            LoadLstIncidentes();
+            GetIncidents();
         }
 
-        private void LoadLstIncidentes()
+        private void GetIncidents()
         {
             grdIncident.Columns.Clear();
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.GetIssuesCompleted += new EventHandler<Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesCompletedEventArgs>(ws_GetIssuesCompleted);
+            ws.GetIssuesAsync();
+        }
+        void ws_GetIssuesCompleted(object sender, Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesCompletedEventArgs e)
+        {
+            Dispatcher.BeginInvoke(LoadIncidents(e.Result));
+        }
+        private Delegate LoadIncidents(List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue> list) 
+        {
+            DataGridTextColumn col;
+            foreach (Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue issue in list)
+            {
+                foreach (Infocorp.TITA.SilverlightUI.WSTitaReference.DTField field in issue.Fields)
+                {
+                    col = new DataGridTextColumn();
+                    //col.Header = field.Name;
+                    //col.DisplayMemberBinding = new System.Windows.Data.Binding(field.Name);
+                    
+                    grdIncident.Columns.Add(col);
+                }
+            }
 
-            DataGridTextColumn col1 = new DataGridTextColumn();
-            col1.Header = "col1";
-            col1.DisplayMemberBinding = new System.Windows.Data.Binding("Priority");
 
-            DataGridTextColumn col2 = new DataGridTextColumn();
-            col2.Header = "col2";
-            col2.DisplayMemberBinding = new System.Windows.Data.Binding("value");
+            //DataGridTextColumn col1 = new DataGridTextColumn();
+            //col1.Header = "col1";
+            //col1.DisplayMemberBinding = new System.Windows.Data.Binding("Priority");
 
-
-            grdIncident.Columns.Add(col1);
-            grdIncident.Columns.Add(col2);
-
-            List<MyIssue> lstMyIssue = new List<MyIssue>();
-            MyIssue issue = new MyIssue();
-            issue.Priority = "algo";
-            lstMyIssue.Add(issue);
-
-            grdIncident.ItemsSource = lstMyIssue;
+            //DataGridTextColumn col2 = new DataGridTextColumn();
+            //col2.Header = "col2";
+            //col2.DisplayMemberBinding = new System.Windows.Data.Binding("value");
 
 
+            //grdIncident.Columns.Add(col1);
+            //grdIncident.Columns.Add(col2);
+
+            //List<MyIssue> lstMyIssue = new List<MyIssue>();
+            //MyIssue issue = new MyIssue();
+            //issue.Priority = "algo";
+            //lstMyIssue.Add(issue);
+
+            //grdIncident.ItemsSource = lstMyIssue;
+            return null;
         }
 
         #endregion
