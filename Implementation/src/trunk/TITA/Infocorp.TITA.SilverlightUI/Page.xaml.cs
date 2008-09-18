@@ -239,8 +239,8 @@ namespace Infocorp.TITA.SilverlightUI
                     col = new DataGridTextColumn();
                     //col.Header = field.Name;
                     //col.DisplayMemberBinding = new System.Windows.Data.Binding(field.Name);
-                    field.Name
-                    grdIncident.Columns.Add(col);
+                   // field.Name
+                   // grdIncident.Columns.Add(col);
                 }
             }
 
