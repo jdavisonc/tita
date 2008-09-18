@@ -152,7 +152,6 @@ namespace Infocorp.TITA.SharePointUtilities
             return fieldsCollection;
         }
 
-
         public List<DTField> GetFieldsIssue(string urlSite)
         {
             List<DTField> fieldsCollection = null;
