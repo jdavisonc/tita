@@ -22,11 +22,13 @@ namespace Infocorp.TITA.DataTypes
         public List<DTAttachment> Attachments
         {
             get { return _attachments; }
+            set { _attachments = value; }
         }
 
         public List<DTField> Fields
         {
             get { return _fields; }
+            set { _fields = value; }
         }
 
         public DTField GetField(string nameField)

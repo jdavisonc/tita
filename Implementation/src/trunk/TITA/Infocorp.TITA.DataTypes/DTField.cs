@@ -51,21 +51,25 @@ namespace Infocorp.TITA.DataTypes
         public string Name
         {
             get { return _name; }
+            set { _name = value; }
         }
 
         public Types Type
         {
             get { return _type; }
+            set { _type = value; }
         }
         
         public bool Required
         {
             get { return _required; }
+            set { _required = value; }
         }
 
         public List<string> Choices
         {
             get { return _choices; }
+            set { _choices = value; }
         }
 
         public string Value
