@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace Infocorp.TITA.DataTypes
 {
+    [Serializable]
     public class DTIssue
     {
         private List<DTField> _fields;
