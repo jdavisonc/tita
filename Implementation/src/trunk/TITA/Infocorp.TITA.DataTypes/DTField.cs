@@ -1,16 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System;
+using System.Runtime.Serialization;
 
 namespace Infocorp.TITA.DataTypes
 {
     [Serializable]
+    [DataContract]
     public class DTField
     {
+        [DataMember]
         private string _name = string.Empty;
+        [DataMember]
         private Types _type = Types.Integer;
+        [DataMember]
         private bool _required = false;
+        [DataMember]
         private string _value = string.Empty;
+        [DataMember]
         private List<string> _choices = null;
 
         public enum Types

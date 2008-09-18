@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Runtime.Serialization;
 
 namespace Infocorp.TITA.DataTypes
 {
     [Serializable]
+    [DataContract]
     public class DTIssue
     {
+        [DataMember]
         private List<DTField> _fields = null;
+        [DataMember]
         private List<DTAttachment> _attachments = null;
 
         public DTIssue(List<DTField> Fields, List<DTAttachment> Attachments)
