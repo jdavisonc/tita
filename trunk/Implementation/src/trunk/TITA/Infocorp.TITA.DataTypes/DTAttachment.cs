@@ -1,12 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Runtime.Serialization;
+using System;
 
 namespace Infocorp.TITA.DataTypes
 {
+    [Serializable]
+    [DataContract]
     public class DTAttachment
     {
+        [DataMember]
         private string _name = string.Empty;
+        [DataMember]
         private byte[] _data = null;
+        [DataMember]
         private string _url = string.Empty;
         
         public DTAttachment(string name, byte[] data)
