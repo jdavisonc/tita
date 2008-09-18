@@ -29,17 +29,16 @@ public class WSTita : System.Web.Services.WebService
     [WebMethod]
     public List<DTIssue> GetIssues()
     {
-        List<DTIssue> lst = GetIssues();
-        return lst;
+     
+       
         DTField DTF = new DTField("EMILIA",0,true,new List<string>());
         List<DTField> fields = new List<DTField>();
         fields.Add(DTF);
         DTIssue dt = new DTIssue(fields, new List<DTAttachment>());
             
-        //List<DTIssue> lst = new List<DTIssue>();
-        //lst.Add(dt);
-        return lst;
-        
+        List<DTIssue> lst = new List<DTIssue>();
+        lst.Add(dt);
+        return lst;       
     }
 
 }

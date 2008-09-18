@@ -9,13 +9,15 @@ namespace Infocorp.TITA.DataTypes
     [DataContract]
     public class DTAttachment
     {
-        [DataMember]
+      
         private string _name = string.Empty;
-        [DataMember]
+      
         private byte[] _data = null;
-        [DataMember]
-        private string _url = string.Empty;
         
+        private string _url = string.Empty;
+
+        public DTAttachment() { }
+
         public DTAttachment(string name, byte[] data)
         {
             _name = name;
@@ -29,19 +31,19 @@ namespace Infocorp.TITA.DataTypes
             _url = Url;
             _data = null;
         }
-
+        [DataMember]
         public string Name
         {
             get { return _name; }
             set { _name = value; }
         }
-
+        [DataMember]
         public byte[] Data
         {
             get { return _data; }
             set { _data = value; }
         }
-
+        [DataMember]
         public string Url
         {
             get { return _url; }
