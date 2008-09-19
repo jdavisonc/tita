@@ -12,5 +12,37 @@ namespace Infocorp.TITA.SharePointUtilities
         /// <param name="urlSite">Url del Sitio</param>
         /// <returns>Lista de DataType Incidente</returns>
         List<DTIssue> GetIssues(string urlSite);
+
+        /// <summary>
+        /// Retorna la definicion de los campos de un incidente
+        /// </summary>
+        /// <param name="urlSite">Url del Sitio</param>
+        /// <returns>Lista de DataType Field</returns>
+        List<DTField> GetFieldsIssue(string urlSite);
+
+        /// <summary>
+        /// Alta de incidente en SharePoint
+        /// </summary>
+        /// <param name="urlSite">Url del Sitio</param>
+        /// <param name="issue">DataType del incidente</param>
+        /// <returns>Retorna si fue satisfactoria la alta</returns>
+        bool AddIssue(string urlSite, DTIssue issue);
+
+        /// <summary>
+        /// Baja de incidente en SharePoint
+        /// </summary>
+        /// <param name="urlSite">Url del Sitio</param>
+        /// <param name="IDIssue">ID del incidente a dar de baja</param>
+        /// <returns>Retorna si fue satisfactoria la baja</returns>
+        bool DeleteIssue(string urlSite, int IDIssue);
+
+        /// <summary>
+        /// Actualizacion de un incidente en SharePoint
+        /// </summary>
+        /// <param name="urlSite">Url de Sitio</param>
+        /// <param name="issue">DataType del incidente</param>
+        /// <returns>Retorna si fue satisfactoria la actualizacion</returns>
+        bool UpdateIssue(string urlSite, DTIssue issue);
+
     }
 }
