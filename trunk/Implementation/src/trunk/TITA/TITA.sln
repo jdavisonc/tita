@@ -13,7 +13,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Infocorp.TITA.SilverlightUIWeb", "Infocorp.TITA.SilverlightUIWeb\", "{997164DE-B757-4995-9C67-BA3CAADE8F7D}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFramework = "3.5"
-		ProjectReferences = "{FC4C3770-4D7F-4B3F-A9F1-6E541B3AEE72}|Infocorp.TITA.DataTypes.dll;"
+		ProjectReferences = "{FC4C3770-4D7F-4B3F-A9F1-6E541B3AEE72}|Infocorp.TITA.DataTypes.dll;{DC0F0C14-089E-4145-96EE-0E6D47B95C1B}|Infocorp.TITA.WITLogic.dll;{B221BE03-AFBF-4A2A-A1D6-EE0302AA55A8}|Infocorp.TITA.SharePointUtilities.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/Infocorp.TITA.SilverlightUIWeb"
 		Debug.AspNetCompiler.PhysicalPath = "Infocorp.TITA.SilverlightUIWeb\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Infocorp.TITA.SilverlightUIWeb\"
@@ -118,4 +118,3 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
-
