@@ -31,6 +31,15 @@ namespace Infocorp.TITA.DataTypes
             _url = Url;
             _data = null;
         }
+
+        public DTAttachment(DTAttachment attachment)
+        {
+            _name = attachment.Name;
+            _url = attachment.Url;
+            if (attachment.Data != null)
+                Array.Copy(attachment.Data, _data, attachment.Data.Length);
+        }
+
         [DataMember]
         public string Name
         {
