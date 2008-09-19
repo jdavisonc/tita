@@ -115,6 +115,7 @@ namespace Infocorp.TITA.OutlookSharePoint
                             case SPFieldType.Computed:
                                 break;
                             case SPFieldType.Counter:
+                                fieldsCollection.Add(new DTField(name, DTField.Types.Counter, required, choices));
                                 break;
                             case SPFieldType.CrossProjectLink:
                                 break;
