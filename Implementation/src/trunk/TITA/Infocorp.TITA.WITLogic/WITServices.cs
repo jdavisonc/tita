@@ -15,7 +15,24 @@ namespace Infocorp.TITA.WITLogic
 
         public List<DTIssue> GetIssues(string urlSite)
         {
-            return SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint().GetIssues(urlSite);
+            DTIssue issue = new DTIssue();
+
+            DTField field = new DTField();
+            field.Name = "ID";
+            field.Required = true;
+            field.Type = DTField.Types.Integer;
+            field.Value = "1";
+
+            DTField field2 = new DTField();
+            field2.Name = "Title";
+            field2.Required = true;
+            field2.Type = DTField.Types.String;
+            field2.Value = "Título";
+
+            issue.Fields = new List<DTField>() { field, field2 };
+            return new List<DTIssue>() { issue };
+
+            //return SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint().GetIssues(urlSite);
         }
 
         public void ApplyChanges()
