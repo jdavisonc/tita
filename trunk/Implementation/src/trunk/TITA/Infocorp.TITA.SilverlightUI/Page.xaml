@@ -116,17 +116,7 @@
 
         <!--INCIDENTE -->
         <Canvas Margin="138,0,0,0" x:Name="CanvasIncident" Background="White" Width="auto" Visibility="Collapsed">
-
-            <my:DataGrid RowBackground="White" x:Name="grdIncident" Width="500" Height="250" 
-                     Margin="10" AutoGenerateColumns="False">
-           
-                <my:DataGrid.Columns>
-
-                </my:DataGrid.Columns>
-</my:DataGrid>
-
-
-
+            <my:DataGrid x:Name="grdIncident" AutoGenerateColumns="True"></my:DataGrid>
         </Canvas>
 
 
