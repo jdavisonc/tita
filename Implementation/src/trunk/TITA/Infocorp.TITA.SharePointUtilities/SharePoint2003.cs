@@ -148,12 +148,7 @@ namespace Infocorp.TITA.SharePointUtilities
             List<DTField> fieldCollection = issue.Fields;
             foreach (DTField field in fieldCollection)
             {
-                if (field.Type == DTField.Types.Integer)
-                {
-                    if (field.Value.CompareTo("") != 0)
-                        listItem[field.Name] = int.Parse(field.Value);
-                }
-                else if (field.Type == DTField.Types.DateTime)
+                if (field.Type == DTField.Types.DateTime)
                 {
                     if (field.Value.CompareTo("") != 0)
                         listItem[field.Name] = DateTime.Parse(field.Value);
@@ -173,16 +168,29 @@ namespace Infocorp.TITA.SharePointUtilities
                         i++;
                     }
                 }
-                else
+                else if (field.Type != DTField.Types.Counter)
                 {
                     listItem[field.Name] = field.Value;
                 }
             }
             SPAttachmentCollection listItemAttachmentCollection = listItem.Attachments;
             List<DTAttachment> attachmentCollection = issue.Attachments;
+            bool condition;
+            int j;
             foreach (var attachment in attachmentCollection)
             {
-                listItemAttachmentCollection.Add(attachment.Name, attachment.Data);
+                condition = false;
+                j = 0;
+                while (!condition && j < listItemAttachmentCollection.Count)
+                {
+                    if (listItemAttachmentCollection[j].CompareTo(attachment.Name) == 0)
+                        condition = true;
+                    j++;
+                }
+                if (!condition && j == listItemAttachmentCollection.Count)
+                {
+                    listItemAttachmentCollection.Add(attachment.Name, attachment.Data);
+                }
             }
             listItem.Update();
         }
@@ -229,7 +237,7 @@ namespace Infocorp.TITA.SharePointUtilities
                     case SPFieldType.Computed:
                         break;
                     case SPFieldType.Counter:
-                        fieldsCollection.Add(new DTField(name, DTField.Types.Integer, required, choices));
+                        fieldsCollection.Add(new DTField(name, DTField.Types.Counter, required, choices));
                         break;
                     case SPFieldType.CrossProjectLink:
                         break;
