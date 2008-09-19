@@ -11,13 +11,9 @@ namespace Infocorp.TITA.DataTypes
     {
       
         private string _name = string.Empty;
-        
         private Types _type = Types.Integer;
-        
         private bool _required = false;
-        
         private string _value = string.Empty;
-       
         private List<string> _choices = null;
 
         public enum Types
@@ -41,6 +37,15 @@ namespace Infocorp.TITA.DataTypes
         }
 
         public DTField() { }
+
+        public DTField(DTField field)
+        {
+            _name = field.Name;
+            _type = field.Type;
+            _required = field.Required;
+            _choices = new List<string>(field.Choices);
+            _value = field.Value;
+        }
       
         public DTField(string Name, Types Type, bool Required, List<string> Choices, string Value)
         {
