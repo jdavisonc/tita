@@ -28,7 +28,8 @@ namespace Infocorp.TITA.DataTypes
             Boolean = 3,
             DateTime = 4,
             Note = 5,
-            User = 6
+            User = 6,
+            Counter = 7
         }
        
         public DTField(string Name, Types Type, bool Required, List<string> Choices)
