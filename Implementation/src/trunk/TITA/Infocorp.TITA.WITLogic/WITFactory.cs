@@ -6,16 +6,30 @@ using System.Text;
 namespace Infocorp.TITA.WITLogic
 {
     
-    public static class WITFactory
+    public class WITFactory
     {
-        private static IWITServices _WITServicesInstance;
-        public static IWITServices WITServicesInstance()
+        private static IWITServices _wITServicesInstance;
+        private static WITFactory _instance;
+
+        private WITFactory() { }
+
+        public static WITFactory Instance()
         {
-            if (_WITServicesInstance == null){
-                _WITServicesInstance = new WITServices();
+            if (_instance == null)
+            {
+                _instance = new WITFactory();
             }
 
-            return _WITServicesInstance;
+            return _instance;
+        }
+
+        public IWITServices WITServicesInstance()
+        {
+            if (_wITServicesInstance == null){
+                _wITServicesInstance = new WITServices();
+            }
+
+            return _wITServicesInstance;
         }
     }
 }
