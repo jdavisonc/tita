@@ -6,7 +6,7 @@ using System.Collections.Specialized;
 
 namespace Infocorp.TITA.SharePointUtilities
 {
-    class SharePoint2003:ISharePoint
+    public class SharePoint2003:ISharePoint
     {
         #region ISharePoint Members
 
@@ -54,6 +54,137 @@ namespace Infocorp.TITA.SharePointUtilities
             {
                 throw new Exception("Error en GetIssues: " + e.Message);
             }
+        }
+
+        public List<DTField> GetFieldsIssue(string urlSite)
+        {
+            List<DTField> fieldsCollection = null;
+            using (SPSite site = new SPSite(urlSite))
+            {
+                using (SPWeb web = site.OpenWeb())
+                {
+                    SPList list = web.Lists["Issues"];
+                    fieldsCollection = GetFieldsListItem(list);
+                }
+            }
+            return fieldsCollection;
+        }
+
+        public bool AddIssue(string urlSite, DTIssue issue)
+        {
+            try
+            {
+                using (SPSite site = new SPSite(urlSite))
+                {
+                    site.AllowUnsafeUpdates = true;
+                    using (SPWeb web = site.OpenWeb())
+                    {
+                        web.AllowUnsafeUpdates = true;
+                        SPList list = web.Lists["Issues"];
+                        SPListItem listItem = list.Items.Add();
+                        UpdateListItem(web, listItem, issue);
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteIssue(string urlSite, int IDIssue)
+        {
+            try
+            {
+                using (SPSite site = new SPSite(urlSite))
+                {
+                    site.AllowUnsafeUpdates = true;
+                    using (SPWeb web = site.OpenWeb())
+                    {
+                        web.AllowUnsafeUpdates = true;
+                        SPList list = web.Lists["Issues"];
+                        list.Items.DeleteItemById(IDIssue);
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateIssue(string urlSite, DTIssue issue)
+        {
+            try
+            {
+                using (SPSite site = new SPSite(urlSite))
+                {
+                    site.AllowUnsafeUpdates = true;
+                    using (SPWeb web = site.OpenWeb())
+                    {
+                        web.AllowUnsafeUpdates = true;
+                        SPList list = web.Lists["Issues"];
+                        int IDIssue = int.Parse(issue.GetField("ID").Value.ToString());
+                        SPListItem listItem = list.Items.GetItemById(IDIssue);
+                        UpdateListItem(web, listItem, issue);
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Auxiliar Methods
+
+        private void UpdateListItem(SPWeb web,SPListItem listItem, DTIssue issue)
+        {
+            List<DTField> fieldCollection = issue.Fields;
+            foreach (DTField field in fieldCollection)
+            {
+                if (field.Type == DTField.Types.Integer)
+                {
+                    if (field.Value.CompareTo("") != 0)
+                        listItem[field.Name] = int.Parse(field.Value);
+                }
+                else if (field.Type == DTField.Types.DateTime)
+                {
+                    if (field.Value.CompareTo("") != 0)
+                        listItem[field.Name] = DateTime.Parse(field.Value);
+                }
+                else if (field.Type == DTField.Types.User)
+                {
+                    SPUserCollection userCollection = web.AllUsers;
+                    bool stop = false;
+                    int i = 0;
+                    while (!stop && i < userCollection.Count)
+                    {
+                        if (userCollection[i].Name.CompareTo(field.Value) == 0)
+                        {
+                            listItem[field.Name] = string.Format("{0};#{1}", userCollection[i].ID.ToString(), userCollection[i].Name);
+                            stop = true;
+                        }
+                        i++;
+                    }
+                }
+                else
+                {
+                    listItem[field.Name] = field.Value;
+                }
+            }
+            SPAttachmentCollection listItemAttachmentCollection = listItem.Attachments;
+            List<DTAttachment> attachmentCollection = issue.Attachments;
+            foreach (var attachment in attachmentCollection)
+            {
+                listItemAttachmentCollection.Add(attachment.Name, attachment.Data);
+            }
+            listItem.Update();
         }
 
         private List<DTField> GetFieldsListItem(SPList list)
@@ -147,20 +278,6 @@ namespace Infocorp.TITA.SharePointUtilities
                         break;
                     default:
                         break;
-                }
-            }
-            return fieldsCollection;
-        }
-
-        public List<DTField> GetFieldsIssue(string urlSite)
-        {
-            List<DTField> fieldsCollection = null;
-            using (SPSite site = new SPSite(urlSite))
-            {
-                using (SPWeb web = site.OpenWeb())
-                {
-                    SPList list = web.Lists["Issues"];
-                    fieldsCollection = GetFieldsListItem(list);
                 }
             }
             return fieldsCollection;
