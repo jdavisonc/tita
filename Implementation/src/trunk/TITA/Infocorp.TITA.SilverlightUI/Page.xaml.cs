@@ -231,38 +231,52 @@ namespace Infocorp.TITA.SilverlightUI
         }
         private Delegate LoadIncidents(List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue> list) 
         {
-            DataGridTextColumn col;
+            Issue i;
+            List<Issue> lstIssue = new List<Issue>();
             foreach (Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue issue in list)
             {
                 foreach (Infocorp.TITA.SilverlightUI.WSTitaReference.DTField field in issue.Fields)
                 {
-                    col = new DataGridTextColumn();
-                    //col.Header = field.Name;
-                    //col.DisplayMemberBinding = new System.Windows.Data.Binding(field.Name);
-                   // field.Name
-                   // grdIncident.Columns.Add(col);
+                    i = new Issue();
+                    switch (field.Name)
+                    {
+                        case "ID":
+                            i.Id = Convert.ToInt32(field.Value);
+                            break;
+                        case "Title":
+                            i.Title = field.Value;
+                            break;
+                        case "Status":
+                            i.Status = field.Value;
+                            break;
+                        case "Priority":
+                            i.Priority = field.Value;
+                            break;
+                        case "Category":
+                            i.Category = field.Value;
+                            break;
+                        case "ReportedDate":
+                            i.ReportedDate = field.Value;
+                            break;
+                        case "WP":
+                            i.WP = field.Value;
+                            break;
+                        case "ReportedBy":
+                            i.ReportedBy = field.Value;
+                            break;
+                        case "Ord":
+                            i.Ord = float.Parse(field.Value);
+                            break;
+                        case "Resolution":
+                            i.Resolution = field.Value;
+                            break;
+                        default:
+                            break;
+                    }
+                    lstIssue.Add(i);
                 }
             }
-
-
-            //DataGridTextColumn col1 = new DataGridTextColumn();
-            //col1.Header = "col1";
-            //col1.DisplayMemberBinding = new System.Windows.Data.Binding("Priority");
-
-            //DataGridTextColumn col2 = new DataGridTextColumn();
-            //col2.Header = "col2";
-            //col2.DisplayMemberBinding = new System.Windows.Data.Binding("value");
-
-
-            //grdIncident.Columns.Add(col1);
-            //grdIncident.Columns.Add(col2);
-
-            //List<MyIssue> lstMyIssue = new List<MyIssue>();
-            //MyIssue issue = new MyIssue();
-            //issue.Priority = "algo";
-            //lstMyIssue.Add(issue);
-
-            //grdIncident.ItemsSource = lstMyIssue;
+            grdIncident.ItemsSource = lstIssue;
             return null;
         }
 

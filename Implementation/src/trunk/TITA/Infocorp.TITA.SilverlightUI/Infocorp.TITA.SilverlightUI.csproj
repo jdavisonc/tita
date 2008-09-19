@@ -63,7 +63,7 @@
     </Compile>
     <Compile Include="Code\Contrato.cs" />
     <Compile Include="Code\Functions.cs" />
-    <Compile Include="Code\MyIssue.cs" />
+    <Compile Include="Code\Issue.cs" />
     <Compile Include="Page.xaml.cs">
       <DependentUpon>Page.xaml</DependentUpon>
     </Compile>
