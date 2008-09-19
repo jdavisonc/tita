@@ -11,6 +11,8 @@ namespace Infocorp.TITA.WITLogic
 
         #region IWITServices Members
 
+
+
         public List<DTIssue> GetIssues(string urlSite)
         {
             return SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint().GetIssues(urlSite);
