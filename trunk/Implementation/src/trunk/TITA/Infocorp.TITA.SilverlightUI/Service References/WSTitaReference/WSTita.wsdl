@@ -65,6 +65,16 @@
           <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="AddIssue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="issue" type="tns:DTIssue" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddIssueResponse">
+        <s:complexType />
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="GetIssuesSoapIn">
@@ -73,10 +83,20 @@
   <wsdl:message name="GetIssuesSoapOut">
     <wsdl:part name="parameters" element="tns:GetIssuesResponse" />
   </wsdl:message>
+  <wsdl:message name="AddIssueSoapIn">
+    <wsdl:part name="parameters" element="tns:AddIssue" />
+  </wsdl:message>
+  <wsdl:message name="AddIssueSoapOut">
+    <wsdl:part name="parameters" element="tns:AddIssueResponse" />
+  </wsdl:message>
   <wsdl:portType name="WSTitaSoap">
     <wsdl:operation name="GetIssues">
       <wsdl:input message="tns:GetIssuesSoapIn" />
       <wsdl:output message="tns:GetIssuesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddIssue">
+      <wsdl:input message="tns:AddIssueSoapIn" />
+      <wsdl:output message="tns:AddIssueSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSTitaSoap" type="tns:WSTitaSoap">
@@ -90,11 +110,29 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AddIssue">
+      <soap:operation soapAction="http://tempuri.org/AddIssue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="WSTitaSoap12" type="tns:WSTitaSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetIssues">
       <soap12:operation soapAction="http://tempuri.org/GetIssues" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddIssue">
+      <soap12:operation soapAction="http://tempuri.org/AddIssue" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -32,8 +32,14 @@ public class WSTita : System.Web.Services.WebService
     {
 
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
-        return witInstance.GetIssues("http://localhost/infocorp");       
+        return witInstance.GetIssues("http://localhost/infocorp");
     }
 
-}
+    [WebMethod]
+    public void AddIssue(DTIssue issue)
+    {
 
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.AddNewIssue(issue);
+    }
+}
