@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Infocorp.TITA.SilverlightUI.Code;
 using Infocorp.TITA.SilverlightUI.WSTitaReference;
+using Liquid;
 
 namespace Infocorp.TITA.SilverlightUI
 {
@@ -23,6 +24,7 @@ namespace Infocorp.TITA.SilverlightUI
             CONTRACT,
         }
 
+        private List<DTIssue> my_issue = new List<DTIssue>();
         private bool isEdit;
         private bool isDelete;
 
@@ -229,15 +231,15 @@ namespace Infocorp.TITA.SilverlightUI
         {
             Dispatcher.BeginInvoke(LoadIncidents(e.Result));
         }
-        private Delegate LoadIncidents(List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue> list) 
+        private Delegate LoadIncidents(List<DTIssue> list)
         {
             Issue i;
             List<Issue> lstIssue = new List<Issue>();
-            foreach (Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue issue in list)
+            foreach (DTIssue issue in list)
             {
-                foreach (Infocorp.TITA.SilverlightUI.WSTitaReference.DTField field in issue.Fields)
+                i = new Issue();
+                foreach (DTField field in issue.Fields)
                 {
-                    i = new Issue();
                     switch (field.Name)
                     {
                         case "ID":
@@ -273,13 +275,164 @@ namespace Infocorp.TITA.SilverlightUI
                         default:
                             break;
                     }
-                    lstIssue.Add(i);
                 }
+                lstIssue.Add(i);
             }
             grdIncident.ItemsSource = lstIssue;
+            my_issue = list;
             return null;
         }
 
         #endregion
+
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnNuevo_Click(object sender, RoutedEventArgs e)
+        {
+            PnlbtnNuevo.Visibility = Visibility.Collapsed;
+            ShowNewPanel();
+            PnlAction.Visibility = Visibility.Visible;
+        }
+
+        private void ShowNewPanel()
+        {
+            int numCtrl = 0;
+            Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
+
+            foreach (DTIssue issue in my_issue)
+            {
+                foreach (DTField field in issue.Fields)
+                {
+                    if (field.Name != "ID")
+                    {
+                        TextBlock txt = new TextBlock();
+                        numCtrl = numCtrl + 1;
+                        switch (field.Type)
+                        {
+                            case Types.Boolean:
+
+                                txt.Text = field.Name;
+                                txt.SetValue(NameProperty, "txt_" + field.Name);
+                                txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
+                                txt.Width = 80;
+
+                                CheckBox chk = new CheckBox();
+                                chk.SetValue(NameProperty, "chk_" + field.Name);
+                                chk.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+                                chk.Width = 40;
+
+                                cnv.Children.Add(txt);
+                                cnv.Children.Add(chk);
+                                break;
+                            case Types.Choice:
+                                txt.Text = field.Name;
+                                txt.SetValue(NameProperty, "txt_" + field.Name);
+                                txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
+                                txt.Width = 80;
+
+                                ListBox lstbx = new ListBox();
+                                lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
+                                lstbx.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+                                lstbx.Width = 80;
+                                lstbx.ItemsSource = field.Choices;
+
+                                //DropDownList drp = new DropDownList();
+                                //drp.SetValue(NameProperty, "drp_" + field.Name);
+                                //foreach (string option in field.Choices){
+                                //    drp.Items.Add(new ListItem(option,option));
+                                //}
+                                //drp.DataBind();
+                                //drp.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+
+                                cnv.Children.Add(txt);
+                                cnv.Children.Add(lstbx);
+                                break;
+                            case Types.DateTime:
+                                numCtrl = numCtrl + 3;
+                                txt.Text = field.Name;
+                                txt.SetValue(NameProperty, "txt_" + field.Name);
+                                txt.Margin = new Thickness(50, numCtrl * 20, 0, 10);
+                                txt.Width = 80;
+
+                                Calendar cal = new Calendar();
+                                cal.SetValue(NameProperty, "cal_" + field.Name);
+                                cal.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+                                cal.Width = 280;
+                                cal.Height = 200;
+
+                                cnv.Children.Add(txt);
+                                cnv.Children.Add(cal);
+                                break;
+                            default:
+                                txt.Text = field.Name;
+                                txt.SetValue(NameProperty, "txt_" + field.Name);
+                                txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
+                                txt.Width = 80;
+
+                                TextBox bx = new TextBox();
+                                bx.SetValue(NameProperty, "bx_" + field.Name);
+                                bx.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+                                bx.Width = 80;
+
+                                cnv.Children.Add(txt);
+                                cnv.Children.Add(bx);
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void BtnAccept_Click(object sender, RoutedEventArgs e)
+        {
+           DTIssue issue = new DTIssue();
+           issue.Fields = new List<DTField>();
+           DTField field = new DTField();
+           Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
+
+           foreach (DTIssue i in my_issue)
+           {
+                foreach (DTField f in i.Fields)
+                {
+                    switch (f.Type)
+                    {
+                        case Types.Boolean:
+                            //CheckBox info = (CheckBox)cnv.FindName("chk_" + f.Name);
+                            //field.Value = info.Text;
+                            //field.Type = field.Type;
+                            //field.Name = f.Name;
+                            break;
+                        case Types.Choice:
+
+                            break;
+                        case Types.DateTime:
+
+                            break;
+                        default:
+                            TextBox info = (TextBox)cnv.FindName("bx_" + f.Name);
+                            field.Value = info.Text;
+                            field.Type = field.Type;
+                            field.Name = f.Name;
+                            break;
+                    }
+                }
+                issue.Fields.Add(field);
+            }
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.AddIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_AddIssueCompleted);
+            ws.AddIssueAsync(issue);
+        }
+
+        void ws_AddIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {}
+
     }
 }
