@@ -30,17 +30,17 @@ namespace Infocorp.TITA.WITLogic
             return _instance;
         }
 
-        public static void AddCommand(DTCommandInfo command)
+        public void AddCommand(DTCommandInfo command)
         {
             _commands.Add(command);
         }
 
-        public static void RemoveCommand(DTCommandInfo command)
+        public void RemoveCommand(DTCommandInfo command)
         {
             _commands.Remove(command);
         }
 
-        public static List<DTCommandInfo> Commands
+        public List<DTCommandInfo> Commands
         {
             get { return _commands; }
         }
