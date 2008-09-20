@@ -15,6 +15,7 @@ namespace Infocorp.TITA.WITLogic
 
     class WITCommandState
     {
+        private static int _lastUsedId = 0;
         private static List<DTCommandInfo> _commands = new List<DTCommandInfo>();
         private static WITCommandState _instance;
 
@@ -32,7 +33,20 @@ namespace Infocorp.TITA.WITLogic
 
         public void AddCommand(DTCommandInfo command)
         {
-            _commands.Add(command);
+            if (command.CommandType == CommandType.DELETE && Commands.Contains(command))
+            {
+                RemoveCommand(command);
+            }
+            else
+            {
+                if (command.CommandType == CommandType.ADD)
+                {
+                    DTField field = new DTField("ID", DTField.Types.Integer, true, null, (--_lastUsedId).ToString());
+                    command.Issue.Fields.Add(field);
+                }
+
+                _commands.Add(command);
+            }
         }
 
         public void RemoveCommand(DTCommandInfo command)

@@ -29,7 +29,26 @@ namespace Infocorp.TITA.WITLogic
             field2.Type = DTField.Types.String;
             field2.Value = "Título";
 
-            issue.Fields = new List<DTField>() { field, field2 };
+            DTField field3 = new DTField();
+            field3.Name = "Urgente?";
+            field3.Required = true;
+            field3.Type = DTField.Types.Boolean;
+            field3.Value = "true";
+
+            DTField field4 = new DTField();
+            field4.Name = "Vencimiento";
+            field4.Required = true;
+            field4.Type = DTField.Types.DateTime;
+            field4.Value = DateTime.Now.AddDays(5).ToShortDateString();
+
+            DTField field5 = new DTField();
+            field5.Name = "Prioridad";
+            field5.Required = true;
+            field5.Type = DTField.Types.Choice;
+            field5.Choices = new List<string>() { "Alta", "Media", "Baja" };
+            field5.Value = "Media";
+
+            issue.Fields = new List<DTField>() { field, field2, field3, field4, field5 };
 
             List<DTCommandInfo> commands =  WITCommandState.Instance().Commands;
             
@@ -58,6 +77,15 @@ namespace Infocorp.TITA.WITLogic
             DTCommandInfo command = new DTCommandInfo();
             command.CommandType = CommandType.ADD;
             command.CreationDate = DateTime.Now;
+            DTField field = new DTField();
+            field.Name = "ID";
+
+
+            if (issue.Fields.Contains(field))
+            {
+                issue.Fields.Remove(field);
+            }
+
             command.Issue = issue;
 
             WITCommandState.Instance().AddCommand(command);            
