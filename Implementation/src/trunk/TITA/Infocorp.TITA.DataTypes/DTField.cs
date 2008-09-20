@@ -53,7 +53,14 @@ namespace Infocorp.TITA.DataTypes
             _type = Type;
             _required = Required;
             _value = Value;
-            _choices = new List<string>(Choices);
+            if (Choices != null)
+            {
+                _choices = new List<string>(Choices);
+            }
+            else
+            {
+                _choices = new List<string>();
+            }
         }
         [DataMember]
         public string Name
