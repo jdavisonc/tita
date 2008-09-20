@@ -28,7 +28,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Infocorp.TITA.SilverlightUI
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "2574"
+		VWDPort = "2030"
 		DefaultWebSiteLanguage = "Visual C#"
 		ProjOutputReferences = "{E878AFE4-21F8-4025-BFF9-E7CB036B8A46}|ClientBin|false;"
 	EndProjectSection
