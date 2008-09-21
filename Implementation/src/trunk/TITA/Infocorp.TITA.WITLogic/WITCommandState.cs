@@ -33,18 +33,34 @@ namespace Infocorp.TITA.WITLogic
 
         public void AddCommand(DTCommandInfo command)
         {
-            if (command.CommandType == CommandType.DELETE && Commands.Contains(command))
+            bool exists = Commands.Contains(command);
+            bool add = true;
+            switch (command.CommandType)
             {
-                RemoveCommand(command);
-            }
-            else
-            {
-                if (command.CommandType == CommandType.ADD)
-                {
+                case CommandType.ADD:
                     DTField field = new DTField("ID", DTField.Types.Integer, true, null, (--_lastUsedId).ToString());
                     command.Issue.Fields.Add(field);
-                }
 
+                    break;
+                case CommandType.MODIFY:
+                    if (exists)
+                    {
+                        RemoveCommand(command);
+                    }
+                    break;
+                case CommandType.DELETE:
+                    if (exists)
+                    {
+                        add = false;
+                        RemoveCommand(command);
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+            if (add)
+            {
                 _commands.Add(command);
             }
         }

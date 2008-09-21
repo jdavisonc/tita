@@ -26,5 +26,18 @@ namespace Infocorp.TITA.WITLogic
             get { return _issue; }
             set { _issue = value; }
         }
+
+        public override bool Equals(object obj)
+        {
+            bool result = false;
+
+            DTField f1 = this.Issue.Fields.Find(delegate(DTField f) { return f.Name == "ID"; });
+            DTField f2 = (obj as DTCommandInfo).Issue.Fields.Find(delegate(DTField f) { return f.Name == "ID"; });
+            if (f1 != null && f2 != null)
+            {
+                result = f1.Value == f2.Value;
+            }
+            return result;
+        }
     }
 }
