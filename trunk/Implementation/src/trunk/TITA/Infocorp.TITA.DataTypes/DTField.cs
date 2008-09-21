@@ -9,7 +9,7 @@ namespace Infocorp.TITA.DataTypes
     [DataContract]
     public class DTField
     {
-      
+
         private string _name = string.Empty;
         private Types _type = Types.Integer;
         private bool _required = false;
@@ -27,7 +27,7 @@ namespace Infocorp.TITA.DataTypes
             User = 6,
             Counter = 7
         }
-       
+
         public DTField(string Name, Types Type, bool Required, List<string> Choices)
         {
             _name = Name;
@@ -46,7 +46,7 @@ namespace Infocorp.TITA.DataTypes
             _choices = new List<string>(field.Choices);
             _value = field.Value;
         }
-      
+
         public DTField(string Name, Types Type, bool Required, List<string> Choices, string Value)
         {
             _name = Name;
@@ -91,6 +91,13 @@ namespace Infocorp.TITA.DataTypes
         {
             get { return _value; }
             set { _value = value; }
+        }
+
+        public override bool Equals(object obj)
+        {
+            DTField field = obj as DTField;
+
+            return field.Name.ToLower() == this.Name.ToLower();
         }
     }
 }
