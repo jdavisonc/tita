@@ -17,6 +17,8 @@ namespace Infocorp.TITA.WITLogic
 
         #region Issues
 
+        DTIssue GetIssueTemplate(string urlSite);
+
         List<DTIssue> GetIssues(string urlSite);
 
         void AddNewIssue(DTIssue issue);
