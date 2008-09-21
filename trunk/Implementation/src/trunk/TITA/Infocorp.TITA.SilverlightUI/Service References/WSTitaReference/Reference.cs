@@ -227,6 +227,9 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         User = 6,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Counter = 7,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -246,6 +249,11 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         System.IAsyncResult BeginAddIssue(Infocorp.TITA.SilverlightUI.WSTitaReference.AddIssueRequest request, System.AsyncCallback callback, object asyncState);
         
         Infocorp.TITA.SilverlightUI.WSTitaReference.AddIssueResponse EndAddIssue(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/GetIssueTemplate", ReplyAction="*")]
+        System.IAsyncResult BeginGetIssueTemplate(Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateResponse EndGetIssueTemplate(System.IAsyncResult result);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -354,6 +362,59 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetIssueTemplateRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetIssueTemplate", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateRequestBody Body;
+        
+        public GetIssueTemplateRequest() {
+        }
+        
+        public GetIssueTemplateRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class GetIssueTemplateRequestBody {
+        
+        public GetIssueTemplateRequestBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetIssueTemplateResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetIssueTemplateResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateResponseBody Body;
+        
+        public GetIssueTemplateResponse() {
+        }
+        
+        public GetIssueTemplateResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class GetIssueTemplateResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue GetIssueTemplateResult;
+        
+        public GetIssueTemplateResponseBody() {
+        }
+        
+        public GetIssueTemplateResponseBody(Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue GetIssueTemplateResult) {
+            this.GetIssueTemplateResult = GetIssueTemplateResult;
+        }
+    }
+    
     public interface WSTitaSoapChannel : Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap, System.ServiceModel.IClientChannel {
     }
     
@@ -376,6 +437,24 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
+    public partial class GetIssueTemplateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetIssueTemplateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
     public partial class WSTitaSoapClient : System.ServiceModel.ClientBase<Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap>, Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap {
         
         private BeginOperationDelegate onBeginGetIssuesDelegate;
@@ -389,6 +468,12 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         private EndOperationDelegate onEndAddIssueDelegate;
         
         private System.Threading.SendOrPostCallback onAddIssueCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetIssueTemplateDelegate;
+        
+        private EndOperationDelegate onEndGetIssueTemplateDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetIssueTemplateCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -424,6 +509,8 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         public event System.EventHandler<GetIssuesCompletedEventArgs> GetIssuesCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddIssueCompleted;
+        
+        public event System.EventHandler<GetIssueTemplateCompletedEventArgs> GetIssueTemplateCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -536,6 +623,59 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
                         issue}, this.onEndAddIssueDelegate, this.onAddIssueCompletedDelegate, userState);
         }
         
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginGetIssueTemplate(Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetIssueTemplate(request, callback, asyncState);
+        }
+        
+        private System.IAsyncResult BeginGetIssueTemplate(System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateRequestBody();
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginGetIssueTemplate(inValue, callback, asyncState);
+        }
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndGetIssueTemplate(System.IAsyncResult result) {
+            return base.Channel.EndGetIssueTemplate(result);
+        }
+        
+        private Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue EndGetIssueTemplate(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndGetIssueTemplate(result);
+            return retVal.Body.GetIssueTemplateResult;
+        }
+        
+        private System.IAsyncResult OnBeginGetIssueTemplate(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return this.BeginGetIssueTemplate(callback, asyncState);
+        }
+        
+        private object[] OnEndGetIssueTemplate(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue retVal = this.EndGetIssueTemplate(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetIssueTemplateCompleted(object state) {
+            if ((this.GetIssueTemplateCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetIssueTemplateCompleted(this, new GetIssueTemplateCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetIssueTemplateAsync() {
+            this.GetIssueTemplateAsync(null);
+        }
+        
+        public void GetIssueTemplateAsync(object userState) {
+            if ((this.onBeginGetIssueTemplateDelegate == null)) {
+                this.onBeginGetIssueTemplateDelegate = new BeginOperationDelegate(this.OnBeginGetIssueTemplate);
+            }
+            if ((this.onEndGetIssueTemplateDelegate == null)) {
+                this.onEndGetIssueTemplateDelegate = new EndOperationDelegate(this.OnEndGetIssueTemplate);
+            }
+            if ((this.onGetIssueTemplateCompletedDelegate == null)) {
+                this.onGetIssueTemplateCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetIssueTemplateCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetIssueTemplateDelegate, null, this.onEndGetIssueTemplateDelegate, this.onGetIssueTemplateCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -635,6 +775,19 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             public Infocorp.TITA.SilverlightUI.WSTitaReference.AddIssueResponse EndAddIssue(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 Infocorp.TITA.SilverlightUI.WSTitaReference.AddIssueResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.AddIssueResponse)(base.EndInvoke("AddIssue", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetIssueTemplate(Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("GetIssueTemplate", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateResponse EndGetIssueTemplate(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateResponse)(base.EndInvoke("GetIssueTemplate", _args, result)));
                 return _result;
             }
         }

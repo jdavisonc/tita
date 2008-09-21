@@ -97,14 +97,17 @@
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\WSTitaReference\WSTita.wsdl" />
-    <None Include="Service References\WSTitaReference\WSTita.disco" />
     <None Include="Service References\WSTitaReference\configuration91.svcinfo" />
     <None Include="Service References\WSTitaReference\configuration.svcinfo" />
+    <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\WSTitaReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\WSTitaReference\WSTita1.wsdl" />
+    <None Include="Service References\WSTitaReference\WSTita1.disco" />
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
