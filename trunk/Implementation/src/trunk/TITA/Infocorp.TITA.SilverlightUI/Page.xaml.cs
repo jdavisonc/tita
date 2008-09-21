@@ -279,6 +279,7 @@ namespace Infocorp.TITA.SilverlightUI
                 lstIssue.Add(i);
             }
             grdIncident.ItemsSource = lstIssue;
+            grdIncident.Columns[0].Visibility = Visibility.Collapsed;
             my_issue = list;
             return null;
         }
@@ -304,135 +305,152 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void ShowNewPanel()
         {
-            int numCtrl = 0;
+
             Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
+            int numCtrl = 0;
+            DTIssue issue = my_issue.First();
 
-            foreach (DTIssue issue in my_issue)
+            foreach (DTField field in issue.Fields)
             {
-                foreach (DTField field in issue.Fields)
+                if (field.Name != "ID")
                 {
-                    if (field.Name != "ID")
+                    TextBlock txt = new TextBlock();
+                    numCtrl = numCtrl + 1;
+                    switch (field.Type)
                     {
-                        TextBlock txt = new TextBlock();
-                        numCtrl = numCtrl + 1;
-                        switch (field.Type)
-                        {
-                            case Types.Boolean:
+                        case Types.Boolean:
 
-                                txt.Text = field.Name;
-                                txt.SetValue(NameProperty, "txt_" + field.Name);
-                                txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
-                                txt.Width = 80;
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
+                            txt.Width = 80;
 
-                                CheckBox chk = new CheckBox();
-                                chk.SetValue(NameProperty, "chk_" + field.Name);
-                                chk.Margin = new Thickness(140, numCtrl * 20, 0, 0);
-                                chk.Width = 40;
+                            CheckBox chk = new CheckBox();
+                            chk.SetValue(NameProperty, "chk_" + field.Name);
+                            chk.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+                            chk.Width = 40;
 
-                                cnv.Children.Add(txt);
-                                cnv.Children.Add(chk);
-                                break;
-                            case Types.Choice:
-                                txt.Text = field.Name;
-                                txt.SetValue(NameProperty, "txt_" + field.Name);
-                                txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
-                                txt.Width = 80;
+                            cnv.Children.Add(txt);
+                            cnv.Children.Add(chk);
+                            break;
+                        case Types.Choice:
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
+                            txt.Width = 80;
 
-                                ListBox lstbx = new ListBox();
-                                lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
-                                lstbx.Margin = new Thickness(140, numCtrl * 20, 0, 0);
-                                lstbx.Width = 80;
-                                lstbx.ItemsSource = field.Choices;
+                            ListBox lstbx = new ListBox();
+                            lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
+                            lstbx.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+                            lstbx.Width = 80;
+                            lstbx.ItemsSource = field.Choices;
+                            lstbx.SelectedIndex = -1;
 
-                                //DropDownList drp = new DropDownList();
-                                //drp.SetValue(NameProperty, "drp_" + field.Name);
-                                //foreach (string option in field.Choices){
-                                //    drp.Items.Add(new ListItem(option,option));
-                                //}
-                                //drp.DataBind();
-                                //drp.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+                            //DropDownList drp = new DropDownList();
+                            //drp.SetValue(NameProperty, "drp_" + field.Name);
+                            //foreach (string option in field.Choices){
+                            //    drp.Items.Add(new ListItem(option,option));
+                            //}
+                            //drp.DataBind();
+                            //drp.Margin = new Thickness(140, numCtrl * 20, 0, 0);
 
-                                cnv.Children.Add(txt);
-                                cnv.Children.Add(lstbx);
-                                break;
-                            case Types.DateTime:
-                                numCtrl = numCtrl + 3;
-                                txt.Text = field.Name;
-                                txt.SetValue(NameProperty, "txt_" + field.Name);
-                                txt.Margin = new Thickness(50, numCtrl * 20, 0, 10);
-                                txt.Width = 80;
+                            cnv.Children.Add(txt);
+                            cnv.Children.Add(lstbx);
+                            break;
+                        case Types.DateTime:
+                            numCtrl = numCtrl + 3;
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 10);
+                            txt.Width = 80;
 
-                                Calendar cal = new Calendar();
-                                cal.SetValue(NameProperty, "cal_" + field.Name);
-                                cal.Margin = new Thickness(140, numCtrl * 20, 0, 0);
-                                cal.Width = 280;
-                                cal.Height = 200;
+                            Calendar cal = new Calendar();
+                            cal.SetValue(NameProperty, "cal_" + field.Name);
+                            cal.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+                            cal.Width = 280;
+                            cal.Height = 200;
+                            cal.SelectedDate = DateTime.Today;
 
-                                cnv.Children.Add(txt);
-                                cnv.Children.Add(cal);
-                                break;
-                            default:
-                                txt.Text = field.Name;
-                                txt.SetValue(NameProperty, "txt_" + field.Name);
-                                txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
-                                txt.Width = 80;
+                            cnv.Children.Add(txt);
+                            cnv.Children.Add(cal);
+                            break;
+                        default:
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
+                            txt.Width = 80;
 
-                                TextBox bx = new TextBox();
-                                bx.SetValue(NameProperty, "bx_" + field.Name);
-                                bx.Margin = new Thickness(140, numCtrl * 20, 0, 0);
-                                bx.Width = 80;
+                            TextBox bx = new TextBox();
+                            bx.SetValue(NameProperty, "bx_" + field.Name);
+                            bx.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+                            bx.Width = 80;
 
-                                cnv.Children.Add(txt);
-                                cnv.Children.Add(bx);
-                                break;
-                        }
+                            cnv.Children.Add(txt);
+                            cnv.Children.Add(bx);
+                            break;
                     }
                 }
+
             }
         }
 
         private void BtnAccept_Click(object sender, RoutedEventArgs e)
         {
-           DTIssue issue = new DTIssue();
-           issue.Fields = new List<DTField>();
-           DTField field = new DTField();
-           Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
+            Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
+            DTIssue i = my_issue.First();
 
-           foreach (DTIssue i in my_issue)
-           {
-                foreach (DTField f in i.Fields)
+            DTIssue issue = new DTIssue();
+            issue.Fields = new List<DTField>();
+            foreach (DTField f in i.Fields)
+            {
+                DTField field = new DTField();
+                switch (f.Type)
                 {
-                    switch (f.Type)
-                    {
-                        case Types.Boolean:
-                            //CheckBox info = (CheckBox)cnv.FindName("chk_" + f.Name);
-                            //field.Value = info.Text;
-                            //field.Type = field.Type;
-                            //field.Name = f.Name;
-                            break;
-                        case Types.Choice:
-
-                            break;
-                        case Types.DateTime:
-
-                            break;
-                        default:
-                            TextBox info = (TextBox)cnv.FindName("bx_" + f.Name);
-                            field.Value = info.Text;
-                            field.Type = field.Type;
+                    case Types.Boolean:
+                        CheckBox info = (CheckBox)cnv.FindName("chk_" + f.Name);
+                        field.Value = info.IsChecked.ToString();
+                        field.Type = f.Type;
+                        field.Name = f.Name;
+                        break;
+                    case Types.Choice:
+                        ListBox lst = (ListBox)cnv.FindName("lstbx_" + f.Name);
+                        field.Value = lst.SelectedItem as string;
+                        field.Type = f.Type;
+                        field.Name = f.Name;
+                        break;
+                    case Types.DateTime:
+                        Calendar cal = (Calendar)cnv.FindName("cal_" + f.Name);
+                        field.Value = cal.SelectedDate.Value.ToShortDateString();
+                        field.Type = f.Type;
+                        field.Name = f.Name;
+                        break;
+                    default:
+                        if (f.Name != "ID")
+                        {
+                            TextBox txt = (TextBox)cnv.FindName("bx_" + f.Name);
+                            field.Value = txt.Text;
+                            field.Type = f.Type;
                             field.Name = f.Name;
-                            break;
-                    }
+                        }
+                        break;
                 }
                 issue.Fields.Add(field);
+
             }
+
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
             ws.AddIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_AddIssueCompleted);
             ws.AddIssueAsync(issue);
         }
 
         void ws_AddIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {}
+        {
+            Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
+            cnv.Children.Clear();
+            PnlAction.Visibility = Visibility.Collapsed;
+            PnlbtnNuevo.Visibility = Visibility.Visible;
+            GetIncidents();
+        }
 
     }
 }

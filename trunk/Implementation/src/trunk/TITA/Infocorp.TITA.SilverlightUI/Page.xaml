@@ -120,11 +120,11 @@
                 <Button Margin="18,166,0,0"  VerticalAlignment="Top" Click="BtnEdit_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEdit" Background="#FF0B97F9"/>
                 <Button Margin="18,166,0,0"  VerticalAlignment="Top" Click="BtnDelete_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDelete" Background="#FF0B97F9"/>
             </Canvas>
+            
+            <Canvas Margin="138,0,0,0" x:Name="PnlNew" Background="White" Width="auto" Visibility="Visible" Canvas.Top="300">
+            </Canvas>
             <Canvas Margin="138,0,0,0" x:Name="PnlbtnNuevo" Background="White" Width="auto" Visibility="Visible">
                 <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Nuevo" Click="BtnNuevo_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevo"  Background="#FF0B97F9"/>
-            </Canvas>
-            <Canvas Margin="138,0,0,0" x:Name="PnlNew" Background="White" Width="auto" Visibility="Visible" Canvas.Top="300">
-                
             </Canvas>
             <Canvas Margin="138,0,0,0" x:Name="PnlAction" Background="White" Width="auto" Visibility="Collapsed">
                 <Button Margin="18,166,0,0" Content="Aceptar" VerticalAlignment="Top" Click="BtnAccept_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEditAction" Background="#FF0B97F9"/>
