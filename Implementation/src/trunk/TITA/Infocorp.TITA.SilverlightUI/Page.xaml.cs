@@ -25,6 +25,7 @@ namespace Infocorp.TITA.SilverlightUI
         }
 
         private List<DTIssue> my_issue = new List<DTIssue>();
+        private DTIssue my_issue_template = null;
         private bool isEdit;
         private bool isDelete;
 
@@ -279,7 +280,10 @@ namespace Infocorp.TITA.SilverlightUI
                 lstIssue.Add(i);
             }
             grdIncident.ItemsSource = lstIssue;
-            grdIncident.Columns[0].Visibility = Visibility.Collapsed;
+            if (grdIncident.Columns.Count != 0)
+            {
+                grdIncident.Columns[0].Visibility = Visibility.Collapsed;
+            }
             my_issue = list;
             return null;
         }
@@ -305,11 +309,17 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void ShowNewPanel()
         {
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.GetIssueTemplateCompleted += new EventHandler<GetIssueTemplateCompletedEventArgs>(ws_GetIssueTemplateCompleted);
+            ws.GetIssueTemplateAsync();
+        }
 
+        void ws_GetIssueTemplateCompleted(object sender, GetIssueTemplateCompletedEventArgs e)
+        {
             Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
             int numCtrl = 0;
-            DTIssue issue = my_issue.First();
-
+            DTIssue issue = e.Result;
+            my_issue_template = e.Result;
             foreach (DTField field in issue.Fields)
             {
                 if (field.Name != "ID")
@@ -397,7 +407,7 @@ namespace Infocorp.TITA.SilverlightUI
         private void BtnAccept_Click(object sender, RoutedEventArgs e)
         {
             Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
-            DTIssue i = my_issue.First();
+            DTIssue i = my_issue_template;
 
             DTIssue issue = new DTIssue();
             issue.Fields = new List<DTField>();
