@@ -14,13 +14,13 @@ namespace Infocorp.TITA.SilverlightUI.Code
     public class Issue
     {
 
-        //private int id;
+        private int id;
 
-        //public int Id
-        //{
-        //    get { return id; }
-        //    set { id = value; }
-        //}
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
         private string title;
 
         public string Title
