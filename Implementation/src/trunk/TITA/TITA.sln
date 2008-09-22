@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.SilverlightUI
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Infocorp.TITA.SilverlightUIWeb", "Infocorp.TITA.SilverlightUIWeb\", "{997164DE-B757-4995-9C67-BA3CAADE8F7D}"
 	ProjectSection(WebsiteProperties) = preProject
+		SccProjectName = "Svn"
+		SccAuxPath = "Svn"
+		SccLocalPath = "Svn"
+		SccProvider = "SubversionScc"
 		TargetFramework = "3.5"
 		ProjectReferences = "{FC4C3770-4D7F-4B3F-A9F1-6E541B3AEE72}|Infocorp.TITA.DataTypes.dll;{DC0F0C14-089E-4145-96EE-0E6D47B95C1B}|Infocorp.TITA.WITLogic.dll;{B221BE03-AFBF-4A2A-A1D6-EE0302AA55A8}|Infocorp.TITA.SharePointUtilities.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/Infocorp.TITA.SilverlightUIWeb"
@@ -36,6 +40,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.WITLogic", "Infocorp.TITA.WITLogic\Infocorp.TITA.WITLogic.csproj", "{DC0F0C14-089E-4145-96EE-0E6D47B95C1B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "infocorp.TITA.DataBasesAcces", "infocorp.TITA.DataBasesAcces\infocorp.TITA.DataBasesAcces.csproj", "{0C09FD6B-D473-4D61-B935-33C986F371D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{F6116409-CDBA-407C-B0D9-7FF6D5A10651}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logic", "Logic", "{CDB4B14E-6DE8-4706-815E-FED4FFBDD481}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Access", "Data Access", "{8CF40645-4168-46A5-854C-1B30F58F33B4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{5638C095-FCAE-40B0-BF99-D45D40BDD39A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -128,5 +140,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{997164DE-B757-4995-9C67-BA3CAADE8F7D} = {F6116409-CDBA-407C-B0D9-7FF6D5A10651}
+		{E878AFE4-21F8-4025-BFF9-E7CB036B8A46} = {F6116409-CDBA-407C-B0D9-7FF6D5A10651}
+		{DC0F0C14-089E-4145-96EE-0E6D47B95C1B} = {CDB4B14E-6DE8-4706-815E-FED4FFBDD481}
+		{0C09FD6B-D473-4D61-B935-33C986F371D6} = {8CF40645-4168-46A5-854C-1B30F58F33B4}
+		{B221BE03-AFBF-4A2A-A1D6-EE0302AA55A8} = {8CF40645-4168-46A5-854C-1B30F58F33B4}
+		{BB917604-4669-4C42-90CD-B919E80EC0AB} = {8CF40645-4168-46A5-854C-1B30F58F33B4}
+		{FC4C3770-4D7F-4B3F-A9F1-6E541B3AEE72} = {5638C095-FCAE-40B0-BF99-D45D40BDD39A}
 	EndGlobalSection
 EndGlobal
