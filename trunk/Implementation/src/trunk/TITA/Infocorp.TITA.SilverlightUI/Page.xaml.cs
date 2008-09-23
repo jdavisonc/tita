@@ -23,7 +23,6 @@ namespace Infocorp.TITA.SilverlightUI
             INCIDENT,
             CONTRACT,
         }
-
         private List<DTIssue> my_issue = new List<DTIssue>();
         private DTIssue my_issue_template = null;
         private bool isEdit;
@@ -84,51 +83,44 @@ namespace Infocorp.TITA.SilverlightUI
             txtUrl.Text = cont.Url.ToString();
         }
 
-        private void lstItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CleanPanel()
         {
-            if (isEdit)
-            {
-                LoadPanelEditContrato();
-                BtnNuevoContrato.Visibility = Visibility.Collapsed;
-            }
-
-            if (isDelete)
-            {
-                Contrato cont = (Contrato)lstContratos.SelectedItem;
-                int id = cont.Id;
-                Functions func = new Functions();
-                func.DeleteContrato(id);
-                LoadLstContratos();
-                lstContratos.Visibility = Visibility.Visible;
-                BtnNuevoContrato.Visibility = Visibility.Visible;
-                ButtonContract.Visibility = Visibility.Visible;
-                ButtonIncident.Visibility = Visibility.Visible;
-                ButtonWP.Visibility = Visibility.Visible;
-                ButtonReports.Visibility = Visibility.Visible;
-            }
+            txtNombre.Text = "";
+            txtUrl.Text = "";
         }
 
-        private void BtnNuevoContrato_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void BtnNuevoContrato_Click(object sender, RoutedEventArgs e)
         {
             isEdit = false;
+            CleanPanel();
             pnlEditContrato.Visibility = Visibility.Visible;
-            BtnNuevoContrato.Visibility = Visibility.Collapsed;
+            PnlbtnsContrato.Visibility = Visibility.Collapsed;
+            PnlActionContrato.Visibility = Visibility.Visible;
         }
 
-        private void BtnModificarContrato_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void BtnModificarContrato_Click(object sender, RoutedEventArgs e)
         {
+            LoadPanelEditContrato();
             isEdit = true;
             isDelete = false;
             pnlEditContrato.Visibility = Visibility.Visible;
+            PnlbtnsContrato.Visibility = Visibility.Collapsed;
+            PnlActionContrato.Visibility = Visibility.Visible;
         }
 
-        private void BtnEliminarContrato_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void BtnEliminarContrato_Click(object sender, RoutedEventArgs e)
         {
             isDelete = true;
             isEdit = false;
+            Contrato cont = (Contrato)lstContratos.SelectedItem;
+            int id = cont.Id;
+            Functions func = new Functions();
+            func.DeleteContrato(id);
+            LoadLstContratos();
+
         }
 
-        private void BtnAceptarContrato_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void BtnAceptarContrato_Click(object sender, RoutedEventArgs e)
         {
             if (!isEdit)
             {
@@ -139,8 +131,9 @@ namespace Infocorp.TITA.SilverlightUI
                     Url = txtUrl.Text.ToString()
                 };
                 func.AddContrato(cont);
-                BtnNuevoContrato.Visibility = Visibility.Visible;
+                PnlbtnsContrato.Visibility = Visibility.Visible;
                 pnlEditContrato.Visibility = Visibility.Collapsed;
+                PnlActionContrato.Visibility = Visibility.Collapsed;
 
             }
             else if (isEdit)
@@ -149,17 +142,19 @@ namespace Infocorp.TITA.SilverlightUI
                 int id = cont.Id;
                 Functions func = new Functions();
                 func.UpdateContrato(txtNombre.Text.ToString(), txtUrl.Text.ToString(), id);
-                BtnNuevoContrato.Visibility = Visibility.Visible;
+                PnlbtnsContrato.Visibility = Visibility.Visible;
                 pnlEditContrato.Visibility = Visibility.Collapsed;
+                PnlActionContrato.Visibility = Visibility.Collapsed;
                 isEdit = false;
             }
             LoadLstContratos();
         }
 
-        private void BtnCancelarContrato_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void BtnCancelarContrato_Click(object sender, RoutedEventArgs e)
         {
             pnlEditContrato.Visibility = Visibility.Collapsed;
-            BtnNuevoContrato.Visibility = Visibility.Visible;
+            PnlbtnsContrato.Visibility = Visibility.Visible;
+            PnlActionContrato.Visibility = Visibility.Collapsed;
         }
 
         private void ButtonContract_Click(object sender, RoutedEventArgs e)
@@ -175,7 +170,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void ButtonWP_Click(object sender, RoutedEventArgs e)
         {
-            CanvasWP.Visibility = Visibility;
+            //CanvasWP.Visibility = Visibility;
             //DataWorkPackage dataWP1 = new DataWorkPackage();
             //dataWP1.IdWP = 1;
 
@@ -228,10 +223,12 @@ namespace Infocorp.TITA.SilverlightUI
             ws.GetIssuesCompleted += new EventHandler<Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesCompletedEventArgs>(ws_GetIssuesCompleted);
             ws.GetIssuesAsync();
         }
+
         void ws_GetIssuesCompleted(object sender, Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesCompletedEventArgs e)
         {
             Dispatcher.BeginInvoke(LoadIncidents(e.Result));
         }
+        
         private Delegate LoadIncidents(List<DTIssue> list)
         {
             Issue i;
@@ -288,8 +285,6 @@ namespace Infocorp.TITA.SilverlightUI
             return null;
         }
 
-        #endregion
-
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
 
@@ -297,12 +292,16 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            PnlNew.Children.Clear();
+            PnlNew.Visibility = Visibility.Collapsed;
+            PnlAction.Visibility = Visibility.Collapsed;
+            PnlbtnNuevo.Visibility = Visibility.Visible;
         }
 
         private void BtnNuevo_Click(object sender, RoutedEventArgs e)
         {
             PnlbtnNuevo.Visibility = Visibility.Collapsed;
+            PnlNew.Visibility = Visibility.Visible;
             ShowNewPanel();
             PnlAction.Visibility = Visibility.Visible;
         }
@@ -316,6 +315,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_GetIssueTemplateCompleted(object sender, GetIssueTemplateCompletedEventArgs e)
         {
+            isEdit = false;
             Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
             int numCtrl = 0;
             DTIssue issue = e.Result;
@@ -346,12 +346,12 @@ namespace Infocorp.TITA.SilverlightUI
                         case Types.Choice:
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
+                            txt.Margin = new Thickness(50, numCtrl * 50, 0, 0);
                             txt.Width = 80;
 
                             ListBox lstbx = new ListBox();
                             lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
-                            lstbx.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+                            lstbx.Margin = new Thickness(140, numCtrl * 50, 0, 0);
                             lstbx.Width = 80;
                             lstbx.ItemsSource = field.Choices;
                             lstbx.SelectedIndex = -1;
@@ -371,7 +371,7 @@ namespace Infocorp.TITA.SilverlightUI
                             numCtrl = numCtrl + 3;
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 10);
+                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
                             txt.Width = 80;
 
                             Calendar cal = new Calendar();
@@ -448,9 +448,27 @@ namespace Infocorp.TITA.SilverlightUI
 
             }
 
-            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-            ws.AddIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_AddIssueCompleted);
-            ws.AddIssueAsync(issue);
+            if (!isEdit)
+            {
+                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                ws.AddIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_AddIssueCompleted);
+                ws.AddIssueAsync(issue);
+            }
+            else if (isEdit) 
+            {
+                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                ws.ModifyIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ModifyIssueCompleted);
+                ws.ModifyIssueAsync(issue);
+            }
+        }
+
+        void ws_ModifyIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
+            cnv.Children.Clear();
+            PnlAction.Visibility = Visibility.Collapsed;
+            PnlbtnNuevo.Visibility = Visibility.Visible;
+            GetIncidents(); 
         }
 
         void ws_AddIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -461,6 +479,139 @@ namespace Infocorp.TITA.SilverlightUI
             PnlbtnNuevo.Visibility = Visibility.Visible;
             GetIncidents();
         }
+        
+        private void BtnChange_Click(object sender, RoutedEventArgs e)
+        {
+            PnlbtnNuevo.Visibility = Visibility.Collapsed;
+
+            Issue issue = (Issue)grdIncident.SelectedItem;
+            int id = issue.Id;
+            DTIssue change = new DTIssue();
+            foreach (DTIssue i in my_issue)
+            {
+                foreach (DTField f in i.Fields)
+                {
+                    if((f.Name == "ID") && (f.Value == id.ToString()))
+                    {
+                        change = i;
+                    }
+                }
+            }
+            isEdit = true;
+            ShowPanelforEdit(change);
+            PnlAction.Visibility = Visibility.Visible;
+        }
+
+        public void ShowPanelforEdit(DTIssue issue) 
+        {
+            Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
+            int numCtrl = 0;
+            foreach (DTField field in issue.Fields)
+            {
+                if (field.Name != "ID" && field.Name != "")
+                {
+                    TextBlock txt = new TextBlock();
+                    numCtrl = numCtrl + 1;
+                    switch (field.Type)
+                    {
+                        case Types.Boolean:
+
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
+                            txt.Width = 80;
+
+                            CheckBox chk = new CheckBox();
+                            chk.SetValue(NameProperty, "chk_" + field.Name);
+                            chk.IsChecked = (field.Value == "True");
+                            chk.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+                            chk.Width = 40;
+
+                            cnv.Children.Add(txt);
+                            cnv.Children.Add(chk);
+                            break;
+                        case Types.Choice:
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Margin = new Thickness(50, numCtrl * 50, 0, 0);
+                            txt.Width = 80;
+
+                            ListBox lstbx = new ListBox();
+                            lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
+                            lstbx.ItemsSource = field.Choices;
+                            lstbx.SelectedItem = field.Value;
+                            lstbx.Margin = new Thickness(140, numCtrl * 50, 0, 0);
+                            lstbx.Width = 80;
+                            lstbx.Height = 100;
+
+                            //DropDownList drp = new DropDownList();
+                            //drp.SetValue(NameProperty, "drp_" + field.Name);
+                            //foreach (string option in field.Choices){
+                            //    drp.Items.Add(new ListItem(option,option));
+                            //}
+                            //drp.DataBind();
+                            //drp.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+
+                            cnv.Children.Add(txt);
+                            cnv.Children.Add(lstbx);
+                            break;
+                        case Types.DateTime:
+                            numCtrl = numCtrl + 3;
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
+                            txt.Width = 80;
+
+                            Calendar cal = new Calendar();
+                            cal.SetValue(NameProperty, "cal_" + field.Name);
+                            cal.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+                            cal.Width = 280;
+                            cal.Height = 200;
+                            cal.SelectedDate = Convert.ToDateTime(field.Value);
+
+                            cnv.Children.Add(txt);
+                            cnv.Children.Add(cal);
+                            break;
+                        default:
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
+                            txt.Width = 80;
+
+                            TextBox bx = new TextBox();
+                            bx.SetValue(NameProperty, "bx_" + field.Name);
+                            bx.Text = field.Value;
+                            bx.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+                            bx.Width = 80;
+
+                            cnv.Children.Add(txt);
+                            cnv.Children.Add(bx);
+                            break;
+                    }
+                }
+
+            }
+        }
+        
+        private void BtnDelete_Action_Click(object sender, RoutedEventArgs e)
+        {
+            Issue issue = (Issue)grdIncident.SelectedItem;
+            int id = issue.Id;
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.DeleteIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_DeleteIssueCompleted);
+            ws.DeleteIssueAsync(id);
+        }
+
+        void ws_DeleteIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
+            cnv.Children.Clear();
+            PnlAction.Visibility = Visibility.Collapsed;
+            PnlbtnNuevo.Visibility = Visibility.Visible;
+            GetIncidents();
+        }
+
+        #endregion
 
     }
 }
