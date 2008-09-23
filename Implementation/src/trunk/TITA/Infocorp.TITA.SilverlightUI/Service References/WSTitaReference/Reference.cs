@@ -254,6 +254,16 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         System.IAsyncResult BeginGetIssueTemplate(Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateRequest request, System.AsyncCallback callback, object asyncState);
         
         Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateResponse EndGetIssueTemplate(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ModifyIssue", ReplyAction="*")]
+        System.IAsyncResult BeginModifyIssue(Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueResponse EndModifyIssue(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DeleteIssue", ReplyAction="*")]
+        System.IAsyncResult BeginDeleteIssue(int id, System.AsyncCallback callback, object asyncState);
+        
+        void EndDeleteIssue(System.IAsyncResult result);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -415,6 +425,59 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ModifyIssueRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ModifyIssue", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueRequestBody Body;
+        
+        public ModifyIssueRequest() {
+        }
+        
+        public ModifyIssueRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class ModifyIssueRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue issue;
+        
+        public ModifyIssueRequestBody() {
+        }
+        
+        public ModifyIssueRequestBody(Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue issue) {
+            this.issue = issue;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ModifyIssueResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ModifyIssueResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueResponseBody Body;
+        
+        public ModifyIssueResponse() {
+        }
+        
+        public ModifyIssueResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class ModifyIssueResponseBody {
+        
+        public ModifyIssueResponseBody() {
+        }
+    }
+    
     public interface WSTitaSoapChannel : Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap, System.ServiceModel.IClientChannel {
     }
     
@@ -475,6 +538,18 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         private System.Threading.SendOrPostCallback onGetIssueTemplateCompletedDelegate;
         
+        private BeginOperationDelegate onBeginModifyIssueDelegate;
+        
+        private EndOperationDelegate onEndModifyIssueDelegate;
+        
+        private System.Threading.SendOrPostCallback onModifyIssueCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginDeleteIssueDelegate;
+        
+        private EndOperationDelegate onEndDeleteIssueDelegate;
+        
+        private System.Threading.SendOrPostCallback onDeleteIssueCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -511,6 +586,10 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddIssueCompleted;
         
         public event System.EventHandler<GetIssueTemplateCompletedEventArgs> GetIssueTemplateCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ModifyIssueCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DeleteIssueCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -676,6 +755,103 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             base.InvokeAsync(this.onBeginGetIssueTemplateDelegate, null, this.onEndGetIssueTemplateDelegate, this.onGetIssueTemplateCompletedDelegate, userState);
         }
         
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginModifyIssue(Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginModifyIssue(request, callback, asyncState);
+        }
+        
+        private System.IAsyncResult BeginModifyIssue(Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue issue, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueRequestBody();
+            inValue.Body.issue = issue;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginModifyIssue(inValue, callback, asyncState);
+        }
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndModifyIssue(System.IAsyncResult result) {
+            return base.Channel.EndModifyIssue(result);
+        }
+        
+        private void EndModifyIssue(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndModifyIssue(result);
+        }
+        
+        private System.IAsyncResult OnBeginModifyIssue(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue issue = ((Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue)(inValues[0]));
+            return this.BeginModifyIssue(issue, callback, asyncState);
+        }
+        
+        private object[] OnEndModifyIssue(System.IAsyncResult result) {
+            this.EndModifyIssue(result);
+            return null;
+        }
+        
+        private void OnModifyIssueCompleted(object state) {
+            if ((this.ModifyIssueCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.ModifyIssueCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void ModifyIssueAsync(Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue issue) {
+            this.ModifyIssueAsync(issue, null);
+        }
+        
+        public void ModifyIssueAsync(Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssue issue, object userState) {
+            if ((this.onBeginModifyIssueDelegate == null)) {
+                this.onBeginModifyIssueDelegate = new BeginOperationDelegate(this.OnBeginModifyIssue);
+            }
+            if ((this.onEndModifyIssueDelegate == null)) {
+                this.onEndModifyIssueDelegate = new EndOperationDelegate(this.OnEndModifyIssue);
+            }
+            if ((this.onModifyIssueCompletedDelegate == null)) {
+                this.onModifyIssueCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnModifyIssueCompleted);
+            }
+            base.InvokeAsync(this.onBeginModifyIssueDelegate, new object[] {
+                        issue}, this.onEndModifyIssueDelegate, this.onModifyIssueCompletedDelegate, userState);
+        }
+        
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginDeleteIssue(int id, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginDeleteIssue(id, callback, asyncState);
+        }
+        
+        void Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndDeleteIssue(System.IAsyncResult result) {
+            base.Channel.EndDeleteIssue(result);
+        }
+        
+        private System.IAsyncResult OnBeginDeleteIssue(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int id = ((int)(inValues[0]));
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginDeleteIssue(id, callback, asyncState);
+        }
+        
+        private object[] OnEndDeleteIssue(System.IAsyncResult result) {
+            ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndDeleteIssue(result);
+            return null;
+        }
+        
+        private void OnDeleteIssueCompleted(object state) {
+            if ((this.DeleteIssueCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.DeleteIssueCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void DeleteIssueAsync(int id) {
+            this.DeleteIssueAsync(id, null);
+        }
+        
+        public void DeleteIssueAsync(int id, object userState) {
+            if ((this.onBeginDeleteIssueDelegate == null)) {
+                this.onBeginDeleteIssueDelegate = new BeginOperationDelegate(this.OnBeginDeleteIssue);
+            }
+            if ((this.onEndDeleteIssueDelegate == null)) {
+                this.onEndDeleteIssueDelegate = new EndOperationDelegate(this.OnEndDeleteIssue);
+            }
+            if ((this.onDeleteIssueCompletedDelegate == null)) {
+                this.onDeleteIssueCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnDeleteIssueCompleted);
+            }
+            base.InvokeAsync(this.onBeginDeleteIssueDelegate, new object[] {
+                        id}, this.onEndDeleteIssueDelegate, this.onDeleteIssueCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -789,6 +965,31 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
                 object[] _args = new object[0];
                 Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateResponse)(base.EndInvoke("GetIssueTemplate", _args, result)));
                 return _result;
+            }
+            
+            public System.IAsyncResult BeginModifyIssue(Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("ModifyIssue", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueResponse EndModifyIssue(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueResponse)(base.EndInvoke("ModifyIssue", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginDeleteIssue(int id, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = id;
+                System.IAsyncResult _result = base.BeginInvoke("DeleteIssue", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public void EndDeleteIssue(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                base.EndInvoke("DeleteIssue", _args, result);
             }
         }
     }

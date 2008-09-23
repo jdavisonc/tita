@@ -122,5 +122,40 @@ namespace Infocorp.TITA.WITLogic
 
 
         #endregion
+
+        #region IWITServices Members
+
+
+        public void AddNewContract(DTContract contract)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteContract(string contractId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangeCurrentContract(int contractId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<DTContract> GetContracts()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetContractSite(string contractId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ModifyContract(DTContract contract)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
