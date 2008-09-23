@@ -26,6 +26,13 @@ public class WSTita : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
+    [WebMethod]
+    public List<DTIssue> GetWPS()
+    {
+        // retorna una lista de incidentes... igual creo q es lo mismo xq dtissue es generico
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        return witInstance.GetIssues("http://localhost/infocorp");
+    }
 
     [WebMethod]
     public List<DTIssue> GetIssues()
