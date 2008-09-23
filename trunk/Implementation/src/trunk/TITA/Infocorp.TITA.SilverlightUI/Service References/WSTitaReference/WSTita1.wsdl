@@ -86,6 +86,26 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="ModifyIssue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="issue" type="tns:DTIssue" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyIssueResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteIssue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteIssueResponse">
+        <s:complexType />
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="GetIssuesSoapIn">
@@ -106,6 +126,18 @@
   <wsdl:message name="GetIssueTemplateSoapOut">
     <wsdl:part name="parameters" element="tns:GetIssueTemplateResponse" />
   </wsdl:message>
+  <wsdl:message name="ModifyIssueSoapIn">
+    <wsdl:part name="parameters" element="tns:ModifyIssue" />
+  </wsdl:message>
+  <wsdl:message name="ModifyIssueSoapOut">
+    <wsdl:part name="parameters" element="tns:ModifyIssueResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteIssueSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteIssue" />
+  </wsdl:message>
+  <wsdl:message name="DeleteIssueSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteIssueResponse" />
+  </wsdl:message>
   <wsdl:portType name="WSTitaSoap">
     <wsdl:operation name="GetIssues">
       <wsdl:input message="tns:GetIssuesSoapIn" />
@@ -118,6 +150,14 @@
     <wsdl:operation name="GetIssueTemplate">
       <wsdl:input message="tns:GetIssueTemplateSoapIn" />
       <wsdl:output message="tns:GetIssueTemplateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ModifyIssue">
+      <wsdl:input message="tns:ModifyIssueSoapIn" />
+      <wsdl:output message="tns:ModifyIssueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteIssue">
+      <wsdl:input message="tns:DeleteIssueSoapIn" />
+      <wsdl:output message="tns:DeleteIssueSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSTitaSoap" type="tns:WSTitaSoap">
@@ -149,6 +189,24 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ModifyIssue">
+      <soap:operation soapAction="http://tempuri.org/ModifyIssue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteIssue">
+      <soap:operation soapAction="http://tempuri.org/DeleteIssue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="WSTitaSoap12" type="tns:WSTitaSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -172,6 +230,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetIssueTemplate">
       <soap12:operation soapAction="http://tempuri.org/GetIssueTemplate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyIssue">
+      <soap12:operation soapAction="http://tempuri.org/ModifyIssue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteIssue">
+      <soap12:operation soapAction="http://tempuri.org/DeleteIssue" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
