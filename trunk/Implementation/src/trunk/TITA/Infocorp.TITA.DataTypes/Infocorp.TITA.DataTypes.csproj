@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTAttachment.cs" />
+    <Compile Include="DTContract.cs" />
     <Compile Include="DTField.cs" />
     <Compile Include="DTIssue.cs" />
     <Compile Include="Gui\DTGuiIssue.cs" />

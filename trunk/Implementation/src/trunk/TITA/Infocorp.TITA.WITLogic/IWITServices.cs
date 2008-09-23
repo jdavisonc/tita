@@ -35,9 +35,17 @@ namespace Infocorp.TITA.WITLogic
 
         #region Contract
 
-        //void AddNewContract(DTContract contract);
+        void AddNewContract(DTContract contract);
 
-        //void ChangeCurrentContract(int contractId);
+        void DeleteContract(string contractId);
+
+        void ChangeCurrentContract(int contractId);
+
+        List<DTContract> GetContracts();
+
+        string GetContractSite(string contractId);
+
+        void ModifyContract(DTContract contract);
 
         #endregion
 
