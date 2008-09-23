@@ -50,4 +50,19 @@ public class WSTita : System.Web.Services.WebService
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
         return witInstance.GetIssueTemplate("http://localhost/infocorp");
     }
+
+    [WebMethod]
+    public void ModifyIssue(DTIssue issue)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.ModifyIssue(issue);
+    }
+
+    [WebMethod]
+    public void DeleteIssue(int id)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.DeleteIssue(id);
+    }
+    
 }
