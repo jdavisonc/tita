@@ -8,26 +8,11 @@
         <Button Height="26" HorizontalAlignment="Left" Margin="18,102,0,0" VerticalAlignment="Top" Width="112" Click="ButtonContract_Click" Content="Contrato" x:Name="ButtonContract" Background="#FF099BF5"/>
         <Button HorizontalAlignment="Left" Margin="18,132,0,0" VerticalAlignment="Top" Content="Incidente" Width="112" Height="26" x:Name="ButtonIncident" Click="ButtonIncident_Click" Background="#FF1297F5"/>
         <Button HorizontalAlignment="Left" Margin="18,196,0,184" VerticalAlignment="Top" Content="Reportes" Width="112" Height="26" x:Name="ButtonReports" Background="#FF0994F5"/>
-        <Button Margin="18,166,0,0"  VerticalAlignment="Top" Click="ButtonWP_Click" Content="WorkPackage" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonWP" Background="#FF0B97F9"/>
+        <!--<Button Margin="18,166,0,0"  VerticalAlignment="Top" Click="ButtonWP_Click" Content="WorkPackage" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonWP" Background="#FF0B97F9"/>-->
 
         <!--WP-->
-        <Canvas Margin="138,0,0,0" x:Name="CanvasWP" Background="White" Width="auto" Visibility="Collapsed">
-            <ListBox Height="49" Width="631" Canvas.Left="4" Canvas.Top="8" x:Name="ListBoxWP" SelectionChanged="ListBoxWP_SelectionChanged">
-                <!--<ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Width="800" Height="50" Background="Black" HorizontalAlignment="Center" Orientation="Horizontal" x:Name="StackPanelWP">
-                            <TextBlock Text="{Binding Nombre}" TextWrapping="NoWrap" Foreground="#FFFFFFFF" FontSize="12" FontFamily="Arial"/>
-                            <TextBlock Text="{Binding Url}" TextWrapping="NoWrap" Foreground="#FFFFFFFF" FontSize="12" FontFamily="Arial"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>-->
-            </ListBox>
-            <Button Height="26" Width="112" Canvas.Left="523" Click="ButtonNewWP_Click" Canvas.Top="81" Content="Nuevo WP" x:Name="ButtonNewWP" Background="#FF0994F5"/>
-            <Canvas Height="295" Width="639" Visibility="Collapsed" Background="White" Canvas.Left="4" Canvas.Top="111" x:Name="CanvasNewWP">
-                <TextBox Height="24" Width="151" Canvas.Left="106" Canvas.Top="20" TextWrapping="Wrap" x:Name="TextBoxName"/>
-                <TextBlock Height="24" Width="99" Canvas.Top="20" Text="Nombre" TextWrapping="Wrap"  x:Name="TextBlockName"/>
-    			<TextBlock Height="24" Width="119" Canvas.Top="67.611" Text="Fecha Creación" TextWrapping="Wrap" x:Name="TextBlockDateCreate"/>
-			</Canvas>
+        <Canvas x:Name="CanvasWP" Margin="138,0,0,0" VerticalAlignment="Top" Visibility="Collapsed">
+            <my:DataGrid x:Name="grdWP" AutoGenerateColumns="True" Width="auto"></my:DataGrid>
         </Canvas>
 
         <!--CONTRATO -->
