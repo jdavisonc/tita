@@ -10,7 +10,7 @@
         <Button HorizontalAlignment="Left" Margin="18,196,0,184" VerticalAlignment="Top" Content="Reportes" Width="112" Height="26" x:Name="ButtonReports" Background="#FF0994F5"/>
         <!--<Button Margin="18,166,0,0"  VerticalAlignment="Top" Click="ButtonWP_Click" Content="WorkPackage" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonWP" Background="#FF0B97F9"/>-->
 
-        <!--WP-->
+        <!--WP--> 
         <Canvas x:Name="CanvasWP" Margin="138,0,0,0" VerticalAlignment="Top" Visibility="Collapsed">
             <my:DataGrid x:Name="grdWP" AutoGenerateColumns="True" Width="auto"></my:DataGrid>
         </Canvas>
