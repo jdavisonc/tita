@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Contracts>
+  <Contract Name="Infocorp" Url="http://localhost/infocorp"/>
+  <Contract Name="Infocorp1" Url="http://localhost/infocorp1"/>
+  <Contract Name="Infocorp2" Url="http://localhost/infocorp2"/>
+  <Contract Name="Infocorp3" Url="http://localhost/infocorp3"/>
+</Contracts>
