@@ -23,8 +23,8 @@ namespace Infocorp.TITA.WpfOutlookAddin
         /// Obtiene los campos que tiene que tener un incidente y 
         /// crea una ventana con esos campos
         /// </summary>
-        /// <params value="colSites">Coleccion de Sitios disponibles</params>
-        void BuildIncidentWindow();
+        /// <params value="url">Url para la cual se generara el incidente</params>
+        void BuildIncidentWindow(DTUrl url);
 
         /// <summary>
         /// Obtiene los datos de la ventana y crea un Issue

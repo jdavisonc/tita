@@ -7,11 +7,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WpfAddinTitaSoft")]
+[assembly: AssemblyTitle("Infocorp.TITA.WpfOutlookAddIn")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("PIS")]
-[assembly: AssemblyProduct("WpfAddinTitaSoft")]
+[assembly: AssemblyProduct("Infocorp.TITA.WpfOutlookAddIn")]
 [assembly: AssemblyCopyright("Copyright © PIS 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
