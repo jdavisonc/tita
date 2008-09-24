@@ -168,41 +168,30 @@ namespace Infocorp.TITA.SilverlightUI
 
         #region WorkPackage
 
+        //http://localhost:2030/Infocorp.TITA.SilverlightUIWeb/WSTita.asmx
+        //WSTitaReference
         private void ButtonWP_Click(object sender, RoutedEventArgs e)
         {
-            //CanvasWP.Visibility = Visibility;
-            //DataWorkPackage dataWP1 = new DataWorkPackage();
-            //dataWP1.IdWP = 1;
-
-            //DataObject dataObj = new DataObject();
-            //dataObj.NameField = "Nombre";
-            //dataObj.TypeField = "string";
-            //dataObj.IsRequired = true;
-
-            //dataWP1.DataList.Add(dataObj);
-
-            //ListBox list = (ListBox)CanvasWP.Children;
-
-            //PrintGeneric printG = PrintGeneric.Instance;
-            //List<object> lin = new List<object>();
-            //lin.Add(dataWP1);
-
-            //List<object> lout = printG.printDataQueryWP(lin);
-
-            //foreach (object o in lout)
-            //{
-            //    list.DataContext(o.GetHashCode());
-            //}
+            EnableOption(Option.WP);
+            GetWPS();
         }
 
-        private void ButtonNewWP_Click(object sender, RoutedEventArgs e)
+        public void GetWPS() 
         {
-            //CanvasNewWP.Visibility = Visibility;
+            grdWP.Columns.Clear();
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.GetWPSCompleted += new EventHandler<Infocorp.TITA.SilverlightUI.WSTitaReference.GetWPSCompletedEventArgs>(ws_GetWPSCompleted);
+            ws.GetWPSAsync();
         }
 
-        private void ListBoxWP_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void ws_GetWPSCompleted(object sender, Infocorp.TITA.SilverlightUI.WSTitaReference.GetWPSCompletedEventArgs e)
         {
+            Dispatcher.BeginInvoke(LoadWPS(e.Result));
+        }
 
+        private Delegate LoadWPS(List<DTIssue> list)
+        {
+            return null;
         }
 
         #endregion
@@ -462,7 +451,7 @@ namespace Infocorp.TITA.SilverlightUI
             }
         }
 
-        void ws_ModifyIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        void ws_ModifyIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) 
         {
             Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
             cnv.Children.Clear();
