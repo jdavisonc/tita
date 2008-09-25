@@ -10,12 +10,12 @@ namespace Infocorp.TITA.DataTypes
     public class DTContract
     {
         [DataMember]
-        string ContractId { get; set; }
+        public string ContractId { get; set; }
 
         [DataMember]
-        string Site { get; set; }
+        public string Site { get; set; }
 
         [DataMember]
-        string UserName { get; set; }
+        public string UserName { get; set; }
     }
 }
