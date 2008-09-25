@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Infocorp.TITA.DataTypes;
 
 namespace infocorp.TITA.DataBasesAcces
 {
-    public class DataContract
+   /* public class DataContract
     {
         public string idContract;
         public string site;
@@ -17,7 +18,7 @@ namespace infocorp.TITA.DataBasesAcces
             this.user = user;
         }
 
-    }
+    }*/
 
 
 
@@ -27,13 +28,13 @@ namespace infocorp.TITA.DataBasesAcces
 
     public class DataBaseAcces
     {
-        public void AddContract(DataContract c)
+        public void AddContract(DTContract c)
         {
             LinqDataContext dc = new LinqDataContext();
             Contract contract = new Contract();
-            contract.id_contract = c.idContract;
-            contract.site = c.site;
-            contract.user = c.user;
+            contract.id_contract = c.ContractId;
+            contract.site = c.Site;
+            contract.user = c.UserName;
             dc.Contracts.InsertOnSubmit(contract);
             dc.SubmitChanges();
 
@@ -76,17 +77,17 @@ namespace infocorp.TITA.DataBasesAcces
 
         }
 
-        public void ModifyContract(DataContract c)
+        public void ModifyContract(DTContract c)
         {
             LinqDataContext dc = new LinqDataContext();
             var contract = from u in dc.Contracts
-                           where u.id_contract == c.idContract
+                           where u.id_contract == c.ContractId
                            select u;
 
             if (contract.Count() > 0)
             {
-                contract.First().site = c.site;
-                contract.First().user = c.user;
+                contract.First().site = c.Site;
+                contract.First().user = c.UserName;
                 dc.SubmitChanges();
             }
         }

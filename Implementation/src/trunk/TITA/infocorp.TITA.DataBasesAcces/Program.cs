@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Infocorp.TITA.DataTypes;
 
 namespace infocorp.TITA.DataBasesAcces
 {
@@ -9,19 +10,24 @@ namespace infocorp.TITA.DataBasesAcces
     {
         static void Main(string[] args)
         {
-            DataContract dc = new DataContract("contrato4", "marcos", "mussio");
+            
+            
+            DTContract dc = new DTContract();
+            dc.ContractId = "contrato5";
+            dc.Site = "marcos";
+            dc.UserName = "modificado";
             DataBaseAcces da = new DataBaseAcces();
-           da.AddContract(dc);
+           //da.AddContract(dc);
 
-            //da.DeleteContract(dc.idContract);
-            /*List<Contracts> lis = da.ContractList();
+            //da.DeleteContract(dc.ContractId);
+            List<Contract> lis = da.ContractList();
             foreach (var iter in lis)
                 Console.WriteLine(iter.id_contract);
-            Console.ReadLine();*/
+            Console.ReadLine();
             /*string salida = da.ContractSite(dc.idContract);
             Console.WriteLine(salida);
             Console.ReadLine();*/
-           // da.ModifyContract(dc);
+           //da.ModifyContract(dc);
         }
     }
 }
