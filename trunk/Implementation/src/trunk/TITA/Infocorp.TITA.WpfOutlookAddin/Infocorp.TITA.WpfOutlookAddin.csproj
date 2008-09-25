@@ -69,6 +69,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerOutlookSharepoint.cs" />
+    <Compile Include="Controlls\DatePicker\DateHelper.cs" />
+    <Compile Include="Controlls\DatePicker\DatePicker.cs" />
+    <Compile Include="Controlls\DatePicker\OneWayValueConverters.cs" />
     <Compile Include="DTUrl.cs" />
     <Compile Include="FabricOutlookSP.cs" />
     <Compile Include="HandlerAddIn.cs" />
