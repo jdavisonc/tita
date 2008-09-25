@@ -25,7 +25,7 @@ namespace infocorp.TITA.DataBasesAcces
 
 
 
-    public class DataBaseAcces : IDataBaseAcces
+    public class DataBaseAcces
     {
         public void AddContract(DataContract c)
         {
