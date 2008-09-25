@@ -9,9 +9,9 @@ namespace infocorp.TITA.DataBasesAcces
     {
         static void Main(string[] args)
         {
-            DataContract dc = new DataContract("contrato3", "marcos", "mussio");
-            IDataBaseAcces da = new DataBaseAcces();
-            //da.AddContract(dc);
+            DataContract dc = new DataContract("contrato4", "marcos", "mussio");
+            DataBaseAcces da = new DataBaseAcces();
+           da.AddContract(dc);
 
             //da.DeleteContract(dc.idContract);
             /*List<Contracts> lis = da.ContractList();
@@ -21,7 +21,7 @@ namespace infocorp.TITA.DataBasesAcces
             /*string salida = da.ContractSite(dc.idContract);
             Console.WriteLine(salida);
             Console.ReadLine();*/
-            da.ModifyContract(dc);
+           // da.ModifyContract(dc);
         }
     }
 }
