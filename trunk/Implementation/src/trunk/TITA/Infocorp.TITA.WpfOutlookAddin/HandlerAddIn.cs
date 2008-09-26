@@ -8,9 +8,11 @@ using Infocorp.TITA.WpfOutlookAddIn;
 using Infocorp.TITA.DataTypes;
 
 
+
+
 namespace Infocorp.TITA.WpfOutlookAddin
 {
-    class HandlerAddIn:IHandlerAddIn
+    public class HandlerAddIn:IHandlerAddIn
     {
         private IOutlookSharePoint _outlookSP;
         
@@ -47,10 +49,13 @@ namespace Infocorp.TITA.WpfOutlookAddin
         {
             
             List<DTField> oListaAtrib = _outlookSP.GetFieldsIssue(url.ContractUrl);
+            
             //aca generar la ventana para mostrar los campos del Issue
-
+            Window1 oIssueWindow = new Window1(oListaAtrib);
+            oIssueWindow.Show();
         }
 
+        
 
         public void BuildIssue()
         {
