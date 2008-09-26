@@ -117,7 +117,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
                 case DTField.Types.DateTime:
                     //datepicker
                     DatePicker oDate = new DatePicker();
-                    //oReturn = 
+                    oReturn = (Control)oDate; 
                     break;
                 case DTField.Types.Note:
                     //Richtexbox
