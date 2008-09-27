@@ -26,7 +26,7 @@ namespace Infocorp.TITA.DataBaseAccess
 
 
 
-    public class DataBaseAcces
+    public class DataBaseAccess
     {
         public void AddContract(DTContract c)
         {
@@ -57,10 +57,22 @@ namespace Infocorp.TITA.DataBaseAccess
 
         }
 
-        public List<Contract> ContractList()
+        public List<DTContract> ContractList()
         {
             LinqDataContext dc = new LinqDataContext();
-            return dc.Contracts.ToList();
+            List<Contract> contracts = dc.Contracts.ToList();
+
+            List<DTContract> result = new List<DTContract>();
+            foreach (Contract contract in contracts)
+            {
+                DTContract dtContract = new DTContract();
+                dtContract.ContractId = contract.id_contract;
+                dtContract.Site = contract.site;
+                dtContract.UserName = contract.user;
+                result.Add(dtContract);
+            }
+
+            return result;
         }
 
         public string ContractSite(string idContract)
