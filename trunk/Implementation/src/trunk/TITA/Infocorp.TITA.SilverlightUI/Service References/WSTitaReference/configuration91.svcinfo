@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="k30Tb+u9Vu51LU8SLHwVzbaTJAw=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="hiIjPIYa/xk+Ipwefi+8+mtQba8=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="WSTitaSoap">
       <properties>
@@ -100,10 +100,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="WSTitaSoap" contract="Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap" bindingType="basicHttpBinding" address="http://localhost:2030/Infocorp.TITA.SilverlightUIWeb/WSTita.asmx" bindingConfiguration="WSTitaSoap">
+    <endpoint name="WSTitaSoap" contract="Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap" bindingType="basicHttpBinding" address="http://localhost:8082/WSTita.asmx" bindingConfiguration="WSTitaSoap">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:2030/Infocorp.TITA.SilverlightUIWeb/WSTita.asmx</serializedValue>
+          <serializedValue>http://localhost:8082/WSTita.asmx</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
