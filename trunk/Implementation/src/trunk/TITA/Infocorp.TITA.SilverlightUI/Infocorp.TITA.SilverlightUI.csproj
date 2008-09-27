@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -94,6 +94,18 @@
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.AddIssueResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -103,6 +115,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.GetWPSResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyIssueResponse.datasource">

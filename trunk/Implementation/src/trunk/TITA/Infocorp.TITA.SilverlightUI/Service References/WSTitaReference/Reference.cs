@@ -237,6 +237,65 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     public class ArrayOfString : System.Collections.Generic.List<string> {
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DTContract", Namespace="http://tempuri.org/")]
+    public partial class DTContract : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string ContractIdField;
+        
+        private string SiteField;
+        
+        private string UserNameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string ContractId {
+            get {
+                return this.ContractIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContractIdField, value) != true)) {
+                    this.ContractIdField = value;
+                    this.RaisePropertyChanged("ContractId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string Site {
+            get {
+                return this.SiteField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SiteField, value) != true)) {
+                    this.SiteField = value;
+                    this.RaisePropertyChanged("Site");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.ServiceModel.ServiceContractAttribute()]
     public interface WSTitaSoap {
         
@@ -269,6 +328,36 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         System.IAsyncResult BeginDeleteIssue(int id, System.AsyncCallback callback, object asyncState);
         
         void EndDeleteIssue(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/AddNewContract", ReplyAction="*")]
+        System.IAsyncResult BeginAddNewContract(Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractResponse EndAddNewContract(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DeleteContract", ReplyAction="*")]
+        System.IAsyncResult BeginDeleteContract(Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractResponse EndDeleteContract(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ChangeCurrentContract", ReplyAction="*")]
+        System.IAsyncResult BeginChangeCurrentContract(int contractId, System.AsyncCallback callback, object asyncState);
+        
+        void EndChangeCurrentContract(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/GetContracts", ReplyAction="*")]
+        System.IAsyncResult BeginGetContracts(Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsResponse EndGetContracts(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/GetContractSite", ReplyAction="*")]
+        System.IAsyncResult BeginGetContractSite(Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteResponse EndGetContractSite(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ModifyContract", ReplyAction="*")]
+        System.IAsyncResult BeginModifyContract(Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse EndModifyContract(System.IAsyncResult result);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -536,6 +625,278 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class AddNewContractRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="AddNewContract", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractRequestBody Body;
+        
+        public AddNewContractRequest() {
+        }
+        
+        public AddNewContractRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class AddNewContractRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract contract;
+        
+        public AddNewContractRequestBody() {
+        }
+        
+        public AddNewContractRequestBody(Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract contract) {
+            this.contract = contract;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class AddNewContractResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="AddNewContractResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractResponseBody Body;
+        
+        public AddNewContractResponse() {
+        }
+        
+        public AddNewContractResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class AddNewContractResponseBody {
+        
+        public AddNewContractResponseBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class DeleteContractRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="DeleteContract", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractRequestBody Body;
+        
+        public DeleteContractRequest() {
+        }
+        
+        public DeleteContractRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class DeleteContractRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string contractId;
+        
+        public DeleteContractRequestBody() {
+        }
+        
+        public DeleteContractRequestBody(string contractId) {
+            this.contractId = contractId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class DeleteContractResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="DeleteContractResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractResponseBody Body;
+        
+        public DeleteContractResponse() {
+        }
+        
+        public DeleteContractResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class DeleteContractResponseBody {
+        
+        public DeleteContractResponseBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetContractsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetContracts", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsRequestBody Body;
+        
+        public GetContractsRequest() {
+        }
+        
+        public GetContractsRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class GetContractsRequestBody {
+        
+        public GetContractsRequestBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetContractsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetContractsResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsResponseBody Body;
+        
+        public GetContractsResponse() {
+        }
+        
+        public GetContractsResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class GetContractsResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract> GetContractsResult;
+        
+        public GetContractsResponseBody() {
+        }
+        
+        public GetContractsResponseBody(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract> GetContractsResult) {
+            this.GetContractsResult = GetContractsResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetContractSiteRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetContractSite", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteRequestBody Body;
+        
+        public GetContractSiteRequest() {
+        }
+        
+        public GetContractSiteRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class GetContractSiteRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string contractId;
+        
+        public GetContractSiteRequestBody() {
+        }
+        
+        public GetContractSiteRequestBody(string contractId) {
+            this.contractId = contractId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetContractSiteResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetContractSiteResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteResponseBody Body;
+        
+        public GetContractSiteResponse() {
+        }
+        
+        public GetContractSiteResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class GetContractSiteResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string GetContractSiteResult;
+        
+        public GetContractSiteResponseBody() {
+        }
+        
+        public GetContractSiteResponseBody(string GetContractSiteResult) {
+            this.GetContractSiteResult = GetContractSiteResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ModifyContractRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ModifyContract", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractRequestBody Body;
+        
+        public ModifyContractRequest() {
+        }
+        
+        public ModifyContractRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class ModifyContractRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract contract;
+        
+        public ModifyContractRequestBody() {
+        }
+        
+        public ModifyContractRequestBody(Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract contract) {
+            this.contract = contract;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ModifyContractResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ModifyContractResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponseBody Body;
+        
+        public ModifyContractResponse() {
+        }
+        
+        public ModifyContractResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class ModifyContractResponseBody {
+        
+        public ModifyContractResponseBody() {
+        }
+    }
+    
     public interface WSTitaSoapChannel : Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap, System.ServiceModel.IClientChannel {
     }
     
@@ -594,6 +955,42 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
+    public partial class GetContractsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetContractsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    public partial class GetContractSiteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetContractSiteCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
     public partial class WSTitaSoapClient : System.ServiceModel.ClientBase<Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap>, Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap {
         
         private BeginOperationDelegate onBeginGetWPSDelegate;
@@ -631,6 +1028,42 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         private EndOperationDelegate onEndDeleteIssueDelegate;
         
         private System.Threading.SendOrPostCallback onDeleteIssueCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginAddNewContractDelegate;
+        
+        private EndOperationDelegate onEndAddNewContractDelegate;
+        
+        private System.Threading.SendOrPostCallback onAddNewContractCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginDeleteContractDelegate;
+        
+        private EndOperationDelegate onEndDeleteContractDelegate;
+        
+        private System.Threading.SendOrPostCallback onDeleteContractCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginChangeCurrentContractDelegate;
+        
+        private EndOperationDelegate onEndChangeCurrentContractDelegate;
+        
+        private System.Threading.SendOrPostCallback onChangeCurrentContractCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetContractsDelegate;
+        
+        private EndOperationDelegate onEndGetContractsDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetContractsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetContractSiteDelegate;
+        
+        private EndOperationDelegate onEndGetContractSiteDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetContractSiteCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginModifyContractDelegate;
+        
+        private EndOperationDelegate onEndModifyContractDelegate;
+        
+        private System.Threading.SendOrPostCallback onModifyContractCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -674,6 +1107,18 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ModifyIssueCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DeleteIssueCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddNewContractCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DeleteContractCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ChangeCurrentContractCompleted;
+        
+        public event System.EventHandler<GetContractsCompletedEventArgs> GetContractsCompleted;
+        
+        public event System.EventHandler<GetContractSiteCompletedEventArgs> GetContractSiteCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ModifyContractCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -989,6 +1434,320 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
                         id}, this.onEndDeleteIssueDelegate, this.onDeleteIssueCompletedDelegate, userState);
         }
         
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginAddNewContract(Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAddNewContract(request, callback, asyncState);
+        }
+        
+        private System.IAsyncResult BeginAddNewContract(Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract contract, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractRequestBody();
+            inValue.Body.contract = contract;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginAddNewContract(inValue, callback, asyncState);
+        }
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndAddNewContract(System.IAsyncResult result) {
+            return base.Channel.EndAddNewContract(result);
+        }
+        
+        private void EndAddNewContract(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndAddNewContract(result);
+        }
+        
+        private System.IAsyncResult OnBeginAddNewContract(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract contract = ((Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract)(inValues[0]));
+            return this.BeginAddNewContract(contract, callback, asyncState);
+        }
+        
+        private object[] OnEndAddNewContract(System.IAsyncResult result) {
+            this.EndAddNewContract(result);
+            return null;
+        }
+        
+        private void OnAddNewContractCompleted(object state) {
+            if ((this.AddNewContractCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.AddNewContractCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void AddNewContractAsync(Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract contract) {
+            this.AddNewContractAsync(contract, null);
+        }
+        
+        public void AddNewContractAsync(Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract contract, object userState) {
+            if ((this.onBeginAddNewContractDelegate == null)) {
+                this.onBeginAddNewContractDelegate = new BeginOperationDelegate(this.OnBeginAddNewContract);
+            }
+            if ((this.onEndAddNewContractDelegate == null)) {
+                this.onEndAddNewContractDelegate = new EndOperationDelegate(this.OnEndAddNewContract);
+            }
+            if ((this.onAddNewContractCompletedDelegate == null)) {
+                this.onAddNewContractCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAddNewContractCompleted);
+            }
+            base.InvokeAsync(this.onBeginAddNewContractDelegate, new object[] {
+                        contract}, this.onEndAddNewContractDelegate, this.onAddNewContractCompletedDelegate, userState);
+        }
+        
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginDeleteContract(Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginDeleteContract(request, callback, asyncState);
+        }
+        
+        private System.IAsyncResult BeginDeleteContract(string contractId, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractRequestBody();
+            inValue.Body.contractId = contractId;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginDeleteContract(inValue, callback, asyncState);
+        }
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndDeleteContract(System.IAsyncResult result) {
+            return base.Channel.EndDeleteContract(result);
+        }
+        
+        private void EndDeleteContract(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndDeleteContract(result);
+        }
+        
+        private System.IAsyncResult OnBeginDeleteContract(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string contractId = ((string)(inValues[0]));
+            return this.BeginDeleteContract(contractId, callback, asyncState);
+        }
+        
+        private object[] OnEndDeleteContract(System.IAsyncResult result) {
+            this.EndDeleteContract(result);
+            return null;
+        }
+        
+        private void OnDeleteContractCompleted(object state) {
+            if ((this.DeleteContractCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.DeleteContractCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void DeleteContractAsync(string contractId) {
+            this.DeleteContractAsync(contractId, null);
+        }
+        
+        public void DeleteContractAsync(string contractId, object userState) {
+            if ((this.onBeginDeleteContractDelegate == null)) {
+                this.onBeginDeleteContractDelegate = new BeginOperationDelegate(this.OnBeginDeleteContract);
+            }
+            if ((this.onEndDeleteContractDelegate == null)) {
+                this.onEndDeleteContractDelegate = new EndOperationDelegate(this.OnEndDeleteContract);
+            }
+            if ((this.onDeleteContractCompletedDelegate == null)) {
+                this.onDeleteContractCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnDeleteContractCompleted);
+            }
+            base.InvokeAsync(this.onBeginDeleteContractDelegate, new object[] {
+                        contractId}, this.onEndDeleteContractDelegate, this.onDeleteContractCompletedDelegate, userState);
+        }
+        
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginChangeCurrentContract(int contractId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginChangeCurrentContract(contractId, callback, asyncState);
+        }
+        
+        void Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndChangeCurrentContract(System.IAsyncResult result) {
+            base.Channel.EndChangeCurrentContract(result);
+        }
+        
+        private System.IAsyncResult OnBeginChangeCurrentContract(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int contractId = ((int)(inValues[0]));
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginChangeCurrentContract(contractId, callback, asyncState);
+        }
+        
+        private object[] OnEndChangeCurrentContract(System.IAsyncResult result) {
+            ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndChangeCurrentContract(result);
+            return null;
+        }
+        
+        private void OnChangeCurrentContractCompleted(object state) {
+            if ((this.ChangeCurrentContractCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.ChangeCurrentContractCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void ChangeCurrentContractAsync(int contractId) {
+            this.ChangeCurrentContractAsync(contractId, null);
+        }
+        
+        public void ChangeCurrentContractAsync(int contractId, object userState) {
+            if ((this.onBeginChangeCurrentContractDelegate == null)) {
+                this.onBeginChangeCurrentContractDelegate = new BeginOperationDelegate(this.OnBeginChangeCurrentContract);
+            }
+            if ((this.onEndChangeCurrentContractDelegate == null)) {
+                this.onEndChangeCurrentContractDelegate = new EndOperationDelegate(this.OnEndChangeCurrentContract);
+            }
+            if ((this.onChangeCurrentContractCompletedDelegate == null)) {
+                this.onChangeCurrentContractCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnChangeCurrentContractCompleted);
+            }
+            base.InvokeAsync(this.onBeginChangeCurrentContractDelegate, new object[] {
+                        contractId}, this.onEndChangeCurrentContractDelegate, this.onChangeCurrentContractCompletedDelegate, userState);
+        }
+        
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginGetContracts(Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetContracts(request, callback, asyncState);
+        }
+        
+        private System.IAsyncResult BeginGetContracts(System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsRequestBody();
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginGetContracts(inValue, callback, asyncState);
+        }
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndGetContracts(System.IAsyncResult result) {
+            return base.Channel.EndGetContracts(result);
+        }
+        
+        private System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract> EndGetContracts(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndGetContracts(result);
+            return retVal.Body.GetContractsResult;
+        }
+        
+        private System.IAsyncResult OnBeginGetContracts(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return this.BeginGetContracts(callback, asyncState);
+        }
+        
+        private object[] OnEndGetContracts(System.IAsyncResult result) {
+            System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract> retVal = this.EndGetContracts(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetContractsCompleted(object state) {
+            if ((this.GetContractsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetContractsCompleted(this, new GetContractsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetContractsAsync() {
+            this.GetContractsAsync(null);
+        }
+        
+        public void GetContractsAsync(object userState) {
+            if ((this.onBeginGetContractsDelegate == null)) {
+                this.onBeginGetContractsDelegate = new BeginOperationDelegate(this.OnBeginGetContracts);
+            }
+            if ((this.onEndGetContractsDelegate == null)) {
+                this.onEndGetContractsDelegate = new EndOperationDelegate(this.OnEndGetContracts);
+            }
+            if ((this.onGetContractsCompletedDelegate == null)) {
+                this.onGetContractsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetContractsCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetContractsDelegate, null, this.onEndGetContractsDelegate, this.onGetContractsCompletedDelegate, userState);
+        }
+        
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginGetContractSite(Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetContractSite(request, callback, asyncState);
+        }
+        
+        private System.IAsyncResult BeginGetContractSite(string contractId, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteRequestBody();
+            inValue.Body.contractId = contractId;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginGetContractSite(inValue, callback, asyncState);
+        }
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndGetContractSite(System.IAsyncResult result) {
+            return base.Channel.EndGetContractSite(result);
+        }
+        
+        private string EndGetContractSite(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndGetContractSite(result);
+            return retVal.Body.GetContractSiteResult;
+        }
+        
+        private System.IAsyncResult OnBeginGetContractSite(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string contractId = ((string)(inValues[0]));
+            return this.BeginGetContractSite(contractId, callback, asyncState);
+        }
+        
+        private object[] OnEndGetContractSite(System.IAsyncResult result) {
+            string retVal = this.EndGetContractSite(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetContractSiteCompleted(object state) {
+            if ((this.GetContractSiteCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetContractSiteCompleted(this, new GetContractSiteCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetContractSiteAsync(string contractId) {
+            this.GetContractSiteAsync(contractId, null);
+        }
+        
+        public void GetContractSiteAsync(string contractId, object userState) {
+            if ((this.onBeginGetContractSiteDelegate == null)) {
+                this.onBeginGetContractSiteDelegate = new BeginOperationDelegate(this.OnBeginGetContractSite);
+            }
+            if ((this.onEndGetContractSiteDelegate == null)) {
+                this.onEndGetContractSiteDelegate = new EndOperationDelegate(this.OnEndGetContractSite);
+            }
+            if ((this.onGetContractSiteCompletedDelegate == null)) {
+                this.onGetContractSiteCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetContractSiteCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetContractSiteDelegate, new object[] {
+                        contractId}, this.onEndGetContractSiteDelegate, this.onGetContractSiteCompletedDelegate, userState);
+        }
+        
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginModifyContract(Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginModifyContract(request, callback, asyncState);
+        }
+        
+        private System.IAsyncResult BeginModifyContract(Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract contract, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractRequestBody();
+            inValue.Body.contract = contract;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginModifyContract(inValue, callback, asyncState);
+        }
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndModifyContract(System.IAsyncResult result) {
+            return base.Channel.EndModifyContract(result);
+        }
+        
+        private void EndModifyContract(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndModifyContract(result);
+        }
+        
+        private System.IAsyncResult OnBeginModifyContract(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract contract = ((Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract)(inValues[0]));
+            return this.BeginModifyContract(contract, callback, asyncState);
+        }
+        
+        private object[] OnEndModifyContract(System.IAsyncResult result) {
+            this.EndModifyContract(result);
+            return null;
+        }
+        
+        private void OnModifyContractCompleted(object state) {
+            if ((this.ModifyContractCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.ModifyContractCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void ModifyContractAsync(Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract contract) {
+            this.ModifyContractAsync(contract, null);
+        }
+        
+        public void ModifyContractAsync(Infocorp.TITA.SilverlightUI.WSTitaReference.DTContract contract, object userState) {
+            if ((this.onBeginModifyContractDelegate == null)) {
+                this.onBeginModifyContractDelegate = new BeginOperationDelegate(this.OnBeginModifyContract);
+            }
+            if ((this.onEndModifyContractDelegate == null)) {
+                this.onEndModifyContractDelegate = new EndOperationDelegate(this.OnEndModifyContract);
+            }
+            if ((this.onModifyContractCompletedDelegate == null)) {
+                this.onModifyContractCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnModifyContractCompleted);
+            }
+            base.InvokeAsync(this.onBeginModifyContractDelegate, new object[] {
+                        contract}, this.onEndModifyContractDelegate, this.onModifyContractCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -1140,6 +1899,83 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             public void EndDeleteIssue(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 base.EndInvoke("DeleteIssue", _args, result);
+            }
+            
+            public System.IAsyncResult BeginAddNewContract(Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("AddNewContract", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractResponse EndAddNewContract(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractResponse)(base.EndInvoke("AddNewContract", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginDeleteContract(Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("DeleteContract", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractResponse EndDeleteContract(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractResponse)(base.EndInvoke("DeleteContract", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginChangeCurrentContract(int contractId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = contractId;
+                System.IAsyncResult _result = base.BeginInvoke("ChangeCurrentContract", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public void EndChangeCurrentContract(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                base.EndInvoke("ChangeCurrentContract", _args, result);
+            }
+            
+            public System.IAsyncResult BeginGetContracts(Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("GetContracts", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsResponse EndGetContracts(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractsResponse)(base.EndInvoke("GetContracts", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetContractSite(Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("GetContractSite", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteResponse EndGetContractSite(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteResponse)(base.EndInvoke("GetContractSite", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginModifyContract(Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("ModifyContract", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse EndModifyContract(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse)(base.EndInvoke("ModifyContract", _args, result)));
+                return _result;
             }
         }
     }
