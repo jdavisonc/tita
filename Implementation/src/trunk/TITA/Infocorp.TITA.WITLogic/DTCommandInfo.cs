@@ -6,7 +6,7 @@ using Infocorp.TITA.DataTypes;
 
 namespace Infocorp.TITA.WITLogic
 {
-    public class DTCommandInfo
+    public class DTCommandInfo : IComparable
     {
         private DateTime _creationDate;
         public DateTime CreationDate
@@ -37,7 +37,14 @@ namespace Infocorp.TITA.WITLogic
             {
                 result = f1.Value == f2.Value;
             }
+
             return result;
+        }
+
+
+        public int CompareTo(object obj)
+        {
+            return this.CreationDate.CompareTo((obj as DTCommandInfo).CreationDate);
         }
     }
 }

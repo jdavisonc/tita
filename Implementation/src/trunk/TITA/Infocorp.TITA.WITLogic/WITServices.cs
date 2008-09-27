@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Infocorp.TITA.DataTypes;
+using Infocorp.TITA.DataBaseAccess;
+using Infocorp.TITA.SharePointUtilities;
 
 namespace Infocorp.TITA.WITLogic
 {
@@ -56,6 +58,7 @@ namespace Infocorp.TITA.WITLogic
 
             List<DTIssue> result = new List<DTIssue>();
             List<DTCommandInfo> commands =  WITCommandState.Instance().Commands;
+            result = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint().GetIssues(urlSite);
 
             commands.ForEach(delegate(DTCommandInfo command)
             {
@@ -65,13 +68,39 @@ namespace Infocorp.TITA.WITLogic
                 };
             });
 
-            //return SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint().GetIssues(urlSite);
+            
             return result;
         }
 
-        public void ApplyChanges()
+        public void ApplyChanges(string siteUrl)
         {
-            throw new NotImplementedException();
+            List<DTCommandInfo> commands = WITCommandState.Instance().Commands;
+            ISharePoint spu = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint();
+            commands.Sort();
+            foreach (DTCommandInfo command in commands)
+            {
+                switch (command.CommandType)
+                {
+                    case CommandType.ADD:
+                        spu.AddIssue(siteUrl, command.Issue);
+                        break;
+                    case CommandType.MODIFY:
+                        spu.UpdateIssue(siteUrl, command.Issue);
+                        break;
+                    case CommandType.DELETE:
+                        int issueId   = Convert.ToInt32(command.Issue.Fields.Find(delegate(DTField f) { return f.Name.ToLower() == "id"; }).Value);
+                        spu.DeleteIssue(siteUrl, issueId);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+        }
+
+        public bool HasPendingChanges(string siteUrl)
+        {
+            return WITCommandState.Instance().Commands.Count > 0;
         }
 
         public void AddNewIssue(DTIssue issue)
@@ -143,6 +172,8 @@ namespace Infocorp.TITA.WITLogic
 
         public List<DTContract> GetContracts()
         {
+            //DataBaseAcces db = new DataBaseAcces();
+            //return  db.ContractList();
             return new List<DTContract>();
         }
 

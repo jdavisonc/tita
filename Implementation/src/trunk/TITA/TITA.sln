@@ -17,7 +17,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Infocorp.TITA.SilverlightUI
 		SccLocalPath = "Svn"
 		SccProvider = "SubversionScc"
 		TargetFramework = "3.5"
-		ProjectReferences = "{FC4C3770-4D7F-4B3F-A9F1-6E541B3AEE72}|Infocorp.TITA.DataTypes.dll;{DC0F0C14-089E-4145-96EE-0E6D47B95C1B}|Infocorp.TITA.WITLogic.dll;{B221BE03-AFBF-4A2A-A1D6-EE0302AA55A8}|Infocorp.TITA.SharePointUtilities.dll;"
+		ProjectReferences = "{FC4C3770-4D7F-4B3F-A9F1-6E541B3AEE72}|Infocorp.TITA.DataTypes.dll;{DC0F0C14-089E-4145-96EE-0E6D47B95C1B}|Infocorp.TITA.WITLogic.dll;{B221BE03-AFBF-4A2A-A1D6-EE0302AA55A8}|Infocorp.TITA.SharePointUtilities.dll;{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}|Infocorp.TITA.DataBaseAccess.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/Infocorp.TITA.SilverlightUIWeb"
 		Debug.AspNetCompiler.PhysicalPath = "Infocorp.TITA.SilverlightUIWeb\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Infocorp.TITA.SilverlightUIWeb\"
@@ -43,6 +43,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.OutlookAddIn", "Infocorp.TITA.OutlookAddIn\Infocorp.TITA.OutlookAddIn.csproj", "{03BE9197-CB4F-4FF5-BC7F-BA6D3E94681E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.WpfOutlookAddin", "Infocorp.TITA.WpfOutlookAddin\Infocorp.TITA.WpfOutlookAddin.csproj", "{7684171B-311E-4008-9645-D8EE1BF203CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.DataBaseAccess", "Infocorp.TITA.DataBaseAccess\Infocorp.TITA.DataBaseAccess.csproj", "{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -152,6 +154,16 @@ Global
 		{7684171B-311E-4008-9645-D8EE1BF203CF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7684171B-311E-4008-9645-D8EE1BF203CF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7684171B-311E-4008-9645-D8EE1BF203CF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}.Release|.NET.ActiveCfg = Release|Any CPU
+		{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
