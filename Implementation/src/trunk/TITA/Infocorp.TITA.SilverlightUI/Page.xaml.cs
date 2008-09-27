@@ -455,6 +455,13 @@ namespace Infocorp.TITA.SilverlightUI
                             field.Type = f.Type;
                             field.Name = f.Name;
                         }
+                        else if ((f.Name == "ID") &&(isEdit))
+                        {
+                            Issue select_issue = (Issue)grdIncident.SelectedItem;
+                            field.Name = "ID";
+                            field.Value = select_issue.Id.ToString();
+                            field.Type = Types.Integer;
+                        }
                         break;
                 }
                 issue.Fields.Add(field);
@@ -468,7 +475,7 @@ namespace Infocorp.TITA.SilverlightUI
                 ws.AddIssueAsync(issue);
             }
             else if (isEdit) 
-            {
+            {   
                 WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
                 ws.ModifyIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ModifyIssueCompleted);
                 ws.ModifyIssueAsync(issue);
