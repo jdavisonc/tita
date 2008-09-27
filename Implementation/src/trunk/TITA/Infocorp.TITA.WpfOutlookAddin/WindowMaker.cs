@@ -25,7 +25,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
 
             _grid.ColumnDefinitions.Add(new ColumnDefinition());
             _grid.ColumnDefinitions.Add(new ColumnDefinition());
-            _scrollViewer.Height = 270;
+            _scrollViewer.Height = 700;
             //_grid.SetValue( ScrollViewer.VerticalScrollBarVisibilityProperty ,);
             //_grid.Height = 24;
         
@@ -44,6 +44,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
         {
             ComboBox comboChoice = new ComboBox();
             comboChoice.ItemsSource = listChoice;
+            comboChoice.SelectedItem = listChoice[0];
             return comboChoice;
         }
 
@@ -85,7 +86,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
             //textBox.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             //textBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             textBox.AcceptsReturn = true;
-            textBox.AcceptsTab = true;
+            textBox.AcceptsTab = false;
             textBox.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
 
             return textBox;
