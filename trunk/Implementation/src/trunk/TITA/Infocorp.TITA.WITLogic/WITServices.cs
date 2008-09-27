@@ -15,11 +15,11 @@ namespace Infocorp.TITA.WITLogic
         public DTIssue GetIssueTemplate(string urlSite)
         {
             DTIssue issue = new DTIssue();
-
+            /*
             DTField field = new DTField();
             field.Name = "ID";
             field.Required = true;
-            field.Type = DTField.Types.Integer;
+            field.Type = DTField.Types.Counter;
             field.Value = "1";
 
             DTField field2 = new DTField();
@@ -48,6 +48,9 @@ namespace Infocorp.TITA.WITLogic
             field5.Value = "Media";
 
             issue.Fields = new List<DTField>() { field, field2, field3, field4, field5 };
+            */
+
+            issue.Fields = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint().GetFieldsIssue(urlSite);
 
             return issue;
         }
@@ -92,9 +95,10 @@ namespace Infocorp.TITA.WITLogic
                         break;
                     default:
                         break;
-                }
+                }                
             }
 
+            commands.Clear();
         }
 
         public bool HasPendingChanges(string siteUrl)
@@ -140,7 +144,7 @@ namespace Infocorp.TITA.WITLogic
             DTField field = new DTField();
             field.Name = "ID";
             field.Required = true;
-            field.Type  = DTField.Types.Integer;
+            field.Type  = DTField.Types.Counter;
             field.Value = issueId.ToString();
             command.Issue.Fields = new List<DTField>() { field };
 

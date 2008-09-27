@@ -192,6 +192,30 @@
       <s:element name="ModifyContractResponse">
         <s:complexType />
       </s:element>
+      <s:element name="ApplyChanges">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ApplyChangesResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="HasPendingChanges">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HasPendingChangesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="HasPendingChangesResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="GetWPSSoapIn">
@@ -266,6 +290,18 @@
   <wsdl:message name="ModifyContractSoapOut">
     <wsdl:part name="parameters" element="tns:ModifyContractResponse" />
   </wsdl:message>
+  <wsdl:message name="ApplyChangesSoapIn">
+    <wsdl:part name="parameters" element="tns:ApplyChanges" />
+  </wsdl:message>
+  <wsdl:message name="ApplyChangesSoapOut">
+    <wsdl:part name="parameters" element="tns:ApplyChangesResponse" />
+  </wsdl:message>
+  <wsdl:message name="HasPendingChangesSoapIn">
+    <wsdl:part name="parameters" element="tns:HasPendingChanges" />
+  </wsdl:message>
+  <wsdl:message name="HasPendingChangesSoapOut">
+    <wsdl:part name="parameters" element="tns:HasPendingChangesResponse" />
+  </wsdl:message>
   <wsdl:portType name="WSTitaSoap">
     <wsdl:operation name="GetWPS">
       <wsdl:input message="tns:GetWPSSoapIn" />
@@ -314,6 +350,14 @@
     <wsdl:operation name="ModifyContract">
       <wsdl:input message="tns:ModifyContractSoapIn" />
       <wsdl:output message="tns:ModifyContractSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ApplyChanges">
+      <wsdl:input message="tns:ApplyChangesSoapIn" />
+      <wsdl:output message="tns:ApplyChangesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="HasPendingChanges">
+      <wsdl:input message="tns:HasPendingChangesSoapIn" />
+      <wsdl:output message="tns:HasPendingChangesSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSTitaSoap" type="tns:WSTitaSoap">
@@ -426,6 +470,24 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ApplyChanges">
+      <soap:operation soapAction="http://tempuri.org/ApplyChanges" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HasPendingChanges">
+      <soap:operation soapAction="http://tempuri.org/HasPendingChanges" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="WSTitaSoap12" type="tns:WSTitaSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -530,6 +592,24 @@
     </wsdl:operation>
     <wsdl:operation name="ModifyContract">
       <soap12:operation soapAction="http://tempuri.org/ModifyContract" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyChanges">
+      <soap12:operation soapAction="http://tempuri.org/ApplyChanges" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HasPendingChanges">
+      <soap12:operation soapAction="http://tempuri.org/HasPendingChanges" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

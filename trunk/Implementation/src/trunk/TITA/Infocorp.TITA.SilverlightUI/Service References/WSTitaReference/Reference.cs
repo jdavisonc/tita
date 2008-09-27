@@ -358,6 +358,16 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         System.IAsyncResult BeginModifyContract(Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractRequest request, System.AsyncCallback callback, object asyncState);
         
         Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse EndModifyContract(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ApplyChanges", ReplyAction="*")]
+        System.IAsyncResult BeginApplyChanges(Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesResponse EndApplyChanges(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/HasPendingChanges", ReplyAction="*")]
+        System.IAsyncResult BeginHasPendingChanges(Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesResponse EndHasPendingChanges(System.IAsyncResult result);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -897,6 +907,119 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ApplyChangesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ApplyChanges", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequestBody Body;
+        
+        public ApplyChangesRequest() {
+        }
+        
+        public ApplyChangesRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class ApplyChangesRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string url;
+        
+        public ApplyChangesRequestBody() {
+        }
+        
+        public ApplyChangesRequestBody(string url) {
+            this.url = url;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ApplyChangesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ApplyChangesResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesResponseBody Body;
+        
+        public ApplyChangesResponse() {
+        }
+        
+        public ApplyChangesResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class ApplyChangesResponseBody {
+        
+        public ApplyChangesResponseBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class HasPendingChangesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="HasPendingChanges", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesRequestBody Body;
+        
+        public HasPendingChangesRequest() {
+        }
+        
+        public HasPendingChangesRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class HasPendingChangesRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string url;
+        
+        public HasPendingChangesRequestBody() {
+        }
+        
+        public HasPendingChangesRequestBody(string url) {
+            this.url = url;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class HasPendingChangesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="HasPendingChangesResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesResponseBody Body;
+        
+        public HasPendingChangesResponse() {
+        }
+        
+        public HasPendingChangesResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class HasPendingChangesResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool HasPendingChangesResult;
+        
+        public HasPendingChangesResponseBody() {
+        }
+        
+        public HasPendingChangesResponseBody(bool HasPendingChangesResult) {
+            this.HasPendingChangesResult = HasPendingChangesResult;
+        }
+    }
+    
     public interface WSTitaSoapChannel : Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap, System.ServiceModel.IClientChannel {
     }
     
@@ -991,6 +1114,24 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
+    public partial class HasPendingChangesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public HasPendingChangesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
     public partial class WSTitaSoapClient : System.ServiceModel.ClientBase<Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap>, Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap {
         
         private BeginOperationDelegate onBeginGetWPSDelegate;
@@ -1065,6 +1206,18 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         private System.Threading.SendOrPostCallback onModifyContractCompletedDelegate;
         
+        private BeginOperationDelegate onBeginApplyChangesDelegate;
+        
+        private EndOperationDelegate onEndApplyChangesDelegate;
+        
+        private System.Threading.SendOrPostCallback onApplyChangesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginHasPendingChangesDelegate;
+        
+        private EndOperationDelegate onEndHasPendingChangesDelegate;
+        
+        private System.Threading.SendOrPostCallback onHasPendingChangesCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -1119,6 +1272,10 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         public event System.EventHandler<GetContractSiteCompletedEventArgs> GetContractSiteCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ModifyContractCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ApplyChangesCompleted;
+        
+        public event System.EventHandler<HasPendingChangesCompletedEventArgs> HasPendingChangesCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -1748,6 +1905,116 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
                         contract}, this.onEndModifyContractDelegate, this.onModifyContractCompletedDelegate, userState);
         }
         
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginApplyChanges(Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginApplyChanges(request, callback, asyncState);
+        }
+        
+        private System.IAsyncResult BeginApplyChanges(string url, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequestBody();
+            inValue.Body.url = url;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginApplyChanges(inValue, callback, asyncState);
+        }
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndApplyChanges(System.IAsyncResult result) {
+            return base.Channel.EndApplyChanges(result);
+        }
+        
+        private void EndApplyChanges(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndApplyChanges(result);
+        }
+        
+        private System.IAsyncResult OnBeginApplyChanges(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string url = ((string)(inValues[0]));
+            return this.BeginApplyChanges(url, callback, asyncState);
+        }
+        
+        private object[] OnEndApplyChanges(System.IAsyncResult result) {
+            this.EndApplyChanges(result);
+            return null;
+        }
+        
+        private void OnApplyChangesCompleted(object state) {
+            if ((this.ApplyChangesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.ApplyChangesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void ApplyChangesAsync(string url) {
+            this.ApplyChangesAsync(url, null);
+        }
+        
+        public void ApplyChangesAsync(string url, object userState) {
+            if ((this.onBeginApplyChangesDelegate == null)) {
+                this.onBeginApplyChangesDelegate = new BeginOperationDelegate(this.OnBeginApplyChanges);
+            }
+            if ((this.onEndApplyChangesDelegate == null)) {
+                this.onEndApplyChangesDelegate = new EndOperationDelegate(this.OnEndApplyChanges);
+            }
+            if ((this.onApplyChangesCompletedDelegate == null)) {
+                this.onApplyChangesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnApplyChangesCompleted);
+            }
+            base.InvokeAsync(this.onBeginApplyChangesDelegate, new object[] {
+                        url}, this.onEndApplyChangesDelegate, this.onApplyChangesCompletedDelegate, userState);
+        }
+        
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginHasPendingChanges(Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginHasPendingChanges(request, callback, asyncState);
+        }
+        
+        private System.IAsyncResult BeginHasPendingChanges(string url, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesRequestBody();
+            inValue.Body.url = url;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginHasPendingChanges(inValue, callback, asyncState);
+        }
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndHasPendingChanges(System.IAsyncResult result) {
+            return base.Channel.EndHasPendingChanges(result);
+        }
+        
+        private bool EndHasPendingChanges(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndHasPendingChanges(result);
+            return retVal.Body.HasPendingChangesResult;
+        }
+        
+        private System.IAsyncResult OnBeginHasPendingChanges(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string url = ((string)(inValues[0]));
+            return this.BeginHasPendingChanges(url, callback, asyncState);
+        }
+        
+        private object[] OnEndHasPendingChanges(System.IAsyncResult result) {
+            bool retVal = this.EndHasPendingChanges(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnHasPendingChangesCompleted(object state) {
+            if ((this.HasPendingChangesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.HasPendingChangesCompleted(this, new HasPendingChangesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void HasPendingChangesAsync(string url) {
+            this.HasPendingChangesAsync(url, null);
+        }
+        
+        public void HasPendingChangesAsync(string url, object userState) {
+            if ((this.onBeginHasPendingChangesDelegate == null)) {
+                this.onBeginHasPendingChangesDelegate = new BeginOperationDelegate(this.OnBeginHasPendingChanges);
+            }
+            if ((this.onEndHasPendingChangesDelegate == null)) {
+                this.onEndHasPendingChangesDelegate = new EndOperationDelegate(this.OnEndHasPendingChanges);
+            }
+            if ((this.onHasPendingChangesCompletedDelegate == null)) {
+                this.onHasPendingChangesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnHasPendingChangesCompleted);
+            }
+            base.InvokeAsync(this.onBeginHasPendingChangesDelegate, new object[] {
+                        url}, this.onEndHasPendingChangesDelegate, this.onHasPendingChangesCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -1975,6 +2242,32 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             public Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse EndModifyContract(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse)(base.EndInvoke("ModifyContract", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginApplyChanges(Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("ApplyChanges", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesResponse EndApplyChanges(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesResponse)(base.EndInvoke("ApplyChanges", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginHasPendingChanges(Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("HasPendingChanges", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesResponse EndHasPendingChanges(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesResponse)(base.EndInvoke("HasPendingChanges", _args, result)));
                 return _result;
             }
         }
