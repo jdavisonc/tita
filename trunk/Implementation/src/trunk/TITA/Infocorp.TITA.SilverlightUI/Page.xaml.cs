@@ -25,6 +25,7 @@ namespace Infocorp.TITA.SilverlightUI
         }
         private List<DTIssue> my_issue = new List<DTIssue>();
         private DTIssue my_issue_template = null;
+        List<DTContract> my_contract = new List<DTContract>();
         private bool isEdit;
         private bool isDelete;
 
@@ -56,31 +57,30 @@ namespace Infocorp.TITA.SilverlightUI
 
         #region Contrato
 
-        private void LoadLstContratos()
+        private void GetContract()
         {
-            List<Contrato> lst = new List<Contrato>();
-            lst.Add(new Contrato
-            {
-                Id = 1,
-                Nombre = "prueba1_NOMBRE",
-                Url = "prueba1_URL"
-            });
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.GetContractsCompleted += new EventHandler<GetContractsCompletedEventArgs>(ws_GetContractsCompleted);
+            ws.GetContractsAsync();
+        }
 
-            lst.Add(new Contrato
-            {
-                Id = 2,
-                Nombre = "prueba2_NOMBRE",
-                Url = "prueba2_URL"
-            });
-            lstContratos.ItemsSource = lst;
+        void ws_GetContractsCompleted(object sender, GetContractsCompletedEventArgs e)
+        {
+            if(e.Result != null)
+                my_contract = e.Result;
+        }
 
+        private void LoadLstContratos(List<DTContract> my_contract)
+        {
+            if (my_contract.Count() != 0)
+                lstContratos.ItemsSource = my_contract;
         }
 
         private void LoadPanelEditContrato()
         {
-            Contrato cont = (Contrato)lstContratos.SelectedItem;
-            txtNombre.Text = cont.Nombre.ToString();
-            txtUrl.Text = cont.Url.ToString();
+            DTContract cont = (DTContract)lstContratos.SelectedItem;
+            txtNombre.Text = cont.UserName.ToString();
+            txtUrl.Text = cont.Site.ToString();
         }
 
         private void CleanPanel()
@@ -112,25 +112,31 @@ namespace Infocorp.TITA.SilverlightUI
         {
             isDelete = true;
             isEdit = false;
-            Contrato cont = (Contrato)lstContratos.SelectedItem;
-            int id = cont.Id;
-            Functions func = new Functions();
-            func.DeleteContrato(id);
-            LoadLstContratos();
+            DTContract cont = (DTContract)lstContratos.SelectedItem;
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.DeleteContractCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_DeleteContractCompleted);
+            ws.DeleteContractAsync(cont.ContractId);
+        }
 
+        void ws_DeleteContractCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            GetContract();
         }
 
         private void BtnAceptarContrato_Click(object sender, RoutedEventArgs e)
         {
             if (!isEdit)
             {
-                Functions func = new Functions();
-                Contrato cont = new Contrato
+                DTContract cont = new DTContract
                 {
-                    Nombre = txtNombre.Text.ToString(),
-                    Url = txtUrl.Text.ToString()
+                    UserName = txtNombre.Text.ToString(),
+                    Site = txtUrl.Text.ToString()
                 };
-                func.AddContrato(cont);
+
+                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                ws.AddNewContractCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_AddNewContractCompleted);
+                ws.AddNewContractAsync(cont);
+                
                 PnlbtnsContrato.Visibility = Visibility.Visible;
                 pnlEditContrato.Visibility = Visibility.Collapsed;
                 PnlActionContrato.Visibility = Visibility.Collapsed;
@@ -138,16 +144,34 @@ namespace Infocorp.TITA.SilverlightUI
             }
             else if (isEdit)
             {
-                Contrato cont = (Contrato)lstContratos.SelectedItem;
-                int id = cont.Id;
-                Functions func = new Functions();
-                func.UpdateContrato(txtNombre.Text.ToString(), txtUrl.Text.ToString(), id);
+                DTContract cont = (DTContract)lstContratos.SelectedItem;
+
+                DTContract c = new DTContract();
+                c.ContractId = cont.ContractId;
+                c.Site = txtUrl.Text.ToString();
+                c.UserName = txtNombre.Text.ToString();
+
+                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                ws.ModifyContractCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ModifyContractCompleted);
+                ws.ModifyContractAsync(c);
+
+                
                 PnlbtnsContrato.Visibility = Visibility.Visible;
                 pnlEditContrato.Visibility = Visibility.Collapsed;
                 PnlActionContrato.Visibility = Visibility.Collapsed;
                 isEdit = false;
             }
-            LoadLstContratos();
+            GetContract();
+        }
+
+        void ws_ModifyContractCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void ws_AddNewContractCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void BtnCancelarContrato_Click(object sender, RoutedEventArgs e)
@@ -160,7 +184,7 @@ namespace Infocorp.TITA.SilverlightUI
         private void ButtonContract_Click(object sender, RoutedEventArgs e)
         {
             EnableOption(Option.CONTRACT);
-            LoadLstContratos();
+            GetContract();
         }
 
         #endregion
