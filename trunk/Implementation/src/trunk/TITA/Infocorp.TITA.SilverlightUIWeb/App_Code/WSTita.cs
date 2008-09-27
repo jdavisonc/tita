@@ -118,4 +118,22 @@ public class WSTita : System.Web.Services.WebService
     }
     #endregion
 
+
+    #region Apply
+
+    [WebMethod]
+    public void ApplyChanges(string url)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.ApplyChanges(url);
+    }
+
+    [WebMethod]
+    public bool HasPendingChanges(string url)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        return witInstance.HasPendingChanges(url);
+    }
+
+    #endregion
 }
