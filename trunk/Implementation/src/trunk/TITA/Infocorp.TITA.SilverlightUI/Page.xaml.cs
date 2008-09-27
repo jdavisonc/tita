@@ -23,6 +23,7 @@ namespace Infocorp.TITA.SilverlightUI
             INCIDENT,
             CONTRACT,
         }
+        private string url ="http://localhost/infocorp";
         private List<DTIssue> my_issue = new List<DTIssue>();
         private DTIssue my_issue_template = null;
         List<DTContract> my_contract = new List<DTContract>();
@@ -32,6 +33,7 @@ namespace Infocorp.TITA.SilverlightUI
         public Page()
         {
             InitializeComponent();
+            ViewPendingChanges();
         }
 
         public void EnableOption(Option o)
@@ -55,19 +57,56 @@ namespace Infocorp.TITA.SilverlightUI
             }
         }
 
+        public void ShowError(string msg, bool show)
+        {
+            if (show)
+            {
+                CanvasError.Visibility = Visibility.Visible;
+                lblError.Text = msg;
+            }
+            else 
+            {
+                CanvasError.Visibility = Visibility.Collapsed;
+                lblError.Text = "";
+            }
+        }
+
+        public void ViewPendingChanges()
+        {
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.HasPendingChangesCompleted += new EventHandler<HasPendingChangesCompletedEventArgs>(ws_HasPendingChangesCompleted);
+            ws.HasPendingChangesAsync(url);
+        }
+
+        void ws_HasPendingChangesCompleted(object sender, HasPendingChangesCompletedEventArgs e)
+        {
+            lblPending.Visibility = Visibility.Visible;
+            lblPending.Text = "Hay cambios pendientes";
+        }
+
         #region Contrato
 
         private void GetContract()
         {
-            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-            ws.GetContractsCompleted += new EventHandler<GetContractsCompletedEventArgs>(ws_GetContractsCompleted);
-            ws.GetContractsAsync();
+            try
+            {
+                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                ws.GetContractsCompleted += new EventHandler<GetContractsCompletedEventArgs>(ws_GetContractsCompleted);
+                ws.GetContractsAsync();
+            }
+            catch (Exception exp)
+            {
+                ShowError("No se pudo obtener los contratos:" + exp, true);
+            }
         }
 
         void ws_GetContractsCompleted(object sender, GetContractsCompletedEventArgs e)
         {
-            if(e.Result != null)
+            if (e.Result != null)
+            {
                 my_contract = e.Result;
+                lstContratos.ItemsSource = e.Result;
+            }
         }
 
         private void LoadLstContratos(List<DTContract> my_contract)
@@ -76,11 +115,21 @@ namespace Infocorp.TITA.SilverlightUI
                 lstContratos.ItemsSource = my_contract;
         }
 
-        private void LoadPanelEditContrato()
+        private bool LoadPanelEditContrato()
         {
-            DTContract cont = (DTContract)lstContratos.SelectedItem;
-            txtNombre.Text = cont.UserName.ToString();
-            txtUrl.Text = cont.Site.ToString();
+            bool ok = true;
+            if (lstContratos.SelectedIndex != -1)
+            {
+                DTContract cont = (DTContract)lstContratos.SelectedItem;
+                txtNombre.Text = cont.UserName.ToString();
+                txtUrl.Text = cont.Site.ToString();
+            }
+            else 
+            {
+                ShowError("Debe seleccionar un contrato", true);
+                ok = false;
+            }
+            return ok;
         }
 
         private void CleanPanel()
@@ -91,6 +140,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnNuevoContrato_Click(object sender, RoutedEventArgs e)
         {
+            ShowError("", false);
             isEdit = false;
             CleanPanel();
             pnlEditContrato.Visibility = Visibility.Visible;
@@ -100,12 +150,18 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnModificarContrato_Click(object sender, RoutedEventArgs e)
         {
-            LoadPanelEditContrato();
-            isEdit = true;
-            isDelete = false;
-            pnlEditContrato.Visibility = Visibility.Visible;
-            PnlbtnsContrato.Visibility = Visibility.Collapsed;
-            PnlActionContrato.Visibility = Visibility.Visible;
+            if (LoadPanelEditContrato())
+            {
+                isEdit = true;
+                isDelete = false;
+                pnlEditContrato.Visibility = Visibility.Visible;
+                PnlbtnsContrato.Visibility = Visibility.Collapsed;
+                PnlActionContrato.Visibility = Visibility.Visible;
+            }
+            else 
+            {
+
+            }
         }
 
         private void BtnEliminarContrato_Click(object sender, RoutedEventArgs e)
@@ -171,7 +227,6 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_AddNewContractCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         private void BtnCancelarContrato_Click(object sender, RoutedEventArgs e)
@@ -188,8 +243,7 @@ namespace Infocorp.TITA.SilverlightUI
         }
 
         #endregion
-
-
+        
         #region WorkPackage
 
         //http://localhost:2030/Infocorp.TITA.SilverlightUIWeb/WSTita.asmx
@@ -219,8 +273,7 @@ namespace Infocorp.TITA.SilverlightUI
         }
 
         #endregion
-
-
+        
         #region Incident
 
         private void ButtonIncident_Click(object sender, RoutedEventArgs e)
@@ -558,11 +611,14 @@ namespace Infocorp.TITA.SilverlightUI
 
                             ListBox lstbx = new ListBox();
                             lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
-                            lstbx.ItemsSource = field.Choices;
+                            foreach (DTField field_lst in my_issue_template.Fields)
+                            {
+                                if((field_lst.Type == Types.Choice) && (field_lst.Name == field.Name))
+                                    lstbx.ItemsSource = field_lst.Choices;
+                            }
                             lstbx.SelectedItem = field.Value;
                             lstbx.Margin = new Thickness(140, numCtrl * 50, 0, 0);
                             lstbx.Width = 80;
-                            lstbx.Height = 100;
 
                             //DropDownList drp = new DropDownList();
                             //drp.SetValue(NameProperty, "drp_" + field.Name);
@@ -632,6 +688,27 @@ namespace Infocorp.TITA.SilverlightUI
         }
 
         #endregion
+
+        #region Apply
+        private void ButtonApply_Click(object sender, RoutedEventArgs e)
+        {
+            try 
+            { 
+                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                ws.ApplyChangesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ApplyChangesCompleted);
+                ws.ApplyChangesAsync(url);
+            }
+            catch(Exception exp)
+            {
+                ShowError("Error al impactar cambios:" + exp.Message, true);
+            }
+        }
+
+        void ws_ApplyChangesCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+        }
+        #endregion
+
 
     }
 }
