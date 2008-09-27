@@ -28,5 +28,10 @@ namespace Infocorp.TITA.WpfOutlookAddin
             WindowMaker oWindow = new WindowMaker(StackPanelDT, issueFields);
             oWindow.GenerateWindow();
         }
+
+        private void StackPanelDT_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        {
+
+        }
     }
 }

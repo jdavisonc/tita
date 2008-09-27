@@ -14,15 +14,19 @@ namespace Infocorp.TITA.WpfOutlookAddIn
         private StackPanel _mainPanel;
         private List<DTField> _issueFields;
         private Grid _grid;
+        private ScrollViewer _scrollViewer;
 
         public WindowMaker( StackPanel mainPanel, List<DTField> issueFields)
         {
             _mainPanel = mainPanel;
             _issueFields = issueFields;
+            _scrollViewer = new ScrollViewer();
             _grid = new Grid();
 
             _grid.ColumnDefinitions.Add(new ColumnDefinition());
             _grid.ColumnDefinitions.Add(new ColumnDefinition());
+            _scrollViewer.Height = 270;
+            //_grid.SetValue( ScrollViewer.VerticalScrollBarVisibilityProperty ,);
             //_grid.Height = 24;
         
             //IHandlerAddIn oHandlerAddIn = new HandlerAddIn();
@@ -56,14 +60,14 @@ namespace Infocorp.TITA.WpfOutlookAddIn
         private Control InsertTextBox(string boxName) 
         {
             TextBox textBox = new TextBox();
-            textBox.Height = 19;
-            textBox.Width = 100;
+            //textBox.Height = 19;
+            //textBox.Width = 150;
             textBox.Name = boxName;
             // register textbox2's name with newgrid
             //newgrid.registername(textbox.name, textbox);
-            textBox.Margin = new System.Windows.Thickness(140, 55, 0, 0);
-            textBox.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            textBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            //textBox.Margin = new System.Windows.Thickness(0, 3, 3, 3);
+            //textBox.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            //textBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             return textBox;
 
         }
@@ -72,14 +76,14 @@ namespace Infocorp.TITA.WpfOutlookAddIn
         {
             TextBox textBox = new TextBox();
             textBox.Height = height;
-            textBox.Width = width;
+            //textBox.Width = width;
             //textBox.Name = nameTextBox;
             //Register TextBox3's Name with newgrid
            // newgrid.RegisterName(TextBox4.Name, TextBox4);
-            textBox.Margin = new System.Windows.Thickness(141, 80, 0, 72);
+            //textBox.Margin = new System.Windows.Thickness(0, 3, 3, 3);
             //textBox.Margin = new System.Windows.Thickness(left, top, right, bottom);
-            textBox.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            textBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            //textBox.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            //textBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             textBox.AcceptsReturn = true;
             textBox.AcceptsTab = true;
             textBox.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
@@ -116,7 +120,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
                     break;
                 case DTField.Types.Note:
                     //Richtexbox
-                    oReturn = InsertTextNote(19,100);
+                    oReturn = InsertTextNote(100,150);
                     break;
                 case DTField.Types.User:
                     //combo
@@ -154,6 +158,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
                 
                 //agrega el tipo correspondiente al Type del DTField
                 Control oControl = AddValueLine(lineField);
+                oControl.Margin = new System.Windows.Thickness(0, 3, 3, 3);
                 oControl.SetValue(Grid.RowProperty, line);
                 oControl.SetValue(Grid.ColumnProperty, 1);
                 _grid.Children.Add(oControl);
@@ -171,7 +176,8 @@ namespace Infocorp.TITA.WpfOutlookAddIn
                 _grid.RowDefinitions.Add(new RowDefinition());
                 AddGridLine(item,i++);
             }
-            _mainPanel.Children.Add(_grid);
+            _scrollViewer.Content = _grid;
+            _mainPanel.Children.Add(_scrollViewer);
             return true;
         }
     }
