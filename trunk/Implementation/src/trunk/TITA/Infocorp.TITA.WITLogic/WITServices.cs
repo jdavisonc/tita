@@ -143,7 +143,7 @@ namespace Infocorp.TITA.WITLogic
 
         public List<DTContract> GetContracts()
         {
-            throw new NotImplementedException();
+            return new List<DTContract>();
         }
 
         public string GetContractSite(string contractId)
