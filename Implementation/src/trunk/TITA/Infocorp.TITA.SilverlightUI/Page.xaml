@@ -9,7 +9,9 @@
         <Button HorizontalAlignment="Left" Margin="18,132,0,0" VerticalAlignment="Top" Content="Incidente" Width="112" Height="26" x:Name="ButtonIncident" Click="ButtonIncident_Click" Background="#FF1297F5"/>
         <Button HorizontalAlignment="Left" Margin="18,196,0,184" VerticalAlignment="Top" Content="Reportes" Width="112" Height="26" x:Name="ButtonReports" Background="#FF0994F5"/>
         <Button Margin="18,166,0,0"  VerticalAlignment="Top" Click="ButtonWP_Click" Content="WorkPackage" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonWP" Background="#FF0B97F9"/>
-
+        <Button Margin="18,230,0,0"  VerticalAlignment="Top" Click="ButtonApply_Click" Content="Aplicar" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonApply" Background="#FF0B97F9"/>
+        <TextBlock Margin="18,400,0,0"  VerticalAlignment="Top" x:Name="lblPending" Visibility="Collapsed" Width="112" HorizontalAlignment="Left" Height="26"></TextBlock>
+        
         <!--WP--> 
         <Canvas x:Name="CanvasWP" Margin="138,0,0,0" VerticalAlignment="Top" Visibility="Collapsed">
             <my:DataGrid x:Name="grdWP" AutoGenerateColumns="True" Width="auto"></my:DataGrid>
@@ -18,7 +20,7 @@
         <!--CONTRATO -->
         <Canvas x:Name="pnl_Contrato" Margin="138,0,0,0" VerticalAlignment="Top" Visibility="Collapsed">
             <my:DataGrid x:Name="lstContratos" AutoGenerateColumns="True" Width="auto"></my:DataGrid>
-                        
+            <TextBlock x:Name="lblErrorContract" Visibility="Collapsed"></TextBlock>            
             <Canvas Margin="138,0,0,0" x:Name="PnlbtnsContrato" Background="White" Width="auto" Visibility="Visible">
                 <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Nuevo" Click="BtnNuevoContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoContrato"  Background="#FF0B97F9"/>
                 <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnModificarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnModificarContrato"  Background="#FF0B97F9"/>
@@ -57,7 +59,10 @@
             </Canvas>
         </Canvas>
         
-
+        <!--Error -->
+        <Canvas x:Name="CanvasError" Margin="138,0,0,0" VerticalAlignment="Top">
+            <TextBlock x:Name="lblError"></TextBlock>
+        </Canvas>
 
     </Grid >
 </UserControl>
