@@ -65,8 +65,8 @@ namespace Infocorp.TITA.WITLogic
                 };
             });
 
-            //return SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint().GetIssues(urlSite);
-            return result;
+            return SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint().GetIssues(urlSite);
+            //return result;
         }
 
         public void ApplyChanges()

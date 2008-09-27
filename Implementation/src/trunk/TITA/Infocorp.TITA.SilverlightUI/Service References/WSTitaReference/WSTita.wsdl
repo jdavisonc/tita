@@ -2,13 +2,13 @@
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
-      <s:element name="GetIssues">
+      <s:element name="GetWPS">
         <s:complexType />
       </s:element>
-      <s:element name="GetIssuesResponse">
+      <s:element name="GetWPSResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetIssuesResult" type="tns:ArrayOfDTIssue" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetWPSResult" type="tns:ArrayOfDTIssue" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -66,6 +66,16 @@
           <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="GetIssues">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetIssuesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetIssuesResult" type="tns:ArrayOfDTIssue" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="AddIssue">
         <s:complexType>
           <s:sequence>
@@ -108,6 +118,12 @@
       </s:element>
     </s:schema>
   </wsdl:types>
+  <wsdl:message name="GetWPSSoapIn">
+    <wsdl:part name="parameters" element="tns:GetWPS" />
+  </wsdl:message>
+  <wsdl:message name="GetWPSSoapOut">
+    <wsdl:part name="parameters" element="tns:GetWPSResponse" />
+  </wsdl:message>
   <wsdl:message name="GetIssuesSoapIn">
     <wsdl:part name="parameters" element="tns:GetIssues" />
   </wsdl:message>
@@ -139,6 +155,10 @@
     <wsdl:part name="parameters" element="tns:DeleteIssueResponse" />
   </wsdl:message>
   <wsdl:portType name="WSTitaSoap">
+    <wsdl:operation name="GetWPS">
+      <wsdl:input message="tns:GetWPSSoapIn" />
+      <wsdl:output message="tns:GetWPSSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="GetIssues">
       <wsdl:input message="tns:GetIssuesSoapIn" />
       <wsdl:output message="tns:GetIssuesSoapOut" />
@@ -162,6 +182,15 @@
   </wsdl:portType>
   <wsdl:binding name="WSTitaSoap" type="tns:WSTitaSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetWPS">
+      <soap:operation soapAction="http://tempuri.org/GetWPS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetIssues">
       <soap:operation soapAction="http://tempuri.org/GetIssues" style="document" />
       <wsdl:input>
@@ -210,6 +239,15 @@
   </wsdl:binding>
   <wsdl:binding name="WSTitaSoap12" type="tns:WSTitaSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetWPS">
+      <soap12:operation soapAction="http://tempuri.org/GetWPS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetIssues">
       <soap12:operation soapAction="http://tempuri.org/GetIssues" style="document" />
       <wsdl:input>
@@ -258,10 +296,10 @@
   </wsdl:binding>
   <wsdl:service name="WSTita">
     <wsdl:port name="WSTitaSoap" binding="tns:WSTitaSoap">
-      <soap:address location="http://localhost:2030/Infocorp.TITA.SilverlightUIWeb/WSTita.asmx" />
+      <soap:address location="http://localhost:8082/WSTita.asmx" />
     </wsdl:port>
     <wsdl:port name="WSTitaSoap12" binding="tns:WSTitaSoap12">
-      <soap12:address location="http://localhost:2030/Infocorp.TITA.SilverlightUIWeb/WSTita.asmx" />
+      <soap12:address location="http://localhost:8082/WSTita.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

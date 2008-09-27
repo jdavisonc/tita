@@ -19,11 +19,11 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:2030/Infocorp.TITA.SilverlightUIWeb/WSTita.asmx" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8082/WSTita.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="WSTita1.wsdl" MetadataType="Wsdl" ID="285251e0-884d-4d13-bd82-53da36aaed74" SourceId="1" SourceUrl="http://localhost:2030/Infocorp.TITA.SilverlightUIWeb/WSTita.asmx?wsdl" />
-    <MetadataFile FileName="WSTita1.disco" MetadataType="Disco" ID="820eca70-d9f6-4687-b3a7-28dc383bb0bc" SourceId="1" SourceUrl="http://localhost:2030/Infocorp.TITA.SilverlightUIWeb/WSTita.asmx?disco" />
+    <MetadataFile FileName="WSTita.wsdl" MetadataType="Wsdl" ID="be475c7b-546e-4877-9fea-f8cf5b12bb5d" SourceId="1" SourceUrl="http://localhost:8082/WSTita.asmx?wsdl" />
+    <MetadataFile FileName="WSTita.disco" MetadataType="Disco" ID="7561d07d-8bdc-4074-8803-7a18242d07bc" SourceId="1" SourceUrl="http://localhost:8082/WSTita.asmx?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

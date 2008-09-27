@@ -8,9 +8,8 @@
             </basicHttpBinding>
         </bindings>
         <client>
-            <endpoint address="http://localhost:2030/Infocorp.TITA.SilverlightUIWeb/WSTita.asmx"
-                binding="basicHttpBinding" bindingConfiguration="WSTitaSoap"
-                contract="Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap"
+            <endpoint address="http://localhost:8082/WSTita.asmx" binding="basicHttpBinding"
+                bindingConfiguration="WSTitaSoap" contract="Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap"
                 name="WSTitaSoap" />
         </client>
     </system.serviceModel>
