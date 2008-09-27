@@ -59,7 +59,7 @@ namespace Infocorp.TITA.WITLogic
 
             commands.ForEach(delegate(DTCommandInfo command)
             {
-                if (command.CommandType == CommandType.ADD)
+                if (command.CommandType == CommandType.ADD || command.CommandType == CommandType.MODIFY)
                 {
                     result.Add(command.Issue);
                 };
