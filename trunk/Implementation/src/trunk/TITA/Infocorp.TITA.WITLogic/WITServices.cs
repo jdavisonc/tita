@@ -156,12 +156,21 @@ namespace Infocorp.TITA.WITLogic
 
         public void AddNewContract(DTContract contract)
         {
-            throw new NotImplementedException();
+            try
+            {
+                DataBaseAccess.DataBaseAccess db = new DataBaseAccess.DataBaseAccess();
+                db.AddContract(contract);
+            }
+            catch (Exception exc)
+            {
+                string s = exc.Message;
+            }
         }
 
         public void DeleteContract(string contractId)
         {
-            throw new NotImplementedException();
+            DataBaseAccess.DataBaseAccess db = new DataBaseAccess.DataBaseAccess();
+            db.DeleteContract(contractId);
         }
 
         public void ChangeCurrentContract(int contractId)
