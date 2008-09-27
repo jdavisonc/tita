@@ -54,6 +54,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Themes\DatePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Window1.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -69,9 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerOutlookSharepoint.cs" />
-    <Compile Include="DatePicker\DateHelper.cs" />
-    <Compile Include="DatePicker\DatePicker.cs" />
-    <Compile Include="DatePicker\OneWayValueConverters.cs" />
+    <Compile Include="DateHelper.cs" />
+    <Compile Include="DatePicker.cs" />
+    <Compile Include="OneWayValueConverters.cs" />
     <Compile Include="DTUrl.cs" />
     <Compile Include="FabricOutlookSP.cs" />
     <Compile Include="HandlerAddIn.cs" />
