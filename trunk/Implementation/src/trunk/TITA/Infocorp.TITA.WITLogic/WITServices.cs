@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Infocorp.TITA.DataTypes;
-using Infocorp.TITA.DataBaseAccess;
 using Infocorp.TITA.SharePointUtilities;
 
 namespace Infocorp.TITA.WITLogic
@@ -172,9 +171,9 @@ namespace Infocorp.TITA.WITLogic
 
         public List<DTContract> GetContracts()
         {
-            //DataBaseAcces db = new DataBaseAcces();
-            //return  db.ContractList();
-            return new List<DTContract>();
+            DataBaseAccess.DataBaseAccess db = new DataBaseAccess.DataBaseAccess();
+            return  db.ContractList();
+            //return new List<DTContract>();
         }
 
         public string GetContractSite(string contractId)
