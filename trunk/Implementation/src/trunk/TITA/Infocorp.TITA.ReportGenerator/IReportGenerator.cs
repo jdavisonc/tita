@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Infocorp.TITA.ReportGenerator
 {
-    interface IReportGenerator
+    /*interface IReportGenerator
     {
         DataReporte ReportDesvWorkPackage(); 
-    }
+    }*/
 }
