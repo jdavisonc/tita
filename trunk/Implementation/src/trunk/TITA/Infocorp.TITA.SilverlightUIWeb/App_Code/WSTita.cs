@@ -26,6 +26,7 @@ public class WSTita : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
+    #region Issue
     [WebMethod]
     public List<DTIssue> GetWPS()
     {
@@ -71,5 +72,50 @@ public class WSTita : System.Web.Services.WebService
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
         witInstance.DeleteIssue(id);
     }
-    
+    #endregion
+
+    #region Contract
+    [WebMethod]
+    public void AddNewContract(DTContract contract)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.AddNewContract(contract);
+    }
+
+    [WebMethod]
+    public void DeleteContract(string contractId)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.DeleteContract(contractId);
+    }
+
+    [WebMethod]
+    public void ChangeCurrentContract(int contractId)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.ChangeCurrentContract(contractId);
+    }
+
+    [WebMethod]
+    public List<DTContract> GetContracts()
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        return witInstance.GetContracts();
+    }
+
+    [WebMethod]
+    public string GetContractSite(string contractId)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        return witInstance.GetContractSite(contractId);
+    }
+
+    [WebMethod]
+    public void ModifyContract(DTContract contract)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.ModifyContract(contract);
+    }
+    #endregion
+
 }
