@@ -35,7 +35,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Infocorp.TITA.SilverlightUI
 		DefaultWebSiteLanguage = "Visual C#"
 		ProjOutputReferences = "{E878AFE4-21F8-4025-BFF9-E7CB036B8A46}|ClientBin|false;"
 	EndProjectSection
-EndProject 
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.WITLogic", "Infocorp.TITA.WITLogic\Infocorp.TITA.WITLogic.csproj", "{DC0F0C14-089E-4145-96EE-0E6D47B95C1B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "infocorp.TITA.DataBasesAcces", "infocorp.TITA.DataBasesAcces\infocorp.TITA.DataBasesAcces.csproj", "{0C09FD6B-D473-4D61-B935-33C986F371D6}"
@@ -45,6 +45,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.WpfOutlookAddin", "Infocorp.TITA.WpfOutlookAddin\Infocorp.TITA.WpfOutlookAddin.csproj", "{7684171B-311E-4008-9645-D8EE1BF203CF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.DataBaseAccess", "Infocorp.TITA.DataBaseAccess\Infocorp.TITA.DataBaseAccess.csproj", "{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.ReportGenerator", "Infocorp.TITA.ReportGenerator\Infocorp.TITA.ReportGenerator.csproj", "{FFEEDC06-1416-442F-9B13-8E2D735C936F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -164,6 +166,16 @@ Global
 		{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{FFEEDC06-1416-442F-9B13-8E2D735C936F}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{FFEEDC06-1416-442F-9B13-8E2D735C936F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFEEDC06-1416-442F-9B13-8E2D735C936F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFEEDC06-1416-442F-9B13-8E2D735C936F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{FFEEDC06-1416-442F-9B13-8E2D735C936F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{FFEEDC06-1416-442F-9B13-8E2D735C936F}.Release|.NET.ActiveCfg = Release|Any CPU
+		{FFEEDC06-1416-442F-9B13-8E2D735C936F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFEEDC06-1416-442F-9B13-8E2D735C936F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFEEDC06-1416-442F-9B13-8E2D735C936F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FFEEDC06-1416-442F-9B13-8E2D735C936F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
