@@ -80,7 +80,7 @@ namespace Infocorp.TITA.DataBaseAccess
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private string _id_contract;
+		private int _id_contract;
 		
 		private string _site;
 		
@@ -90,7 +90,7 @@ namespace Infocorp.TITA.DataBaseAccess
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void Onid_contractChanging(string value);
+    partial void Onid_contractChanging(int value);
     partial void Onid_contractChanged();
     partial void OnsiteChanging(string value);
     partial void OnsiteChanged();
@@ -103,8 +103,8 @@ namespace Infocorp.TITA.DataBaseAccess
 			OnCreated();
 		}
 		
-		[Column(Storage="_id_contract", DbType="NChar(40) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string id_contract
+		[Column(Storage="_id_contract", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id_contract
 		{
 			get
 			{
