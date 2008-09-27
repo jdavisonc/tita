@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Infocorp.TITA.DataTypes;
-using Infocorp.TITA.DataBaseAccess;
 
-namespace Infocorp.TITA.DataBasesAcces
+namespace Infocorp.TITA.DataBaseAccess
 {
    /* public class DataContract
     {
