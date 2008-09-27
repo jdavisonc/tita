@@ -14,11 +14,14 @@ namespace Infocorp.TITA.SharePointUtilities
         {
             try
             {
+                //System.Security.Principal.WindowsImpersonationContext wic = null;
+                //wic = System.Security.Principal.WindowsIdentity.GetCurrent().Impersonate();
                 List<DTIssue> issues = new List<DTIssue>();
                 using (SPSite site = new SPSite(urlSite))
                 {
                     using (SPWeb web = site.OpenWeb())
                     {
+                        
                         SPList list = web.Lists["Issues"];
                         SPListItemCollection listItemCollection = list.Items;
                         List<DTAttachment> attachmentCollectionIssue;
