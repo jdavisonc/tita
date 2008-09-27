@@ -32,7 +32,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Infocorp.TITA.SilverlightUI
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "2030"
 		DefaultWebSiteLanguage = "Visual C#"
 		ProjOutputReferences = "{E878AFE4-21F8-4025-BFF9-E7CB036B8A46}|ClientBin|false;"
 	EndProjectSection
@@ -40,6 +39,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.WITLogic", "Infocorp.TITA.WITLogic\Infocorp.TITA.WITLogic.csproj", "{DC0F0C14-089E-4145-96EE-0E6D47B95C1B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "infocorp.TITA.DataBasesAcces", "infocorp.TITA.DataBasesAcces\infocorp.TITA.DataBasesAcces.csproj", "{0C09FD6B-D473-4D61-B935-33C986F371D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.OutlookAddIn", "Infocorp.TITA.OutlookAddIn\Infocorp.TITA.OutlookAddIn.csproj", "{03BE9197-CB4F-4FF5-BC7F-BA6D3E94681E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.WpfOutlookAddin", "Infocorp.TITA.WpfOutlookAddin\Infocorp.TITA.WpfOutlookAddin.csproj", "{7684171B-311E-4008-9645-D8EE1BF203CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +132,26 @@ Global
 		{0C09FD6B-D473-4D61-B935-33C986F371D6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0C09FD6B-D473-4D61-B935-33C986F371D6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0C09FD6B-D473-4D61-B935-33C986F371D6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{03BE9197-CB4F-4FF5-BC7F-BA6D3E94681E}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{03BE9197-CB4F-4FF5-BC7F-BA6D3E94681E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03BE9197-CB4F-4FF5-BC7F-BA6D3E94681E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03BE9197-CB4F-4FF5-BC7F-BA6D3E94681E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{03BE9197-CB4F-4FF5-BC7F-BA6D3E94681E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{03BE9197-CB4F-4FF5-BC7F-BA6D3E94681E}.Release|.NET.ActiveCfg = Release|Any CPU
+		{03BE9197-CB4F-4FF5-BC7F-BA6D3E94681E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03BE9197-CB4F-4FF5-BC7F-BA6D3E94681E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03BE9197-CB4F-4FF5-BC7F-BA6D3E94681E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{03BE9197-CB4F-4FF5-BC7F-BA6D3E94681E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7684171B-311E-4008-9645-D8EE1BF203CF}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{7684171B-311E-4008-9645-D8EE1BF203CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7684171B-311E-4008-9645-D8EE1BF203CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7684171B-311E-4008-9645-D8EE1BF203CF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7684171B-311E-4008-9645-D8EE1BF203CF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7684171B-311E-4008-9645-D8EE1BF203CF}.Release|.NET.ActiveCfg = Release|Any CPU
+		{7684171B-311E-4008-9645-D8EE1BF203CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7684171B-311E-4008-9645-D8EE1BF203CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7684171B-311E-4008-9645-D8EE1BF203CF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7684171B-311E-4008-9645-D8EE1BF203CF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
