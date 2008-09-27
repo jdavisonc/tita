@@ -32,7 +32,6 @@ namespace Infocorp.TITA.DataBaseAccess
         {
             LinqDataContext dc = new LinqDataContext();
             Contract contract = new Contract();
-            contract.id_contract = c.ContractId;
             contract.site = c.Site;
             contract.user = c.UserName;
             dc.Contracts.InsertOnSubmit(contract);
@@ -45,7 +44,7 @@ namespace Infocorp.TITA.DataBaseAccess
 
             LinqDataContext dc = new LinqDataContext();
             var contract = from u in dc.Contracts
-                           where u.id_contract == idContract
+                           where u.id_contract == int.Parse(idContract)
                            select u;
 
             if (contract.Count() > 0)
@@ -66,7 +65,7 @@ namespace Infocorp.TITA.DataBaseAccess
             foreach (Contract contract in contracts)
             {
                 DTContract dtContract = new DTContract();
-                dtContract.ContractId = contract.id_contract;
+                dtContract.ContractId = contract.id_contract.ToString();
                 dtContract.Site = contract.site;
                 dtContract.UserName = contract.user;
                 result.Add(dtContract);
@@ -79,7 +78,7 @@ namespace Infocorp.TITA.DataBaseAccess
         {
             LinqDataContext dc = new LinqDataContext();
             var contract = from u in dc.Contracts
-                           where u.id_contract == idContract
+                           where u.id_contract == int.Parse(idContract)
                            select u;
 
             if (contract.Count() > 0)
@@ -93,7 +92,7 @@ namespace Infocorp.TITA.DataBaseAccess
         {
             LinqDataContext dc = new LinqDataContext();
             var contract = from u in dc.Contracts
-                           where u.id_contract == c.ContractId
+                           where u.id_contract == int.Parse(c.ContractId)
                            select u;
 
             if (contract.Count() > 0)
