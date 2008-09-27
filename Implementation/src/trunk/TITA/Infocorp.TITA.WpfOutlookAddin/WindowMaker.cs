@@ -23,17 +23,15 @@ namespace Infocorp.TITA.WpfOutlookAddIn
 
             _grid.ColumnDefinitions.Add(new ColumnDefinition());
             _grid.ColumnDefinitions.Add(new ColumnDefinition());
-            _grid.Height = 24;
+            //_grid.Height = 24;
         
             //IHandlerAddIn oHandlerAddIn = new HandlerAddIn();
             //InsertCombo(oHandlerAddIn.GetUrlContracts());
-            
         }
 
         private ComboBox InsertCombo(List<DTUrl> listChoice)
         {
             ComboBox comboChoice = new ComboBox();
-            comboChoice.SetValue(Grid.ColumnProperty, 1);
             comboChoice.ItemsSource = listChoice;
             return comboChoice;
         }
@@ -41,7 +39,6 @@ namespace Infocorp.TITA.WpfOutlookAddIn
         private ComboBox InsertCombo(List<string> listChoice) 
         {
             ComboBox comboChoice = new ComboBox();
-            comboChoice.SetValue(Grid.ColumnProperty, 1);
             comboChoice.ItemsSource = listChoice;
             return comboChoice;
         }
@@ -52,7 +49,6 @@ namespace Infocorp.TITA.WpfOutlookAddIn
             List<string> listValues = new List<string>();
             listValues.Add("S");
             listValues.Add("N");
-            comboChoice.SetValue(Grid.ColumnProperty, 1);
             comboChoice.ItemsSource = listValues;
             return comboChoice;
         }
@@ -68,7 +64,6 @@ namespace Infocorp.TITA.WpfOutlookAddIn
             textBox.Margin = new System.Windows.Thickness(140, 55, 0, 0);
             textBox.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             textBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-            textBox.SetValue(Grid.ColumnProperty, 1);
             return textBox;
 
         }
@@ -144,31 +139,37 @@ namespace Infocorp.TITA.WpfOutlookAddIn
             return label;
         }
 
-        private void AddGridLine(DTField lineField) 
+        private void AddGridLine(DTField lineField, int line) 
         {
             if (lineField.Type != DTField.Types.Counter)
             {
-                _grid.ColumnDefinitions.Add(new ColumnDefinition());
-                _grid.ColumnDefinitions.Add(new ColumnDefinition());
-                _grid.Height = 24;
+                //_grid.ColumnDefinitions.Add(new ColumnDefinition());
+                //_grid.ColumnDefinitions.Add(new ColumnDefinition());
+                //_grid.Height = 24;
                 
                 //agrega el nombre el label
-                _grid.Children.Add(AddLabelLine(lineField.Name));
+                Label oLabelLine = AddLabelLine(lineField.Name);
+                oLabelLine.SetValue(Grid.RowProperty, line);
+                _grid.Children.Add(oLabelLine);
                 
                 //agrega el tipo correspondiente al Type del DTField
-                _grid.Children.Add(AddValueLine(lineField));
+                Control oControl = AddValueLine(lineField);
+                oControl.SetValue(Grid.RowProperty, line);
+                oControl.SetValue(Grid.ColumnProperty, 1);
+                _grid.Children.Add(oControl);
 
             }
            
         }
 
-
         public bool GenerateWindow()
         {
+            int i = 0;
+            
             foreach (DTField item in _issueFields)
             {
-                AddGridLine(item);
-                
+                _grid.RowDefinitions.Add(new RowDefinition());
+                AddGridLine(item,i++);
             }
             _mainPanel.Children.Add(_grid);
             return true;
