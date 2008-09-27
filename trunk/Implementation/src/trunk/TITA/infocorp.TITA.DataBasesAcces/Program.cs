@@ -17,13 +17,13 @@ namespace infocorp.TITA.DataBasesAcces
             dc.Site = "marcos";
             dc.UserName = "modificado";
             DataBaseAcces da = new DataBaseAcces();
-           //da.AddContract(dc);
+           da.AddContract(dc);
 
             //da.DeleteContract(dc.ContractId);
-            List<Contract> lis = da.ContractList();
-            foreach (var iter in lis)
-                Console.WriteLine(iter.id_contract);
-            Console.ReadLine();
+           // List<DTContract> lis = da.ContractList();
+            //foreach (var iter in lis)
+            //    Console.WriteLine(iter.id_contract);
+            //Console.ReadLine();
             /*string salida = da.ContractSite(dc.idContract);
             Console.WriteLine(salida);
             Console.ReadLine();*/

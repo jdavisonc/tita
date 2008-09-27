@@ -35,6 +35,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -53,6 +56,10 @@
     <Compile Include="WITServices.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Infocorp.TITA.DataBaseAccess\Infocorp.TITA.DataBaseAccess.csproj">
+      <Project>{04E5A41B-D059-4F9F-9FBB-6E4F2CA6BBBE}</Project>
+      <Name>Infocorp.TITA.DataBaseAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infocorp.TITA.DataTypes\Infocorp.TITA.DataTypes.csproj">
       <Project>{FC4C3770-4D7F-4B3F-A9F1-6E541B3AEE72}</Project>
       <Name>Infocorp.TITA.DataTypes</Name>
