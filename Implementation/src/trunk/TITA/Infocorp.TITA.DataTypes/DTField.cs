@@ -9,7 +9,6 @@ namespace Infocorp.TITA.DataTypes
     [DataContract]
     public class DTField
     {
-
         private string _name = string.Empty;
         private Types _type = Types.Integer;
         private bool _required = false;
@@ -90,7 +89,17 @@ namespace Infocorp.TITA.DataTypes
         public string Value
         {
             get { return _value; }
-            set { _value = value; }
+            set 
+            { 
+                if (_type == Types.DateTime)
+                {
+                    _value = (DateTime.Parse(value)).ToString("yyyy-MM-dd hh:mm:ss");
+                }
+                else
+                {
+                    _value = value;
+                }
+            }
         }
 
         public override bool Equals(object obj)
