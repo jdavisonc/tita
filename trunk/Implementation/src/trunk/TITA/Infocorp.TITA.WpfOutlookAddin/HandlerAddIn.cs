@@ -87,7 +87,7 @@ namespace Infocorp.TITA.WpfOutlookAddin
                         break;
 	            }
             }
-            List<DTField> oList = dictionaryElements.Keys;
+            List<DTField> oList = new List<DTField>(dictionaryElements.Keys);
             BuildIssue(oList);
 
         }
@@ -142,7 +142,7 @@ namespace Infocorp.TITA.WpfOutlookAddin
             //a Sharepoint
             List<DTAttachment> attachments= new List<DTAttachment>();
             DTIssue oIssue = new DTIssue(fields, attachments);
-            _outlookSP.AddIssue(_urlContract, issue);
+            _outlookSP.AddIssue(_urlContract, oIssue);
         }
 
         #endregion

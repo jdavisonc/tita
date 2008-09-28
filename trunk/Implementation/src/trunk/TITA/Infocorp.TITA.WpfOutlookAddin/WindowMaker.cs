@@ -56,9 +56,10 @@ namespace Infocorp.TITA.WpfOutlookAddIn
         {
             ComboBox comboChoice = new ComboBox();
             List<string> listValues = new List<string>();
-            listValues.Add("S");
-            listValues.Add("N");
+            listValues.Add("True");
+            listValues.Add("False");
             comboChoice.ItemsSource = listValues;
+            comboChoice.SelectedItem = listValues[0];
             return comboChoice;
         }
 
