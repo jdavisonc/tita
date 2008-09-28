@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Infocorp.TITA.WpfOutlookAddin;
 using Infocorp.TITA.DataTypes;
 using System.Windows.Controls;
 using AC.AvalonControlsLibrary.Controls;
+using System.Collections.Generic;
+using System.Windows;
+
 
 namespace Infocorp.TITA.WpfOutlookAddIn
 {
@@ -13,11 +15,13 @@ namespace Infocorp.TITA.WpfOutlookAddIn
     {
         private StackPanel _mainPanel;
         private List<DTField> _issueFields;
+        private Dictionary<string, Control> _mapElements;
         private Grid _grid;
         private ScrollViewer _scrollViewer;
 
         public WindowMaker( StackPanel mainPanel, List<DTField> issueFields)
         {
+            _mapElements = new Dictionary<string,Control>();
             _mainPanel = mainPanel;
             _issueFields = issueFields;
             _scrollViewer = new ScrollViewer();
@@ -177,9 +181,38 @@ namespace Infocorp.TITA.WpfOutlookAddIn
                 _grid.RowDefinitions.Add(new RowDefinition());
                 AddGridLine(item,i++);
             }
+
+            _grid.RowDefinitions.Add(new RowDefinition ());
+            Button oButtonImpact = new Button() ;
+            oButtonImpact.SetValue(Grid.ColumnProperty, 1);
+            oButtonImpact.SetValue(Grid.RowProperty, i++);
+            oButtonImpact.Margin = new System.Windows.Thickness(30, 10, 30, 10);
+            oButtonImpact.Content = "Impactar";
+            oButtonImpact.Click += new RoutedEventHandler(oButtonImpact_Click);
+            _grid.Children.Add(oButtonImpact);
             _scrollViewer.Content = _grid;
             _mainPanel.Children.Add(_scrollViewer);
             return true;
         }
+       
+        private void oButtonImpact_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BuildIssueToSend(string urlIssue)
+        {
+            //_mainPanel.Children.
+            HandlerAddIn oHandlerAddIn = HandlerAddIn.GetInstanceHandlerAddIn();
+            List<DTAttachment> oMailListAttachments = new List<DTAttachment>();
+            DTIssue oDTIssueInfo = new DTIssue(_issueFields, oMailListAttachments);
+ 
+
+           // oHandlerAddIn.BuildIssue(urlIssue,DTIssue issue);
+            //url, DTIssue
+        }
+
+
     }
+
 }
