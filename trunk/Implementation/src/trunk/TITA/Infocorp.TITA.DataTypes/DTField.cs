@@ -14,6 +14,7 @@ namespace Infocorp.TITA.DataTypes
         private bool _required = false;
         private string _value = string.Empty;
         private List<string> _choices = null;
+        private bool _isDateOnly = false;
 
         public enum Types
         {
@@ -88,7 +89,17 @@ namespace Infocorp.TITA.DataTypes
         [DataMember]
         public string Value
         {
-            get { return _value; }
+            get 
+            {
+                if (_type == Types.DateTime && _isDateOnly)
+                {
+                    return (DateTime.Parse(_value)).ToString("yyyy-MM-dd"); 
+                }
+                else 
+                {
+                    return _value; 
+                }
+            }
             set 
             { 
                 if (_type == Types.DateTime)
@@ -98,6 +109,19 @@ namespace Infocorp.TITA.DataTypes
                 else
                 {
                     _value = value;
+                }
+            }
+        }
+
+        [DataMember]
+        public bool IsDateOnly
+        {
+            get { return _isDateOnly; }
+            set 
+            {
+                if (_type == Types.DateTime)
+                {
+                    _isDateOnly = value;
                 }
             }
         }
