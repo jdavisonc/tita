@@ -35,7 +35,9 @@ namespace Infocorp.TITA.WpfOutlookAddIn
 
         private void btnContracts_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
+
+        
     }
 }

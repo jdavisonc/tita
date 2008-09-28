@@ -15,13 +15,13 @@ namespace Infocorp.TITA.WpfOutlookAddIn
     {
         private StackPanel _mainPanel;
         private List<DTField> _issueFields;
-        private Dictionary<string, Control> _mapElements;
+        private Dictionary<DTField, Control> _mapElements;
         private Grid _grid;
         private ScrollViewer _scrollViewer;
 
-        public WindowMaker( StackPanel mainPanel, List<DTField> issueFields)
+        public WindowMaker( StackPanel mainPanel, List<DTField> issueFields, Dictionary<DTField,Control> mapElements)
         {
-            _mapElements = new Dictionary<string,Control>();
+            _mapElements = mapElements;
             _mainPanel = mainPanel;
             _issueFields = issueFields;
             _scrollViewer = new ScrollViewer();
@@ -148,14 +148,10 @@ namespace Infocorp.TITA.WpfOutlookAddIn
             return label;
         }
 
-        private void AddGridLine(DTField lineField, int line) 
+        private Control AddGridLine(DTField lineField, int line) 
         {
             if (lineField.Type != DTField.Types.Counter)
             {
-                //_grid.ColumnDefinitions.Add(new ColumnDefinition());
-                //_grid.ColumnDefinitions.Add(new ColumnDefinition());
-                //_grid.Height = 24;
-                
                 //agrega el nombre el label
                 Label oLabelLine = AddLabelLine(lineField.Name);
                 oLabelLine.SetValue(Grid.RowProperty, line);
@@ -167,45 +163,44 @@ namespace Infocorp.TITA.WpfOutlookAddIn
                 oControl.SetValue(Grid.RowProperty, line);
                 oControl.SetValue(Grid.ColumnProperty, 1);
                 _grid.Children.Add(oControl);
+                return oControl;
 
             }
+            return null;
            
         }
 
-        public bool GenerateWindow()
+        public bool GenerateWindow(Button sendIssueButton)
         {
             int i = 0;
-            
+            Control oTempControl;
             foreach (DTField item in _issueFields)
             {
                 _grid.RowDefinitions.Add(new RowDefinition());
-                AddGridLine(item,i++);
+                oTempControl=AddGridLine(item,i++);
+                if(oTempControl != null)
+                {
+                    _mapElements.Add(item, oTempControl);
+                }
             }
 
             _grid.RowDefinitions.Add(new RowDefinition ());
-            Button oButtonImpact = new Button() ;
-            oButtonImpact.SetValue(Grid.ColumnProperty, 1);
-            oButtonImpact.SetValue(Grid.RowProperty, i++);
-            oButtonImpact.Margin = new System.Windows.Thickness(30, 10, 30, 10);
-            oButtonImpact.Content = "Impactar";
-            oButtonImpact.Click += new RoutedEventHandler(oButtonImpact_Click);
-            _grid.Children.Add(oButtonImpact);
+            
+            sendIssueButton.SetValue(Grid.ColumnProperty, 1);
+            sendIssueButton.SetValue(Grid.RowProperty, i++);
+
+            _grid.Children.Add(sendIssueButton);
             _scrollViewer.Content = _grid;
             _mainPanel.Children.Add(_scrollViewer);
             return true;
         }
-       
-        private void oButtonImpact_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
 
         private void BuildIssueToSend(string urlIssue)
         {
-            //_mainPanel.Children.
-            HandlerAddIn oHandlerAddIn = HandlerAddIn.GetInstanceHandlerAddIn();
-            List<DTAttachment> oMailListAttachments = new List<DTAttachment>();
-            DTIssue oDTIssueInfo = new DTIssue(_issueFields, oMailListAttachments);
+           
+            //List<DTAttachment> oMailListAttachments = new List<DTAttachment>();
+            //DTIssue oDTIssueInfo = new DTIssue(_issueFields, oMailListAttachments);
  
 
            // oHandlerAddIn.BuildIssue(urlIssue,DTIssue issue);

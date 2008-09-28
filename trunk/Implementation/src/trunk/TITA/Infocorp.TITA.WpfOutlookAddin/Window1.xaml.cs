@@ -21,12 +21,33 @@ namespace Infocorp.TITA.WpfOutlookAddin
     /// </summary>
     public partial class Window1 : Window
     {
+        private Button _sendIssueButton;
+        private Dictionary<DTField, Control> _mapElements;
+
+        public Dictionary<DTField, Control> MapElements
+        {
+            get { return _mapElements; }
+            set { _mapElements = value; }
+        }
+
+        public Button SendIssueButton
+        {
+            get { return _sendIssueButton; }
+        }
+
+
 
         public Window1(List<DTField> issueFields)
         {
             InitializeComponent();
-            WindowMaker oWindow = new WindowMaker(StackPanelDT, issueFields);
-            oWindow.GenerateWindow();
+            _sendIssueButton = new Button();
+            _sendIssueButton.Margin = new System.Windows.Thickness(30, 10, 30, 10);
+            _sendIssueButton.Content = "Impactar";
+          
+            _mapElements = new Dictionary<DTField, Control>();
+
+            WindowMaker oWindow = new WindowMaker(StackPanelDT, issueFields, _mapElements);
+            oWindow.GenerateWindow(_sendIssueButton);
         }
 
         private void StackPanelDT_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
