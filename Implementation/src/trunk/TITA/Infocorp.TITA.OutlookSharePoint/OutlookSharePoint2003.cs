@@ -31,16 +31,17 @@ namespace Infocorp.TITA.OutlookSharePoint
                         List<DTField> fieldCollection = issue.Fields;
                         foreach (DTField field in fieldCollection)
                         {
-                            if (field.Type != DTField.Types.User)
+                            if (field.Type == DTField.Types.DateTime)
                             {
-                                listItem[field.Name] = field.Value;
+                                if (field.Value.CompareTo("") != 0)
+                                    listItem[field.Name] = DateTime.Parse(field.Value);
                             }
-                            else
+                            else if (field.Type == DTField.Types.User)
                             {
                                 SPUserCollection userCollection = web.AllUsers;
                                 bool stop = false;
                                 int i = 0;
-                                while (!stop)
+                                while (!stop && i < userCollection.Count)
                                 {
                                     if (userCollection[i].Name.CompareTo(field.Value) == 0)
                                     {
@@ -49,6 +50,10 @@ namespace Infocorp.TITA.OutlookSharePoint
                                     }
                                     i++;
                                 }
+                            }
+                            else if (field.Type != DTField.Types.Counter)
+                            {
+                                listItem[field.Name] = field.Value;
                             }
                         }
                         SPAttachmentCollection listItemAttachmentCollection = listItem.Attachments;
