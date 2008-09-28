@@ -83,7 +83,7 @@ namespace Infocorp.TITA.OutlookSharePoint
                         bool required = field.Required;
                         SPFieldType type = field.Type;
                         List<string> choices = new List<string>();
-
+                        
                         if (type == SPFieldType.Choice)
                         {
                             StringCollection choicesCollection = ((SPFieldChoice)field).Choices;
@@ -122,7 +122,12 @@ namespace Infocorp.TITA.OutlookSharePoint
                             case SPFieldType.Currency:
                                 break;
                             case SPFieldType.DateTime:
-                                fieldsCollection.Add(new DTField(name, DTField.Types.DateTime, required, choices));
+                                DTField dtField = new DTField(name, DTField.Types.DateTime, required, choices);
+                                if (((SPFieldDateTime)field).DisplayFormat == SPDateTimeFieldFormatType.DateOnly)
+                                {
+                                    dtField.IsDateOnly = true;
+                                }
+                                fieldsCollection.Add(dtField);
                                 break;
                             case SPFieldType.Error:
                                 break;

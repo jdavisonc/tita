@@ -247,7 +247,12 @@ namespace Infocorp.TITA.SharePointUtilities
                     case SPFieldType.Currency:
                         break;
                     case SPFieldType.DateTime:
-                        fieldsCollection.Add(new DTField(name, DTField.Types.DateTime, required, choices));
+                        DTField dtField = new DTField(name, DTField.Types.DateTime, required, choices);
+                        if (((SPFieldDateTime)field).DisplayFormat == SPDateTimeFieldFormatType.DateOnly)
+                        {
+                            dtField.IsDateOnly = true;
+                        }
+                        fieldsCollection.Add(dtField);
                         break;
                     case SPFieldType.Error:
                         break;
