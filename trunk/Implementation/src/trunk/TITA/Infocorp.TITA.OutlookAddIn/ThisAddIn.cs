@@ -88,8 +88,8 @@ namespace OutlookAddInTitaSoft
         {
             //Create a Windows form with WPF namespace
             HandlerAddIn oHandlerAddIn = HandlerAddIn.GetInstanceHandlerAddIn();
-            DTUrl oURL = new DTUrl("infotest", "http://localhost/infocorp");
-            oHandlerAddIn.BuildIncidentWindow(oURL);
+            //DTUrl oURL = new DTUrl("infotest", "http://localhost/infocorp");
+            oHandlerAddIn.BuildIncidentWindow();
             //window.Title = "TITA Soft ";
             //Set the dimension
             //window.Height = 306;
