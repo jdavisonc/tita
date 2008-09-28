@@ -84,7 +84,7 @@ namespace Infocorp.TITA.OutlookSharePoint
                     SPFieldCollection listFieldsCollection = list.Fields;
                     foreach (SPField field in listFieldsCollection)
 	                {
-                        if (!field.Hidden && !field.ReadOnlyField)
+                        if (!(field.Hidden || field.ReadOnlyField))
                         {
                             string name = field.Title;
                             bool required = field.Required;
