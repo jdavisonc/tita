@@ -6,6 +6,7 @@ using System.Xml;
 using Infocorp.TITA.OutlookSharePoint;
 using Infocorp.TITA.WpfOutlookAddIn;
 using Infocorp.TITA.DataTypes;
+using System.Windows;
 
 
 
@@ -16,20 +17,45 @@ namespace Infocorp.TITA.WpfOutlookAddin
     {
         private IOutlookSharePoint _outlookSP;
         
-        public HandlerAddIn()
+        private static HandlerAddIn _instanceHandlerAddIn = null;
+
+        private HandlerAddIn()
         {
             _outlookSP = (new ControllerOutlookSharepoint()).GetOutlookSharepoint();
+        }
 
-        
+        public static HandlerAddIn GetInstanceHandlerAddIn()
+        {
+            //lock (syncRoot)
+            //{
+                if (_instanceHandlerAddIn == null)
+                {
+                    _instanceHandlerAddIn = new HandlerAddIn();
+                }
+            //}
+            
+            return _instanceHandlerAddIn;
         }
 
         #region IHandlerAddIn Members
 
-        public List<DTUrl> GetUrlContracts()
+                public List<DTUrl> GetUrlContracts() 
         {
-            List<DTUrl> oListDataUrl= new List<DTUrl>();
+            List<DTUrl> oListDataUrl= new List<DTUrl>() ;
             XmlDocument doc = new XmlDocument() ;
-            doc.Load("Contracts.xml");
+            string path = string.Empty;
+            try
+            {
+                path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\TITA Soft\\Contracts.xml";
+                doc.Load(path);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No se ha podido acceder al archivo Contracts.xml.\n\n"+
+                "Verifique que el archivo se encuentre en " + path, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw e;
+            }
+            
             XmlNodeList bookList = doc.GetElementsByTagName("Contract");
             foreach (XmlNode node in bookList)
             {
@@ -57,12 +83,12 @@ namespace Infocorp.TITA.WpfOutlookAddin
 
         
 
-        public void BuildIssue()
+        public void BuildIssue(string urlSite, DTIssue issue)
         {
             //tomar los valores de la ventana y crear el issue para enviar
             //a Sharepoint
 
-            throw new NotImplementedException();
+            _outlookSP.AddIssue(urlSite, issue);
         }
 
         #endregion

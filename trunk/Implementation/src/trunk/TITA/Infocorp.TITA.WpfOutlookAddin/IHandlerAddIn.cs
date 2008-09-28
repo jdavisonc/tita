@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Infocorp.TITA.DataTypes;
 
 namespace Infocorp.TITA.WpfOutlookAddin
 {
@@ -30,7 +31,7 @@ namespace Infocorp.TITA.WpfOutlookAddin
         /// Obtiene los datos de la ventana y crea un Issue
         /// para enviar a Sharepoint mediante la IOutlookSharePoint
         /// </summary>
-        void BuildIssue();
+        void BuildIssue(string urlSite, DTIssue issue);
 
 
     }
