@@ -104,7 +104,7 @@ namespace Infocorp.TITA.DataTypes
             { 
                 if (_type == Types.DateTime)
                 {
-                    _value = (DateTime.Parse(value)).ToString("yyyy-MM-dd hh:mm:ss");
+                    _value = (DateTime.Parse(value)).ToString("yyyy-MM-dd hh:mm:ss tt");
                 }
                 else
                 {
