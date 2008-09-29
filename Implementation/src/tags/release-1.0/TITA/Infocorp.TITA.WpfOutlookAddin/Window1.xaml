@@ -1,7 +1,0 @@
-﻿<Window x:Class="Infocorp.TITA.WpfOutlookAddin.Window1"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="TITASoft" Height="550" Width="500">
-    <StackPanel Name="StackPanelDT">
-    </StackPanel>
-</Window>
