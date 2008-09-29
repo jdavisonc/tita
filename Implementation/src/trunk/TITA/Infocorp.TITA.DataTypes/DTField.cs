@@ -93,7 +93,7 @@ namespace Infocorp.TITA.DataTypes
             {
                 if (_type == Types.DateTime && _isDateOnly)
                 {
-                    return (DateTime.Parse(_value)).ToString("yyyy-MM-dd"); 
+                    return (DateTime.Parse(_value)).ToString("yyyy-MM-dd") + " 00:00:00 a.m."; 
                 }
                 else 
                 {
