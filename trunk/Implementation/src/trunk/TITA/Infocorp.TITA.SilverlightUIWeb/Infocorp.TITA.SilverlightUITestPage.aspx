@@ -12,9 +12,10 @@
 <body style="height:100%;margin:0;">
     <form id="form1" runat="server" style="height:100%;">
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-        <div  style="height:100%;">
+        <div style="width:100%;height:100%;">
             <asp:Silverlight ID="Xaml1" runat="server"  Source="~/ClientBin/Infocorp.TITA.SilverlightUI.xap" MinimumVersion="2.0.30523" Width="100%" Height="100%" />
-        </div>
+           
+        </div>       
     </form>
 </body>
 </html>
