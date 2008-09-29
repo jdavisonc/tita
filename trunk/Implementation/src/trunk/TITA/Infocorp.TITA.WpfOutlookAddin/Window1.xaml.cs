@@ -47,7 +47,9 @@ namespace Infocorp.TITA.WpfOutlookAddin
             _mapElements = new Dictionary<DTField, Control>();
 
             WindowMaker oWindow = new WindowMaker(StackPanelDT, issueFields, _mapElements);
-            oWindow.GenerateWindow(_sendIssueButton);
+            
+            oWindow.GenerateWindow(_sendIssueButton, this.Height);
+            this.Height += 30; 
         }
 
         private void StackPanelDT_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)

@@ -61,18 +61,27 @@ namespace Infocorp.TITA.WpfOutlookAddin
 
         private void SendIssueButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            bool isRequiredOK = true;
             Dictionary<DTField,Control> dictionaryElements = _oIssueWindow.MapElements;
             var keyElements = dictionaryElements.Keys;
             foreach (DTField item in keyElements)
             {
+                
                 switch (item.Type)
 
 	            {
 		            case DTField.Types.Integer:
                     case DTField.Types.String:
                     case DTField.Types.Note:
-                        item.Value = ((TextBox)dictionaryElements[item]).Text;                        
+                        if (((TextBox)dictionaryElements[item]).Text.Length == 0 && item.Required)
+                        {
+                            isRequiredOK = false;
+                        }
+                        else
+                        {
+                            item.Value = ((TextBox)dictionaryElements[item]).Text;
+                        }
+                        
                         break;
                     
                     case DTField.Types.Choice:
@@ -86,9 +95,18 @@ namespace Infocorp.TITA.WpfOutlookAddin
                     default:
                         break;
 	            }
+
             }
-            List<DTField> oList = new List<DTField>(dictionaryElements.Keys);
-            BuildIssue(oList);
+            if (isRequiredOK)
+            {
+                List<DTField> oList = new List<DTField>(dictionaryElements.Keys);
+                BuildIssue(oList);
+                _oIssueWindow.Close();
+            }
+            else
+            {
+                MessageBox.Show("Faltan campos obligatorios por completar", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
 

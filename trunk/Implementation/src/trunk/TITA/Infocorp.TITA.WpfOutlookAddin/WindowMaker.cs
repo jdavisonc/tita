@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using AC.AvalonControlsLibrary.Controls;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Media;
 
 
 namespace Infocorp.TITA.WpfOutlookAddIn
@@ -29,7 +30,9 @@ namespace Infocorp.TITA.WpfOutlookAddIn
 
             _grid.ColumnDefinitions.Add(new ColumnDefinition());
             _grid.ColumnDefinitions.Add(new ColumnDefinition());
-            _scrollViewer.Height = 700;
+            _grid.ColumnDefinitions[0].Width = new GridLength(100, GridUnitType.Pixel);
+
+            
             //_grid.SetValue( ScrollViewer.VerticalScrollBarVisibilityProperty ,);
             //_grid.Height = 24;
         
@@ -138,12 +141,16 @@ namespace Infocorp.TITA.WpfOutlookAddIn
             return oReturn;
         }
 
-        private Label AddLabelLine(string labelName)
+        private Label AddLabelLine(DTField lineField)
         {
 
             Label label = new Label();
-            label.Content = labelName;
+            label.Content = lineField.Name;
             label.FontSize = 12;
+            if(lineField.Required)
+            {
+                label.Foreground = Brushes.Orange;
+            }
             Grid.SetRow(label, 0);
             
             return label;
@@ -154,7 +161,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
             if (lineField.Type != DTField.Types.Counter)
             {
                 //agrega el nombre el label
-                Label oLabelLine = AddLabelLine(lineField.Name);
+                Label oLabelLine = AddLabelLine(lineField);
                 oLabelLine.SetValue(Grid.RowProperty, line);
                 _grid.Children.Add(oLabelLine);
                 
@@ -171,9 +178,10 @@ namespace Infocorp.TITA.WpfOutlookAddIn
            
         }
 
-        public bool GenerateWindow(Button sendIssueButton)
+        public bool GenerateWindow(Button sendIssueButton, double scrollHeight)
         {
             int i = 0;
+            _scrollViewer.Height = scrollHeight;
             Control oTempControl;
             foreach (DTField item in _issueFields)
             {
