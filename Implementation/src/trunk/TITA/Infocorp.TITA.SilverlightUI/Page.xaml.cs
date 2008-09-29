@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Infocorp.TITA.SilverlightUI.Code;
 using Infocorp.TITA.SilverlightUI.WSTitaReference;
 using Liquid;
+using Infocorp.TITA.SilverlightUI.UserControls;
 
 namespace Infocorp.TITA.SilverlightUI
 {
@@ -29,6 +30,7 @@ namespace Infocorp.TITA.SilverlightUI
         List<DTContract> my_contract = new List<DTContract>();
         private bool isEdit;
         private bool isDelete;
+        private Loading loading = new Loading();
 
         public Page()
         {
@@ -80,8 +82,16 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_HasPendingChangesCompleted(object sender, HasPendingChangesCompletedEventArgs e)
         {
-            lblPending.Visibility = Visibility.Visible;
-            lblPending.Text = "Hay cambios pendientes";
+            if (e.Result)
+            {
+                lblPending.Visibility = Visibility.Visible;
+                lblPending.Text = "Hay cambios pendientes";
+            }
+            else 
+            {
+                lblPending.Visibility = Visibility.Collapsed;
+                lblPending.Text = "";
+            }
         }
 
         #region Contrato
@@ -106,19 +116,25 @@ namespace Infocorp.TITA.SilverlightUI
             {
                 my_contract = e.Result;
                 lstContratos.ItemsSource = e.Result;
+                if (lstContratos.Columns.Count != 0)
+                {
+                    lstContratos.Columns[0].Visibility = Visibility.Collapsed;
+                }
             }
         }
 
         private void LoadLstContratos(List<DTContract> my_contract)
         {
             if (my_contract.Count() != 0)
+            {
                 lstContratos.ItemsSource = my_contract;
+            }
         }
 
         private bool LoadPanelEditContrato()
         {
             bool ok = true;
-            if (lstContratos.SelectedIndex != -1)
+            if (lstContratos.SelectedItem != null)
             {
                 DTContract cont = (DTContract)lstContratos.SelectedItem;
                 txtNombre.Text = cont.UserName.ToString();
@@ -150,18 +166,18 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnModificarContrato_Click(object sender, RoutedEventArgs e)
         {
-            if (LoadPanelEditContrato())
-            {
-                isEdit = true;
-                isDelete = false;
-                pnlEditContrato.Visibility = Visibility.Visible;
-                PnlbtnsContrato.Visibility = Visibility.Collapsed;
-                PnlActionContrato.Visibility = Visibility.Visible;
-            }
-            else 
-            {
+            //if (LoadPanelEditContrato())
+            //{
+            //    isEdit = true;
+            //    isDelete = false;
+            //    pnlEditContrato.Visibility = Visibility.Visible;
+            //    PnlbtnsContrato.Visibility = Visibility.Collapsed;
+            //    PnlActionContrato.Visibility = Visibility.Visible;
+            //}
+            //else 
+            //{
 
-            }
+            //}
         }
 
         private void BtnEliminarContrato_Click(object sender, RoutedEventArgs e)
@@ -369,7 +385,7 @@ namespace Infocorp.TITA.SilverlightUI
             PnlbtnNuevo.Visibility = Visibility.Collapsed;
             PnlNew.Visibility = Visibility.Visible;
             ShowNewPanel();
-            PnlAction.Visibility = Visibility.Visible;
+            PnlNew.Children.Add(loading);
         }
 
         private void ShowNewPanel()
@@ -379,48 +395,62 @@ namespace Infocorp.TITA.SilverlightUI
             ws.GetIssueTemplateAsync();
         }
 
+
         void ws_GetIssueTemplateCompleted(object sender, GetIssueTemplateCompletedEventArgs e)
         {
             isEdit = false;
-            Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
+            PnlAction.Visibility = Visibility.Visible;
+            Grid grd = grdIncidents;
+
             int numCtrl = 0;
+            int row = 0;
             DTIssue issue = e.Result;
             my_issue_template = e.Result;
+            grd.ColumnDefinitions.Add(new ColumnDefinition());
+            grd.ColumnDefinitions.Add(new ColumnDefinition());
+
             foreach (DTField field in issue.Fields)
             {
                 if (field.Name != "ID")
                 {
+                    Grid nuevo = new Grid();
+                    nuevo.ColumnDefinitions.Add(new ColumnDefinition());
+                    nuevo.ColumnDefinitions.Add(new ColumnDefinition());
+                    nuevo.ColumnDefinitions[0].Width = new GridLength(200);
                     TextBlock txt = new TextBlock();
                     numCtrl = numCtrl + 1;
+                    row = row + 1;
                     switch (field.Type)
                     {
                         case Types.Boolean:
-
+                            
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
                             txt.Width = 80;
-
+                          
                             CheckBox chk = new CheckBox();
                             chk.SetValue(NameProperty, "chk_" + field.Name);
-                            chk.Margin = new Thickness(140, numCtrl * 20, 0, 0);
                             chk.Width = 40;
+                            chk.SetValue(Grid.ColumnProperty, 1);
 
-                            cnv.Children.Add(txt);
-                            cnv.Children.Add(chk);
+                            txt.SetValue(Grid.RowProperty, row);
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            nuevo.Children.Add(txt);
+                            nuevo.Children.Add(chk);
                             break;
                         case Types.Choice:
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Margin = new Thickness(50, numCtrl * 50, 0, 0);
                             txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
 
                             ListBox lstbx = new ListBox();
                             lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
-                            lstbx.Margin = new Thickness(140, numCtrl * 50, 0, 0);
                             lstbx.Width = 80;
                             lstbx.ItemsSource = field.Choices;
                             lstbx.SelectedIndex = -1;
+                            lstbx.SetValue(Grid.ColumnProperty, 1);
 
                             //DropDownList drp = new DropDownList();
                             //drp.SetValue(NameProperty, "drp_" + field.Name);
@@ -430,49 +460,52 @@ namespace Infocorp.TITA.SilverlightUI
                             //drp.DataBind();
                             //drp.Margin = new Thickness(140, numCtrl * 20, 0, 0);
 
-                            cnv.Children.Add(txt);
-                            cnv.Children.Add(lstbx);
+                            //txt.SetValue(Grid.RowProperty, row);
+                            
+                            nuevo.Children.Add(txt);
+                            nuevo.Children.Add(lstbx);
                             break;
                         case Types.DateTime:
                             numCtrl = numCtrl + 3;
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
                             txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
 
                             Calendar cal = new Calendar();
                             cal.SetValue(NameProperty, "cal_" + field.Name);
-                            cal.Margin = new Thickness(140, numCtrl * 20, 0, 0);
                             cal.Width = 280;
                             cal.Height = 200;
                             cal.SelectedDate = DateTime.Today;
-
-                            cnv.Children.Add(txt);
-                            cnv.Children.Add(cal);
+                            cal.SetValue(Grid.ColumnProperty, 1);
+                            
+                            nuevo.Children.Add(txt);
+                            nuevo.Children.Add(cal);
                             break;
                         default:
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
                             txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
 
                             TextBox bx = new TextBox();
                             bx.SetValue(NameProperty, "bx_" + field.Name);
-                            bx.Margin = new Thickness(140, numCtrl * 20, 0, 0);
                             bx.Width = 80;
-
-                            cnv.Children.Add(txt);
-                            cnv.Children.Add(bx);
+                            bx.SetValue(Grid.ColumnProperty, 1);
+                            
+                            nuevo.Children.Add(txt);
+                            nuevo.Children.Add(bx);
                             break;
                     }
+                    PnlNew.Children.Add(nuevo);
                 }
-
             }
+            PnlNew.Children.Remove(loading);
         }
 
         private void BtnAccept_Click(object sender, RoutedEventArgs e)
         {
-            Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
+            StackPanel cnv = (StackPanel)CanvasIncident.FindName("PnlNew");
             DTIssue i = my_issue_template;
 
             DTIssue issue = new DTIssue();
@@ -537,7 +570,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_ModifyIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) 
         {
-            Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
+            StackPanel cnv = (StackPanel)CanvasIncident.FindName("PnlNew");
             cnv.Children.Clear();
             PnlAction.Visibility = Visibility.Collapsed;
             PnlbtnNuevo.Visibility = Visibility.Visible;
@@ -546,7 +579,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_AddIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
+            StackPanel cnv = (StackPanel)CanvasIncident.FindName("PnlNew");
             cnv.Children.Clear();
             PnlAction.Visibility = Visibility.Collapsed;
             PnlbtnNuevo.Visibility = Visibility.Visible;
@@ -555,6 +588,8 @@ namespace Infocorp.TITA.SilverlightUI
         
         private void BtnChange_Click(object sender, RoutedEventArgs e)
         {
+            PnlNew.Children.Add(loading);
+
             PnlbtnNuevo.Visibility = Visibility.Collapsed;
 
             Issue issue = (Issue)grdIncident.SelectedItem;
@@ -577,7 +612,12 @@ namespace Infocorp.TITA.SilverlightUI
 
         public void ShowPanelforEdit(DTIssue issue) 
         {
-            Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
+            StackPanel cnv = (StackPanel)CanvasIncident.FindName("PnlNew");
+            Grid grd = grdIncidents;
+            grd.ColumnDefinitions.Add(new ColumnDefinition());
+            grd.ColumnDefinitions.Add(new ColumnDefinition());
+
+            int row = 0;
             int numCtrl = 0;
             foreach (DTField field in issue.Fields)
             {
@@ -585,28 +625,33 @@ namespace Infocorp.TITA.SilverlightUI
                 {
                     TextBlock txt = new TextBlock();
                     numCtrl = numCtrl + 1;
+                    Grid nuevo = new Grid();
+                    nuevo.ColumnDefinitions.Add(new ColumnDefinition());
+                    nuevo.ColumnDefinitions.Add(new ColumnDefinition());
+                    nuevo.ColumnDefinitions[0].Width = new GridLength(200);
+
                     switch (field.Type)
                     {
                         case Types.Boolean:
 
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
                             txt.Width = 80;
+                            txt.SetValue(Grid.RowProperty, row);
+                            txt.SetValue(Grid.ColumnProperty, 0);
 
                             CheckBox chk = new CheckBox();
                             chk.SetValue(NameProperty, "chk_" + field.Name);
                             chk.IsChecked = (field.Value == "True");
-                            chk.Margin = new Thickness(140, numCtrl * 20, 0, 0);
                             chk.Width = 40;
+                            chk.SetValue(Grid.ColumnProperty, 1);
 
-                            cnv.Children.Add(txt);
-                            cnv.Children.Add(chk);
+                            nuevo.Children.Add(txt);
+                            nuevo.Children.Add(chk);
                             break;
                         case Types.Choice:
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Margin = new Thickness(50, numCtrl * 50, 0, 0);
                             txt.Width = 80;
 
                             ListBox lstbx = new ListBox();
@@ -617,8 +662,8 @@ namespace Infocorp.TITA.SilverlightUI
                                     lstbx.ItemsSource = field_lst.Choices;
                             }
                             lstbx.SelectedItem = field.Value;
-                            lstbx.Margin = new Thickness(140, numCtrl * 50, 0, 0);
                             lstbx.Width = 80;
+                            lstbx.SetValue(Grid.ColumnProperty, 1);
 
                             //DropDownList drp = new DropDownList();
                             //drp.SetValue(NameProperty, "drp_" + field.Name);
@@ -628,45 +673,46 @@ namespace Infocorp.TITA.SilverlightUI
                             //drp.DataBind();
                             //drp.Margin = new Thickness(140, numCtrl * 20, 0, 0);
 
-                            cnv.Children.Add(txt);
-                            cnv.Children.Add(lstbx);
+                            nuevo.Children.Add(txt);
+                            nuevo.Children.Add(lstbx);
                             break;
                         case Types.DateTime:
                             numCtrl = numCtrl + 3;
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
                             txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
 
                             Calendar cal = new Calendar();
                             cal.SetValue(NameProperty, "cal_" + field.Name);
-                            cal.Margin = new Thickness(140, numCtrl * 20, 0, 0);
                             cal.Width = 280;
                             cal.Height = 200;
                             cal.SelectedDate = Convert.ToDateTime(field.Value);
+                            cal.SetValue(Grid.ColumnProperty, 1);
 
-                            cnv.Children.Add(txt);
-                            cnv.Children.Add(cal);
+                            nuevo.Children.Add(txt);
+                            nuevo.Children.Add(cal);
                             break;
                         default:
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Margin = new Thickness(50, numCtrl * 20, 0, 0);
                             txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
 
                             TextBox bx = new TextBox();
                             bx.SetValue(NameProperty, "bx_" + field.Name);
                             bx.Text = field.Value;
-                            bx.Margin = new Thickness(140, numCtrl * 20, 0, 0);
                             bx.Width = 80;
+                            bx.SetValue(Grid.ColumnProperty, 1);
 
-                            cnv.Children.Add(txt);
-                            cnv.Children.Add(bx);
+                            nuevo.Children.Add(txt);
+                            nuevo.Children.Add(bx);
                             break;
                     }
+                    PnlNew.Children.Add(nuevo);
                 }
-
             }
+            PnlNew.Children.Remove(loading);
         }
         
         private void BtnDelete_Action_Click(object sender, RoutedEventArgs e)
@@ -680,7 +726,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_DeleteIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            Canvas cnv = (Canvas)CanvasIncident.FindName("PnlNew");
+            StackPanel cnv = (StackPanel)CanvasIncident.FindName("PnlNew");
             cnv.Children.Clear();
             PnlAction.Visibility = Visibility.Collapsed;
             PnlbtnNuevo.Visibility = Visibility.Visible;
