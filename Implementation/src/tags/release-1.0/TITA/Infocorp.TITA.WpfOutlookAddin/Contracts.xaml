@@ -1,0 +1,9 @@
+﻿<Window x:Class="Infocorp.TITA.WpfOutlookAddIn.Contracts"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Contratos" Height="93" Width="226">
+    <Grid>
+        <ComboBox Margin="6,3,6,0" Name="comboBox1" Height="24" VerticalAlignment="Top" />
+        <Button Margin="46,0,47,4" Name="btnContracts" Click="btnContracts_Click" Height="23" VerticalAlignment="Bottom">Seleccionar</Button>
+    </Grid>
+</Window>
