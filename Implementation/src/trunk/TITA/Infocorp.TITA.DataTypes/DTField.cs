@@ -91,12 +91,17 @@ namespace Infocorp.TITA.DataTypes
         {
             get 
             {
+                if (String.IsNullOrEmpty(_value))
+                {
+                    _value = DateTime.MinValue.ToString("yyyy-MM-dd") + " 00:00:00 a.m."; ;
+                }
                 if (_type == Types.DateTime && _isDateOnly)
                 {
                     return (DateTime.Parse(_value)).ToString("yyyy-MM-dd") + " 00:00:00 a.m."; 
                 }
                 else 
                 {
+
                     return _value; 
                 }
             }
