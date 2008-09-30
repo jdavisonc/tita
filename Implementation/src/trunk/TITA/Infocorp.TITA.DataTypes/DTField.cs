@@ -102,7 +102,7 @@ namespace Infocorp.TITA.DataTypes
             }
             set 
             { 
-                if (_type == Types.DateTime)
+                if (_type == Types.DateTime && value.Length > 0)
                 {
                     _value = (DateTime.Parse(value)).ToString("yyyy-MM-dd hh:mm:ss tt");
                 }
