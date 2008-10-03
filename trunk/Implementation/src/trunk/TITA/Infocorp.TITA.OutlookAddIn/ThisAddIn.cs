@@ -24,6 +24,7 @@ namespace OutlookAddInTitaSoft
         #region CONTEXTUALMENU
         private Office.CommandBarButton btn;
         private Outlook.MailItem mail;
+        private bool _inUse = false;
         #endregion
 
         #region TOOLBUTTONS
@@ -34,6 +35,7 @@ namespace OutlookAddInTitaSoft
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+            _inUse = true;
             this.Application.ItemContextMenuDisplay += new Outlook.ApplicationEvents_11_ItemContextMenuDisplayEventHandler(Application_ItemContextMenuDisplay);
             AddToolbar();
         }
@@ -71,11 +73,10 @@ namespace OutlookAddInTitaSoft
                     result += oMail.Subject + " from " + oMail.SenderName + " on " + oMail.SentOn.ToString() + System.Environment.NewLine;// + EntryID.ToString();
                     // TODO: Actually delete it (oMail.Delete())
                 }
-                System.Windows.Forms.MessageBox.Show("Deberia Abrir Menu Alta_Inicidente: " + System.Environment.NewLine + result);
+                //System.Windows.Forms.MessageBox.Show("Deberia Abrir Menu Alta_Inicidente: " + System.Environment.NewLine + result);
+                FormWPFCreate();
             }
             //sos emo ??
-
-
         }
         #endregion
 
@@ -356,8 +357,8 @@ namespace OutlookAddInTitaSoft
                     1, missing, missing, missing, missing);
 
                 firstButton.Style = Office.MsoButtonStyle.msoButtonCaption;
-                firstButton.Caption = "Generar Incidente";
-                firstButton.Tag = "Generar Incidente";
+                firstButton.Caption = "Reportar Incidente";
+                firstButton.Tag = "Reportar Incidente";
                 firstButton.Click += new Office._CommandBarButtonEvents_ClickEventHandler(buttonOne_Click);
                 //firstButton.Click += new Office._CommandBarButtonEvents_ClickEventHandler(ButtonClick);
                 
@@ -379,11 +380,11 @@ namespace OutlookAddInTitaSoft
         }
 
         // Handles the event when a button on the new toolbar is clicked.
-        private void ButtonClick(Office.CommandBarButton ctrl, ref bool cancel)
-        {
-            System.Windows.Forms.MessageBox.Show("You clicked: " + ctrl.Caption);
-            //FormWPFCreate();
-        }
+        //private void ButtonClick(Office.CommandBarButton ctrl, ref bool cancel)
+        //{
+        //    System.Windows.Forms.MessageBox.Show("You clicked: " + ctrl.Caption);
+        //    //FormWPFCreate();
+        //}
 
 
         #endregion
