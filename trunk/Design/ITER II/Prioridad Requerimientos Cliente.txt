@@ -1,0 +1,30 @@
+Prioridad Alta:
+        -  R1- Impactar los Incidentes desde Outlook 2007     (Prioridad 1)
+
+        -  R6 – ABM de Incidentes (Prioridad 2)
+
+        -  R7 – Adjuntar archivos a los incidentes (Prioridad 2)
+
+        -  R8 – ABM de WorkPackages (Prioridad 2)
+
+        -  R5 – ABM de Tareas (Prioridad 3)
+
+ 
+
+Prioridad Media:
+
+        - R10 – Reportes (Prioridad 4)ç
+
+        - R3 – Notificación de tareas al usuario via mail (Prioridad 5)
+
+        - R2 – Notificación de tareas al usuario por medio de Outlook Tasks  (Prioridad 6)
+
+ 
+
+Prioridad Baja:
+
+        - R3 – Perfiles y permisos de los Usuarios (Prioridad 7)
+
+        -  R4 – ABM de Usuarios (Prioridad 7)
+
+        - R9 – ABM de Contratos (Prioridad 7)
