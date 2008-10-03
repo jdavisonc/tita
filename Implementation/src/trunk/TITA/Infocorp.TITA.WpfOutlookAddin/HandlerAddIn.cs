@@ -147,9 +147,6 @@ namespace Infocorp.TITA.WpfOutlookAddin
             _contract = new Contracts(GetUrlContracts());
             _contract.btnContracts.Click += new RoutedEventHandler(btnContracts_Click);
             _contract.Show();
-
-
-
         }
 
 
