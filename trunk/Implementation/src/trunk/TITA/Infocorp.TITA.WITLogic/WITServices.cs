@@ -55,8 +55,9 @@ namespace Infocorp.TITA.WITLogic
             bool result = true;
             foreach (DTCommandInfo command in commands)
             {
+                command.Issue.Fields.RemoveAll(delegate(DTField f) { return f.Name == "IsLocal"; });
                 switch (command.CommandType)
-                {
+                {                      
                     case CommandType.ADD:
                         result = spu.AddIssue(siteUrl, command.Issue);
                         break;
