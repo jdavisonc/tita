@@ -204,8 +204,8 @@ namespace Infocorp.TITA.SharePointUtilities
             SPFieldCollection listFieldsCollection = list.Fields;
             foreach (SPField field in listFieldsCollection)
             {
-                //if (!(field.Hidden || field.ReadOnlyField))
-                //{
+                if (!(field.Hidden || field.ReadOnlyField) || field.Title.ToLower() == "id")
+                {
                     string name = field.Title;
                     bool required = field.Required;
                     SPFieldType type = field.Type;
@@ -297,7 +297,7 @@ namespace Infocorp.TITA.SharePointUtilities
                         default:
                             break;
                     }
-                //}
+                }
             }
             return fieldsCollection;
         }
