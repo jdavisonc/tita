@@ -21,32 +21,35 @@ namespace Infocorp.TITA.SharePointUtilities
                 {
                     using (SPWeb web = site.OpenWeb())
                     {
-                        
+
                         SPList list = web.Lists["Issues"];
                         SPListItemCollection listItemCollection = list.Items;
                         List<DTAttachment> attachmentCollectionIssue;
                         foreach (SPListItem item in listItemCollection)
                         {
-                            List<DTField> fieldCollectionIssue = new List<DTField>(GetFieldsListItem(list));
-                            foreach (DTField field in fieldCollectionIssue)
+                            if (Convert.ToBoolean(item["ows_IsCurrent"]))
                             {
-                                if (item[field.Name] != null)
+                                List<DTField> fieldCollectionIssue = new List<DTField>(GetFieldsListItem(list));
+                                foreach (DTField field in fieldCollectionIssue)
                                 {
-                                    field.Value = item[field.Name].ToString();
+                                    if (item[field.Name] != null)
+                                    {
+                                        field.Value = item[field.Name].ToString();
+                                    }
+                                    else
+                                    {
+                                        field.Value = string.Empty;
+                                    }
                                 }
-                                else
+                                attachmentCollectionIssue = new List<DTAttachment>();
+                                SPAttachmentCollection attachmentCollection = item.Attachments;
+                                foreach (var attachment in attachmentCollection)
                                 {
-                                    field.Value = string.Empty;
+                                    attachmentCollectionIssue.Add(new DTAttachment(attachment.ToString(), attachmentCollection.UrlPrefix));
                                 }
+                                DTIssue issueItem = new DTIssue(fieldCollectionIssue, attachmentCollectionIssue);
+                                issues.Add(issueItem);
                             }
-                            attachmentCollectionIssue = new List<DTAttachment>();
-                            SPAttachmentCollection attachmentCollection = item.Attachments;
-                            foreach (var attachment in attachmentCollection)
-                            {
-                                attachmentCollectionIssue.Add(new DTAttachment(attachment.ToString(), attachmentCollection.UrlPrefix));
-                            }
-                            DTIssue issueItem = new DTIssue(fieldCollectionIssue, attachmentCollectionIssue);
-                            issues.Add(issueItem);
                         }
                     }
 
