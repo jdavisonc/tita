@@ -15,7 +15,7 @@ namespace Infocorp.TITA.WITLogic
         public DTIssue GetIssueTemplate(string urlSite)
         {
             DTIssue issue = new DTIssue();
-            
+
             issue.Fields = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint().GetFieldsIssue(urlSite);
 
             return issue;
@@ -25,9 +25,8 @@ namespace Infocorp.TITA.WITLogic
         {
 
             List<DTIssue> result = new List<DTIssue>();
-            List<DTCommandInfo> commands =  WITCommandState.Instance().Commands;
+            List<DTCommandInfo> commands = WITCommandState.Instance().Commands;
             result = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint().GetIssues(urlSite);
-
             commands.ForEach(delegate(DTCommandInfo command)
             {
                 if (command.CommandType == CommandType.ADD || command.CommandType == CommandType.MODIFY)
@@ -36,14 +35,18 @@ namespace Infocorp.TITA.WITLogic
                     command.Issue.Fields.Add(isLocal);
                     //Si traigo uno que estoy modificando, devuelvo sólo la modificación
                     if (command.CommandType == CommandType.MODIFY)
-                    {                        
+                    {
                         result.Remove(command.Issue);
                     }
                     result.Add(command.Issue);
+                }
+                else
+                {
+                    result.Remove(command.Issue);
                 };
             });
 
-            
+
             return result;
         }
 
@@ -57,7 +60,7 @@ namespace Infocorp.TITA.WITLogic
             {
                 command.Issue.Fields.RemoveAll(delegate(DTField f) { return f.Name == "IsLocal"; });
                 switch (command.CommandType)
-                {                      
+                {
                     case CommandType.ADD:
                         result = spu.AddIssue(siteUrl, command.Issue);
                         break;
@@ -65,12 +68,12 @@ namespace Infocorp.TITA.WITLogic
                         result = spu.UpdateIssue(siteUrl, command.Issue);
                         break;
                     case CommandType.DELETE:
-                        int issueId   = Convert.ToInt32(command.Issue.Fields.Find(delegate(DTField f) { return f.Name.ToLower() == "id"; }).Value);
+                        int issueId = Convert.ToInt32(command.Issue.Fields.Find(delegate(DTField f) { return f.Name.ToLower() == "id"; }).Value);
                         result = spu.DeleteIssue(siteUrl, issueId);
                         break;
                     default:
                         break;
-                }                
+                }
             }
 
             commands.Clear();
@@ -78,7 +81,7 @@ namespace Infocorp.TITA.WITLogic
         }
 
         public bool HasPendingChanges(string siteUrl)
-        {            
+        {
             return WITCommandState.Instance().Commands.Count > 0;
         }
 
@@ -98,7 +101,7 @@ namespace Infocorp.TITA.WITLogic
 
             command.Issue = issue;
 
-            WITCommandState.Instance().AddCommand(command);            
+            WITCommandState.Instance().AddCommand(command);
         }
 
         public void ModifyIssue(DTIssue issue)
@@ -120,7 +123,7 @@ namespace Infocorp.TITA.WITLogic
             DTField field = new DTField();
             field.Name = "ID";
             field.Required = true;
-            field.Type  = DTField.Types.Counter;
+            field.Type = DTField.Types.Counter;
             field.Value = issueId.ToString();
             command.Issue.Fields = new List<DTField>() { field };
 
@@ -161,7 +164,7 @@ namespace Infocorp.TITA.WITLogic
         public List<DTContract> GetContracts()
         {
             DataBaseAccess.DataBaseAccess db = new DataBaseAccess.DataBaseAccess();
-            return  db.ContractList();
+            return db.ContractList();
             //return new List<DTContract>();
         }
 

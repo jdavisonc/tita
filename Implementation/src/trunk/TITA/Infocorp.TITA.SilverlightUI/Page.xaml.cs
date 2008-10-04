@@ -363,6 +363,7 @@ namespace Infocorp.TITA.SilverlightUI
         private Delegate LoadIncidents(List<DTIssue> list)
         {
             Issue i;
+            bool add = true;
             List<Issue> lstIssue = new List<Issue>();
             foreach (DTIssue issue in list)
             {
@@ -405,10 +406,14 @@ namespace Infocorp.TITA.SilverlightUI
                             i.IsLocal = bool.Parse(field.Value);
                             break;
                         default:
+                            add = false;
                             break;
                     }
                 }
-                lstIssue.Add(i);
+                if (add)
+                {
+                    lstIssue.Add(i);
+                }
             }
             grdIncident.ItemsSource = lstIssue;
             if (grdIncident.Columns.Count != 0)
@@ -863,7 +868,8 @@ namespace Infocorp.TITA.SilverlightUI
                                 if((field_lst.Type == Types.Choice) && (field_lst.Name == field.Name))
                                     lstbx.ItemsSource = field_lst.Choices;
                             }
-                            lstbx.SelectedItem = field.Value;
+                            lstbx.SelectedIndex = lstbx.Items.IndexOf(field.Value);
+                            lstbx.SelectedIndexWorkaround();
                             lstbx.Width = 80;
                             lstbx.SetValue(Grid.ColumnProperty, 1);
 
