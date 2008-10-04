@@ -34,6 +34,11 @@ namespace Infocorp.TITA.WITLogic
                 {
                     DTField isLocal = new DTField("IsLocal", DTField.Types.Boolean, false, null, "true");
                     command.Issue.Fields.Add(isLocal);
+                    //Si traigo uno que estoy modificando, devuelvo sólo la modificación
+                    if (command.CommandType == CommandType.MODIFY)
+                    {                        
+                        result.Remove(command.Issue);
+                    }
                     result.Add(command.Issue);
                 };
             });
