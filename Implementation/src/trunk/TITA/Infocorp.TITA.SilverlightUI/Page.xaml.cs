@@ -16,6 +16,41 @@ using Infocorp.TITA.SilverlightUI.UserControls;
 
 namespace Infocorp.TITA.SilverlightUI
 {
+    public static class ListBoxExtensions 
+    {
+        public static void SelectedIndexWorkaround(this ListBox listBox)
+        {
+            int selectedIndex = listBox.SelectedIndex;
+            bool set = false;
+            listBox.LayoutUpdated += delegate
+            {
+                if (!set)
+                {
+                    // Toggle value to force the change
+                    listBox.SelectedIndex = -1;
+                    listBox.SelectedIndex = selectedIndex;
+                    set = true;
+                }
+            };
+        }
+
+        public static void IsSelectedWorkaround(this ListBoxItem listBoxItem)
+        {
+            bool isSelected = listBoxItem.IsSelected;
+            bool set = false;
+            listBoxItem.LayoutUpdated += delegate
+            {
+                if (!set)
+                {
+                    // Toggle value to force the change
+                    listBoxItem.IsSelected = !isSelected;
+                    listBoxItem.IsSelected = isSelected;
+                    set = true;
+                }
+            };
+        }
+    }
+
     public partial class Page : UserControl
     {
         public enum Option
@@ -351,16 +386,16 @@ namespace Infocorp.TITA.SilverlightUI
                         case "Category":
                             i.Category = field.Value;
                             break;
-                        case "ReportedDate":
+                        case "Reported Date":
                             i.ReportedDate = field.Value;
                             break;
                         case "WP":
                             i.WP = field.Value;
                             break;
-                        case "ReportedBy":
+                        case "Reported by":
                             i.ReportedBy = field.Value;
                             break;
-                        case "Ord":
+                        case "Order":
                             i.Ord = float.Parse(field.Value);
                             break;
                         case "Resolution":
@@ -468,16 +503,6 @@ namespace Infocorp.TITA.SilverlightUI
                             lstbx.ItemsSource = field.Choices;
                             lstbx.SelectedIndex = -1;
                             lstbx.SetValue(Grid.ColumnProperty, 1);
-
-                            //DropDownList drp = new DropDownList();
-                            //drp.SetValue(NameProperty, "drp_" + field.Name);
-                            //foreach (string option in field.Choices){
-                            //    drp.Items.Add(new ListItem(option,option));
-                            //}
-                            //drp.DataBind();
-                            //drp.Margin = new Thickness(140, numCtrl * 20, 0, 0);
-
-                            //txt.SetValue(Grid.RowProperty, row);
                             
                             nuevo.Children.Add(txt);
                             nuevo.Children.Add(lstbx);
@@ -519,6 +544,8 @@ namespace Infocorp.TITA.SilverlightUI
             }
             PnlNew.Children.Remove(loading);
         }
+
+        
 
         private void LoadPnlError(DTIssue issue)
         {
@@ -576,21 +603,9 @@ namespace Infocorp.TITA.SilverlightUI
                                     lstbx.ItemsSource = field_lst.Choices;
                             }
                             lstbx.Width = 80;
-                            //lstbx.ItemsSource = field.Choices;
-                            lstbx.SelectedItem = field.Value;
+                            lstbx.SelectedIndex = lstbx.Items.IndexOf(field.Value);
+                            lstbx.SelectedIndexWorkaround();
                             lstbx.SetValue(Grid.ColumnProperty, 1);
-                            
-
-
-                            //DropDownList drp = new DropDownList();
-                            //drp.SetValue(NameProperty, "drp_" + field.Name);
-                            //foreach (string option in field.Choices){
-                            //    drp.Items.Add(new ListItem(option,option));
-                            //}
-                            //drp.DataBind();
-                            //drp.Margin = new Thickness(140, numCtrl * 20, 0, 0);
-
-                            //txt.SetValue(Grid.RowProperty, row);
                             
                             nuevo.Children.Add(txt);
                             nuevo.Children.Add(lstbx);
@@ -713,8 +728,7 @@ namespace Infocorp.TITA.SilverlightUI
                 {
                     issue.Fields.Add(field);
                 }
-            }
-
+            } 
             if (error)
             {
                 PnlNew.Children.Clear();
@@ -758,9 +772,22 @@ namespace Infocorp.TITA.SilverlightUI
         private void BtnChange_Click(object sender, RoutedEventArgs e)
         {
             PnlNew.Children.Add(loading);
-
             PnlbtnNuevo.Visibility = Visibility.Collapsed;
+            if (my_issue_template == null)
+            {
+                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                ws.GetIssueTemplateCompleted += new EventHandler<GetIssueTemplateCompletedEventArgs>(ws_GetIssueTemplateCompleted2);
+                ws.GetIssueTemplateAsync();
+            }
+            else
+            { 
+                LoadChangeFields();
+            }
+            
+        }
 
+        private void LoadChangeFields()
+        {
             Issue issue = (Issue)grdIncident.SelectedItem;
             int id = issue.Id;
             DTIssue change = new DTIssue();
@@ -768,7 +795,7 @@ namespace Infocorp.TITA.SilverlightUI
             {
                 foreach (DTField f in i.Fields)
                 {
-                    if((f.Name == "ID") && (f.Value == id.ToString()))
+                    if ((f.Name == "ID") && (f.Value == id.ToString()))
                     {
                         change = i;
                     }
@@ -777,6 +804,12 @@ namespace Infocorp.TITA.SilverlightUI
             isEdit = true;
             ShowPanelforEdit(change);
             PnlAction.Visibility = Visibility.Visible;
+        }
+
+        void ws_GetIssueTemplateCompleted2(object sender, GetIssueTemplateCompletedEventArgs e)
+        {
+            my_issue_template = e.Result;
+            LoadChangeFields();
         }
 
         public void ShowPanelforEdit(DTIssue issue) 
@@ -833,14 +866,6 @@ namespace Infocorp.TITA.SilverlightUI
                             lstbx.SelectedItem = field.Value;
                             lstbx.Width = 80;
                             lstbx.SetValue(Grid.ColumnProperty, 1);
-
-                            //DropDownList drp = new DropDownList();
-                            //drp.SetValue(NameProperty, "drp_" + field.Name);
-                            //foreach (string option in field.Choices){
-                            //    drp.Items.Add(new ListItem(option,option));
-                            //}
-                            //drp.DataBind();
-                            //drp.Margin = new Thickness(140, numCtrl * 20, 0, 0);
 
                             nuevo.Children.Add(txt);
                             nuevo.Children.Add(lstbx);
@@ -921,6 +946,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_ApplyChangesCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
+            GetIncidents();
         }
         #endregion
 
