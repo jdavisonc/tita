@@ -363,7 +363,6 @@ namespace Infocorp.TITA.SilverlightUI
         private Delegate LoadIncidents(List<DTIssue> list)
         {
             Issue i;
-            bool add = true;
             List<Issue> lstIssue = new List<Issue>();
             foreach (DTIssue issue in list)
             {
@@ -406,14 +405,10 @@ namespace Infocorp.TITA.SilverlightUI
                             i.IsLocal = bool.Parse(field.Value);
                             break;
                         default:
-                            add = false;
                             break;
                     }
                 }
-                if (add)
-                {
-                    lstIssue.Add(i);
-                }
+                 lstIssue.Add(i);
             }
             grdIncident.ItemsSource = lstIssue;
             if (grdIncident.Columns.Count != 0)
