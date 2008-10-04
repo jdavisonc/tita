@@ -15,41 +15,7 @@ namespace Infocorp.TITA.WITLogic
         public DTIssue GetIssueTemplate(string urlSite)
         {
             DTIssue issue = new DTIssue();
-            /*
-            DTField field = new DTField();
-            field.Name = "ID";
-            field.Required = true;
-            field.Type = DTField.Types.Counter;
-            field.Value = "1";
-
-            DTField field2 = new DTField();
-            field2.Name = "Title";
-            field2.Required = true;
-            field2.Type = DTField.Types.String;
-            field2.Value = "Título";
-
-            DTField field3 = new DTField();
-            field3.Name = "Urgent?";
-            field3.Required = true;
-            field3.Type = DTField.Types.Boolean;
-            field3.Value = "true";
-
-            DTField field4 = new DTField();
-            field4.Name = "ReportedDate";
-            field4.Required = true;
-            field4.Type = DTField.Types.DateTime;
-            field4.Value = DateTime.Now.AddDays(5).ToShortDateString();
-
-            DTField field5 = new DTField();
-            field5.Name = "Priority";
-            field5.Required = true;
-            field5.Type = DTField.Types.Choice;
-            field5.Choices = new List<string>() { "Alta", "Media", "Baja" };
-            field5.Value = "Media";
-
-            issue.Fields = new List<DTField>() { field, field2, field3, field4, field5 };
-            */
-
+            
             issue.Fields = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint().GetFieldsIssue(urlSite);
 
             return issue;
@@ -66,6 +32,8 @@ namespace Infocorp.TITA.WITLogic
             {
                 if (command.CommandType == CommandType.ADD || command.CommandType == CommandType.MODIFY)
                 {
+                    DTField isLocal = new DTField("IsLocal", DTField.Types.Boolean, false, null, "true");
+                    command.Issue.Fields.Add(isLocal);
                     result.Add(command.Issue);
                 };
             });
@@ -74,24 +42,25 @@ namespace Infocorp.TITA.WITLogic
             return result;
         }
 
-        public void ApplyChanges(string siteUrl)
+        public bool ApplyChanges(string siteUrl)
         {
             List<DTCommandInfo> commands = WITCommandState.Instance().Commands;
             ISharePoint spu = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint();
             commands.Sort();
+            bool result = true;
             foreach (DTCommandInfo command in commands)
             {
                 switch (command.CommandType)
                 {
                     case CommandType.ADD:
-                        spu.AddIssue(siteUrl, command.Issue);
+                        result = spu.AddIssue(siteUrl, command.Issue);
                         break;
                     case CommandType.MODIFY:
-                        spu.UpdateIssue(siteUrl, command.Issue);
+                        result = spu.UpdateIssue(siteUrl, command.Issue);
                         break;
                     case CommandType.DELETE:
                         int issueId   = Convert.ToInt32(command.Issue.Fields.Find(delegate(DTField f) { return f.Name.ToLower() == "id"; }).Value);
-                        spu.DeleteIssue(siteUrl, issueId);
+                        result = spu.DeleteIssue(siteUrl, issueId);
                         break;
                     default:
                         break;
@@ -99,10 +68,11 @@ namespace Infocorp.TITA.WITLogic
             }
 
             commands.Clear();
+            return result;
         }
 
         public bool HasPendingChanges(string siteUrl)
-        {
+        {            
             return WITCommandState.Instance().Commands.Count > 0;
         }
 

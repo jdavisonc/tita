@@ -9,7 +9,7 @@ namespace Infocorp.TITA.WITLogic
     public interface IWITServices
     {
 
-        void ApplyChanges(string siteUrl);
+        bool ApplyChanges(string siteUrl);
 
         bool HasPendingChanges(string siteUrl);
 
