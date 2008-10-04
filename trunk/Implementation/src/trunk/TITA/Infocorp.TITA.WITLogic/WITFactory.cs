@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Infocorp.TITA.WITLogic
 {
-    
+
     public class WITFactory
     {
         private static IWITServices _wITServicesInstance;
@@ -25,7 +25,8 @@ namespace Infocorp.TITA.WITLogic
 
         public IWITServices WITServicesInstance()
         {
-            if (_wITServicesInstance == null){
+            if (_wITServicesInstance == null)
+            {
                 _wITServicesInstance = new WITServices();
             }
 

@@ -4,19 +4,23 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Infocorp.TITA.SharePointUtilities;
+using Infocorp.TITA.DataTypes;
 
 namespace Infocorp.TITA.WITLogic.Tests
 {
     [TestFixture]
     public class WITServices_Issues_Test
     {
+        IWITServices witServices;
         MockRepository mocks;
         DataBaseAccess.DataBaseAccess dbMock;
+        ISharePoint su;
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-         
+          
         }
 
         [TestFixtureTearDown]
@@ -27,8 +31,10 @@ namespace Infocorp.TITA.WITLogic.Tests
         [SetUp]
         public void SetUp()
         {
+            witServices = WITFactory.Instance().WITServicesInstance();
             mocks = new MockRepository();
             dbMock = mocks.CreateMock<DataBaseAccess.DataBaseAccess>();
+            su = mocks.CreateMock<ISharePoint>();
         }
 
         [TearDown]
@@ -40,11 +46,21 @@ namespace Infocorp.TITA.WITLogic.Tests
         [Test]
         public void MustGetIssueTemplate()
         {
+            string url = "http://www.testurl.com";
+            List<DTField> fields = new List<DTField>() { new DTField("Test", DTField.Types.Boolean, true, null, "true") };
             using (mocks.Record())
             {
+                Expect.On(su).Call(su.GetFieldsIssue(url)).Return(fields);
             }
 
-            Assert.IsTrue(true);
+            DTIssue issueTemplate = witServices.GetIssueTemplate(url);
+
+            Assert.AreEqual(fields.Count, issueTemplate.Fields.Count);
+            foreach (DTField field in issueTemplate.Fields)
+            {
+                Assert.Contains(field, fields);
+            }
+            
         }
 
         [Test, Ignore("Not ready")]
