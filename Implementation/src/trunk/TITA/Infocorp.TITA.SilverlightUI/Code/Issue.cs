@@ -84,12 +84,13 @@ namespace Infocorp.TITA.SilverlightUI.Code
             get { return resolution; }
             set { resolution = value; }
         }
-        //private int linkIssueIdNoMenu;
 
-        //public int LinkIssueIdNoMenu
-        //{
-        //    get { return linkIssueIdNoMenu; }
-        //    set { linkIssueIdNoMenu = value; }
-        //}
+        private bool isLocal = false;
+
+        public bool IsLocal
+        {
+            get { return isLocal; }
+            set { isLocal = value; }
+        }
     }
 }
