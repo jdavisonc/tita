@@ -195,6 +195,11 @@ namespace Infocorp.TITA.SilverlightUI
             GetContract();
         }
 
+        bool ValidarCampos(DTContract cont)
+        {
+            return ((cont.UserName.ToString() != "") && (cont.Site.ToString() != ""));
+        }
+
         private void BtnAceptarContrato_Click(object sender, RoutedEventArgs e)
         {
             if (!isEdit)
@@ -204,15 +209,24 @@ namespace Infocorp.TITA.SilverlightUI
                     UserName = txtNombre.Text.ToString(),
                     Site = txtUrl.Text.ToString()
                 };
+                if (ValidarCampos(cont))
+                {
+                    WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                    ws.AddNewContractCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_AddNewContractCompleted);
+                    ws.AddNewContractAsync(cont);
 
-                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-                ws.AddNewContractCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_AddNewContractCompleted);
-                ws.AddNewContractAsync(cont);
-                
-                PnlbtnsContrato.Visibility = Visibility.Visible;
-                pnlEditContrato.Visibility = Visibility.Collapsed;
-                PnlActionContrato.Visibility = Visibility.Collapsed;
-
+                    PnlbtnsContrato.Visibility = Visibility.Visible;
+                    pnlEditContrato.Visibility = Visibility.Collapsed;
+                    PnlActionContrato.Visibility = Visibility.Collapsed;
+                }
+                else 
+                {
+                    txtNombre.Text = "Campo requerido";
+                    txtUrl.Text = "Campo requerido";
+                    pnlEditContrato.Visibility = Visibility.Visible;
+                    PnlbtnsContrato.Visibility = Visibility.Collapsed;
+                    PnlActionContrato.Visibility = Visibility.Visible;
+                }
             }
             else if (isEdit)
             {
@@ -351,6 +365,9 @@ namespace Infocorp.TITA.SilverlightUI
                             break;
                         case "Resolution":
                             i.Resolution = field.Value;
+                            break;
+                        case "IsLocal":
+                            i.IsLocal = bool.Parse(field.Value);
                             break;
                         default:
                             break;
@@ -503,8 +520,124 @@ namespace Infocorp.TITA.SilverlightUI
             PnlNew.Children.Remove(loading);
         }
 
+        private void LoadPnlError(DTIssue issue)
+        {
+            isEdit = false;
+            PnlAction.Visibility = Visibility.Visible;
+            Grid grd = grdIncidents;
+
+            int numCtrl = 0;
+            int row = 0;
+            grd.ColumnDefinitions.Add(new ColumnDefinition());
+            grd.ColumnDefinitions.Add(new ColumnDefinition());
+
+            foreach (DTField field in issue.Fields)
+            {
+                if ((field.Name != "ID")&&(field.Name != null))
+                {
+                    Grid nuevo = new Grid();
+                    nuevo.ColumnDefinitions.Add(new ColumnDefinition());
+                    nuevo.ColumnDefinitions.Add(new ColumnDefinition());
+                    nuevo.ColumnDefinitions[0].Width = new GridLength(200);
+                    TextBlock txt = new TextBlock();
+                    numCtrl = numCtrl + 1;
+                    row = row + 1;
+                    switch (field.Type)
+                    {
+                        case Types.Boolean:
+                            
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                          
+                            CheckBox chk = new CheckBox();
+                            chk.SetValue(NameProperty, "chk_" + field.Name);
+                            chk.Width = 40;
+                            chk.IsChecked = (field.Value == "True");
+                            chk.SetValue(Grid.ColumnProperty, 1);
+
+                            txt.SetValue(Grid.RowProperty, row);
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            nuevo.Children.Add(txt);
+                            nuevo.Children.Add(chk);
+                            break;
+                        case Types.Choice:
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            ListBox lstbx = new ListBox();
+                            lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
+                            foreach (DTField field_lst in my_issue_template.Fields)
+                            {
+                                if ((field_lst.Type == Types.Choice) && (field_lst.Name == field.Name))
+                                    lstbx.ItemsSource = field_lst.Choices;
+                            }
+                            lstbx.Width = 80;
+                            //lstbx.ItemsSource = field.Choices;
+                            lstbx.SelectedItem = field.Value;
+                            lstbx.SetValue(Grid.ColumnProperty, 1);
+                            
+
+
+                            //DropDownList drp = new DropDownList();
+                            //drp.SetValue(NameProperty, "drp_" + field.Name);
+                            //foreach (string option in field.Choices){
+                            //    drp.Items.Add(new ListItem(option,option));
+                            //}
+                            //drp.DataBind();
+                            //drp.Margin = new Thickness(140, numCtrl * 20, 0, 0);
+
+                            //txt.SetValue(Grid.RowProperty, row);
+                            
+                            nuevo.Children.Add(txt);
+                            nuevo.Children.Add(lstbx);
+                            break;
+                        case Types.DateTime:
+                            numCtrl = numCtrl + 3;
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            Calendar cal = new Calendar();
+                            cal.SetValue(NameProperty, "cal_" + field.Name);
+                            cal.Width = 280;
+                            cal.Height = 200;
+                            cal.SelectedDate = DateTime.Today;
+                            cal.SelectedDate = Convert.ToDateTime(field.Value);
+                            cal.SetValue(Grid.ColumnProperty, 1);
+                            
+                            nuevo.Children.Add(txt);
+                            nuevo.Children.Add(cal);
+                            break;
+                        default:
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            TextBox bx = new TextBox();
+                            bx.SetValue(NameProperty, "bx_" + field.Name);
+                            bx.Width = 80;
+                            bx.Text = field.Value;
+                            bx.SetValue(Grid.ColumnProperty, 1);
+                            
+                            nuevo.Children.Add(txt);
+                            nuevo.Children.Add(bx);
+                            break;
+                    }
+                    PnlNew.Children.Add(nuevo);
+                }
+            }
+            PnlNew.Children.Remove(loading);
+        }
+
         private void BtnAccept_Click(object sender, RoutedEventArgs e)
         {
+            bool error = false;
             StackPanel cnv = (StackPanel)CanvasIncident.FindName("PnlNew");
             DTIssue i = my_issue_template;
 
@@ -525,12 +658,20 @@ namespace Infocorp.TITA.SilverlightUI
                         break;
                     case Types.Choice:
                         ListBox lst = (ListBox)cnv.FindName("lstbx_" + f.Name);
+                        if ((f.Required) && (lst.SelectedItem == null))
+                        {
+                            error = true;
+                        }
                         field.Value = lst.SelectedItem as string;
                         field.Type = f.Type;
                         field.Name = f.Name;
                         break;
                     case Types.DateTime:
                         Calendar cal = (Calendar)cnv.FindName("cal_" + f.Name);
+                        if ((f.Required) && (cal.SelectedDate.Value.ToShortDateString().ToString() == ""))
+                        {
+                            error = true;
+                        }
                         field.Value = cal.SelectedDate.Value.ToShortDateString();
                         field.Type = f.Type;
                         field.Name = f.Name;
@@ -539,7 +680,15 @@ namespace Infocorp.TITA.SilverlightUI
                         if (f.Name != "ID")
                         {
                             TextBox txt = (TextBox)cnv.FindName("bx_" + f.Name);
-                            field.Value = txt.Text;
+                            if ((f.Required) && (txt.Text.ToString() == ""))
+                            {
+                                field.Value = "Datos incorrectos";
+                                error = true;
+                            }
+                            else 
+                            {
+                                field.Value = txt.Text;
+                            }
                             field.Type = f.Type;
                             field.Name = f.Name;
                         }
@@ -564,20 +713,27 @@ namespace Infocorp.TITA.SilverlightUI
                 {
                     issue.Fields.Add(field);
                 }
-
             }
 
-            if (!isEdit)
+            if (error)
             {
-                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-                ws.AddIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_AddIssueCompleted);
-                ws.AddIssueAsync(issue);
+                PnlNew.Children.Clear();
+                LoadPnlError(issue);
             }
-            else if (isEdit) 
-            {   
-                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-                ws.ModifyIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ModifyIssueCompleted);
-                ws.ModifyIssueAsync(issue);
+            else
+            {
+                if (!isEdit)
+                {
+                    WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                    ws.AddIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_AddIssueCompleted);
+                    ws.AddIssueAsync(issue);
+                }
+                else if (isEdit)
+                {
+                    WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                    ws.ModifyIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ModifyIssueCompleted);
+                    ws.ModifyIssueAsync(issue);
+                }
             }
         }
 
