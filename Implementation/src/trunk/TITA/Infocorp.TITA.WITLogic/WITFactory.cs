@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Infocorp.TITA.SharePointUtilities;
 
 namespace Infocorp.TITA.WITLogic
 {
@@ -28,6 +29,16 @@ namespace Infocorp.TITA.WITLogic
             if (_wITServicesInstance == null)
             {
                 _wITServicesInstance = new WITServices();
+            }
+
+            return _wITServicesInstance;
+        }
+
+        public IWITServices WITServicesInstance(DataBaseAccess.DataBaseAccess db, ISharePoint sharepoint)
+        {
+            if (_wITServicesInstance == null)
+            {
+                _wITServicesInstance = new WITServices(db, sharepoint);
             }
 
             return _wITServicesInstance;

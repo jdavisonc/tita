@@ -10,13 +10,31 @@ namespace Infocorp.TITA.WITLogic
     class WITServices : IWITServices
     {
 
+        #region ctor
+
+        DataBaseAccess.DataBaseAccess _db = null;
+        ISharePoint _sharepoint = null;
+
+        public WITServices()
+        {
+            _sharepoint = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint();
+        }
+
+        public WITServices(DataBaseAccess.DataBaseAccess db, ISharePoint sharepoint)
+        {
+            _db = db;
+            _sharepoint = sharepoint;
+        }
+
+        #endregion
+
         #region IWITServices Members
 
         public DTIssue GetIssueTemplate(string urlSite)
         {
             DTIssue issue = new DTIssue();
 
-            issue.Fields = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint().GetFieldsIssue(urlSite);
+            issue.Fields =_sharepoint.GetFieldsIssue(urlSite);
 
             return issue;
         }
@@ -26,7 +44,7 @@ namespace Infocorp.TITA.WITLogic
 
             List<DTIssue> result = new List<DTIssue>();
             List<DTCommandInfo> commands = WITCommandState.Instance().Commands;
-            result = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint().GetIssues(urlSite);
+            result = _sharepoint.GetIssues(urlSite);
             commands.ForEach(delegate(DTCommandInfo command)
             {
                 if (command.CommandType == CommandType.ADD || command.CommandType == CommandType.MODIFY)

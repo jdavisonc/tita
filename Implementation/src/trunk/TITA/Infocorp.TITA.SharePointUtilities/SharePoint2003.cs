@@ -146,53 +146,57 @@ namespace Infocorp.TITA.SharePointUtilities
 
         #region Auxiliar Methods
 
-        private void UpdateListItem(SPWeb web,SPListItem listItem, DTIssue issue)
+        private void UpdateListItem(SPWeb web, SPListItem listItem, DTIssue issue)
         {
             List<DTField> fieldCollection = issue.Fields;
             foreach (DTField field in fieldCollection)
             {
-                if (field.Type == DTField.Types.DateTime)
+                if (!listItem.Fields[field.Name].ReadOnlyField)
                 {
-                    if (field.Value.CompareTo("") != 0)
-                        listItem[field.Name] = DateTime.Parse(field.Value);
-                }
-                else if (field.Type == DTField.Types.User)
-                {
-                    SPUserCollection userCollection = web.AllUsers;
-                    bool stop = false;
-                    int i = 0;
-                    while (!stop && i < userCollection.Count)
+                    if (field.Type == DTField.Types.DateTime)
                     {
-                        if (userCollection[i].Name.CompareTo(field.Value) == 0)
-                        {
-                            listItem[field.Name] = string.Format("{0};#{1}", userCollection[i].ID.ToString(), userCollection[i].Name);
-                            stop = true;
-                        }
-                        i++;
+                        if (field.Value.CompareTo("") != 0)
+                            listItem[field.Name] = DateTime.Parse(field.Value);
                     }
-                }
-                else if (field.Type != DTField.Types.Counter)
-                {
-                    listItem[field.Name] = field.Value;
-                }
-            }
-            SPAttachmentCollection listItemAttachmentCollection = listItem.Attachments;
-            List<DTAttachment> attachmentCollection = issue.Attachments;
-            bool condition;
-            int j;
-            foreach (var attachment in attachmentCollection)
-            {
-                condition = false;
-                j = 0;
-                while (!condition && j < listItemAttachmentCollection.Count)
-                {
-                    if (listItemAttachmentCollection[j].CompareTo(attachment.Name) == 0)
-                        condition = true;
-                    j++;
-                }
-                if (!condition && j == listItemAttachmentCollection.Count)
-                {
-                    listItemAttachmentCollection.Add(attachment.Name, attachment.Data);
+                    else if (field.Type == DTField.Types.User)
+                    {
+                        SPUserCollection userCollection = web.AllUsers;
+                        bool stop = false;
+                        int i = 0;
+                        while (!stop && i < userCollection.Count)
+                        {
+                            if (userCollection[i].Name.CompareTo(field.Value) == 0)
+                            {
+                                listItem[field.Name] = string.Format("{0};#{1}", userCollection[i].ID.ToString(), userCollection[i].Name);
+                                stop = true;
+                            }
+                            i++;
+                        }
+                    }
+                    else if (field.Type != DTField.Types.Counter)
+                    {
+                        listItem[field.Name] = field.Value;
+                    }
+
+                    SPAttachmentCollection listItemAttachmentCollection = listItem.Attachments;
+                    List<DTAttachment> attachmentCollection = issue.Attachments;
+                    bool condition;
+                    int j;
+                    foreach (var attachment in attachmentCollection)
+                    {
+                        condition = false;
+                        j = 0;
+                        while (!condition && j < listItemAttachmentCollection.Count)
+                        {
+                            if (listItemAttachmentCollection[j].CompareTo(attachment.Name) == 0)
+                                condition = true;
+                            j++;
+                        }
+                        if (!condition && j == listItemAttachmentCollection.Count)
+                        {
+                            listItemAttachmentCollection.Add(attachment.Name, attachment.Data);
+                        }
+                    }
                 }
             }
             listItem.Update();
