@@ -15,7 +15,7 @@ namespace Infocorp.TITA.WITLogic.Tests
         IWITServices witServices;
         MockRepository mocks;
         DataBaseAccess.DataBaseAccess dbMock;
-        ISharePoint su;
+        ISharePoint suMock;
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
@@ -31,10 +31,10 @@ namespace Infocorp.TITA.WITLogic.Tests
         [SetUp]
         public void SetUp()
         {
-            witServices = WITFactory.Instance().WITServicesInstance();
             mocks = new MockRepository();
             dbMock = mocks.CreateMock<DataBaseAccess.DataBaseAccess>();
-            su = mocks.CreateMock<ISharePoint>();
+            suMock = mocks.CreateMock<ISharePoint>();
+            witServices = WITFactory.Instance().WITServicesInstance(dbMock, suMock);
         }
 
         [TearDown]
@@ -50,7 +50,7 @@ namespace Infocorp.TITA.WITLogic.Tests
             List<DTField> fields = new List<DTField>() { new DTField("Test", DTField.Types.Boolean, true, null, "true") };
             using (mocks.Record())
             {
-                Expect.On(su).Call(su.GetFieldsIssue(url)).Return(fields);
+                Expect.On(suMock).Call(suMock.GetFieldsIssue(url)).Return(fields);
             }
 
             DTIssue issueTemplate = witServices.GetIssueTemplate(url);
@@ -63,9 +63,19 @@ namespace Infocorp.TITA.WITLogic.Tests
             
         }
 
-        [Test, Ignore("Not ready")]
+        [Test]
         public void MustGetIssues()
         {
+            string url = "http://www.testurl.com";
+            List<DTIssue> issues = new List<DTIssue>() { new DTIssue(new List<DTField>(), new List<DTAttachment>()) };
+            using (mocks.Record())
+            {
+                Expect.On(suMock).Call(suMock.GetIssues(url)).Return(issues);
+            }
+
+            List<DTIssue> result = witServices.GetIssues(url);
+
+            Assert.AreEqual(issues.Count, result.Count);
         }
 
         [Test, Ignore("Not ready")]
