@@ -510,8 +510,10 @@ namespace Infocorp.TITA.SilverlightUI
 
             DTIssue issue = new DTIssue();
             issue.Fields = new List<DTField>();
+          
             foreach (DTField f in i.Fields)
             {
+                bool addIssue = true;
                 DTField field = new DTField();
                 switch (f.Type)
                 {
@@ -541,16 +543,27 @@ namespace Infocorp.TITA.SilverlightUI
                             field.Type = f.Type;
                             field.Name = f.Name;
                         }
-                        else if ((f.Name == "ID") &&(isEdit))
+                        else
                         {
-                            Issue select_issue = (Issue)grdIncident.SelectedItem;
-                            field.Name = "ID";
-                            field.Value = select_issue.Id.ToString();
-                            field.Type = Types.Integer;
+                            if (isEdit)
+                            {
+                                Issue select_issue = (Issue)grdIncident.SelectedItem;
+                                field.Name = "ID";
+                                field.Value = select_issue.Id.ToString();
+                                field.Type = Types.Integer;
+                            }
+                            else
+                            {
+                                addIssue = false;
+                            }
                         }
+                
                         break;
                 }
-                issue.Fields.Add(field);
+                if (addIssue)
+                {
+                    issue.Fields.Add(field);
+                }
 
             }
 
