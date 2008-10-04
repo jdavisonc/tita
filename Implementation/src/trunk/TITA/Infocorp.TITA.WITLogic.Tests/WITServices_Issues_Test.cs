@@ -16,8 +16,7 @@ namespace Infocorp.TITA.WITLogic.Tests
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            mocks = new MockRepository();
-            dbMock =  mocks.CreateMock<DataBaseAccess.DataBaseAccess>();
+         
         }
 
         [TestFixtureTearDown]
@@ -28,6 +27,8 @@ namespace Infocorp.TITA.WITLogic.Tests
         [SetUp]
         public void SetUp()
         {
+            mocks = new MockRepository();
+            dbMock = mocks.CreateMock<DataBaseAccess.DataBaseAccess>();
         }
 
         [TearDown]
@@ -37,30 +38,33 @@ namespace Infocorp.TITA.WITLogic.Tests
         }
 
         [Test]
-        void MustGetIssueTemplate()
+        public void MustGetIssueTemplate()
         {
+            using (mocks.Record())
+            {
+            }
+
             Assert.IsTrue(true);
         }
 
         [Test, Ignore("Not ready")]
-        void MustGetIssues()
+        public void MustGetIssues()
         {
         }
 
         [Test, Ignore("Not ready")]
-        void MustAddNewIssue()
+        public void MustAddNewIssue()
         {
         }
 
         [Test, Ignore("Not ready")]
-        void MustModifyIssue()
+        public void MustModifyIssue()
         {
         }
 
         [Test, Ignore("Not ready")]
-        void MustDeleteIssue()
+        public void MustDeleteIssue()
         {
         }
-
     }
 }
