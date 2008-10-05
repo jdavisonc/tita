@@ -66,12 +66,12 @@ namespace Infocorp.TITA.WpfOutlookAddIn
             return comboChoice;
         }
 
-        private Control InsertTextBox(string boxName) 
+        private Control InsertTextBox() 
         {
             TextBox textBox = new TextBox();
             //textBox.Height = 19;
             //textBox.Width = 150;
-            textBox.Name = boxName;
+            //textBox.Name = boxName;
             // register textbox2's name with newgrid
             //newgrid.registername(textbox.name, textbox);
             //textBox.Margin = new System.Windows.Thickness(0, 3, 3, 3);
@@ -104,19 +104,19 @@ namespace Infocorp.TITA.WpfOutlookAddIn
         {
             Control oReturn = null;
 
-            switch (lineField.Type)
+            switch (lineField.GetCustomType())
             {
                 case DTField.Types.Integer:
                     //textbox
-                    oReturn = InsertTextBox(lineField.Value);
+                    oReturn = InsertTextBox();
                     break;
                 case DTField.Types.String:
                     //textbox
-                    oReturn = oReturn = InsertTextBox(lineField.Value);
+                    oReturn = InsertTextBox();
                     break;
                 case DTField.Types.Choice:
                     //combo
-                    oReturn = InsertCombo(lineField.Choices);
+                    oReturn = InsertCombo(((DTFieldChoice)lineField).Choices);
                     break;
                 case DTField.Types.Boolean:
                     //combo boolean
@@ -133,7 +133,12 @@ namespace Infocorp.TITA.WpfOutlookAddIn
                     break;
                 case DTField.Types.User:
                     //combo
-                    oReturn = InsertCombo(lineField.Choices);
+                    oReturn = InsertCombo(((DTFieldChoice)lineField).Choices);
+                    break;
+                case DTField.Types.Lookup:
+                    oReturn = InsertCombo(((DTFieldChoice)lineField).Choices);
+                    break;
+                case DTField.Types.Default:
                     break;
                 default:
                     break;
@@ -158,7 +163,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
 
         private Control AddGridLine(DTField lineField, int line) 
         {
-            if (lineField.Type != DTField.Types.Counter)
+            if (lineField.GetCustomType() != DTField.Types.Counter)
             {
                 //agrega el nombre el label
                 Label oLabelLine = AddLabelLine(lineField);
