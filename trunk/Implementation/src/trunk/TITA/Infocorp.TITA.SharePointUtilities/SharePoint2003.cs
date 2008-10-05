@@ -10,46 +10,93 @@ namespace Infocorp.TITA.SharePointUtilities
     {
         #region ISharePoint Members
 
-        public List<DTIssue> GetIssues(string urlSite)
+        public List<DTItem> GetIssues(string urlSite)
         {
             try
             {
-                //System.Security.Principal.WindowsImpersonationContext wic = null;
-                //wic = System.Security.Principal.WindowsIdentity.GetCurrent().Impersonate();
-                List<DTIssue> issues = new List<DTIssue>();
+                List<DTItem> issues = new List<DTItem>();
                 using (SPSite site = new SPSite(urlSite))
                 {
                     using (SPWeb web = site.OpenWeb())
                     {
-
                         SPList list = web.Lists["Issues"];
                         SPListItemCollection listItemCollection = list.Items;
                         List<DTAttachment> attachmentCollectionIssue;
                         foreach (SPListItem item in listItemCollection)
                         {
-                            if (Convert.ToBoolean(item["ows_IsCurrent"]))
+                            List<DTField> fieldCollectionIssue = new List<DTField>(GetFieldsListItem(web, list));
+                            foreach (DTField field in fieldCollectionIssue)
                             {
-                                List<DTField> fieldCollectionIssue = new List<DTField>(GetFieldsListItem(list));
-                                foreach (DTField field in fieldCollectionIssue)
-                                {
-                                    if (item[field.Name] != null)
+                                    switch (field.GetCustomType())
                                     {
-                                        field.Value = item[field.Name].ToString();
+                                        case DTField.Types.Integer:
+                                            ((DTFieldAtomicInteger)field).Value = int.Parse(item[field.Name].ToString());
+                                            break;
+                                        case DTField.Types.String:
+                                            ((DTFieldAtomicString)field).Value = item[field.Name].ToString();
+                                            break;
+                                        case DTField.Types.Choice:
+                                            ((DTFieldChoice)field).Value = item[field.Name].ToString();
+                                            break;
+                                        case DTField.Types.Boolean:
+                                            ((DTFieldAtomicBoolean)field).Value = Boolean.Parse(item[field.Name].ToString());
+                                            break;
+                                        case DTField.Types.DateTime:
+                                            ((DTFieldAtomicDateTime)field).Value = DateTime.Parse(item[field.Name].ToString());
+                                            break;
+                                        case DTField.Types.Note:
+                                            ((DTFieldAtomicNote)field).Value = item[field.Name].ToString();
+                                            break;
+                                        case DTField.Types.User:
+                                            SPUserCollection userCollection = web.AllUsers;
+                                            string val = item[field.Name].ToString();
+                                            int index = val.IndexOf(';');
+                                            int id = int.Parse(val.Substring(0, index));
+                                            foreach (SPUser user in userCollection)
+                                            {
+                                                if (user.ID == id)
+                                                {
+                                                    ((DTFieldChoiceUser)field).Value = user.Name;
+                                                    break;
+                                                }
+                                            }
+                                            break;
+                                        case DTField.Types.Counter:
+                                            ((DTFieldCounter)field).Value = int.Parse(item[field.Name].ToString());
+                                            break;
+                                        case DTField.Types.Lookup:
+                                            DTFieldChoiceLookup fieldLookup = (DTFieldChoiceLookup)field;
+                                            string val1 = item[field.Name].ToString();
+                                            int index1 = val1.IndexOf(';');
+                                            int id1 = int.Parse(val1.Substring(0, index1));
+
+                                            SPListCollection listCollection = web.Lists;
+                                            Guid listGuid = new Guid(fieldLookup.LookupList);
+                                            SPList listL = listCollection.GetList(listGuid, false);
+                                            SPListItemCollection itemCollection = listL.Items;
+                                            foreach (SPListItem itemL in itemCollection)
+                                            {
+                                                if (itemL.ID == id1)
+                                                {
+                                                    fieldLookup.Value = itemL[fieldLookup.LookupField].ToString();
+                                                    break;
+                                                }
+                                            }
+                                            break;
+                                        case DTField.Types.Default:
+                                            break;
+                                        default:
+                                            break;
                                     }
-                                    else
-                                    {
-                                        field.Value = string.Empty;
-                                    }
-                                }
-                                attachmentCollectionIssue = new List<DTAttachment>();
-                                SPAttachmentCollection attachmentCollection = item.Attachments;
-                                foreach (var attachment in attachmentCollection)
-                                {
-                                    attachmentCollectionIssue.Add(new DTAttachment(attachment.ToString(), attachmentCollection.UrlPrefix));
-                                }
-                                DTIssue issueItem = new DTIssue(fieldCollectionIssue, attachmentCollectionIssue);
-                                issues.Add(issueItem);
                             }
+                            attachmentCollectionIssue = new List<DTAttachment>();
+                            SPAttachmentCollection attachmentCollection = item.Attachments;
+                            foreach (var attachment in attachmentCollection)
+                            {
+                                attachmentCollectionIssue.Add(new DTAttachment(attachment.ToString(), attachmentCollection.UrlPrefix + attachment.ToString()));
+                            }
+                            DTItem issueItem = new DTItem(fieldCollectionIssue, attachmentCollectionIssue);
+                            issues.Add(issueItem);
                         }
                     }
 
@@ -70,13 +117,13 @@ namespace Infocorp.TITA.SharePointUtilities
                 using (SPWeb web = site.OpenWeb())
                 {
                     SPList list = web.Lists["Issues"];
-                    fieldsCollection = GetFieldsListItem(list);
+                    fieldsCollection = GetFieldsListItem(web, list);
                 }
             }
             return fieldsCollection;
         }
 
-        public bool AddIssue(string urlSite, DTIssue issue)
+        public bool AddIssue(string urlSite, DTItem issue)
         {
             try
             {
@@ -111,6 +158,7 @@ namespace Infocorp.TITA.SharePointUtilities
                         web.AllowUnsafeUpdates = true;
                         SPList list = web.Lists["Issues"];
                         list.Items.DeleteItemById(IDIssue);
+                        list.Update();
                     }
                 }
                 return true;
@@ -121,7 +169,7 @@ namespace Infocorp.TITA.SharePointUtilities
             }
         }
 
-        public bool UpdateIssue(string urlSite, DTIssue issue)
+        public bool UpdateIssue(string urlSite, DTItem issue)
         {
             try
             {
@@ -132,7 +180,7 @@ namespace Infocorp.TITA.SharePointUtilities
                     {
                         web.AllowUnsafeUpdates = true;
                         SPList list = web.Lists["Issues"];
-                        int IDIssue = int.Parse(issue.GetField("ID").Value.ToString());
+                        int IDIssue = ((DTFieldCounter)issue.GetField("ID")).Value;
                         SPListItem listItem = list.Items.GetItemById(IDIssue);
                         UpdateListItem(web, listItem, issue);
                     }
@@ -143,42 +191,76 @@ namespace Infocorp.TITA.SharePointUtilities
             {
                 return false;
             }
+            return true;
         }
 
         #endregion
 
         #region Auxiliar Methods
 
-        private void UpdateListItem(SPWeb web, SPListItem listItem, DTIssue issue)
+        private void UpdateListItem(SPWeb web,SPListItem listItem, DTItem issue)
         {
             List<DTField> fieldCollection = issue.Fields;
             foreach (DTField field in fieldCollection)
             {
-                if (!listItem.Fields[field.Name].ReadOnlyField)
+                if (!(field.IsReadOnly || field.Hidden))
                 {
-                    if (field.Type == DTField.Types.DateTime)
+                    switch (field.GetCustomType())
                     {
-                        if (field.Value.CompareTo("") != 0)
-                            listItem[field.Name] = DateTime.Parse(field.Value);
-                    }
-                    else if (field.Type == DTField.Types.User)
-                    {
-                        SPUserCollection userCollection = web.AllUsers;
-                        bool stop = false;
-                        int i = 0;
-                        while (!stop && i < userCollection.Count)
-                        {
-                            if (userCollection[i].Name.CompareTo(field.Value) == 0)
+                        case DTField.Types.Integer:
+                            listItem[field.Name] = ((DTFieldAtomicInteger)field).Value.ToString();
+                            break;
+                        case DTField.Types.String:
+                            listItem[field.Name] = ((DTFieldAtomicString)field).Value;
+                            break;
+                        case DTField.Types.Choice:
+                            listItem[field.Name] = ((DTFieldChoice)field).Value;
+                            break;
+                        case DTField.Types.Boolean:
+                            listItem[field.Name] = ((DTFieldAtomicBoolean)field).Value.ToString();
+                            break;
+                        case DTField.Types.DateTime:
+                            listItem[field.Name] = ((DTFieldAtomicDateTime)field).Value;
+                            break;
+                        case DTField.Types.Note:
+                            listItem[field.Name] = ((DTFieldAtomicNote)field).Value;
+                            break;
+                        case DTField.Types.User:
+                            SPUserCollection userCollection = web.AllUsers;
+                            bool stop = false;
+                            int i = 0;
+                            while (!stop && i < userCollection.Count)
                             {
-                                listItem[field.Name] = string.Format("{0};#{1}", userCollection[i].ID.ToString(), userCollection[i].Name);
-                                stop = true;
+                                if (userCollection[i].Name.CompareTo(((DTFieldChoiceUser)field).Value) == 0)
+                                {
+                                    listItem[field.Name] = string.Format("{0};#{1}", userCollection[i].ID.ToString(), userCollection[i].Name);
+                                    stop = true;
+                                }
+                                i++;
                             }
-                            i++;
-                        }
-                    }
-                    else if (field.Type != DTField.Types.Counter)
-                    {
-                        listItem[field.Name] = field.Value;
+                            break;
+                        case DTField.Types.Counter:
+                            break;
+                        case DTField.Types.Lookup:
+                            DTFieldChoiceLookup lookup = (DTFieldChoiceLookup)field;
+                            SPListCollection listCollection = web.Lists;
+                            Guid listGuid = new Guid(lookup.LookupList);
+                            SPList listLookup = listCollection.GetList(listGuid, false);
+                            SPListItemCollection itemCollection = listLookup.Items;
+                            foreach (SPListItem item in itemCollection)
+                            {
+                                if (lookup.Value.CompareTo(item[lookup.LookupField].ToString()) == 0)
+                                {
+                                    listItem[lookup.Name] = string.Format("{0}", item.ID.ToString());
+                                    break;
+                                }
+                            }
+
+                            break;
+                        case DTField.Types.Default:
+                            break;
+                        default:
+                            break;
                     }
 
                     SPAttachmentCollection listItemAttachmentCollection = listItem.Attachments;
@@ -205,110 +287,124 @@ namespace Infocorp.TITA.SharePointUtilities
             listItem.Update();
         }
 
-        private List<DTField> GetFieldsListItem(SPList list)
+        private List<DTField> GetFieldsListItem(SPWeb web, SPList list)
         {
             List<DTField> fieldsCollection = new List<DTField>();
             SPFieldCollection listFieldsCollection = list.Fields;
             foreach (SPField field in listFieldsCollection)
             {
-                if (!(field.Hidden || field.ReadOnlyField) || field.Title.ToLower() == "id")
+                string name = field.Title;
+                bool required = field.Required;
+                bool hidden = field.Hidden;
+                bool isReadOnly = field.ReadOnlyField;
+                SPFieldType type = field.Type;
+                List<string> choices;
+                switch (type)
                 {
-                    string name = field.Title;
-                    bool required = field.Required;
-                    SPFieldType type = field.Type;
-                    List<string> choices = new List<string>();
-
-                    if (type == SPFieldType.Choice)
-                    {
+                    case SPFieldType.Attachments:
+                        break;
+                    case SPFieldType.Boolean:
+                        fieldsCollection.Add(new DTFieldAtomicBoolean(name, required, hidden, isReadOnly));
+                        break;
+                    case SPFieldType.Calculated:
+                        break;
+                    case SPFieldType.Choice:
+                        choices = new List<string>();
                         StringCollection choicesCollection = ((SPFieldChoice)field).Choices;
                         foreach (var choice in choicesCollection)
                         {
                             choices.Add(choice);
                         }
-                    }
-                    else if (type == SPFieldType.User)
-                    {
-                        SPUserCollection userCollection = list.ParentWeb.AllUsers;
+                        fieldsCollection.Add(new DTFieldChoice(name, required, hidden, isReadOnly, choices));
+                        break;
+                    case SPFieldType.Computed:
+                        break;
+                    case SPFieldType.Counter:
+                        fieldsCollection.Add(new DTFieldCounter(name, required, hidden, isReadOnly));
+                        break;
+                    case SPFieldType.CrossProjectLink:
+                        break;
+                    case SPFieldType.Currency:
+                        break;
+                    case SPFieldType.DateTime:
+                        bool isDateOnly = false;
+                        if (((SPFieldDateTime)field).DisplayFormat == SPDateTimeFieldFormatType.DateOnly)
+                        {
+                            isDateOnly = true;
+                        }
+                        fieldsCollection.Add(new DTFieldAtomicDateTime(name, required, hidden, isReadOnly, isDateOnly));
+                        break;
+                    case SPFieldType.Error:
+                        break;
+                    case SPFieldType.File:
+                        break;
+                    case SPFieldType.GridChoice:
+                        break;
+                    case SPFieldType.Guid:
+                        break;
+                    case SPFieldType.Integer:
+                        break;
+                    case SPFieldType.Invalid:
+                        break;
+                    case SPFieldType.Lookup:
+                        choices = new List<string>();
+                        SPFieldLookup fieldLookup = (SPFieldLookup)field;
+                        string lookupField = fieldLookup.LookupField;
+                        string lookupList = fieldLookup.LookupList;
+                        choices.AddRange(GetChoicesFromList(web, lookupList, lookupField));
+                        fieldsCollection.Add(new DTFieldChoiceLookup(name, required, hidden, isReadOnly, choices, lookupField, lookupList));
+                        break;
+                    case SPFieldType.MaxItems:
+                        break;
+                    case SPFieldType.ModStat:
+                        break;
+                    case SPFieldType.MultiChoice:
+                        break;
+                    case SPFieldType.Note:
+                        fieldsCollection.Add(new DTFieldAtomicNote(name, required, hidden, isReadOnly));
+                        break;
+                    case SPFieldType.Number:
+                        fieldsCollection.Add(new DTFieldAtomicInteger(name, required, hidden, isReadOnly));
+                        break;
+                    case SPFieldType.Recurrence:
+                        break;
+                    case SPFieldType.Text:
+                        fieldsCollection.Add(new DTFieldAtomicString(name, required, hidden, isReadOnly));
+                        break;
+                    case SPFieldType.Threading:
+                        break;
+                    case SPFieldType.URL:
+                        break;
+                    case SPFieldType.User:
+                        choices = new List<string>();
+                        SPUserCollection userCollection = web.AllUsers;
                         foreach (SPUser user in userCollection)
                         {
                             choices.Add(user.Name);
                         }
-                    }
-                    switch (type)
-                    {
-                        case SPFieldType.Attachments:
-                            break;
-                        case SPFieldType.Boolean:
-                            fieldsCollection.Add(new DTField(name, DTField.Types.Boolean, required, choices));
-                            break;
-                        case SPFieldType.Calculated:
-                            break;
-                        case SPFieldType.Choice:
-                            fieldsCollection.Add(new DTField(name, DTField.Types.Choice, required, choices));
-                            break;
-                        case SPFieldType.Computed:
-                            break;
-                        case SPFieldType.Counter:
-                            fieldsCollection.Add(new DTField(name, DTField.Types.Counter, required, choices));
-                            break;
-                        case SPFieldType.CrossProjectLink:
-                            break;
-                        case SPFieldType.Currency:
-                            break;
-                        case SPFieldType.DateTime:
-                            DTField dtField = new DTField(name, DTField.Types.DateTime, required, choices);
-                            if (((SPFieldDateTime)field).DisplayFormat == SPDateTimeFieldFormatType.DateOnly)
-                            {
-                                dtField.IsDateOnly = true;
-                            }
-                            fieldsCollection.Add(dtField);
-                            break;
-                        case SPFieldType.Error:
-                            break;
-                        case SPFieldType.File:
-                            break;
-                        case SPFieldType.GridChoice:
-                            break;
-                        case SPFieldType.Guid:
-                            break;
-                        case SPFieldType.Integer:
-                            break;
-                        case SPFieldType.Invalid:
-                            break;
-                        case SPFieldType.Lookup:
-                            break;
-                        case SPFieldType.MaxItems:
-                            break;
-                        case SPFieldType.ModStat:
-                            break;
-                        case SPFieldType.MultiChoice:
-                            break;
-                        case SPFieldType.Note:
-                            fieldsCollection.Add(new DTField(name, DTField.Types.Note, required, choices));
-                            break;
-                        case SPFieldType.Number:
-                            fieldsCollection.Add(new DTField(name, DTField.Types.Integer, required, choices));
-                            break;
-                        case SPFieldType.Recurrence:
-                            break;
-                        case SPFieldType.Text:
-                            fieldsCollection.Add(new DTField(name, DTField.Types.String, required, choices));
-                            break;
-                        case SPFieldType.Threading:
-                            break;
-                        case SPFieldType.URL:
-                            break;
-                        case SPFieldType.User:
-                            fieldsCollection.Add(new DTField(name, DTField.Types.User, required, choices));
-                            break;
-                        default:
-                            break;
-                    }
+                        fieldsCollection.Add(new DTFieldChoiceUser(name, required, hidden, isReadOnly, choices));
+                        break;
+                    default:
+                        break;
                 }
             }
             return fieldsCollection;
         }
 
         #endregion
+
+        private List<string> GetChoicesFromList(SPWeb web, string listId, string fieldName)
+        {
+            List<string> listLookupChoices = new List<string>();
+            SPListCollection listCollection = web.Lists;
+            Guid listGuid = new Guid(listId);
+            SPList list = listCollection.GetList(listGuid, false);
+            SPListItemCollection itemCollection = list.Items;
+            foreach (SPListItem item in itemCollection)
+            {
+                listLookupChoices.Add(item[fieldName].ToString());
+            }
+            return listLookupChoices;
+        }
     }
 }
