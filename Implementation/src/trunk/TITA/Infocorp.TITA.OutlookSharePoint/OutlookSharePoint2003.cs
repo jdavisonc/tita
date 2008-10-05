@@ -34,8 +34,8 @@ namespace Infocorp.TITA.OutlookSharePoint
                             {
                                 switch (field.GetCustomType())
                                 {
-                                    case DTField.Types.Integer:
-                                        listItem[field.Name] = ((DTFieldAtomicInteger)field).Value.ToString();
+                                    case DTField.Types.Number:
+                                        listItem[field.Name] = ((DTFieldAtomicNumber)field).Value.ToString();
                                         break;
                                     case DTField.Types.String:
                                         listItem[field.Name] = ((DTFieldAtomicString)field).Value;
@@ -192,7 +192,7 @@ namespace Infocorp.TITA.OutlookSharePoint
                                     fieldsCollection.Add(new DTFieldAtomicNote(name, required, hidden, isReadOnly));
                                     break;
                                 case SPFieldType.Number:
-                                    fieldsCollection.Add(new DTFieldAtomicInteger(name, required, hidden, isReadOnly));
+                                    fieldsCollection.Add(new DTFieldAtomicNumber(name, required, hidden, isReadOnly));
                                     break;
                                 case SPFieldType.Recurrence:
                                     break;
