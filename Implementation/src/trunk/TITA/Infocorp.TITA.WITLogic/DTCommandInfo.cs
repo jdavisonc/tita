@@ -20,8 +20,8 @@ namespace Infocorp.TITA.WITLogic
             get { return _commandType; }
             set { _commandType = value; }
         }
-        private DTIssue _issue;
-        public DTIssue Issue
+        private DTItem _issue;
+        public DTItem Issue
         {
             get { return _issue; }
             set { _issue = value; }
@@ -35,7 +35,8 @@ namespace Infocorp.TITA.WITLogic
             DTField f2 = (obj as DTCommandInfo).Issue.Fields.Find(delegate(DTField f) { return f.Name == "ID"; });
             if (f1 != null && f2 != null)
             {
-                result = f1.Value == f2.Value;
+
+                result = (f1 as DTFieldAtomicInteger).Value == (f2 as DTFieldAtomicInteger).Value;
             }
 
             return result;

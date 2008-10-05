@@ -38,7 +38,7 @@ namespace Infocorp.TITA.WITLogic
             switch (command.CommandType)
             {
                 case CommandType.ADD:
-                    DTField field = new DTField("ID", DTField.Types.Integer, true, null, (--_lastUsedId).ToString());
+                    DTFieldAtomicInteger field = new DTFieldAtomicInteger("ID", true,true,true, --_lastUsedId);
                     command.Issue.Fields.Add(field);
 
                     break;
