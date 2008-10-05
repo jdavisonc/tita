@@ -54,7 +54,7 @@
     <Compile Include="DTFieldAtomic.cs" />
     <Compile Include="DTFieldAtomicBoolean.cs" />
     <Compile Include="DTFieldAtomicDateTime.cs" />
-    <Compile Include="DTFieldAtomicInteger.cs" />
+    <Compile Include="DTFieldAtomicNumber.cs" />
     <Compile Include="DTFieldAtomicNote.cs" />
     <Compile Include="DTFieldAtomicString.cs" />
     <Compile Include="DTFieldChoice.cs" />

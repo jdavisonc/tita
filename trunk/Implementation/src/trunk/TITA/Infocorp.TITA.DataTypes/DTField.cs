@@ -16,7 +16,7 @@ namespace Infocorp.TITA.DataTypes
 
         public enum Types
         {
-            Integer = 0,
+            Number = 0,
             String = 1,
             Choice = 2,
             Boolean = 3,
