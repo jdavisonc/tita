@@ -133,8 +133,8 @@ namespace Infocorp.TITA.SharePointUtilities
                             {
                                 switch (field.GetCustomType())
                                 {
-                                    case DTField.Types.Integer:
-                                        listItem[field.Name] = ((DTFieldAtomicInteger)field).Value.ToString();
+                                    case DTField.Types.Number:
+                                        listItem[field.Name] = ((DTFieldAtomicNumber)field).Value.ToString();
                                         break;
                                     case DTField.Types.String:
                                         listItem[field.Name] = ((DTFieldAtomicString)field).Value;
@@ -262,66 +262,69 @@ namespace Infocorp.TITA.SharePointUtilities
                             List<DTField> fieldCollectionIssue = new List<DTField>(origianlDTCol);
                             foreach (DTField field in fieldCollectionIssue)
                             {
-                                switch (field.GetCustomType())
+                                if (item[field.Name] != null)
                                 {
-                                    case DTField.Types.Integer:
-                                        ((DTFieldAtomicInteger)field).Value = int.Parse(item[field.Name].ToString());
-                                        break;
-                                    case DTField.Types.String:
-                                        ((DTFieldAtomicString)field).Value = item[field.Name].ToString();
-                                        break;
-                                    case DTField.Types.Choice:
-                                        ((DTFieldChoice)field).Value = item[field.Name].ToString();
-                                        break;
-                                    case DTField.Types.Boolean:
-                                        ((DTFieldAtomicBoolean)field).Value = Boolean.Parse(item[field.Name].ToString());
-                                        break;
-                                    case DTField.Types.DateTime:
-                                        ((DTFieldAtomicDateTime)field).Value = DateTime.Parse(item[field.Name].ToString());
-                                        break;
-                                    case DTField.Types.Note:
-                                        ((DTFieldAtomicNote)field).Value = item[field.Name].ToString();
-                                        break;
-                                    case DTField.Types.User:
-                                        SPUserCollection userCollection = web.AllUsers;
-                                        string val = item[field.Name].ToString();
-                                        int index = val.IndexOf(';');
-                                        int id = int.Parse(val.Substring(0, index));
-                                        foreach (SPUser user in userCollection)
-                                        {
-                                            if (user.ID == id)
+                                    switch (field.GetCustomType())
+                                    {
+                                        case DTField.Types.Number:
+                                            ((DTFieldAtomicNumber)field).Value = double.Parse(item[field.Name].ToString());
+                                            break;
+                                        case DTField.Types.String:
+                                            ((DTFieldAtomicString)field).Value = item[field.Name].ToString();
+                                            break;
+                                        case DTField.Types.Choice:
+                                            ((DTFieldChoice)field).Value = item[field.Name].ToString();
+                                            break;
+                                        case DTField.Types.Boolean:
+                                            ((DTFieldAtomicBoolean)field).Value = Boolean.Parse(item[field.Name].ToString());
+                                            break;
+                                        case DTField.Types.DateTime:
+                                            ((DTFieldAtomicDateTime)field).Value = DateTime.Parse(item[field.Name].ToString());
+                                            break;
+                                        case DTField.Types.Note:
+                                            ((DTFieldAtomicNote)field).Value = item[field.Name].ToString();
+                                            break;
+                                        case DTField.Types.User:
+                                            SPUserCollection userCollection = web.AllUsers;
+                                            string val = item[field.Name].ToString();
+                                            int index = val.IndexOf(';');
+                                            int id = int.Parse(val.Substring(0, index));
+                                            foreach (SPUser user in userCollection)
                                             {
-                                                ((DTFieldChoiceUser)field).Value = user.Name;
-                                                break;
+                                                if (user.ID == id)
+                                                {
+                                                    ((DTFieldChoiceUser)field).Value = user.Name;
+                                                    break;
+                                                }
                                             }
-                                        }
-                                        break;
-                                    case DTField.Types.Counter:
-                                        ((DTFieldCounter)field).Value = int.Parse(item[field.Name].ToString());
-                                        break;
-                                    case DTField.Types.Lookup:
-                                        DTFieldChoiceLookup fieldLookup = (DTFieldChoiceLookup)field;
-                                        string val1 = item[field.Name].ToString();
-                                        int index1 = val1.IndexOf(';');
-                                        int id1 = int.Parse(val1.Substring(0, index1));
+                                            break;
+                                        case DTField.Types.Counter:
+                                            ((DTFieldCounter)field).Value = int.Parse(item[field.Name].ToString());
+                                            break;
+                                        case DTField.Types.Lookup:
+                                            DTFieldChoiceLookup fieldLookup = (DTFieldChoiceLookup)field;
+                                            string val1 = item[field.Name].ToString();
+                                            int index1 = val1.IndexOf(';');
+                                            int id1 = int.Parse(val1.Substring(0, index1));
 
-                                        SPListCollection listCollection = web.Lists;
-                                        Guid listGuid = new Guid(fieldLookup.LookupList);
-                                        SPList listL = listCollection.GetList(listGuid, false);
-                                        SPListItemCollection itemCollection = listL.Items;
-                                        foreach (SPListItem itemL in itemCollection)
-                                        {
-                                            if (itemL.ID == id1)
+                                            SPListCollection listCollection = web.Lists;
+                                            Guid listGuid = new Guid(fieldLookup.LookupList);
+                                            SPList listL = listCollection.GetList(listGuid, false);
+                                            SPListItemCollection itemCollection = listL.Items;
+                                            foreach (SPListItem itemL in itemCollection)
                                             {
-                                                fieldLookup.Value = itemL[fieldLookup.LookupField].ToString();
-                                                break;
+                                                if (itemL.ID == id1)
+                                                {
+                                                    fieldLookup.Value = itemL[fieldLookup.LookupField].ToString();
+                                                    break;
+                                                }
                                             }
-                                        }
-                                        break;
-                                    case DTField.Types.Default:
-                                        break;
-                                    default:
-                                        break;
+                                            break;
+                                        case DTField.Types.Default:
+                                            break;
+                                        default:
+                                            break;
+                                    }
                                 }
                             }
                             attachmentCollectionIssue = new List<DTAttachment>();
@@ -426,7 +429,7 @@ namespace Infocorp.TITA.SharePointUtilities
                                 fieldsCollection.Add(new DTFieldAtomicNote(name, required, hidden, isReadOnly));
                                 break;
                             case SPFieldType.Number:
-                                fieldsCollection.Add(new DTFieldAtomicInteger(name, required, hidden, isReadOnly));
+                                fieldsCollection.Add(new DTFieldAtomicNumber(name, required, hidden, isReadOnly));
                                 break;
                             case SPFieldType.Recurrence:
                                 break;
