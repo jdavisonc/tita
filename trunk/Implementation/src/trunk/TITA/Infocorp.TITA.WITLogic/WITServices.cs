@@ -71,7 +71,7 @@ namespace Infocorp.TITA.WITLogic
         public bool ApplyChanges(string siteUrl)
         {
             List<DTCommandInfo> commands = WITCommandState.Instance().Commands;
-            ISharePoint spu = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint();
+            ISharePoint spu = _sharepoint;
             commands.Sort();
             bool result = true;
             foreach (DTCommandInfo command in commands)
@@ -177,24 +177,82 @@ namespace Infocorp.TITA.WITLogic
 
         public void ChangeCurrentContract(int contractId)
         {
-            throw new NotImplementedException();
+            //TODO 
+            throw new NotImplementedException("Esta operación no se hizo!!");
         }
 
         public List<DTContract> GetContracts()
         {
-            DataBaseAccess.DataBaseAccess db = new DataBaseAccess.DataBaseAccess();
-            return db.ContractList();
-            //return new List<DTContract>();
+            return _db.ContractList();         
         }
 
         public string GetContractSite(string contractId)
         {
-            throw new NotImplementedException();
+            return _db.ContractSite(contractId);
         }
 
         public void ModifyContract(DTContract contract)
         {
-            throw new NotImplementedException();
+            _db.ModifyContract(contract);
+        }
+
+        #endregion
+
+        #region IWITServices Members
+        
+        public List<DTItem> GetTasks(string urlSite)
+        {
+            return _sharepoint.GetTasks(urlSite);
+        }
+
+        public List<DTField> GetFieldsTask(string urlSite)
+        {
+            return _sharepoint.GetFieldsTask(urlSite);
+        }
+
+        public bool AddTask(string urlSite, DTItem task)
+        {
+            return _sharepoint.AddTask(urlSite, task);
+        }
+
+        public bool DeleteTask(string urlSite, int idTask)
+        {
+            return _sharepoint.DeleteTask(urlSite, idTask);
+        }
+
+        public bool UpdateTask(string urlSite, DTItem task)
+        {
+            return _sharepoint.UpdateTask(urlSite, task);
+        }
+
+        #endregion
+
+        #region IWITServices Members
+
+
+        public List<DTItem> GetWorkPackages(string urlSite)
+        {
+            return _sharepoint.GetWorkPackages(urlSite);
+        }
+
+        public List<DTField> GetFieldsWorkPackage(string urlSite)
+        {
+            return _sharepoint.GetFieldsWorkPackage(urlSite);
+        }
+
+        public bool AddWorkPackage(string urlSite, DTItem wp)
+        {
+            return _sharepoint.AddWorkPackage(urlSite, wp);
+        }
+
+        public bool DeleteWorkPackage(string urlSite, int idWp)
+        {
+            return _sharepoint.DeleteWorkPackage(urlSite, idWp);
+        }
+
+        public bool UpdateWorkPackage(string urlSite, DTItem wp)
+        {
+            return _sharepoint.UpdateWorkPackage(urlSite, wp);
         }
 
         #endregion
