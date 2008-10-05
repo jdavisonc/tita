@@ -69,14 +69,14 @@ namespace Infocorp.TITA.WpfOutlookAddin
                 
                 switch (item.GetCustomType())
 	            {
-		            case DTField.Types.Integer:
+		            case DTField.Types.Number:
                         if (((TextBox)dictionaryElements[item]).Text.Length == 0 && item.Required)
                         {
                             isRequiredOK = false;
                         }
                         else if (((TextBox)dictionaryElements[item]).Text.Length > 0)
                         {
-                            ((DTFieldAtomicInteger)item).Value = int.Parse(((TextBox)dictionaryElements[item]).Text);
+                            ((DTFieldAtomicNumber)item).Value = int.Parse(((TextBox)dictionaryElements[item]).Text);
                         }
                         break;
                     case DTField.Types.String:
