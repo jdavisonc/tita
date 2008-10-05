@@ -12,7 +12,7 @@ namespace Infocorp.TITA.OutlookSharePoint
         /// <param name="urlSite">Url del Sitio a dar de alta</param>
         /// <param name="issue">DTIssue con los datos del Incidente</param>
         /// <returns></returns>
-        bool AddIssue(string urlSite, DTIssue issue);
+        bool AddIssue(string urlSite, DTItem issue);
 
         /// <summary>
         /// Retorna una coleccion de campos que contiene un incidente

@@ -10,13 +10,11 @@ namespace Infocorp.TITA.OutlookSharePoint
 {
     public class OutlookSharePoint2003: IOutlookSharePoint
     {
-        public OutlookSharePoint2003()
-        {
-        }
+        public OutlookSharePoint2003() { }
 
         #region IOutlookSharePoint Members
 
-        public bool AddIssue(string urlSite, DTIssue issue)
+        public bool AddIssue(string urlSite, DTItem issue)
         {
             try
             {
@@ -29,31 +27,68 @@ namespace Infocorp.TITA.OutlookSharePoint
                         SPList list = web.Lists["Issues"];
                         SPListItem listItem = list.Items.Add();
                         List<DTField> fieldCollection = issue.Fields;
+
                         foreach (DTField field in fieldCollection)
                         {
-                            if (field.Type == DTField.Types.DateTime)
+                            if (!(field.IsReadOnly || field.Hidden))
                             {
-                                if (field.Value.CompareTo("") != 0)
-                                    listItem[field.Name] = DateTime.Parse(field.Value);
-                            }
-                            else if (field.Type == DTField.Types.User)
-                            {
-                                SPUserCollection userCollection = web.AllUsers;
-                                bool stop = false;
-                                int i = 0;
-                                while (!stop && i < userCollection.Count)
+                                switch (field.GetCustomType())
                                 {
-                                    if (userCollection[i].Name.CompareTo(field.Value) == 0)
-                                    {
-                                        listItem[field.Name] = string.Format("{0};#{1}", userCollection[i].ID.ToString(), userCollection[i].Name);
-                                        stop = true;
-                                    }
-                                    i++;
+                                    case DTField.Types.Integer:
+                                        listItem[field.Name] = ((DTFieldAtomicInteger)field).Value.ToString();
+                                        break;
+                                    case DTField.Types.String:
+                                        listItem[field.Name] = ((DTFieldAtomicString)field).Value;
+                                        break;
+                                    case DTField.Types.Choice:
+                                        listItem[field.Name] = ((DTFieldChoice)field).Value;
+                                        break;
+                                    case DTField.Types.Boolean:
+                                        listItem[field.Name] = ((DTFieldAtomicBoolean)field).Value.ToString();
+                                        break;
+                                    case DTField.Types.DateTime:
+                                        listItem[field.Name] = ((DTFieldAtomicDateTime)field).Value;
+                                        break;
+                                    case DTField.Types.Note:
+                                        listItem[field.Name] = ((DTFieldAtomicNote)field).Value;
+                                        break;
+                                    case DTField.Types.User:
+                                        SPUserCollection userCollection = web.AllUsers;
+                                        bool stop = false;
+                                        int i = 0;
+                                        while (!stop && i < userCollection.Count)
+                                        {
+                                            if (userCollection[i].Name.CompareTo(((DTFieldChoiceUser)field).Value) == 0)
+                                            {
+                                                listItem[field.Name] = string.Format("{0};#{1}", userCollection[i].ID.ToString(), userCollection[i].Name);
+                                                stop = true;
+                                            }
+                                            i++;
+                                        }
+                                        break;
+                                    case DTField.Types.Counter:
+                                        break;
+                                    case DTField.Types.Lookup:
+                                        DTFieldChoiceLookup lookup = (DTFieldChoiceLookup)field;
+                                        SPListCollection listCollection = web.Lists;
+                                        Guid listGuid = new Guid(lookup.LookupList);
+                                        SPList listLookup = listCollection.GetList(listGuid, false);
+                                        SPListItemCollection itemCollection = listLookup.Items;
+                                        foreach (SPListItem item in itemCollection)
+                                        {
+                                            if (lookup.Value.CompareTo(item[lookup.LookupField].ToString()) == 0)
+                                            {
+                                                listItem[lookup.Name] = string.Format("{0}", item.ID.ToString());
+                                                break;
+                                            }
+                                        }
+
+                                        break;
+                                    case DTField.Types.Default:
+                                        break;
+                                    default:
+                                        break;
                                 }
-                            }
-                            else if (field.Type != DTField.Types.Counter)
-                            {
-                                listItem[field.Name] = field.Value;
                             }
                         }
                         SPAttachmentCollection listItemAttachmentCollection = listItem.Attachments;
@@ -65,7 +100,7 @@ namespace Infocorp.TITA.OutlookSharePoint
                         listItem.Update();
                     }
                 }
-                return true;
+                return true; 
             }
             catch (Exception e)
             {
@@ -84,57 +119,48 @@ namespace Infocorp.TITA.OutlookSharePoint
                     SPFieldCollection listFieldsCollection = list.Fields;
                     foreach (SPField field in listFieldsCollection)
 	                {
-                        if (!(field.Hidden || field.ReadOnlyField))
+                        string name = field.Title;
+                        bool required = field.Required;
+                        bool hidden = field.Hidden;
+                        bool isReadOnly = field.ReadOnlyField;
+                        SPFieldType type = field.Type;
+                        List<string> choices;
+                        if (!(hidden || isReadOnly))
                         {
-                            string name = field.Title;
-                            bool required = field.Required;
-                            SPFieldType type = field.Type;
-                            List<string> choices = new List<string>();
-
-                            if (type == SPFieldType.Choice)
-                            {
-                                StringCollection choicesCollection = ((SPFieldChoice)field).Choices;
-                                foreach (var choice in choicesCollection)
-                                {
-                                    choices.Add(choice);
-                                }
-                            }
-                            else if (type == SPFieldType.User)
-                            {
-                                SPUserCollection userCollection = web.AllUsers;
-                                foreach (SPUser user in userCollection)
-                                {
-                                    choices.Add(user.Name);
-                                }
-                            }
                             switch (type)
                             {
                                 case SPFieldType.Attachments:
                                     break;
                                 case SPFieldType.Boolean:
-                                    fieldsCollection.Add(new DTField(name, DTField.Types.Boolean, required, choices));
+                                    fieldsCollection.Add(new DTFieldAtomicBoolean(name, required, hidden, isReadOnly));
                                     break;
                                 case SPFieldType.Calculated:
                                     break;
                                 case SPFieldType.Choice:
-                                    fieldsCollection.Add(new DTField(name, DTField.Types.Choice, required, choices));
+                                    choices = new List<string>();
+                                    StringCollection choicesCollection = ((SPFieldChoice)field).Choices;
+                                    foreach (var choice in choicesCollection)
+                                    {
+                                        choices.Add(choice);
+                                    }
+                                    fieldsCollection.Add(new DTFieldChoice(name, required, hidden, isReadOnly, choices));
                                     break;
                                 case SPFieldType.Computed:
                                     break;
                                 case SPFieldType.Counter:
-                                    fieldsCollection.Add(new DTField(name, DTField.Types.Counter, required, choices));
+                                    fieldsCollection.Add(new DTFieldCounter(name, required, hidden, isReadOnly));
                                     break;
                                 case SPFieldType.CrossProjectLink:
                                     break;
                                 case SPFieldType.Currency:
                                     break;
                                 case SPFieldType.DateTime:
-                                    DTField dtField = new DTField(name, DTField.Types.DateTime, required, choices);
+                                    bool isDateOnly = false;
                                     if (((SPFieldDateTime)field).DisplayFormat == SPDateTimeFieldFormatType.DateOnly)
                                     {
-                                        dtField.IsDateOnly = true;
+                                        isDateOnly = true;
                                     }
-                                    fieldsCollection.Add(dtField);
+                                    fieldsCollection.Add(new DTFieldAtomicDateTime(name, required, hidden, isReadOnly, isDateOnly));
                                     break;
                                 case SPFieldType.Error:
                                     break;
@@ -149,6 +175,12 @@ namespace Infocorp.TITA.OutlookSharePoint
                                 case SPFieldType.Invalid:
                                     break;
                                 case SPFieldType.Lookup:
+                                    choices = new List<string>();
+                                    SPFieldLookup fieldLookup = (SPFieldLookup)field;
+                                    string lookupField = fieldLookup.LookupField;
+                                    string lookupList = fieldLookup.LookupList;
+                                    choices.AddRange(GetChoicesFromList(web, lookupList, lookupField));
+                                    fieldsCollection.Add(new DTFieldChoiceLookup(name, required, hidden, isReadOnly, choices, lookupField, lookupList));
                                     break;
                                 case SPFieldType.MaxItems:
                                     break;
@@ -157,22 +189,28 @@ namespace Infocorp.TITA.OutlookSharePoint
                                 case SPFieldType.MultiChoice:
                                     break;
                                 case SPFieldType.Note:
-                                    fieldsCollection.Add(new DTField(name, DTField.Types.Note, required, choices));
+                                    fieldsCollection.Add(new DTFieldAtomicNote(name, required, hidden, isReadOnly));
                                     break;
                                 case SPFieldType.Number:
-                                    fieldsCollection.Add(new DTField(name, DTField.Types.Integer, required, choices));
+                                    fieldsCollection.Add(new DTFieldAtomicInteger(name, required, hidden, isReadOnly));
                                     break;
                                 case SPFieldType.Recurrence:
                                     break;
                                 case SPFieldType.Text:
-                                    fieldsCollection.Add(new DTField(name, DTField.Types.String, required, choices));
+                                    fieldsCollection.Add(new DTFieldAtomicString(name, required, hidden, isReadOnly));
                                     break;
                                 case SPFieldType.Threading:
                                     break;
                                 case SPFieldType.URL:
                                     break;
                                 case SPFieldType.User:
-                                    fieldsCollection.Add(new DTField(name, DTField.Types.User, required, choices));
+                                    choices = new List<string>();
+                                    SPUserCollection userCollection = web.AllUsers;
+                                    foreach (SPUser user in userCollection)
+                                    {
+                                        choices.Add(user.Name);
+                                    }
+                                    fieldsCollection.Add(new DTFieldChoiceUser(name, required, hidden, isReadOnly, choices));
                                     break;
                                 default:
                                     break;
@@ -186,5 +224,19 @@ namespace Infocorp.TITA.OutlookSharePoint
 
         #endregion
 
+
+        private List<string> GetChoicesFromList(SPWeb web, string listId, string fieldName)
+        {
+            List<string> listLookupChoices = new List<string>();
+            SPListCollection listCollection = web.Lists;
+            Guid listGuid = new Guid(listId);
+            SPList list = listCollection.GetList(listGuid, false);
+            SPListItemCollection itemCollection = list.Items;
+            foreach (SPListItem item in itemCollection)
+            {
+                listLookupChoices.Add(item[fieldName].ToString());
+            }
+            return listLookupChoices;
+        }
     }
 }
