@@ -114,7 +114,7 @@ namespace Infocorp.TITA.DataTypes.Gui
             _reportedBy = ((DTFieldChoiceUser)issue.GetField("Reported by")).Value;
             _reportedDate = ((DTFieldAtomicDateTime)issue.GetField("Reported date")).Value;
             _wp = ((DTFieldChoiceLookup)issue.GetField("WP")).Value;
-            _ord = ((DTFieldAtomicInteger)issue.GetField("Priority Order")).Value;
+            _ord = ((DTFieldAtomicNumber)issue.GetField("Priority Order")).Value;
             _priority = ((DTFieldAtomicString)issue.GetField("Priority")).Value;
             _category = ((DTFieldAtomicString)issue.GetField("Category")).Value;
             _status = ((DTFieldAtomicString)issue.GetField("Status")).Value;
