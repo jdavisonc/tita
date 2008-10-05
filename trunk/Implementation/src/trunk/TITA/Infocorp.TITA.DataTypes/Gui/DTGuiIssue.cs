@@ -107,21 +107,18 @@ namespace Infocorp.TITA.DataTypes.Gui
 
         public DTGuiIssue(){}
 
-        public DTGuiIssue(DTIssue issue) 
+        public DTGuiIssue(DTItem issue) 
         {
-            if (issue.GetField("ID").Value.CompareTo("") != 0)
-                _id = int.Parse(issue.GetField("ID").Value);
-            _title = issue.GetField("Title").Value;
-            _reportedBy = issue.GetField("Reported by").Value;
-            if (issue.GetField("Reported date").Value.CompareTo("") != 0)
-                _reportedDate = DateTime.Parse(issue.GetField("Reported date").Value);
-            _wp = issue.GetField("WP").Value;
-            if (issue.GetField("Priority Order").Value.CompareTo("") != 0)
-                _ord = int.Parse(issue.GetField("Priority Order").Value);
-            _priority = issue.GetField("Priority").Value;
-            _category = issue.GetField("Category").Value;
-            _status = issue.GetField("Status").Value;
-            _resolution = issue.GetField("Resolution").Value;
+            _id = ((DTFieldCounter)issue.GetField("ID")).Value;
+            _title = ((DTFieldAtomicString)issue.GetField("Title")).Value;
+            _reportedBy = ((DTFieldChoiceUser)issue.GetField("Reported by")).Value;
+            _reportedDate = ((DTFieldAtomicDateTime)issue.GetField("Reported date")).Value;
+            _wp = ((DTFieldChoiceLookup)issue.GetField("WP")).Value;
+            _ord = ((DTFieldAtomicInteger)issue.GetField("Priority Order")).Value;
+            _priority = ((DTFieldAtomicString)issue.GetField("Priority")).Value;
+            _category = ((DTFieldAtomicString)issue.GetField("Category")).Value;
+            _status = ((DTFieldAtomicString)issue.GetField("Status")).Value;
+            _resolution = ((DTFieldAtomicString)issue.GetField("Resolution")).Value;
 
             _fields = new List<DTField>();
             List<DTField> collectionFields = issue.Fields;
