@@ -67,11 +67,28 @@ namespace Infocorp.TITA.WpfOutlookAddin
             foreach (DTField item in keyElements)
             {
                 
-                switch (item.Type)
-
+                switch (item.GetCustomType())
 	            {
 		            case DTField.Types.Integer:
+                        if (((TextBox)dictionaryElements[item]).Text.Length == 0 && item.Required)
+                        {
+                            isRequiredOK = false;
+                        }
+                        else if (((TextBox)dictionaryElements[item]).Text.Length > 0)
+                        {
+                            ((DTFieldAtomicInteger)item).Value = int.Parse(((TextBox)dictionaryElements[item]).Text);
+                        }
+                        break;
                     case DTField.Types.String:
+                        if (((TextBox)dictionaryElements[item]).Text.Length == 0 && item.Required)
+                        {
+                            isRequiredOK = false;
+                        }
+                        else
+                        {
+                            ((DTFieldAtomicString)item).Value = ((TextBox)dictionaryElements[item]).Text;
+                        }
+                        break;
                     case DTField.Types.Note:
                         if (((TextBox)dictionaryElements[item]).Text.Length == 0 && item.Required)
                         {
@@ -79,19 +96,32 @@ namespace Infocorp.TITA.WpfOutlookAddin
                         }
                         else
                         {
-                            item.Value = ((TextBox)dictionaryElements[item]).Text;
+                            ((DTFieldAtomicNote)item).Value = ((TextBox)dictionaryElements[item]).Text;
                         }
-                        
                         break;
-                    
                     case DTField.Types.Choice:
+                        ((DTFieldChoice)item).Value = ((ComboBox)dictionaryElements[item]).SelectedValue.ToString();
+                        break;
                     case DTField.Types.Boolean:
+                        if (((ComboBox)dictionaryElements[item]).SelectedValue.ToString().CompareTo("True") == 0)
+                        {
+                            ((DTFieldAtomicBoolean)item).Value = true;
+                        }
+                        else
+                        {
+                            ((DTFieldAtomicBoolean)item).Value = false;
+                        }
+                        break;
                     case DTField.Types.User:
-                        item.Value = ((ComboBox)dictionaryElements[item]).SelectedValue.ToString();                        
+                        ((DTFieldChoiceUser)item).Value = ((ComboBox)dictionaryElements[item]).SelectedValue.ToString();                        
                         break;
                     case DTField.Types.DateTime:
-                        item.Value = ((DatePicker)dictionaryElements[item]).CurrentlySelectedDate.ToString();                        
+                        ((DTFieldAtomicDateTime)item).Value = ((DatePicker)dictionaryElements[item]).CurrentlySelectedDate;                        
                         break;
+                    case DTField.Types.Lookup:
+                        ((DTFieldChoiceLookup)item).Value = ((ComboBox)dictionaryElements[item]).SelectedValue.ToString();
+                        break;
+                    case DTField.Types.Default:
                     default:
                         break;
 	            }
@@ -156,7 +186,7 @@ namespace Infocorp.TITA.WpfOutlookAddin
             //tomar los valores de la ventana y crear el issue para enviar
             //a Sharepoint
             List<DTAttachment> attachments= new List<DTAttachment>();
-            DTIssue oIssue = new DTIssue(fields, attachments);
+            DTItem oIssue = new DTItem(fields, attachments);
             _outlookSP.AddIssue(_urlContract, oIssue);
         }
 
