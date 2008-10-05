@@ -30,26 +30,26 @@ namespace Infocorp.TITA.WITLogic
 
         #region IWITServices Members
 
-        public DTIssue GetIssueTemplate(string urlSite)
+        public DTItem GetIssueTemplate(string urlSite)
         {
-            DTIssue issue = new DTIssue();
+            DTItem issue = new DTItem();
 
             issue.Fields =_sharepoint.GetFieldsIssue(urlSite);
 
             return issue;
         }
 
-        public List<DTIssue> GetIssues(string urlSite)
+        public List<DTItem> GetIssues(string urlSite)
         {
 
-            List<DTIssue> result = new List<DTIssue>();
+            List<DTItem> result = new List<DTItem>();
             List<DTCommandInfo> commands = WITCommandState.Instance().Commands;
             result = _sharepoint.GetIssues(urlSite);
             commands.ForEach(delegate(DTCommandInfo command)
             {
                 if (command.CommandType == CommandType.ADD || command.CommandType == CommandType.MODIFY)
                 {
-                    DTField isLocal = new DTField("IsLocal", DTField.Types.Boolean, false, null, "true");
+                    DTFieldAtomicBoolean isLocal = new DTFieldAtomicBoolean("IsLocal", false, true, true, true);
                     command.Issue.Fields.Add(isLocal);
                     //Si traigo uno que estoy modificando, devuelvo sólo la modificación
                     if (command.CommandType == CommandType.MODIFY)
@@ -86,7 +86,7 @@ namespace Infocorp.TITA.WITLogic
                         result = spu.UpdateIssue(siteUrl, command.Issue);
                         break;
                     case CommandType.DELETE:
-                        int issueId = Convert.ToInt32(command.Issue.Fields.Find(delegate(DTField f) { return f.Name.ToLower() == "id"; }).Value);
+                        int issueId = (command.Issue.Fields.Find(delegate(DTField f) { return f.Name.ToLower() == "id"; }) as DTFieldAtomicInteger).Value;
                         result = spu.DeleteIssue(siteUrl, issueId);
                         break;
                     default:
@@ -103,7 +103,7 @@ namespace Infocorp.TITA.WITLogic
             return WITCommandState.Instance().Commands.Count > 0;
         }
 
-        public void AddNewIssue(DTIssue issue)
+        public void AddNewIssue(DTItem issue)
         {
             DTCommandInfo command = new DTCommandInfo();
             command.CommandType = CommandType.ADD;
@@ -122,7 +122,7 @@ namespace Infocorp.TITA.WITLogic
             WITCommandState.Instance().AddCommand(command);
         }
 
-        public void ModifyIssue(DTIssue issue)
+        public void ModifyIssue(DTItem issue)
         {
             DTCommandInfo command = new DTCommandInfo();
             command.CommandType = CommandType.MODIFY;
@@ -137,12 +137,13 @@ namespace Infocorp.TITA.WITLogic
             DTCommandInfo command = new DTCommandInfo();
             command.CommandType = CommandType.DELETE;
             command.CreationDate = DateTime.Now;
-            command.Issue = new DTIssue();
-            DTField field = new DTField();
+            command.Issue = new DTItem();
+            DTFieldAtomicInteger field = new DTFieldAtomicInteger();
+            field.Hidden = true;
+            field.IsReadOnly = true;            
             field.Name = "ID";
-            field.Required = true;
-            field.Type = DTField.Types.Counter;
-            field.Value = issueId.ToString();
+            field.Required = true;            
+            field.Value = issueId;
             command.Issue.Fields = new List<DTField>() { field };
 
             WITCommandState.Instance().AddCommand(command);
