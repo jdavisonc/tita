@@ -15,6 +15,16 @@ namespace Infocorp.TITA.WITLogic
 
         #region WorkPackages
 
+        List<DTItem> GetWorkPackages(string urlSite);
+
+        List<DTField> GetFieldsWorkPackage(string urlSite);
+
+        bool AddWorkPackage(string urlSite, DTItem wp);
+
+        bool DeleteWorkPackage(string urlSite, int idWp);
+
+        bool UpdateWorkPackage(string urlSite, DTItem wp);
+
         #endregion
 
         #region Issues
@@ -32,6 +42,16 @@ namespace Infocorp.TITA.WITLogic
         #endregion
 
         #region Tasks
+
+        List<DTItem> GetTasks(string urlSite);
+
+        List<DTField> GetFieldsTask(string urlSite);
+      
+        bool AddTask(string urlSite, DTItem task);
+      
+        bool DeleteTask(string urlSite, int idTask);
+
+        bool UpdateTask(string urlSite, DTItem task);
 
         #endregion
 
