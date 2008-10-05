@@ -36,7 +36,7 @@ namespace Infocorp.TITA.WITLogic
             if (f1 != null && f2 != null)
             {
 
-                result = (f1 as DTFieldAtomicInteger).Value == (f2 as DTFieldAtomicInteger).Value;
+                result = (f1 as DTFieldAtomicNumber).Value == (f2 as DTFieldAtomicNumber).Value;
             }
 
             return result;

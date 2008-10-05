@@ -86,7 +86,7 @@ namespace Infocorp.TITA.WITLogic
                         result = spu.UpdateIssue(siteUrl, command.Issue);
                         break;
                     case CommandType.DELETE:
-                        int issueId = (command.Issue.Fields.Find(delegate(DTField f) { return f.Name.ToLower() == "id"; }) as DTFieldAtomicInteger).Value;
+                        int issueId = Convert.ToInt32( (command.Issue.Fields.Find(delegate(DTField f) { return f.Name.ToLower() == "id"; }) as DTFieldAtomicNumber).Value);
                         result = spu.DeleteIssue(siteUrl, issueId);
                         break;
                     default:
@@ -138,7 +138,7 @@ namespace Infocorp.TITA.WITLogic
             command.CommandType = CommandType.DELETE;
             command.CreationDate = DateTime.Now;
             command.Issue = new DTItem();
-            DTFieldAtomicInteger field = new DTFieldAtomicInteger();
+            DTFieldAtomicNumber field = new DTFieldAtomicNumber();
             field.Hidden = true;
             field.IsReadOnly = true;            
             field.Name = "ID";
