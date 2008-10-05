@@ -13,7 +13,7 @@ namespace Infocorp.TITA.DataTypes.Gui
         private string _reportedBy = string.Empty;
         private DateTime _reportedDate;
         private string _wp = string.Empty;
-        private int _ord = 0;
+        private double _ord = 0;
         private string _priority = string.Empty;
         private string _status = string.Empty;
         private string _category = string.Empty;
@@ -71,7 +71,7 @@ namespace Infocorp.TITA.DataTypes.Gui
         }
 
         [DataMember]
-        public int Ord
+        public double Ord
         {
             get { return _ord; }
             set { _ord = value; }
