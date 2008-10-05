@@ -51,9 +51,22 @@
     <Compile Include="DTAttachment.cs" />
     <Compile Include="DTContract.cs" />
     <Compile Include="DTField.cs" />
-    <Compile Include="DTIssue.cs" />
+    <Compile Include="DTFieldAtomic.cs" />
+    <Compile Include="DTFieldAtomicBoolean.cs" />
+    <Compile Include="DTFieldAtomicDateTime.cs" />
+    <Compile Include="DTFieldAtomicInteger.cs" />
+    <Compile Include="DTFieldAtomicNote.cs" />
+    <Compile Include="DTFieldAtomicString.cs" />
+    <Compile Include="DTFieldChoice.cs" />
+    <Compile Include="DTFieldChoiceLookup.cs" />
+    <Compile Include="DTFieldChoiceUser.cs" />
+    <Compile Include="DTFieldCounter.cs" />
+    <Compile Include="DTItem.cs" />
     <Compile Include="Gui\DTGuiIssue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
