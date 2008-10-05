@@ -10,11 +10,9 @@ namespace Infocorp.TITA.DataTypes
     public class DTField
     {
         private string _name = string.Empty;
-        private Types _type = Types.Integer;
         private bool _required = false;
-        private string _value = string.Empty;
-        private List<string> _choices = null;
-        private bool _isDateOnly = false;
+        private bool _hidden = false;
+        private bool _isReadOnly = false;
 
         public enum Types
         {
@@ -25,15 +23,17 @@ namespace Infocorp.TITA.DataTypes
             DateTime = 4,
             Note = 5,
             User = 6,
-            Counter = 7
+            Counter = 7,
+            Lookup = 8,
+            Default = 9
         }
 
-        public DTField(string Name, Types Type, bool Required, List<string> Choices)
+        public DTField(string name, bool required, bool hidden, bool isReadOnly)
         {
-            _name = Name;
-            _type = Type;
-            _required = Required;
-            _choices = new List<string>(Choices);
+            _name = name;
+            _required = required;
+            _hidden = hidden;
+            _isReadOnly = isReadOnly;
         }
 
         public DTField() { }
@@ -41,89 +41,42 @@ namespace Infocorp.TITA.DataTypes
         public DTField(DTField field)
         {
             _name = field.Name;
-            _type = field.Type;
             _required = field.Required;
-            _choices = new List<string>(field.Choices);
-            _value = field.Value;
+            _hidden = field.Hidden;
+            _isReadOnly = field.IsReadOnly;
         }
 
-        public DTField(string Name, Types Type, bool Required, List<string> Choices, string Value)
-        {
-            _name = Name;
-            _type = Type;
-            _required = Required;
-            _value = Value;
-            if (Choices != null)
-            {
-                _choices = new List<string>(Choices);
-            }
-            else
-            {
-                _choices = new List<string>();
-            }
-        }
         [DataMember]
         public string Name
         {
             get { return _name; }
             set { _name = value; }
         }
-        [DataMember]
-        public Types Type
+
+        public virtual Types GetCustomType()
         {
-            get { return _type; }
-            set { _type = value; }
+            return Types.Default;
         }
+        
         [DataMember]
         public bool Required
         {
             get { return _required; }
             set { _required = value; }
         }
+
         [DataMember]
-        public List<string> Choices
+        public bool Hidden
         {
-            get { return _choices; }
-            set { _choices = value; }
-        }
-        [DataMember]
-        public string Value
-        {
-            get 
-            {
-                if (_type == Types.DateTime && _isDateOnly && !String.IsNullOrEmpty(_value))
-                {
-                    return (DateTime.Parse(_value)).ToString("yyyy-MM-dd") + " 00:00:00 a.m."; 
-                }
-                else 
-                {
-                    return _value; 
-                }
-            }
-            set 
-            { 
-                if (_type == Types.DateTime && value.Length > 0)
-                {
-                    _value = (DateTime.Parse(value)).ToString("yyyy-MM-dd hh:mm:ss tt");
-                }
-                else
-                {
-                    _value = value;
-                }
-            }
+            get { return _hidden; }
+            set { _hidden = value; }
         }
 
         [DataMember]
-        public bool IsDateOnly
+        public bool IsReadOnly
         {
-            get { return _isDateOnly; }
-            set 
-            {
-                if (_type == Types.DateTime)
-                {
-                    _isDateOnly = value;
-                }
-            }
+            get { return _isReadOnly; }
+            set { _isReadOnly = value; }
         }
 
         public override bool Equals(object obj)
