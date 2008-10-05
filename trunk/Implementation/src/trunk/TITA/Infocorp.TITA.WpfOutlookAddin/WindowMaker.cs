@@ -106,7 +106,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
 
             switch (lineField.GetCustomType())
             {
-                case DTField.Types.Integer:
+                case DTField.Types.Number:
                     //textbox
                     oReturn = InsertTextBox();
                     break;
