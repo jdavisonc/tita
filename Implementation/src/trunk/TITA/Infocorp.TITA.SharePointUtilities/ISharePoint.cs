@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Infocorp.TITA.DataTypes;
+using System.Globalization;
 
 namespace Infocorp.TITA.SharePointUtilities
 {
@@ -12,8 +13,9 @@ namespace Infocorp.TITA.SharePointUtilities
         /// Retorna la lista de incidentes de un Sitio
         /// </summary>
         /// <param name="urlSite">Url del Sitio</param>
+        /// <param name="CAMLQuery">CAML Query</param>
         /// <returns>Lista de DataType Incidente</returns>
-        List<DTItem> GetIssues(string urlSite);
+        List<DTItem> GetIssues(string urlSite, string CAMLQuery);
 
         /// <summary>
         /// Retorna la definicion de los campos de un incidente
@@ -54,8 +56,9 @@ namespace Infocorp.TITA.SharePointUtilities
         /// Retorna la lista de work package de un Sitio
         /// </summary>
         /// <param name="urlSite">Url del Sitio</param>
+        /// <param name="CAMLQuery">CAML Query</param>
         /// <returns>Lista de DataType Work Package</returns>
-        List<DTItem> GetWorkPackages(string urlSite);
+        List<DTItem> GetWorkPackages(string urlSite, string CAMLQuery);
 
         /// <summary>
         /// Retorna la definicion de los campos de un work package
@@ -96,8 +99,9 @@ namespace Infocorp.TITA.SharePointUtilities
         /// Retorna la lista de Tasks de un Sitio
         /// </summary>
         /// <param name="urlSite">Url del Sitio</param>
+        /// <param name="CAMLQuery">CAML Query</param>
         /// <returns>Lista de DataType Tasks</returns>
-        List<DTItem> GetTasks(string urlSite);
+        List<DTItem> GetTasks(string urlSite, string CAMLQuery);
 
         /// <summary>
         /// Retorna la definicion de los campos de un Task
@@ -132,5 +136,11 @@ namespace Infocorp.TITA.SharePointUtilities
 
         #endregion
 
+        /// <summary>
+        /// Retorna informacion sobre la cultura del sitio
+        /// </summary>
+        /// <param name="urlSite">Url de Sitio</param>
+        /// <returns>Retorna la informacion sobre la cultura del sitio</returns>
+        CultureInfo GetSiteLocale(string urlSite);
     }
 }

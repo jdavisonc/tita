@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Infocorp.TITA.DataTypes;
 using Microsoft.SharePoint;
 using System.Collections.Specialized;
+using System.Globalization;
 
 namespace Infocorp.TITA.SharePointUtilities
 {
@@ -16,9 +17,9 @@ namespace Infocorp.TITA.SharePointUtilities
 
         #region ABM Issues
 
-        public List<DTItem> GetIssues(string urlSite)
+        public List<DTItem> GetIssues(string urlSite, string CAMLQuery)
         {
-            return GetListItems(urlSite, _listIssues, "");
+            return GetListItems(urlSite, _listIssues, CAMLQuery);
         }
 
         public List<DTField> GetFieldsIssue(string urlSite)
@@ -45,9 +46,9 @@ namespace Infocorp.TITA.SharePointUtilities
 
         #region ABM Work Packages
 
-        public List<DTItem> GetWorkPackages(string urlSite)
+        public List<DTItem> GetWorkPackages(string urlSite, string CAMLQuery)
         {
-            return GetListItems(urlSite, _listWorkPackages, "");
+            return GetListItems(urlSite, _listWorkPackages, CAMLQuery);
         }
 
         public List<DTField> GetFieldsWorkPackage(string urlSite)
@@ -74,9 +75,9 @@ namespace Infocorp.TITA.SharePointUtilities
 
         #region ABM Tasks
 
-        public List<DTItem> GetTasks(string urlSite)
+        public List<DTItem> GetTasks(string urlSite, string CAMLQuery)
         {
-            return GetListItems(urlSite, _listTasks, "");
+            return GetListItems(urlSite, _listTasks, CAMLQuery);
         }
 
         public List<DTField> GetFieldsTask(string urlSite)
@@ -100,6 +101,24 @@ namespace Infocorp.TITA.SharePointUtilities
         }
 
         #endregion
+
+        public CultureInfo GetSiteLocale(string urlSite)
+        {
+            try
+            {
+                using (SPSite site = new SPSite(urlSite))
+                {
+                    using (SPWeb web = site.OpenWeb())
+                    {
+                        return web.Locale;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error en GetSiteLocale: " + e.Message);
+            }
+        }
 
         #endregion
 
