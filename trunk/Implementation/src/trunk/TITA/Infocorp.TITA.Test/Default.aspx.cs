@@ -14,7 +14,7 @@ using Microsoft.SharePoint;
 using Microsoft.SharePoint.Security;
 using Infocorp.TITA.DataTypes;
 using System.Collections.Specialized;
-using Infocorp.TITA.OutlookSharePoint;
+using Infocorp.TITA.SharePointUtilities;
 
 namespace TestSharePoint
 {
@@ -26,6 +26,7 @@ namespace TestSharePoint
         {
             if (IsPostBack)
             {
+                
                 #region 
                 /*SharePointPermission permission = new SharePointPermission(System.Security.Permissions.PermissionState.Unrestricted);
                 permission.ObjectModel = true;
@@ -73,15 +74,16 @@ namespace TestSharePoint
                 }*/
                 #endregion
 
-                IOutlookSharePoint iop = new OutlookSharePoint2003();
+
+                //IOutlookSharePoint iop = new OutlookSharePoint2003();
                 //iop.AddIssue("http://localhost/infocorp");
                 /*List<DTField> fieldsCollection = iop.GetFieldsIssue(SiteUrl);
                 Webs.Text = "";
-                foreach (DTField field in fieldsCollection)
+                foreach (DTField _value in fieldsCollection)
                 {
-                    Webs.Text += field.Name + "(" + field.Type.ToString() + ")<br>";
+                    Webs.Text += _value.Name + "(" + _value.Type.ToString() + ")<br>";
                 }*/
-                List<DTField> fields = new List<DTField>();
+                /*List<DTField> fields = new List<DTField>();
                 fields.Add(new DTField("Title",DTField.Types.String,false,new List<string>(),"Soy buzzzz"));
                 fields.Add(new DTField("Priority",DTField.Types.Integer,false,new List<string>(),"8"));
                 fields.Add(new DTField("Category", DTField.Types.Choice, false, new List<string>(), "Error"));
@@ -94,9 +96,37 @@ namespace TestSharePoint
                 else
                 {
                     Webs.Text = "Mal";
-                }
+                }*/
+
+                /*using (SPSite site = new SPSite("http://localhost/infocorp"))
+                {
+                    site.AllowUnsafeUpdates = true;
+                    using (SPWeb web = site.OpenWeb())
+                    {
+                        web.AllowUnsafeUpdates = true;
+                        SPList list = web.Lists["Issues2"];
+
+
+                    }
+                }*/
+                ISharePoint isp = SharePointUtilities.GetInstance().GetISharePoint();
+                //List<DTItem> col = isp.GetIssues("http://localhost/infocorp");
+                List<DTItem> items = isp.GetIssues(SiteUrl);
             }
 
+        }
+        private List<string> GetChoicesFromList(SPWeb web, string listId, string fieldName)
+        {
+            List<string> listLookupChoices = new List<string>();
+            SPListCollection listCollection = web.Lists;
+            Guid listGuid = new Guid(listId);
+            SPList list = listCollection.GetList(listGuid, false);
+            SPListItemCollection itemCollection = list.Items;
+            foreach (SPListItem item in itemCollection)
+            {
+                listLookupChoices.Add(item[fieldName].ToString());
+            }
+            return listLookupChoices;
         }
     }
 }

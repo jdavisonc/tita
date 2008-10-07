@@ -81,6 +81,10 @@
       <Project>{BB917604-4669-4C42-90CD-B919E80EC0AB}</Project>
       <Name>Infocorp.TITA.OutlookSharePoint</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Infocorp.TITA.SharePointUtilities\Infocorp.TITA.SharePointUtilities.csproj">
+      <Project>{B221BE03-AFBF-4A2A-A1D6-EE0302AA55A8}</Project>
+      <Name>Infocorp.TITA.SharePointUtilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
