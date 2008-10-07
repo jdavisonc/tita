@@ -18,7 +18,7 @@ namespace Infocorp.TITA.SharePointUtilities
 
         public List<DTItem> GetIssues(string urlSite)
         {
-            return GetListItems(urlSite, _listIssues);
+            return GetListItems(urlSite, _listIssues, "");
         }
 
         public List<DTField> GetFieldsIssue(string urlSite)
@@ -47,7 +47,7 @@ namespace Infocorp.TITA.SharePointUtilities
 
         public List<DTItem> GetWorkPackages(string urlSite)
         {
-            return GetListItems(urlSite, _listWorkPackages);
+            return GetListItems(urlSite, _listWorkPackages, "");
         }
 
         public List<DTField> GetFieldsWorkPackage(string urlSite)
@@ -76,7 +76,7 @@ namespace Infocorp.TITA.SharePointUtilities
 
         public List<DTItem> GetTasks(string urlSite)
         {
-            return GetListItems(urlSite, _listTasks);
+            return GetListItems(urlSite, _listTasks, "");
         }
 
         public List<DTField> GetFieldsTask(string urlSite)
@@ -217,7 +217,7 @@ namespace Infocorp.TITA.SharePointUtilities
             }
             catch (Exception e)
             {
-                return false;
+                throw new Exception("Error en UpdateListItem: " + e.Message);
             }
         }
 
@@ -240,13 +240,14 @@ namespace Infocorp.TITA.SharePointUtilities
             }
             catch (Exception e)
             {
-                return false;
+                throw new Exception("Error en DeleteListItem: " + e.Message);
             }
         }
 
-        private List<DTItem> GetListItems(string urlSite, string listName)
+        private List<DTItem> GetListItems(string urlSite, string listName, string CAMLQuery)
         {
-            List<DTField> origianlDTCol = GetFieldsListItem(urlSite, listName);
+            SPQuery query = new SPQuery();
+            query.Query = CAMLQuery;
             try
             {
                 List<DTItem> items = new List<DTItem>();
@@ -255,11 +256,11 @@ namespace Infocorp.TITA.SharePointUtilities
                     using (SPWeb web = site.OpenWeb())
                     {
                         SPList list = web.Lists[listName];
-                        SPListItemCollection listItemCollection = list.Items;
+                        SPListItemCollection listItemCollection = list.GetItems(query);  
                         List<DTAttachment> attachmentCollectionIssue;
                         foreach (SPListItem item in listItemCollection)
                         {
-                            List<DTField> fieldCollectionIssue = new List<DTField>(origianlDTCol);
+                            List<DTField> fieldCollectionIssue = new List<DTField>(GetFieldsListItem(urlSite, listName));
                             foreach (DTField field in fieldCollectionIssue)
                             {
                                 if (item[field.Name] != null)
@@ -337,7 +338,6 @@ namespace Infocorp.TITA.SharePointUtilities
                             items.Add(issueItem);
                         }
                     }
-
                 }
                 return items;
             }
@@ -349,113 +349,120 @@ namespace Infocorp.TITA.SharePointUtilities
 
         private List<DTField> GetFieldsListItem(string urlSite, string listName)
         {
-            List<DTField> fieldsCollection = new List<DTField>();
-            using (SPSite site = new SPSite(urlSite))
+            try
             {
-                using (SPWeb web = site.OpenWeb())
+                List<DTField> fieldsCollection = new List<DTField>();
+                using (SPSite site = new SPSite(urlSite))
                 {
-                    SPList list = web.Lists[listName];
-                    SPFieldCollection listFieldsCollection = list.Fields;
-                    foreach (SPField field in listFieldsCollection)
+                    using (SPWeb web = site.OpenWeb())
                     {
-                        string name = field.Title;
-                        bool required = field.Required;
-                        bool hidden = field.Hidden;
-                        bool isReadOnly = field.ReadOnlyField;
-                        SPFieldType type = field.Type;
-                        List<string> choices;
-                        switch (type)
+                        SPList list = web.Lists[listName];
+                        SPFieldCollection listFieldsCollection = list.Fields;
+                        foreach (SPField field in listFieldsCollection)
                         {
-                            case SPFieldType.Attachments:
-                                break;
-                            case SPFieldType.Boolean:
-                                fieldsCollection.Add(new DTFieldAtomicBoolean(name, required, hidden, isReadOnly));
-                                break;
-                            case SPFieldType.Calculated:
-                                break;
-                            case SPFieldType.Choice:
-                                choices = new List<string>();
-                                StringCollection choicesCollection = ((SPFieldChoice)field).Choices;
-                                foreach (var choice in choicesCollection)
-                                {
-                                    choices.Add(choice);
-                                }
-                                fieldsCollection.Add(new DTFieldChoice(name, required, hidden, isReadOnly, choices));
-                                break;
-                            case SPFieldType.Computed:
-                                break;
-                            case SPFieldType.Counter:
-                                fieldsCollection.Add(new DTFieldCounter(name, required, hidden, isReadOnly));
-                                break;
-                            case SPFieldType.CrossProjectLink:
-                                break;
-                            case SPFieldType.Currency:
-                                break;
-                            case SPFieldType.DateTime:
-                                bool isDateOnly = false;
-                                if (((SPFieldDateTime)field).DisplayFormat == SPDateTimeFieldFormatType.DateOnly)
-                                {
-                                    isDateOnly = true;
-                                }
-                                fieldsCollection.Add(new DTFieldAtomicDateTime(name, required, hidden, isReadOnly, isDateOnly));
-                                break;
-                            case SPFieldType.Error:
-                                break;
-                            case SPFieldType.File:
-                                break;
-                            case SPFieldType.GridChoice:
-                                break;
-                            case SPFieldType.Guid:
-                                break;
-                            case SPFieldType.Integer:
-                                break;
-                            case SPFieldType.Invalid:
-                                break;
-                            case SPFieldType.Lookup:
-                                choices = new List<string>();
-                                SPFieldLookup fieldLookup = (SPFieldLookup)field;
-                                string lookupField = fieldLookup.LookupField;
-                                string lookupList = fieldLookup.LookupList;
-                                choices.AddRange(GetChoicesFromList(web, lookupList, lookupField));
-                                fieldsCollection.Add(new DTFieldChoiceLookup(name, required, hidden, isReadOnly, choices, lookupField, lookupList));
-                                break;
-                            case SPFieldType.MaxItems:
-                                break;
-                            case SPFieldType.ModStat:
-                                break;
-                            case SPFieldType.MultiChoice:
-                                break;
-                            case SPFieldType.Note:
-                                fieldsCollection.Add(new DTFieldAtomicNote(name, required, hidden, isReadOnly));
-                                break;
-                            case SPFieldType.Number:
-                                fieldsCollection.Add(new DTFieldAtomicNumber(name, required, hidden, isReadOnly));
-                                break;
-                            case SPFieldType.Recurrence:
-                                break;
-                            case SPFieldType.Text:
-                                fieldsCollection.Add(new DTFieldAtomicString(name, required, hidden, isReadOnly));
-                                break;
-                            case SPFieldType.Threading:
-                                break;
-                            case SPFieldType.URL:
-                                break;
-                            case SPFieldType.User:
-                                choices = new List<string>();
-                                SPUserCollection userCollection = web.AllUsers;
-                                foreach (SPUser user in userCollection)
-                                {
-                                    choices.Add(user.Name);
-                                }
-                                fieldsCollection.Add(new DTFieldChoiceUser(name, required, hidden, isReadOnly, choices));
-                                break;
-                            default:
-                                break;
+                            string name = field.Title;
+                            bool required = field.Required;
+                            bool hidden = field.Hidden;
+                            bool isReadOnly = field.ReadOnlyField;
+                            SPFieldType type = field.Type;
+                            List<string> choices;
+                            switch (type)
+                            {
+                                case SPFieldType.Attachments:
+                                    break;
+                                case SPFieldType.Boolean:
+                                    fieldsCollection.Add(new DTFieldAtomicBoolean(name, required, hidden, isReadOnly));
+                                    break;
+                                case SPFieldType.Calculated:
+                                    break;
+                                case SPFieldType.Choice:
+                                    choices = new List<string>();
+                                    StringCollection choicesCollection = ((SPFieldChoice)field).Choices;
+                                    foreach (var choice in choicesCollection)
+                                    {
+                                        choices.Add(choice);
+                                    }
+                                    fieldsCollection.Add(new DTFieldChoice(name, required, hidden, isReadOnly, choices));
+                                    break;
+                                case SPFieldType.Computed:
+                                    break;
+                                case SPFieldType.Counter:
+                                    fieldsCollection.Add(new DTFieldCounter(name, required, hidden, isReadOnly));
+                                    break;
+                                case SPFieldType.CrossProjectLink:
+                                    break;
+                                case SPFieldType.Currency:
+                                    break;
+                                case SPFieldType.DateTime:
+                                    bool isDateOnly = false;
+                                    if (((SPFieldDateTime)field).DisplayFormat == SPDateTimeFieldFormatType.DateOnly)
+                                    {
+                                        isDateOnly = true;
+                                    }
+                                    fieldsCollection.Add(new DTFieldAtomicDateTime(name, required, hidden, isReadOnly, isDateOnly));
+                                    break;
+                                case SPFieldType.Error:
+                                    break;
+                                case SPFieldType.File:
+                                    break;
+                                case SPFieldType.GridChoice:
+                                    break;
+                                case SPFieldType.Guid:
+                                    break;
+                                case SPFieldType.Integer:
+                                    break;
+                                case SPFieldType.Invalid:
+                                    break;
+                                case SPFieldType.Lookup:
+                                    choices = new List<string>();
+                                    SPFieldLookup fieldLookup = (SPFieldLookup)field;
+                                    string lookupField = fieldLookup.LookupField;
+                                    string lookupList = fieldLookup.LookupList;
+                                    choices.AddRange(GetChoicesFromList(web, lookupList, lookupField));
+                                    fieldsCollection.Add(new DTFieldChoiceLookup(name, required, hidden, isReadOnly, choices, lookupField, lookupList));
+                                    break;
+                                case SPFieldType.MaxItems:
+                                    break;
+                                case SPFieldType.ModStat:
+                                    break;
+                                case SPFieldType.MultiChoice:
+                                    break;
+                                case SPFieldType.Note:
+                                    fieldsCollection.Add(new DTFieldAtomicNote(name, required, hidden, isReadOnly));
+                                    break;
+                                case SPFieldType.Number:
+                                    fieldsCollection.Add(new DTFieldAtomicNumber(name, required, hidden, isReadOnly));
+                                    break;
+                                case SPFieldType.Recurrence:
+                                    break;
+                                case SPFieldType.Text:
+                                    fieldsCollection.Add(new DTFieldAtomicString(name, required, hidden, isReadOnly));
+                                    break;
+                                case SPFieldType.Threading:
+                                    break;
+                                case SPFieldType.URL:
+                                    break;
+                                case SPFieldType.User:
+                                    choices = new List<string>();
+                                    SPUserCollection userCollection = web.AllUsers;
+                                    foreach (SPUser user in userCollection)
+                                    {
+                                        choices.Add(user.Name);
+                                    }
+                                    fieldsCollection.Add(new DTFieldChoiceUser(name, required, hidden, isReadOnly, choices));
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
                 }
+                return fieldsCollection;
             }
-            return fieldsCollection;
+            catch (Exception e)
+            {
+                throw new Exception("Error en GetFieldsListItem: " + e.Message);
+            }
         }
 
         private List<string> GetChoicesFromList(SPWeb web, string listId, string fieldName)
