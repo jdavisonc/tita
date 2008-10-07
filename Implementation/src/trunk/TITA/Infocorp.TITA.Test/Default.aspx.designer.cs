@@ -17,8 +17,8 @@ namespace TestSharePoint {
         /// form1 control.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Auto-generated _value.
+        /// To modify move _value declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
@@ -26,8 +26,8 @@ namespace TestSharePoint {
         /// Button1 control.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Auto-generated _value.
+        /// To modify move _value declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
         
@@ -35,8 +35,8 @@ namespace TestSharePoint {
         /// Webs control.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Auto-generated _value.
+        /// To modify move _value declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Webs;
     }
