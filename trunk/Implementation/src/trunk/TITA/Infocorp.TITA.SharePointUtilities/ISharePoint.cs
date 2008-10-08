@@ -13,7 +13,7 @@ namespace Infocorp.TITA.SharePointUtilities
         /// Retorna la lista de incidentes de un Sitio
         /// </summary>
         /// <param name="urlSite">Url del Sitio</param>
-        /// <param name="CAMLQuery">CAML Query</param>
+        /// <param name="CAMLQuery">CAML Query es el filtro a aplicar sobre la coleccion.</param>
         /// <returns>Lista de DataType Incidente</returns>
         List<DTItem> GetIssues(string urlSite, string CAMLQuery);
 
@@ -56,7 +56,7 @@ namespace Infocorp.TITA.SharePointUtilities
         /// Retorna la lista de work package de un Sitio
         /// </summary>
         /// <param name="urlSite">Url del Sitio</param>
-        /// <param name="CAMLQuery">CAML Query</param>
+        /// <param name="CAMLQuery">CAML Query es el filtro a aplicar sobre la coleccion.</param>
         /// <returns>Lista de DataType Work Package</returns>
         List<DTItem> GetWorkPackages(string urlSite, string CAMLQuery);
 
@@ -99,7 +99,7 @@ namespace Infocorp.TITA.SharePointUtilities
         /// Retorna la lista de Tasks de un Sitio
         /// </summary>
         /// <param name="urlSite">Url del Sitio</param>
-        /// <param name="CAMLQuery">CAML Query</param>
+        /// <param name="CAMLQuery">CAML Query es el filtro a aplicar sobre la coleccion.</param>
         /// <returns>Lista de DataType Tasks</returns>
         List<DTItem> GetTasks(string urlSite, string CAMLQuery);
 
