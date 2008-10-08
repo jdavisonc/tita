@@ -20,23 +20,39 @@ namespace Infocorp.TITA.WITLogic
             get { return _commandType; }
             set { _commandType = value; }
         }
-        private DTItem _issue;
-        public DTItem Issue
+        private DTItem _item;
+        public DTItem Item
         {
-            get { return _issue; }
-            set { _issue = value; }
+            get { return _item; }
+            set { _item = value; }
+        }
+
+        private ItemType _commandItemType;
+        public ItemType CommandItemType
+        {
+            get { return _commandItemType; }
+            set { _commandItemType = value; }
+        }
+
+        private string _siteUrl;
+        public string SiteUrl
+        {
+            get { return _siteUrl; }
+            set { _siteUrl = value; }
         }
 
         public override bool Equals(object obj)
         {
             bool result = false;
 
-            DTField f1 = this.Issue.Fields.Find(delegate(DTField f) { return f.Name == "ID"; });
-            DTField f2 = (obj as DTCommandInfo).Issue.Fields.Find(delegate(DTField f) { return f.Name == "ID"; });
+            DTField f1 = this.Item.Fields.Find(delegate(DTField f) { return f.Name == "ID"; });
+            DTField f2 = (obj as DTCommandInfo).Item.Fields.Find(delegate(DTField f) { return f.Name == "ID"; });
             if (f1 != null && f2 != null)
             {
-
-                result = (f1 as DTFieldAtomicNumber).Value == (f2 as DTFieldAtomicNumber).Value;
+                result =
+                    this.CommandItemType == (obj as DTCommandInfo).CommandItemType &&
+                    (f1 as DTFieldAtomicNumber).Value == (f2 as DTFieldAtomicNumber).Value &&
+                    this.SiteUrl.ToLower().Trim() == (obj as DTCommandInfo).SiteUrl.ToLower().Trim();
             }
 
             return result;
