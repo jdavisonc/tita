@@ -28,133 +28,36 @@ namespace Infocorp.TITA.WITLogic
 
         #endregion
 
-        #region IWITServices Members
+        #region IssueMethods
 
-        public DTItem GetIssueTemplate(string urlSite)
+        public DTItem GetIssueTemplate(string siteUrl)
         {
-            DTItem issue = new DTItem();
-
-            issue.Fields =_sharepoint.GetFieldsIssue(urlSite);
-
-            return issue;
+            return GetItemTemplate(siteUrl, ItemType.ISSUE);
         }
 
-        public List<DTItem> GetIssues(string urlSite)
+        public List<DTItem> GetIssues(string siteUrl)
         {
-
-            List<DTItem> result = new List<DTItem>();
-            List<DTCommandInfo> commands = WITCommandState.Instance().Commands;
-            result = _sharepoint.GetIssues(urlSite);
-            commands.ForEach(delegate(DTCommandInfo command)
-            {
-                if (command.CommandType == CommandType.ADD || command.CommandType == CommandType.MODIFY)
-                {
-                    DTFieldAtomicBoolean isLocal = new DTFieldAtomicBoolean("IsLocal", false, true, true, true);
-                    command.Issue.Fields.Add(isLocal);
-                    //Si traigo uno que estoy modificando, devuelvo sólo la modificación
-                    if (command.CommandType == CommandType.MODIFY)
-                    {
-                        result.Remove(command.Issue);
-                    }
-                    result.Add(command.Issue);
-                }
-                else
-                {
-                    result.Remove(command.Issue);
-                };
-            });
-
-
-            return result;
+            return GetItems(siteUrl, ItemType.ISSUE);
         }
 
-        public bool ApplyChanges(string siteUrl)
+        public void AddIssue(DTItem issue, string siteUrl)
         {
-            List<DTCommandInfo> commands = WITCommandState.Instance().Commands;
-            ISharePoint spu = _sharepoint;
-            commands.Sort();
-            bool result = true;
-            foreach (DTCommandInfo command in commands)
-            {
-                command.Issue.Fields.RemoveAll(delegate(DTField f) { return f.Name == "IsLocal"; });
-                switch (command.CommandType)
-                {
-                    case CommandType.ADD:
-                        result = spu.AddIssue(siteUrl, command.Issue);
-                        break;
-                    case CommandType.MODIFY:
-                        result = spu.UpdateIssue(siteUrl, command.Issue);
-                        break;
-                    case CommandType.DELETE:
-                        int issueId = Convert.ToInt32( (command.Issue.Fields.Find(delegate(DTField f) { return f.Name.ToLower() == "id"; }) as DTFieldAtomicNumber).Value);
-                        result = spu.DeleteIssue(siteUrl, issueId);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            commands.Clear();
-            return result;
+            AddCommand(issue, ItemType.ISSUE, siteUrl);
         }
 
-        public bool HasPendingChanges(string siteUrl)
+        public void ModifyIssue(DTItem issue, string siteUrl)
         {
-            return WITCommandState.Instance().Commands.Count > 0;
+            ModifyItem(issue,ItemType.ISSUE, siteUrl);
         }
 
-        public void AddNewIssue(DTItem issue)
+        public void DeleteIssue(int issueId, string siteUrl)
         {
-            DTCommandInfo command = new DTCommandInfo();
-            command.CommandType = CommandType.ADD;
-            command.CreationDate = DateTime.Now;
-            DTField field = new DTField();
-            field.Name = "ID";
-
-
-            if (issue.Fields.Contains(field))
-            {
-                issue.Fields.Remove(field);
-            }
-
-            command.Issue = issue;
-
-            WITCommandState.Instance().AddCommand(command);
+            DeleteItem(issueId, ItemType.ISSUE, siteUrl);
         }
-
-        public void ModifyIssue(DTItem issue)
-        {
-            DTCommandInfo command = new DTCommandInfo();
-            command.CommandType = CommandType.MODIFY;
-            command.CreationDate = DateTime.Now;
-            command.Issue = issue;
-
-            WITCommandState.Instance().AddCommand(command);
-        }
-
-        public void DeleteIssue(int issueId)
-        {
-            DTCommandInfo command = new DTCommandInfo();
-            command.CommandType = CommandType.DELETE;
-            command.CreationDate = DateTime.Now;
-            command.Issue = new DTItem();
-            DTFieldAtomicNumber field = new DTFieldAtomicNumber();
-            field.Hidden = true;
-            field.IsReadOnly = true;            
-            field.Name = "ID";
-            field.Required = true;            
-            field.Value = issueId;
-            command.Issue.Fields = new List<DTField>() { field };
-
-            WITCommandState.Instance().AddCommand(command);
-        }
-
-
 
         #endregion
 
-        #region IWITServices Members
-
+        #region ContractMethods
 
         public void AddNewContract(DTContract contract)
         {
@@ -198,61 +101,220 @@ namespace Infocorp.TITA.WITLogic
 
         #endregion
 
-        #region IWITServices Members
+        #region TaskMethods
+
+        public DTItem GetTaskTemplate(string siteUrl)
+        {
+            return GetItemTemplate(siteUrl, ItemType.TASK);
+        }
         
-        public List<DTItem> GetTasks(string urlSite)
+        public List<DTItem> GetTasks(string siteUrl)
         {
-            return _sharepoint.GetTasks(urlSite);
+            return GetItems(siteUrl, ItemType.TASK);
         }
 
-        public List<DTField> GetFieldsTask(string urlSite)
+        public void AddTask( DTItem task, string siteUrl)
         {
-            return _sharepoint.GetFieldsTask(urlSite);
+            AddCommand(task, ItemType.TASK, siteUrl);
         }
 
-        public bool AddTask(string urlSite, DTItem task)
+        public void DeleteTask(int taskId, string siteUrl)
         {
-            return _sharepoint.AddTask(urlSite, task);
+             DeleteItem(taskId, ItemType.TASK,siteUrl);
         }
 
-        public bool DeleteTask(string urlSite, int idTask)
+        public void UpdateTask(DTItem task, string siteUrl)
         {
-            return _sharepoint.DeleteTask(urlSite, idTask);
-        }
-
-        public bool UpdateTask(string urlSite, DTItem task)
-        {
-            return _sharepoint.UpdateTask(urlSite, task);
+            ModifyItem(task, ItemType.TASK, siteUrl);
         }
 
         #endregion
 
         #region IWITServices Members
 
-
-        public List<DTItem> GetWorkPackages(string urlSite)
+        public DTItem GetWorkPackageTemplate(string siteUrl)
         {
-            return _sharepoint.GetWorkPackages(urlSite);
+            return GetItemTemplate(siteUrl, ItemType.WORKPACKAGE);
         }
 
-        public List<DTField> GetFieldsWorkPackage(string urlSite)
+        public List<DTItem> GetWorkPackages(string siteUrl)
         {
-            return _sharepoint.GetFieldsWorkPackage(urlSite);
+            return GetItems(siteUrl, ItemType.WORKPACKAGE);
         }
 
-        public bool AddWorkPackage(string urlSite, DTItem wp)
+        public void AddWorkPackage(DTItem workPackage, string siteUrl)
         {
-            return _sharepoint.AddWorkPackage(urlSite, wp);
+            AddCommand(workPackage, ItemType.WORKPACKAGE, siteUrl);
         }
 
-        public bool DeleteWorkPackage(string urlSite, int idWp)
+        public void DeleteWorkPackage(int workPackageId, string siteUrl)
         {
-            return _sharepoint.DeleteWorkPackage(urlSite, idWp);
+             DeleteItem(workPackageId, ItemType.WORKPACKAGE, siteUrl);
         }
 
-        public bool UpdateWorkPackage(string urlSite, DTItem wp)
+        public void UpdateWorkPackage(DTItem workPackage, string siteUrl)
         {
-            return _sharepoint.UpdateWorkPackage(urlSite, wp);
+             ModifyItem(workPackage, ItemType.WORKPACKAGE, siteUrl);
+        }
+
+        #endregion
+
+        #region GenericMethods
+
+        private DTItem GetItemTemplate(string siteUrl, ItemType itemType)
+        {
+            DTItem issue = new DTItem();
+            switch (itemType)
+            {
+                case ItemType.ISSUE:
+                    issue.Fields = _sharepoint.GetFieldsIssue(siteUrl);
+                    break;
+                case ItemType.TASK:
+                    issue.Fields = _sharepoint.GetFieldsTask(siteUrl);
+                    break;
+                case ItemType.WORKPACKAGE:
+                    issue.Fields = _sharepoint.GetFieldsWorkPackage(siteUrl);
+                    break;
+                default:
+                    //No debería pasar...
+                    break;
+            }
+
+
+            return issue;
+        }
+
+        private List<DTItem> GetItems(string siteUrl, ItemType itemType)
+        {
+            List<DTItem> result = new List<DTItem>();
+            List<DTCommandInfo> commands = WITCommandState.Instance().GetCommands(itemType, siteUrl);
+                
+            switch (itemType)
+            {
+                case ItemType.ISSUE:
+                    result = _sharepoint.GetIssues(siteUrl);
+                    break;
+                case ItemType.TASK:
+                    result = _sharepoint.GetTasks(siteUrl);
+                    break;
+                case ItemType.WORKPACKAGE:
+                    result = _sharepoint.GetWorkPackages(siteUrl);
+                    break;
+                default:
+                    //No debería pasar...
+                    break;
+            }
+            commands.ForEach(delegate(DTCommandInfo command)
+            {
+                if (command.CommandItemType == itemType && command.SiteUrl.ToLower().Trim() == siteUrl.ToLower().Trim())
+                {
+                    if (command.CommandType == CommandType.ADD || command.CommandType == CommandType.MODIFY)
+                    {
+                        DTFieldAtomicBoolean isLocal = new DTFieldAtomicBoolean("IsLocal", false, true, true, true);
+                        command.Item.Fields.Add(isLocal);
+                        //Si traigo uno que estoy modificando, devuelvo sólo la modificación
+                        if (command.CommandType == CommandType.MODIFY)
+                        {
+                            result.Remove(command.Item);
+                        }
+                        result.Add(command.Item);
+                    }
+                    else
+                    {
+                        result.Remove(command.Item);
+                    };
+                }
+            });
+
+            return result;
+        }
+
+        public bool ApplyChanges(string siteUrl)
+        {
+            List<DTCommandInfo> commands = WITCommandState.Instance().GetCommands(siteUrl);
+            ISharePoint spu = _sharepoint;
+            commands.Sort();
+            bool result = true;
+            foreach (DTCommandInfo command in commands)
+            {
+                command.Item.Fields.RemoveAll(delegate(DTField f) { return f.Name == "IsLocal"; });
+                switch (command.CommandType)
+                {
+                    case CommandType.ADD:
+                        result = spu.AddIssue(siteUrl, command.Item);
+                        break;
+                    case CommandType.MODIFY:
+                        result = spu.UpdateIssue(siteUrl, command.Item);
+                        break;
+                    case CommandType.DELETE:
+                        int issueId = Convert.ToInt32((command.Item.Fields.Find(delegate(DTField f) { return f.Name.ToLower() == "id"; }) as DTFieldAtomicNumber).Value);
+                        result = spu.DeleteIssue(siteUrl, issueId);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            commands.Clear();
+            return result;
+        }
+
+        public bool HasPendingChanges(string siteUrl)
+        {
+            return WITCommandState.Instance().GetCommands(siteUrl).Count > 0;
+        }
+
+        private void AddCommand(DTItem issue, ItemType itemType, string siteUrl)
+        {
+            DTCommandInfo command = new DTCommandInfo();
+            command.CommandType = CommandType.ADD;
+            command.CreationDate = DateTime.Now;
+            command.CommandItemType = itemType;
+            command.SiteUrl = siteUrl;
+
+            DTField field = new DTField();
+            field.Name = "ID";
+
+            if (issue.Fields.Contains(field))
+            {
+                issue.Fields.Remove(field);
+            }
+
+            command.Item = issue;
+
+            WITCommandState.Instance().AddCommand(command);
+        }
+
+        private void ModifyItem(DTItem issue, ItemType itemType, string siteUrl)
+        {
+            DTCommandInfo command = new DTCommandInfo();
+            command.CommandType = CommandType.MODIFY;
+            command.CreationDate = DateTime.Now;
+            command.Item = issue;
+            command.SiteUrl = siteUrl;
+            command.CommandItemType = itemType;
+
+            WITCommandState.Instance().AddCommand(command);
+        }
+
+        private void DeleteItem(int issueId, ItemType itemType, string siteUrl)
+        {
+            DTCommandInfo command = new DTCommandInfo();
+            command.CommandType = CommandType.DELETE;
+            command.CreationDate = DateTime.Now;
+            command.Item = new DTItem();
+            command.CommandItemType = itemType;
+            command.SiteUrl = siteUrl;
+
+            DTFieldAtomicNumber field = new DTFieldAtomicNumber();
+            field.Hidden = true;
+            field.IsReadOnly = true;
+            field.Name = "ID";
+            field.Required = true;
+            field.Value = issueId;
+            command.Item.Fields = new List<DTField>() { field };
+
+            WITCommandState.Instance().AddCommand(command);
         }
 
         #endregion

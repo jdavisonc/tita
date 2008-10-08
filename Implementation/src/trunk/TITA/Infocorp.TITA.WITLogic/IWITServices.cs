@@ -15,43 +15,43 @@ namespace Infocorp.TITA.WITLogic
 
         #region WorkPackages
 
-        List<DTItem> GetWorkPackages(string urlSite);
+        List<DTItem> GetWorkPackages(string siteUrl);
 
-        List<DTField> GetFieldsWorkPackage(string urlSite);
+        DTItem GetWorkPackageTemplate(string siteUrl);
 
-        bool AddWorkPackage(string urlSite, DTItem wp);
+        void AddWorkPackage(DTItem workPackage, string siteUrl);
 
-        bool DeleteWorkPackage(string urlSite, int idWp);
+        void DeleteWorkPackage(int workPackageId, string siteUrl);
 
-        bool UpdateWorkPackage(string urlSite, DTItem wp);
+        void UpdateWorkPackage(DTItem workPackage, string siteUrl);
 
         #endregion
 
         #region Issues
 
-        DTItem GetIssueTemplate(string urlSite);
+        DTItem GetIssueTemplate(string siteUrl);
 
-        List<DTItem> GetIssues(string urlSite);
+        List<DTItem> GetIssues(string siteUrl);
 
-        void AddNewIssue(DTItem issue);
+        void AddIssue(DTItem issue, string siteUrl);
 
-        void ModifyIssue(DTItem issue);
+        void ModifyIssue(DTItem issue, string siteUrl);
 
-        void DeleteIssue(int issueId);
+        void DeleteIssue(int issueId, string siteUrl);
 
         #endregion
 
         #region Tasks
 
-        List<DTItem> GetTasks(string urlSite);
+        List<DTItem> GetTasks(string siteUrl);
 
-        List<DTField> GetFieldsTask(string urlSite);
-      
-        bool AddTask(string urlSite, DTItem task);
-      
-        bool DeleteTask(string urlSite, int idTask);
+        DTItem GetTaskTemplate(string siteUrl);
 
-        bool UpdateTask(string urlSite, DTItem task);
+        void AddTask(DTItem task, string siteUrl);
+
+        void DeleteTask(int taskId, string siteUrl);
+
+        void UpdateTask(DTItem task, string siteUrl);
 
         #endregion
 
