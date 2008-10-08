@@ -51,7 +51,7 @@ namespace Infocorp.TITA.WITLogic
             {
                 result =
                     this.CommandItemType == (obj as DTCommandInfo).CommandItemType &&
-                    (f1 as DTFieldAtomicNumber).Value == (f2 as DTFieldAtomicNumber).Value &&
+                    (f1 as DTFieldCounter).Value == (f2 as DTFieldCounter).Value &&
                     this.SiteUrl.ToLower().Trim() == (obj as DTCommandInfo).SiteUrl.ToLower().Trim();
             }
 
