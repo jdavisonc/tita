@@ -26,9 +26,27 @@ public class WSTita : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
+    #region Extras
+
+    [WebMethod]
+    public void ExtendedDTS(DTFieldAtomicString str, DTFieldAtomicBoolean bl, DTFieldAtomicNumber num,
+        DTFieldAtomicDateTime time, DTFieldAtomicNote note, DTFieldCounter counter, DTFieldChoiceUser ch, DTFieldChoiceLookup look)
+    {
+        str = new DTFieldAtomicString();
+        bl = new DTFieldAtomicBoolean ();
+        num = new DTFieldAtomicNumber();
+        time = new DTFieldAtomicDateTime();
+        note = new DTFieldAtomicNote();
+        counter = new DTFieldCounter();
+        ch = new DTFieldChoiceUser();
+        look = new DTFieldChoiceLookup();
+    }
+
+    #endregion
+
     #region Issue
     [WebMethod]
-    public List<DTIssue> GetWPS()
+    public List<DTItem> GetWPS()
     {
         // retorna una lista de incidentes... igual creo q es lo mismo xq dtissue es generico
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
@@ -36,7 +54,7 @@ public class WSTita : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public List<DTIssue> GetIssues()
+    public List<DTItem> GetIssues()
     {
 
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
@@ -44,15 +62,15 @@ public class WSTita : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void AddIssue(DTIssue issue)
+    public void AddIssue(DTItem issue, string url)
     {
 
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
-        witInstance.AddNewIssue(issue);
+        witInstance.AddIssue(issue,url);
     }
 
     [WebMethod]
-    public DTIssue GetIssueTemplate()
+    public DTItem GetIssueTemplate()
     {
 
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
@@ -60,17 +78,17 @@ public class WSTita : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void ModifyIssue(DTIssue issue)
+    public void ModifyIssue(DTItem issue, string url)
     {
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
-        witInstance.ModifyIssue(issue);
+        witInstance.ModifyIssue(issue,url);
     }
 
     [WebMethod]
-    public void DeleteIssue(int id)
+    public void DeleteIssue(int id, string url)
     {
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
-        witInstance.DeleteIssue(id);
+        witInstance.DeleteIssue(id,url);
     }
     #endregion
 
@@ -136,4 +154,6 @@ public class WSTita : System.Web.Services.WebService
     }
 
     #endregion
+
+
 }
