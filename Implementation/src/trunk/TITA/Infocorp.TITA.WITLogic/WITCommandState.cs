@@ -32,7 +32,7 @@ namespace Infocorp.TITA.WITLogic
             switch (command.CommandType)
             {
                 case CommandType.ADD:
-                    DTFieldAtomicNumber field = new DTFieldAtomicNumber("ID", true, true, true, --_lastUsedId);
+                    DTFieldCounter field = new DTFieldCounter("ID", true, true, true, --_lastUsedId);
                     command.Item.Fields.Add(field);
 
                     break;

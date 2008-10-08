@@ -188,17 +188,17 @@ namespace Infocorp.TITA.WITLogic
         {
             List<DTItem> result = new List<DTItem>();
             List<DTCommandInfo> commands = WITCommandState.Instance().GetCommands(itemType, siteUrl);
-                
+            string camlQuery = string.Empty;
             switch (itemType)
             {
                 case ItemType.ISSUE:
-                    result = _sharepoint.GetIssues(siteUrl);
+                    result = _sharepoint.GetIssues(siteUrl,camlQuery);
                     break;
                 case ItemType.TASK:
-                    result = _sharepoint.GetTasks(siteUrl);
+                    result = _sharepoint.GetTasks(siteUrl, camlQuery);
                     break;
                 case ItemType.WORKPACKAGE:
-                    result = _sharepoint.GetWorkPackages(siteUrl);
+                    result = _sharepoint.GetWorkPackages(siteUrl, camlQuery);
                     break;
                 default:
                     //No debería pasar...
