@@ -110,6 +110,12 @@
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteContractResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteIssueResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.ExtendedDTSResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.GetContractSiteResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
