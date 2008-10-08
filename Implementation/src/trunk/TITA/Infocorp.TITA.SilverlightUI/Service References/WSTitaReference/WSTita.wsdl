@@ -2,22 +2,131 @@
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="ExtendedDTS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="str" type="tns:DTFieldAtomicString" />
+            <s:element minOccurs="0" maxOccurs="1" name="bl" type="tns:DTFieldAtomicBoolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="num" type="tns:DTFieldAtomicNumber" />
+            <s:element minOccurs="0" maxOccurs="1" name="time" type="tns:DTFieldAtomicDateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="note" type="tns:DTFieldAtomicNote" />
+            <s:element minOccurs="0" maxOccurs="1" name="counter" type="tns:DTFieldCounter" />
+            <s:element minOccurs="0" maxOccurs="1" name="ch" type="tns:DTFieldChoiceUser" />
+            <s:element minOccurs="0" maxOccurs="1" name="look" type="tns:DTFieldChoiceLookup" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DTFieldAtomicString">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTFieldAtomic">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTFieldAtomic">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTField" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTField">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Required" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Hidden" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsReadOnly" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DTFieldChoice">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTField">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Choices" type="tns:ArrayOfString" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DTFieldChoiceLookup">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTFieldChoice" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTFieldChoiceUser">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTFieldChoice" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTFieldCounter">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTField">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTFieldAtomicNote">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTFieldAtomic">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTFieldAtomicDateTime">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTFieldAtomic">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTFieldAtomicNumber">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTFieldAtomic">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:double" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTFieldAtomicBoolean">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTFieldAtomic">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ExtendedDTSResponse">
+        <s:complexType />
+      </s:element>
       <s:element name="GetWPS">
         <s:complexType />
       </s:element>
       <s:element name="GetWPSResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetWPSResult" type="tns:ArrayOfDTIssue" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetWPSResult" type="tns:ArrayOfDTItem" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="ArrayOfDTIssue">
+      <s:complexType name="ArrayOfDTItem">
         <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="DTIssue" nillable="true" type="tns:DTIssue" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DTItem" nillable="true" type="tns:DTItem" />
         </s:sequence>
       </s:complexType>
-      <s:complexType name="DTIssue">
+      <s:complexType name="DTItem">
         <s:sequence>
           <s:element minOccurs="0" maxOccurs="1" name="Attachments" type="tns:ArrayOfDTAttachment" />
           <s:element minOccurs="0" maxOccurs="1" name="Fields" type="tns:ArrayOfDTField" />
@@ -40,46 +149,21 @@
           <s:element minOccurs="0" maxOccurs="unbounded" name="DTField" nillable="true" type="tns:DTField" />
         </s:sequence>
       </s:complexType>
-      <s:complexType name="DTField">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:Types" />
-          <s:element minOccurs="1" maxOccurs="1" name="Required" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="Choices" type="tns:ArrayOfString" />
-          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:simpleType name="Types">
-        <s:restriction base="s:string">
-          <s:enumeration value="Integer" />
-          <s:enumeration value="String" />
-          <s:enumeration value="Choice" />
-          <s:enumeration value="Boolean" />
-          <s:enumeration value="DateTime" />
-          <s:enumeration value="Note" />
-          <s:enumeration value="User" />
-          <s:enumeration value="Counter" />
-        </s:restriction>
-      </s:simpleType>
-      <s:complexType name="ArrayOfString">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="GetIssues">
         <s:complexType />
       </s:element>
       <s:element name="GetIssuesResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetIssuesResult" type="tns:ArrayOfDTIssue" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetIssuesResult" type="tns:ArrayOfDTItem" />
           </s:sequence>
         </s:complexType>
       </s:element>
       <s:element name="AddIssue">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="issue" type="tns:DTIssue" />
+            <s:element minOccurs="0" maxOccurs="1" name="issue" type="tns:DTItem" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -92,14 +176,15 @@
       <s:element name="GetIssueTemplateResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetIssueTemplateResult" type="tns:DTIssue" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetIssueTemplateResult" type="tns:DTItem" />
           </s:sequence>
         </s:complexType>
       </s:element>
       <s:element name="ModifyIssue">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="issue" type="tns:DTIssue" />
+            <s:element minOccurs="0" maxOccurs="1" name="issue" type="tns:DTItem" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -110,6 +195,7 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -218,6 +304,12 @@
       </s:element>
     </s:schema>
   </wsdl:types>
+  <wsdl:message name="ExtendedDTSSoapIn">
+    <wsdl:part name="parameters" element="tns:ExtendedDTS" />
+  </wsdl:message>
+  <wsdl:message name="ExtendedDTSSoapOut">
+    <wsdl:part name="parameters" element="tns:ExtendedDTSResponse" />
+  </wsdl:message>
   <wsdl:message name="GetWPSSoapIn">
     <wsdl:part name="parameters" element="tns:GetWPS" />
   </wsdl:message>
@@ -303,6 +395,10 @@
     <wsdl:part name="parameters" element="tns:HasPendingChangesResponse" />
   </wsdl:message>
   <wsdl:portType name="WSTitaSoap">
+    <wsdl:operation name="ExtendedDTS">
+      <wsdl:input message="tns:ExtendedDTSSoapIn" />
+      <wsdl:output message="tns:ExtendedDTSSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="GetWPS">
       <wsdl:input message="tns:GetWPSSoapIn" />
       <wsdl:output message="tns:GetWPSSoapOut" />
@@ -362,6 +458,15 @@
   </wsdl:portType>
   <wsdl:binding name="WSTitaSoap" type="tns:WSTitaSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ExtendedDTS">
+      <soap:operation soapAction="http://tempuri.org/ExtendedDTS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetWPS">
       <soap:operation soapAction="http://tempuri.org/GetWPS" style="document" />
       <wsdl:input>
@@ -491,6 +596,15 @@
   </wsdl:binding>
   <wsdl:binding name="WSTitaSoap12" type="tns:WSTitaSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ExtendedDTS">
+      <soap12:operation soapAction="http://tempuri.org/ExtendedDTS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetWPS">
       <soap12:operation soapAction="http://tempuri.org/GetWPS" style="document" />
       <wsdl:input>

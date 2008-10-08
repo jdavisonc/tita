@@ -35,9 +35,9 @@ namespace Infocorp.TITA.SilverlightUI.Code
             get { return reportedBy; }
             set { reportedBy = value; }
         }
-        private string reportedDate;
+        private DateTime reportedDate;
 
-        public string ReportedDate
+        public DateTime ReportedDate
         {
             get { return reportedDate; }
             set { reportedDate = value; }

@@ -58,14 +58,19 @@ namespace Infocorp.TITA.SilverlightUI
             WP,
             INCIDENT,
             CONTRACT,
+            TASK,
         }
         private string url ="http://localhost/infocorp";
-        private List<DTIssue> my_issue = new List<DTIssue>();
-        private DTIssue my_issue_template = null;
-        List<DTContract> my_contract = new List<DTContract>();
-        private bool isEdit;
-        private bool isDelete;
+        private DTItem item = new DTItem();
+        List<DTItem> lstItem = new List<DTItem>();
+        private DTItem resulItem = new DTItem();
         private Loading loading = new Loading();
+        private bool isEdit;
+
+        private DTItem my_issue_template = null;
+        List<DTContract> my_contract = new List<DTContract>();
+        private bool isDelete;
+       
 
         public Page()
         {
@@ -256,8 +261,10 @@ namespace Infocorp.TITA.SilverlightUI
                 }
                 else 
                 {
-                    txtNombre.Text = "Campo requerido";
-                    txtUrl.Text = "Campo requerido";
+                    if (txtNombre.Text == "")
+                        txtNombre.Text = "Campo requerido";
+                    if (txtUrl.Text == "")
+                        txtUrl.Text = "Campo requerido";
                     pnlEditContrato.Visibility = Visibility.Visible;
                     PnlbtnsContrato.Visibility = Visibility.Collapsed;
                     PnlActionContrato.Visibility = Visibility.Visible;
@@ -332,7 +339,7 @@ namespace Infocorp.TITA.SilverlightUI
             Dispatcher.BeginInvoke(LoadWPS(e.Result));
         }
 
-        private Delegate LoadWPS(List<DTIssue> list)
+        private Delegate LoadWPS(List<DTItem> list)
         {
             return null;
         }
@@ -349,7 +356,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void GetIncidents()
         {
-            grdIncident.Columns.Clear();
+            grd_INCIDENT.Columns.Clear();
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
             ws.GetIssuesCompleted += new EventHandler<Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesCompletedEventArgs>(ws_GetIssuesCompleted);
             ws.GetIssuesAsync();
@@ -357,52 +364,54 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_GetIssuesCompleted(object sender, Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesCompletedEventArgs e)
         {
+            lstItem = e.Result;
             Dispatcher.BeginInvoke(LoadIncidents(e.Result));
         }
         
-        private Delegate LoadIncidents(List<DTIssue> list)
+        private Delegate LoadIncidents(List<DTItem> list)
         {
             Issue i;
             List<Issue> lstIssue = new List<Issue>();
-            foreach (DTIssue issue in list)
+            foreach (DTItem issue in list)
             {
                 i = new Issue();
+                
                 foreach (DTField field in issue.Fields)
                 {
                     switch (field.Name)
                     {
                         case "ID":
-                            i.Id = Convert.ToInt32(field.Value);
+                            i.Id = int.Parse(((DTFieldCounter)field).Value.ToString());
                             break;
                         case "Title":
-                            i.Title = field.Value;
+                            i.Title = ((DTFieldAtomicString)field).Value;
                             break;
-                        case "Status":
-                            i.Status = field.Value;
-                            break;
+                        //case "Status":
+                        //    i.Status = ((DTFieldChoice)field).Value;
+                        //    break;
                         case "Priority":
-                            i.Priority = field.Value;
+                            i.Priority = ((DTFieldChoice)field).Value;
                             break;
                         case "Category":
-                            i.Category = field.Value;
+                            i.Category = ((DTFieldChoice)field).Value;
                             break;
                         case "Reported Date":
-                            i.ReportedDate = field.Value;
+                            i.ReportedDate = ((DTFieldAtomicDateTime)field).Value;
                             break;
                         case "WP":
-                            i.WP = field.Value;
+                            i.WP = ((DTFieldChoice)field).Value;
                             break;
                         case "Reported by":
-                            i.ReportedBy = field.Value;
+                            i.ReportedBy = ((DTFieldChoice)field).Value;
                             break;
                         case "Order":
-                            i.Ord = float.Parse(field.Value);
+                            i.Ord = float.Parse(((DTFieldAtomicNumber)field).Value.ToString());
                             break;
                         case "Resolution":
-                            i.Resolution = field.Value;
+                            i.Resolution = ((DTFieldAtomicNote)field).Value;
                             break;
                         case "IsLocal":
-                            i.IsLocal = bool.Parse(field.Value);
+                            i.IsLocal = ((DTFieldAtomicBoolean)field).Value;
                             break;
                         default:
                             break;
@@ -410,12 +419,11 @@ namespace Infocorp.TITA.SilverlightUI
                 }
                  lstIssue.Add(i);
             }
-            grdIncident.ItemsSource = lstIssue;
-            if (grdIncident.Columns.Count != 0)
+            grd_INCIDENT.ItemsSource = lstIssue;
+            if (grd_INCIDENT.Columns.Count != 0)
             {
-                grdIncident.Columns[0].Visibility = Visibility.Collapsed;
+                grd_INCIDENT.Columns[0].Visibility = Visibility.Collapsed;
             }
-            my_issue = list;
             return null;
         }
 
@@ -426,452 +434,207 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-            PnlNew.Children.Clear();
-            PnlNew.Visibility = Visibility.Collapsed;
-            PnlAction.Visibility = Visibility.Collapsed;
-            PnlbtnNuevo.Visibility = Visibility.Visible;
+            PnlForm_INCIDENT.Children.Clear();
+            PnlForm_INCIDENT.Visibility = Visibility.Collapsed;
+            PnlAction_INCIDENT.Visibility = Visibility.Collapsed;
+            PnlForm_INCIDENT.Visibility = Visibility.Visible;
         }
 
         private void BtnNuevo_Click(object sender, RoutedEventArgs e)
         {
-            PnlbtnNuevo.Visibility = Visibility.Collapsed;
-            PnlNew.Visibility = Visibility.Visible;
-            ShowNewPanel();
-            PnlNew.Children.Add(loading);
+            PnlOption_INCIDENT.Visibility = Visibility.Collapsed;
+            PnlForm_INCIDENT.Visibility = Visibility.Visible;
+            PnlForm_INCIDENT.Children.Add(loading);
+            LoadFormsIncedent();
         }
 
-        private void ShowNewPanel()
+        private void LoadFormsIncedent()
         {
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
             ws.GetIssueTemplateCompleted += new EventHandler<GetIssueTemplateCompletedEventArgs>(ws_GetIssueTemplateCompleted);
             ws.GetIssueTemplateAsync();
         }
 
-
         void ws_GetIssueTemplateCompleted(object sender, GetIssueTemplateCompletedEventArgs e)
         {
-            isEdit = false;
-            PnlAction.Visibility = Visibility.Visible;
-            Grid grd = grdIncidents;
-
-            int numCtrl = 0;
-            int row = 0;
-            DTIssue issue = e.Result;
-            my_issue_template = e.Result;
-            grd.ColumnDefinitions.Add(new ColumnDefinition());
-            grd.ColumnDefinitions.Add(new ColumnDefinition());
-
-            foreach (DTField field in issue.Fields)
-            {
-                if (field.Name != "ID")
-                {
-                    Grid nuevo = new Grid();
-                    nuevo.ColumnDefinitions.Add(new ColumnDefinition());
-                    nuevo.ColumnDefinitions.Add(new ColumnDefinition());
-                    nuevo.ColumnDefinitions[0].Width = new GridLength(200);
-                    TextBlock txt = new TextBlock();
-                    numCtrl = numCtrl + 1;
-                    row = row + 1;
-                    switch (field.Type)
-                    {
-                        case Types.Boolean:
-                            
-                            txt.Text = field.Name;
-                            txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
-                          
-                            CheckBox chk = new CheckBox();
-                            chk.SetValue(NameProperty, "chk_" + field.Name);
-                            chk.Width = 40;
-                            chk.SetValue(Grid.ColumnProperty, 1);
-
-                            txt.SetValue(Grid.RowProperty, row);
-                            txt.SetValue(Grid.ColumnProperty, 0);
-
-                            nuevo.Children.Add(txt);
-                            nuevo.Children.Add(chk);
-                            break;
-                        case Types.Choice:
-                            txt.Text = field.Name;
-                            txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
-                            txt.SetValue(Grid.ColumnProperty, 0);
-
-                            ListBox lstbx = new ListBox();
-                            lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
-                            lstbx.Width = 80;
-                            lstbx.ItemsSource = field.Choices;
-                            lstbx.SelectedIndex = -1;
-                            lstbx.SetValue(Grid.ColumnProperty, 1);
-                            
-                            nuevo.Children.Add(txt);
-                            nuevo.Children.Add(lstbx);
-                            break;
-                        case Types.DateTime:
-                            numCtrl = numCtrl + 3;
-                            txt.Text = field.Name;
-                            txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
-                            txt.SetValue(Grid.ColumnProperty, 0);
-
-                            Calendar cal = new Calendar();
-                            cal.SetValue(NameProperty, "cal_" + field.Name);
-                            cal.Width = 280;
-                            cal.Height = 200;
-                            cal.SelectedDate = DateTime.Today;
-                            cal.SetValue(Grid.ColumnProperty, 1);
-                            
-                            nuevo.Children.Add(txt);
-                            nuevo.Children.Add(cal);
-                            break;
-                        default:
-                            txt.Text = field.Name;
-                            txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
-                            txt.SetValue(Grid.ColumnProperty, 0);
-
-                            TextBox bx = new TextBox();
-                            bx.SetValue(NameProperty, "bx_" + field.Name);
-                            bx.Width = 80;
-                            bx.SetValue(Grid.ColumnProperty, 1);
-                            
-                            nuevo.Children.Add(txt);
-                            nuevo.Children.Add(bx);
-                            break;
-                    }
-                    PnlNew.Children.Add(nuevo);
-                }
-            }
-            PnlNew.Children.Remove(loading);
-        }
-
-        
-
-        private void LoadPnlError(DTIssue issue)
-        {
-            isEdit = false;
-            PnlAction.Visibility = Visibility.Visible;
-            Grid grd = grdIncidents;
-
-            int numCtrl = 0;
-            int row = 0;
-            grd.ColumnDefinitions.Add(new ColumnDefinition());
-            grd.ColumnDefinitions.Add(new ColumnDefinition());
-
-            foreach (DTField field in issue.Fields)
-            {
-                if ((field.Name != "ID")&&(field.Name != null))
-                {
-                    Grid nuevo = new Grid();
-                    nuevo.ColumnDefinitions.Add(new ColumnDefinition());
-                    nuevo.ColumnDefinitions.Add(new ColumnDefinition());
-                    nuevo.ColumnDefinitions[0].Width = new GridLength(200);
-                    TextBlock txt = new TextBlock();
-                    numCtrl = numCtrl + 1;
-                    row = row + 1;
-                    switch (field.Type)
-                    {
-                        case Types.Boolean:
-                            
-                            txt.Text = field.Name;
-                            txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
-                          
-                            CheckBox chk = new CheckBox();
-                            chk.SetValue(NameProperty, "chk_" + field.Name);
-                            chk.Width = 40;
-                            chk.IsChecked = (field.Value == "True");
-                            chk.SetValue(Grid.ColumnProperty, 1);
-
-                            txt.SetValue(Grid.RowProperty, row);
-                            txt.SetValue(Grid.ColumnProperty, 0);
-
-                            nuevo.Children.Add(txt);
-                            nuevo.Children.Add(chk);
-                            break;
-                        case Types.Choice:
-                            txt.Text = field.Name;
-                            txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
-                            txt.SetValue(Grid.ColumnProperty, 0);
-
-                            ListBox lstbx = new ListBox();
-                            lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
-                            foreach (DTField field_lst in my_issue_template.Fields)
-                            {
-                                if ((field_lst.Type == Types.Choice) && (field_lst.Name == field.Name))
-                                    lstbx.ItemsSource = field_lst.Choices;
-                            }
-                            lstbx.Width = 80;
-                            lstbx.SelectedIndex = lstbx.Items.IndexOf(field.Value);
-                            lstbx.SelectedIndexWorkaround();
-                            lstbx.SetValue(Grid.ColumnProperty, 1);
-                            
-                            nuevo.Children.Add(txt);
-                            nuevo.Children.Add(lstbx);
-                            break;
-                        case Types.DateTime:
-                            numCtrl = numCtrl + 3;
-                            txt.Text = field.Name;
-                            txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
-                            txt.SetValue(Grid.ColumnProperty, 0);
-
-                            Calendar cal = new Calendar();
-                            cal.SetValue(NameProperty, "cal_" + field.Name);
-                            cal.Width = 280;
-                            cal.Height = 200;
-                            cal.SelectedDate = DateTime.Today;
-                            cal.SelectedDate = Convert.ToDateTime(field.Value);
-                            cal.SetValue(Grid.ColumnProperty, 1);
-                            
-                            nuevo.Children.Add(txt);
-                            nuevo.Children.Add(cal);
-                            break;
-                        default:
-                            txt.Text = field.Name;
-                            txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
-                            txt.SetValue(Grid.ColumnProperty, 0);
-
-                            TextBox bx = new TextBox();
-                            bx.SetValue(NameProperty, "bx_" + field.Name);
-                            bx.Width = 80;
-                            bx.Text = field.Value;
-                            bx.SetValue(Grid.ColumnProperty, 1);
-                            
-                            nuevo.Children.Add(txt);
-                            nuevo.Children.Add(bx);
-                            break;
-                    }
-                    PnlNew.Children.Add(nuevo);
-                }
-            }
-            PnlNew.Children.Remove(loading);
+            PnlAction_INCIDENT.Visibility = Visibility.Visible;
+            item = e.Result;
+            bool ok = LoadForms(Option.INCIDENT, grdForm_INCIDENT, false);
         }
 
         private void BtnAccept_Click(object sender, RoutedEventArgs e)
         {
-            bool error = false;
-            StackPanel cnv = (StackPanel)CanvasIncident.FindName("PnlNew");
-            DTIssue i = my_issue_template;
-
-            DTIssue issue = new DTIssue();
-            issue.Fields = new List<DTField>();
-          
-            foreach (DTField f in i.Fields)
-            {
-                bool addIssue = true;
-                DTField field = new DTField();
-                switch (f.Type)
-                {
-                    case Types.Boolean:
-                        CheckBox info = (CheckBox)cnv.FindName("chk_" + f.Name);
-                        field.Value = info.IsChecked.ToString();
-                        field.Type = f.Type;
-                        field.Name = f.Name;
-                        break;
-                    case Types.Choice:
-                        ListBox lst = (ListBox)cnv.FindName("lstbx_" + f.Name);
-                        if ((f.Required) && (lst.SelectedItem == null))
-                        {
-                            error = true;
-                        }
-                        field.Value = lst.SelectedItem as string;
-                        field.Type = f.Type;
-                        field.Name = f.Name;
-                        break;
-                    case Types.DateTime:
-                        Calendar cal = (Calendar)cnv.FindName("cal_" + f.Name);
-                        if ((f.Required) && (cal.SelectedDate.Value.ToShortDateString().ToString() == ""))
-                        {
-                            error = true;
-                        }
-                        field.Value = cal.SelectedDate.Value.ToShortDateString();
-                        field.Type = f.Type;
-                        field.Name = f.Name;
-                        break;
-                    default:
-                        if (f.Name != "ID")
-                        {
-                            TextBox txt = (TextBox)cnv.FindName("bx_" + f.Name);
-                            if ((f.Required) && (txt.Text.ToString() == ""))
-                            {
-                                field.Value = "Datos incorrectos";
-                                error = true;
-                            }
-                            else 
-                            {
-                                field.Value = txt.Text;
-                            }
-                            field.Type = f.Type;
-                            field.Name = f.Name;
-                        }
-                        else
-                        {
-                            if (isEdit)
-                            {
-                                Issue select_issue = (Issue)grdIncident.SelectedItem;
-                                field.Name = "ID";
-                                field.Value = select_issue.Id.ToString();
-                                field.Type = Types.Integer;
-                            }
-                            else
-                            {
-                                addIssue = false;
-                            }
-                        }
-                
-                        break;
-                }
-                if (addIssue)
-                {
-                    issue.Fields.Add(field);
-                }
-            } 
-            if (error)
-            {
-                PnlNew.Children.Clear();
-                LoadPnlError(issue);
-            }
-            else
+            bool ok = LoadForms(Option.INCIDENT, grdForm_INCIDENT, true);
+            if (ok)
             {
                 if (!isEdit)
                 {
                     WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
                     ws.AddIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_AddIssueCompleted);
-                    ws.AddIssueAsync(issue);
+                    ws.AddIssueAsync(resulItem,url);
                 }
                 else if (isEdit)
                 {
                     WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
                     ws.ModifyIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ModifyIssueCompleted);
-                    ws.ModifyIssueAsync(issue);
+                    ws.ModifyIssueAsync(resulItem,url);
                 }
             }
         }
 
         void ws_ModifyIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) 
         {
-            StackPanel cnv = (StackPanel)CanvasIncident.FindName("PnlNew");
+            string strPnl = "PnlForm_" + Option.INCIDENT;
+            StackPanel cnv = (StackPanel)CanvasIncident.FindName("strPnl");
             cnv.Children.Clear();
-            PnlAction.Visibility = Visibility.Collapsed;
-            PnlbtnNuevo.Visibility = Visibility.Visible;
+            PnlAction_INCIDENT.Visibility = Visibility.Collapsed;
+            PnlOption_INCIDENT.Visibility = Visibility.Visible;
             GetIncidents(); 
         }
 
         void ws_AddIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            StackPanel cnv = (StackPanel)CanvasIncident.FindName("PnlNew");
+            string strPnl = "PnlForm_" + Option.INCIDENT;
+            StackPanel cnv = (StackPanel)CanvasIncident.FindName(strPnl);
             cnv.Children.Clear();
-            PnlAction.Visibility = Visibility.Collapsed;
-            PnlbtnNuevo.Visibility = Visibility.Visible;
+            PnlAction_INCIDENT.Visibility = Visibility.Collapsed;
+            PnlOption_INCIDENT.Visibility = Visibility.Visible;
             GetIncidents();
         }
         
         private void BtnChange_Click(object sender, RoutedEventArgs e)
         {
-            PnlNew.Children.Add(loading);
-            PnlbtnNuevo.Visibility = Visibility.Collapsed;
-            if (my_issue_template == null)
+            string strMy_pnl = "PnlForm_" + Option.INCIDENT;
+            StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
+            my_pnl.Children.Add(loading);
+            PnlOption_INCIDENT.Visibility = Visibility.Collapsed;
+            if (item == null)
             {
                 WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
                 ws.GetIssueTemplateCompleted += new EventHandler<GetIssueTemplateCompletedEventArgs>(ws_GetIssueTemplateCompleted2);
                 ws.GetIssueTemplateAsync();
             }
             else
-            { 
-                LoadChangeFields();
+            {
+                LoadChangeFields(Option.INCIDENT);
             }
-            
+            PnlAction_INCIDENT.Visibility = Visibility.Visible;
         }
 
-        private void LoadChangeFields()
+        private void LoadChangeFields(Option pnl)
         {
-            Issue issue = (Issue)grdIncident.SelectedItem;
+            string strMy_grd = "grd_" + pnl.ToString();
+            DataGrid my_grd = (DataGrid)GridPrincipal.FindName(strMy_grd);
+            /////Cambiar el casteo xa los demas casos wp-tasks//////////////
+            Issue issue = (Issue)my_grd.SelectedItem;
             int id = issue.Id;
-            DTIssue change = new DTIssue();
-            foreach (DTIssue i in my_issue)
+            DTItem change = new DTItem();
+            foreach (DTItem i in lstItem)
             {
                 foreach (DTField f in i.Fields)
                 {
-                    if ((f.Name == "ID") && (f.Value == id.ToString()))
+                    if (f.Name == "ID")
                     {
-                        change = i;
+                        if(((DTFieldCounter)f).Value == id)
+                            change = i; 
                     }
                 }
             }
             isEdit = true;
-            ShowPanelforEdit(change);
-            PnlAction.Visibility = Visibility.Visible;
+            string str_grdForm = "grdForm_" + pnl.ToString();
+            Grid grdForm = (Grid)GridPrincipal.FindName(str_grdForm);
+            LoadForms(pnl, grdForm, false);
         }
 
         void ws_GetIssueTemplateCompleted2(object sender, GetIssueTemplateCompletedEventArgs e)
         {
-            my_issue_template = e.Result;
-            LoadChangeFields();
+            item = e.Result;
+            LoadChangeFields(Option.INCIDENT);
         }
 
-        public void ShowPanelforEdit(DTIssue issue) 
+        public void ShowPanelforEdit(DTItem issue) 
         {
-            StackPanel cnv = (StackPanel)CanvasIncident.FindName("PnlNew");
-            Grid grd = grdIncidents;
+        }
+        
+        private void BtnDelete_Action_Click(object sender, RoutedEventArgs e)
+        {
+            Issue issue = (Issue)grd_INCIDENT.SelectedItem;
+            int id = issue.Id;
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.DeleteIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_DeleteIssueCompleted);
+            ws.DeleteIssueAsync(id,url);
+        }
+
+        void ws_DeleteIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            StackPanel cnv = (StackPanel)CanvasIncident.FindName("PnlForm_INCIDENT");
+            cnv.Children.Clear();
+            PnlAction_INCIDENT.Visibility = Visibility.Collapsed;
+            PnlOption_INCIDENT.Visibility = Visibility.Visible;
+            GetIncidents();
+        }
+
+        private bool LoadForms(Option pnl, Grid grd, bool isCheck)
+        {
+            bool ok = true;
+            string strMy_pnl = "PnlForm_" + pnl.ToString();
+            StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
             grd.ColumnDefinitions.Add(new ColumnDefinition());
             grd.ColumnDefinitions.Add(new ColumnDefinition());
 
-            int row = 0;
-            int numCtrl = 0;
-            foreach (DTField field in issue.Fields)
+            if (!isCheck)
             {
-                if (field.Name != "ID" && field.Name != "")
+                int numCtrl = 0;
+                int row = 0;
+
+                foreach (DTField field in item.Fields)
                 {
-                    TextBlock txt = new TextBlock();
-                    numCtrl = numCtrl + 1;
-                    Grid nuevo = new Grid();
-                    nuevo.ColumnDefinitions.Add(new ColumnDefinition());
-                    nuevo.ColumnDefinitions.Add(new ColumnDefinition());
-                    nuevo.ColumnDefinitions[0].Width = new GridLength(200);
-
-                    switch (field.Type)
+                    if (field.Name != "ID")
                     {
-                        case Types.Boolean:
+                        Grid newGrd = new Grid();
+                        newGrd.ColumnDefinitions.Add(new ColumnDefinition());
+                        newGrd.ColumnDefinitions.Add(new ColumnDefinition());
+                        newGrd.ColumnDefinitions[0].Width = new GridLength(200);
+                        TextBlock txt = new TextBlock();
+                        numCtrl = numCtrl + 1;
+                        row = row + 1;
 
+                        if (field is DTFieldAtomicBoolean)
+                        {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
                             txt.Width = 80;
-                            txt.SetValue(Grid.RowProperty, row);
-                            txt.SetValue(Grid.ColumnProperty, 0);
 
                             CheckBox chk = new CheckBox();
                             chk.SetValue(NameProperty, "chk_" + field.Name);
-                            chk.IsChecked = (field.Value == "True");
                             chk.Width = 40;
                             chk.SetValue(Grid.ColumnProperty, 1);
 
-                            nuevo.Children.Add(txt);
-                            nuevo.Children.Add(chk);
-                            break;
-                        case Types.Choice:
+                            txt.SetValue(Grid.RowProperty, row);
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(chk);
+                        }
+                        else if (field is DTFieldChoice)
+                        {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
                             txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
 
                             ListBox lstbx = new ListBox();
                             lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
-                            foreach (DTField field_lst in my_issue_template.Fields)
-                            {
-                                if((field_lst.Type == Types.Choice) && (field_lst.Name == field.Name))
-                                    lstbx.ItemsSource = field_lst.Choices;
-                            }
-                            lstbx.SelectedIndex = lstbx.Items.IndexOf(field.Value);
-                            lstbx.SelectedIndexWorkaround();
                             lstbx.Width = 80;
+                            lstbx.ItemsSource = ((DTFieldChoice)field).Choices;
+                            lstbx.SelectedIndex = -1;
                             lstbx.SetValue(Grid.ColumnProperty, 1);
 
-                            nuevo.Children.Add(txt);
-                            nuevo.Children.Add(lstbx);
-                            break;
-                        case Types.DateTime:
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(lstbx);
+                        }
+                        else if (field is DTFieldAtomicDateTime)
+                        {
                             numCtrl = numCtrl + 3;
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
@@ -882,13 +645,63 @@ namespace Infocorp.TITA.SilverlightUI
                             cal.SetValue(NameProperty, "cal_" + field.Name);
                             cal.Width = 280;
                             cal.Height = 200;
-                            cal.SelectedDate = Convert.ToDateTime(field.Value);
+                            cal.SelectedDate = DateTime.Today;
                             cal.SetValue(Grid.ColumnProperty, 1);
 
-                            nuevo.Children.Add(txt);
-                            nuevo.Children.Add(cal);
-                            break;
-                        default:
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(cal);
+                        }
+                        else if (field is DTFieldAtomicNote)
+                        {
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            TextBox nt = new TextBox();
+                            nt.SetValue(NameProperty, "nt_" + field.Name);
+                            nt.Width = 300;
+                            nt.Height = 100;
+                            nt.TextWrapping = TextWrapping.Wrap;
+                            nt.SetValue(Grid.ColumnProperty, 1);
+
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(nt);
+                        }
+                        else if (field is DTFieldAtomicNumber)
+                        {
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            TextBox num = new TextBox();
+                            num.SetValue(NameProperty, "num_" + field.Name);
+                            num.Width = 80;
+                            num.TextWrapping = TextWrapping.Wrap;
+                            num.SetValue(Grid.ColumnProperty, 1);
+
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(num);
+                        }
+                        else if (field is DTFieldCounter)
+                        {
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            TextBox cnt = new TextBox();
+                            cnt.SetValue(NameProperty, "cnt_" + field.Name);
+                            cnt.Width = 80;
+                            cnt.TextWrapping = TextWrapping.Wrap;
+                            cnt.SetValue(Grid.ColumnProperty, 1);
+
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(cnt);
+                        }
+                        else
+                        {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
                             txt.Width = 80;
@@ -896,36 +709,122 @@ namespace Infocorp.TITA.SilverlightUI
 
                             TextBox bx = new TextBox();
                             bx.SetValue(NameProperty, "bx_" + field.Name);
-                            bx.Text = field.Value;
                             bx.Width = 80;
                             bx.SetValue(Grid.ColumnProperty, 1);
 
-                            nuevo.Children.Add(txt);
-                            nuevo.Children.Add(bx);
-                            break;
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(bx);
+                        }
+
+                        my_pnl.Children.Add(newGrd);
                     }
-                    PnlNew.Children.Add(nuevo);
+                }
+                my_pnl.Children.Remove(loading);
+            }
+            else 
+            {
+                resulItem.Fields = new List<DTField>();
+                foreach (DTField field in item.Fields)
+                {
+                    if (field.Name != "ID")
+                    {
+
+                        if (field is DTFieldAtomicBoolean)
+                        {
+                            CheckBox info = (CheckBox)my_pnl.FindName("chk_" + field.Name);
+                            DTFieldAtomicBoolean resultField = new DTFieldAtomicBoolean();
+                            resultField.Value = info.IsChecked.Value;
+                            resultField.Name = field.Name;
+                            resulItem.Fields.Add(resultField);
+                        }
+                        else if (field is DTFieldChoice)
+                        {
+                            ListBox lst = (ListBox)my_pnl.FindName("lstbx_" + field.Name);
+                            if ((field.Required) && (lst.SelectedItem == null))
+                            {
+                                TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
+                                txt.Text = field.Name + "*";
+                                ok = false;
+                            }
+                            DTFieldChoice resultField = new DTFieldChoice();
+                            resultField.Value = lst.SelectedItem.ToString();
+                            resultField.Name = field.Name;
+                            resulItem.Fields.Add(resultField);
+                        }
+                        else if (field is DTFieldAtomicDateTime)
+                        {
+                            Calendar cal = (Calendar)my_pnl.FindName("cal_" + field.Name);
+                            if ((field.Required) && (cal.SelectedDate.Value.ToShortDateString().ToString() == ""))
+                            {
+                                TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
+                                txt.Text = field.Name + "*";
+                                ok = false;
+                            }
+                            DTFieldAtomicDateTime resultField = new DTFieldAtomicDateTime();
+                            resultField.Value = cal.SelectedDate.Value;
+                            resultField.Name = field.Name;
+                            resulItem.Fields.Add(resultField);
+                        }
+                        else if (field is DTFieldAtomicNote)
+                        {
+                            TextBox nt = (TextBox)my_pnl.FindName("nt_" + field.Name);
+                            if ((field.Required) && (nt.Text == ""))
+                            {
+                                TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
+                                txt.Text = field.Name + "*";
+                                ok = false;
+                            }
+                            DTFieldAtomicNote resultField = new DTFieldAtomicNote();
+                            resultField.Value = nt.Text;
+                            resultField.Name = field.Name;
+                            resulItem.Fields.Add(resultField);
+                        }
+                        else if (field is DTFieldAtomicNumber)
+                        {
+                            TextBox num = (TextBox)my_pnl.FindName("num_" + field.Name);
+                            if ((field.Required) && (num.Text == ""))
+                            {
+                                TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
+                                txt.Text = field.Name + "*";
+                                ok = false;
+                            }
+                            DTFieldAtomicNumber resultField = new DTFieldAtomicNumber();
+                            resultField.Value = float.Parse(num.Text.ToString());
+                            resultField.Name = field.Name;
+                            resulItem.Fields.Add(resultField);
+                        }
+                        else if (field is DTFieldCounter)
+                        {
+                            TextBox cnt = (TextBox)my_pnl.FindName("cnt_" + field.Name);
+                            if ((field.Required) && (cnt.Text == ""))
+                            {
+                                TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
+                                txt.Text = field.Name + "*";
+                                ok = false;
+                            }
+                            DTFieldCounter resultField = new DTFieldCounter();
+                            resultField.Value = int.Parse(cnt.Text);
+                            resultField.Name = field.Name;
+                            resulItem.Fields.Add(resultField);
+                        }
+                        else
+                        {
+                            TextBox txt = (TextBox)my_pnl.FindName("bx_" + field.Name);
+                            if ((field.Required) && (txt.Text.ToString() == ""))
+                            {
+                                txt.Text = field.Name + "*";
+                                ok = false;
+                            }
+                            DTFieldAtomicString resultField = new DTFieldAtomicString();
+                            resultField.Value = txt.Text;
+                            resultField.Name = field.Name;
+
+                            resulItem.Fields.Add(resultField);
+                        }
+                    }
                 }
             }
-            PnlNew.Children.Remove(loading);
-        }
-        
-        private void BtnDelete_Action_Click(object sender, RoutedEventArgs e)
-        {
-            Issue issue = (Issue)grdIncident.SelectedItem;
-            int id = issue.Id;
-            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-            ws.DeleteIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_DeleteIssueCompleted);
-            ws.DeleteIssueAsync(id);
-        }
-
-        void ws_DeleteIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-            StackPanel cnv = (StackPanel)CanvasIncident.FindName("PnlNew");
-            cnv.Children.Clear();
-            PnlAction.Visibility = Visibility.Collapsed;
-            PnlbtnNuevo.Visibility = Visibility.Visible;
-            GetIncidents();
+            return ok;
         }
 
         #endregion
