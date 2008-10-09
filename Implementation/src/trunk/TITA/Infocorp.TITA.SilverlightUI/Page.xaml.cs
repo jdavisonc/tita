@@ -615,12 +615,7 @@ namespace Infocorp.TITA.SilverlightUI
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
             grd.ColumnDefinitions.Add(new ColumnDefinition());
             grd.ColumnDefinitions.Add(new ColumnDefinition());
-<<<<<<< .mine
             if (!isCheck && !isEdit)
-=======
-
-            if (!isCheck && !isEdit)
->>>>>>> .r298
             {
                 int numCtrl = 0;
                 int row = 0;
@@ -759,11 +754,7 @@ namespace Infocorp.TITA.SilverlightUI
                 }
                 my_pnl.Children.Remove(loading);
             }
-<<<<<<< .mine
             else if (isCheck)
-=======
-            else if (isCheck && !isEdit)
->>>>>>> .r298
             {
                 resulItem.Fields = new List<DTField>();
                 foreach (DTField field in item.Fields)
