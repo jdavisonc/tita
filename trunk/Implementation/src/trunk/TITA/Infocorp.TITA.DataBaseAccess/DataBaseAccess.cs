@@ -6,24 +6,6 @@ using Infocorp.TITA.DataTypes;
 
 namespace Infocorp.TITA.DataBaseAccess
 {
-   /* public class DataContract
-    {
-        public string idContract;
-        public string site;
-        public string user;
-        public DataContract(string idContract, string site, string user)
-        {
-            this.idContract = idContract;
-            this.site = site;
-            this.user = user;
-        }
-
-    }*/
-
-
-
-
-
 
 
     public class DataBaseAccess
@@ -34,6 +16,9 @@ namespace Infocorp.TITA.DataBaseAccess
             Contract contract = new Contract();
             contract.site = c.Site;
             contract.user = c.UserName;
+            contract.issues_list = c.issuesList;
+            contract.workpackage_list = c.workPackageList;
+            contract.task_list = c.taskList;
             dc.Contracts.InsertOnSubmit(contract);
             dc.SubmitChanges();
 
@@ -68,6 +53,9 @@ namespace Infocorp.TITA.DataBaseAccess
                 dtContract.ContractId = contract.id_contract.ToString();
                 dtContract.Site = contract.site;
                 dtContract.UserName = contract.user;
+                dtContract.issuesList = contract.issues_list;
+                dtContract.workPackageList = contract.workpackage_list;
+                dtContract.taskList = contract.task_list;
                 result.Add(dtContract);
             }
 
@@ -99,6 +87,9 @@ namespace Infocorp.TITA.DataBaseAccess
             {
                 contract.First().site = c.Site;
                 contract.First().user = c.UserName;
+                contract.First().issues_list = c.issuesList;
+                contract.First().workpackage_list = c.workPackageList;
+                contract.First().task_list = c.taskList;
                 dc.SubmitChanges();
             }
         }

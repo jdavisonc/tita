@@ -86,6 +86,12 @@ namespace Infocorp.TITA.DataBaseAccess
 		
 		private string _user;
 		
+		private string _issues_list;
+		
+		private string _workpackage_list;
+		
+		private string _task_list;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -96,6 +102,12 @@ namespace Infocorp.TITA.DataBaseAccess
     partial void OnsiteChanged();
     partial void OnuserChanging(string value);
     partial void OnuserChanged();
+    partial void Onissues_listChanging(string value);
+    partial void Onissues_listChanged();
+    partial void Onworkpackage_listChanging(string value);
+    partial void Onworkpackage_listChanged();
+    partial void Ontask_listChanging(string value);
+    partial void Ontask_listChanged();
     #endregion
 		
 		public Contract()
@@ -159,6 +171,66 @@ namespace Infocorp.TITA.DataBaseAccess
 					this._user = value;
 					this.SendPropertyChanged("user");
 					this.OnuserChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_issues_list", DbType="NChar(40)")]
+		public string issues_list
+		{
+			get
+			{
+				return this._issues_list;
+			}
+			set
+			{
+				if ((this._issues_list != value))
+				{
+					this.Onissues_listChanging(value);
+					this.SendPropertyChanging();
+					this._issues_list = value;
+					this.SendPropertyChanged("issues_list");
+					this.Onissues_listChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_workpackage_list", DbType="NChar(40)")]
+		public string workpackage_list
+		{
+			get
+			{
+				return this._workpackage_list;
+			}
+			set
+			{
+				if ((this._workpackage_list != value))
+				{
+					this.Onworkpackage_listChanging(value);
+					this.SendPropertyChanging();
+					this._workpackage_list = value;
+					this.SendPropertyChanged("workpackage_list");
+					this.Onworkpackage_listChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_task_list", DbType="NChar(40)")]
+		public string task_list
+		{
+			get
+			{
+				return this._task_list;
+			}
+			set
+			{
+				if ((this._task_list != value))
+				{
+					this.Ontask_listChanging(value);
+					this.SendPropertyChanging();
+					this._task_list = value;
+					this.SendPropertyChanged("task_list");
+					this.Ontask_listChanged();
 				}
 			}
 		}

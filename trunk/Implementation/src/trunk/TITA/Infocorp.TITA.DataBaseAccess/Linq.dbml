@@ -6,6 +6,9 @@
       <Column Name="id_contract" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="site" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
       <Column Name="[user]" Member="user" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
+      <Column Name="issues_list" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
+      <Column Name="workpackage_list" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
+      <Column Name="task_list" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>
