@@ -582,7 +582,7 @@ namespace Infocorp.TITA.SilverlightUI
             grd.ColumnDefinitions.Add(new ColumnDefinition());
             grd.ColumnDefinitions.Add(new ColumnDefinition());
 
-            if (!isCheck)
+            if (!isCheck && !isEdit)
             {
                 int numCtrl = 0;
                 int row = 0;
@@ -721,7 +721,7 @@ namespace Infocorp.TITA.SilverlightUI
                 }
                 my_pnl.Children.Remove(loading);
             }
-            else 
+            else if (isCheck && !isEdit)
             {
                 resulItem.Fields = new List<DTField>();
                 foreach (DTField field in item.Fields)
@@ -822,6 +822,149 @@ namespace Infocorp.TITA.SilverlightUI
                             resulItem.Fields.Add(resultField);
                         }
                     }
+                }
+                if (!isCheck && !isEdit)
+                {
+                    int numCtrl = 0;
+                    int row = 0;
+
+                    foreach (DTField field in item.Fields)
+                    {
+                        if (field.Name != "ID")
+                        {
+                            Grid newGrd = new Grid();
+                            newGrd.ColumnDefinitions.Add(new ColumnDefinition());
+                            newGrd.ColumnDefinitions.Add(new ColumnDefinition());
+                            newGrd.ColumnDefinitions[0].Width = new GridLength(200);
+                            TextBlock txt = new TextBlock();
+                            numCtrl = numCtrl + 1;
+                            row = row + 1;
+
+                            if (field is DTFieldAtomicBoolean)
+                            {
+                                txt.Text = field.Name;
+                                txt.SetValue(NameProperty, "txt_" + field.Name);
+                                txt.Width = 80;
+
+                                CheckBox chk = new CheckBox();
+                                chk.SetValue(NameProperty, "chk_" + field.Name);
+                                chk.Width = 40;
+                                chk.SetValue(Grid.ColumnProperty, 1);
+                                chk.IsChecked = ((DTFieldAtomicBoolean)field).Value;
+
+                                txt.SetValue(Grid.RowProperty, row);
+                                txt.SetValue(Grid.ColumnProperty, 0);
+
+                                newGrd.Children.Add(txt);
+                                newGrd.Children.Add(chk);
+                            }
+                            else if (field is DTFieldChoice)
+                            {
+                                txt.Text = field.Name;
+                                txt.SetValue(NameProperty, "txt_" + field.Name);
+                                txt.Width = 80;
+                                txt.SetValue(Grid.ColumnProperty, 0);
+
+                                ListBox lstbx = new ListBox();
+                                lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
+                                lstbx.Width = 80;
+                                lstbx.ItemsSource = ((DTFieldChoice)field).Choices;
+                                //lstbx.SelectedItem = ((DTFieldChoice)field).Value;
+                                lstbx.SetValue(Grid.ColumnProperty, 1);
+
+                                newGrd.Children.Add(txt);
+                                newGrd.Children.Add(lstbx);
+                            }
+                            else if (field is DTFieldAtomicDateTime)
+                            {
+                                numCtrl = numCtrl + 3;
+                                txt.Text = field.Name;
+                                txt.SetValue(NameProperty, "txt_" + field.Name);
+                                txt.Width = 80;
+                                txt.SetValue(Grid.ColumnProperty, 0);
+
+                                Calendar cal = new Calendar();
+                                cal.SetValue(NameProperty, "cal_" + field.Name);
+                                cal.Width = 280;
+                                cal.Height = 200;
+                                cal.SelectedDate = ((DTFieldAtomicDateTime)field).Value;
+                                cal.SetValue(Grid.ColumnProperty, 1);
+
+                                newGrd.Children.Add(txt);
+                                newGrd.Children.Add(cal);
+                            }
+                            else if (field is DTFieldAtomicNote)
+                            {
+                                txt.Text = field.Name;
+                                txt.SetValue(NameProperty, "txt_" + field.Name);
+                                txt.Width = 80;
+                                txt.SetValue(Grid.ColumnProperty, 0);
+
+                                TextBox nt = new TextBox();
+                                nt.SetValue(NameProperty, "nt_" + field.Name);
+                                nt.Width = 300;
+                                nt.Height = 100;
+                                nt.TextWrapping = TextWrapping.Wrap;
+                                nt.Text = ((DTFieldAtomicNote)field).Value;
+                                nt.SetValue(Grid.ColumnProperty, 1);
+
+                                newGrd.Children.Add(txt);
+                                newGrd.Children.Add(nt);
+                            }
+                            else if (field is DTFieldAtomicNumber)
+                            {
+                                txt.Text = field.Name;
+                                txt.SetValue(NameProperty, "txt_" + field.Name);
+                                txt.Width = 80;
+                                txt.SetValue(Grid.ColumnProperty, 0);
+
+                                TextBox num = new TextBox();
+                                num.SetValue(NameProperty, "num_" + field.Name);
+                                num.Width = 80;
+                                num.Text = ((DTFieldAtomicNumber)field).Value.ToString();
+                                num.TextWrapping = TextWrapping.Wrap;
+                                num.SetValue(Grid.ColumnProperty, 1);
+
+                                newGrd.Children.Add(txt);
+                                newGrd.Children.Add(num);
+                            }
+                            else if (field is DTFieldCounter)
+                            {
+                                txt.Text = field.Name;
+                                txt.SetValue(NameProperty, "txt_" + field.Name);
+                                txt.Width = 80;
+                                txt.SetValue(Grid.ColumnProperty, 0);
+
+                                TextBox cnt = new TextBox();
+                                cnt.SetValue(NameProperty, "cnt_" + field.Name);
+                                cnt.Width = 80;
+                                cnt.Text = ((DTFieldCounter)field).Value.ToString();
+                                cnt.TextWrapping = TextWrapping.Wrap;
+                                cnt.SetValue(Grid.ColumnProperty, 1);
+
+                                newGrd.Children.Add(txt);
+                                newGrd.Children.Add(cnt);
+                            }
+                            else
+                            {
+                                txt.Text = field.Name;
+                                txt.SetValue(NameProperty, "txt_" + field.Name);
+                                txt.Width = 80;
+                                txt.SetValue(Grid.ColumnProperty, 0);
+
+                                TextBox bx = new TextBox();
+                                bx.SetValue(NameProperty, "bx_" + field.Name);
+                                bx.Width = 80;
+                                bx.SetValue(Grid.ColumnProperty, 1);
+
+                                newGrd.Children.Add(txt);
+                                newGrd.Children.Add(bx);
+                            }
+
+                            my_pnl.Children.Add(newGrd);
+                        }
+                    }
+                    my_pnl.Children.Remove(loading);
                 }
             }
             return ok;
