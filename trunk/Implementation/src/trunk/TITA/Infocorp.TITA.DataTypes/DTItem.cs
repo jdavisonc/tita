@@ -42,5 +42,15 @@ namespace Infocorp.TITA.DataTypes
             }
             return null;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (this.GetField("ID") != null && (obj as DTItem).GetField("ID") != null)
+            {
+                return (this.GetField("ID") as DTFieldCounter).Value == ((obj as DTItem).GetField("ID") as DTFieldCounter).Value;
+            }
+
+            return false;
+        }
     }
 }
