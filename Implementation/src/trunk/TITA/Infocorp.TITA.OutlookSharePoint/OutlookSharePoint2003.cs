@@ -10,6 +10,8 @@ namespace Infocorp.TITA.OutlookSharePoint
 {
     public class OutlookSharePoint2003: IOutlookSharePoint
     {
+        private const string _listIssues = "Incidentes";
+
         public OutlookSharePoint2003() { }
 
         #region IOutlookSharePoint Members
@@ -24,7 +26,7 @@ namespace Infocorp.TITA.OutlookSharePoint
                     using (SPWeb web = site.OpenWeb())
                     {
                         web.AllowUnsafeUpdates = true;
-                        SPList list = web.Lists["Issues"];
+                        SPList list = web.Lists[_listIssues];
                         SPListItem listItem = list.Items.Add();
                         List<DTField> fieldCollection = issue.Fields;
 
@@ -115,7 +117,7 @@ namespace Infocorp.TITA.OutlookSharePoint
             {
                 using (SPWeb web = site.OpenWeb())
                 {
-                    SPList list = web.Lists["Issues"];
+                    SPList list = web.Lists[_listIssues];
                     SPFieldCollection listFieldsCollection = list.Fields;
                     foreach (SPField field in listFieldsCollection)
 	                {
