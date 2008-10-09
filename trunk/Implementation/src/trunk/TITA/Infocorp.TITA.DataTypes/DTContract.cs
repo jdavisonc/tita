@@ -30,6 +30,27 @@ namespace Infocorp.TITA.DataTypes
             get { return _userName; }
             set { _userName = value; }
         }
+        private string _issuesList;
+        [DataMember]
+        public string issuesList
+        {
+            get { return _issuesList; }
+            set { _issuesList = value; }
+        }
+        private string _workPackageList;
+        [DataMember]
+        public string workPackageList
+        {
+            get { return _workPackageList; }
+            set { _workPackageList = value; }
+        }
+        private string _taskList;
+        [DataMember]
+        public string taskList
+        {
+            get { return _taskList; }
+            set { _taskList = value; }
+        }
 
     }
 }
