@@ -111,7 +111,7 @@ namespace TestSharePoint
                 }*/
                 ISharePoint isp = SharePointUtilities.GetInstance().GetISharePoint();
                 //List<DTItem> col = isp.GetIssues("http://localhost/infocorp");
-                List<DTItem> items = isp.GetIssues(SiteUrl);
+                List<DTItem> items = isp.GetIssues(SiteUrl,"");
             }
 
         }
