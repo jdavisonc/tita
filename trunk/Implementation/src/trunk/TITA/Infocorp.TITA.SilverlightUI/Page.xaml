@@ -20,30 +20,25 @@
         <TextBlock Margin="18,400,0,0"  VerticalAlignment="Top" x:Name="lblPending" Visibility="Collapsed" Width="112" HorizontalAlignment="Left" Height="26"/>
         
         <!--WP--> 
-        <Canvas x:Name="CanvasWP" Margin="138,0,0,0" VerticalAlignment="Top" Visibility="Collapsed">
-            <my:DataGrid x:Name="grdWP" AutoGenerateColumns="True" Width="auto"/>
-        </Canvas>
+        <!--<ScrollViewer Margin="-1,4,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Visible">
+            <StackPanel x:Name="CanvasWP" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
+                <my:DataGrid x:Name="grd_WP" AutoGenerateColumns="True" Width="auto"/>
+                <StackPanel  x:Name="PnlOption_WP" Width="auto" Height="auto" Visibility="Visible" Orientation="Horizontal">
+                    <Button Margin="18,166,0,0"  VerticalAlignment="Top"  Content="Nuevo" Click="BtnNuevoWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoWP"  Background="#FF0B97F9"/>
+                    <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnChangeWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnChangeWP"  Background="#FF0B97F9"/>
+                    <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnDeleteWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDeleteWP"  Background="#FF0B97F9"/>
+                </StackPanel>
+                <StackPanel  x:Name="PnlForm_WP" Width="auto" Height="auto"  Visibility="Visible" HorizontalAlignment="Center">
+                    <Grid x:Name="grdForm_WP" Background="Transparent" VerticalAlignment="Top" Height="auto" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,0,50"/>
+                </StackPanel>   
+                <StackPanel  x:Name="PnlAction_WP" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
+                    <Button  Content="Aceptar" VerticalAlignment="Center" Click="BtnAcceptWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEditActionWP" Background="#FF0B97F9"/>
+                    <Button  Content="Cancelar" VerticalAlignment="Center" Canvas.Left="112" Click="BtnDeleteWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDeleteActionWP" Background="#FF0B97F9" Margin="20,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>-->
 
         <!--CONTRATO -->
-        <!--<Canvas x:Name="pnl_Contrato" Margin="138,0,0,0" VerticalAlignment="Top" Visibility="Collapsed">
-            <my:DataGrid x:Name="lstContratos" AutoGenerateColumns="True" Width="auto"/>
-            <TextBlock x:Name="lblErrorContract" Visibility="Collapsed"/>            
-            <Canvas Margin="138,0,0,0" x:Name="PnlbtnsContrato" Background="White" Width="auto" Visibility="Visible">
-                <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Nuevo" Click="BtnNuevoContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoContrato"  Background="#FF0B97F9"/>
-                <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnModificarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnModificarContrato"  Background="#FF0B97F9"/>
-                <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnEliminarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEliminarContrato"  Background="#FF0B97F9"/>
-            </Canvas>
-            <Canvas x:Name="pnlEditContrato" Visibility="Collapsed" Margin="138,0,0,0" Width="auto" Canvas.Top="100">
-                <TextBlock Text="Nombre:" Width="160" Height="30"/>
-                <TextBox x:Name="txtNombre" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130"/>
-                <TextBlock Text="Url:" Width="160" Height="30" Canvas.Top="50"/>
-                <TextBox x:Name="txtUrl" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130" Canvas.Top="50"/>
-            </Canvas>
-            <Canvas Margin="138,0,0,0" x:Name="PnlActionContrato" Background="White" Width="auto" Visibility="Collapsed" Canvas.Top="400">
-                <Button Margin="18,166,0,0" Content="Aceptar" VerticalAlignment="Top" Click="BtnAceptarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnAceptarContrato" Background="#FF0B97F9"/>
-                <Button Margin="18,166,0,0" Content="Cancelar" VerticalAlignment="Top" Canvas.Left="112" Click="BtnCancelarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnCancelarContrato" Background="#FF0B97F9"/>
-            </Canvas>
-        </Canvas>-->
         <ScrollViewer Margin="-1,4,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Visible">
             <StackPanel x:Name="pnl_Contrato" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
                <my:DataGrid x:Name="lstContratos" AutoGenerateColumns="True" Width="auto"/>
@@ -65,7 +60,6 @@
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
-        
 
         <!--INCIDENTE -->
         <ScrollViewer Margin="-1,4,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Visible">

@@ -508,6 +508,26 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse EndModifyContract(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/GetWorkPackages", ReplyAction="*")]
+        System.IAsyncResult BeginGetWorkPackages(Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesResponse EndGetWorkPackages(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/GetWorkPackageTemplate", ReplyAction="*")]
+        System.IAsyncResult BeginGetWorkPackageTemplate(Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateResponse EndGetWorkPackageTemplate(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/AddWorkPackage", ReplyAction="*")]
+        System.IAsyncResult BeginAddWorkPackage(Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageResponse EndAddWorkPackage(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DeleteWorkPackage", ReplyAction="*")]
+        System.IAsyncResult BeginDeleteWorkPackage(Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageResponse EndDeleteWorkPackage(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ApplyChanges", ReplyAction="*")]
         System.IAsyncResult BeginApplyChanges(Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequest request, System.AsyncCallback callback, object asyncState);
         
@@ -1204,6 +1224,240 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetWorkPackagesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetWorkPackages", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesRequestBody Body;
+        
+        public GetWorkPackagesRequest() {
+        }
+        
+        public GetWorkPackagesRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class GetWorkPackagesRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string url;
+        
+        public GetWorkPackagesRequestBody() {
+        }
+        
+        public GetWorkPackagesRequestBody(string url) {
+            this.url = url;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetWorkPackagesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetWorkPackagesResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesResponseBody Body;
+        
+        public GetWorkPackagesResponse() {
+        }
+        
+        public GetWorkPackagesResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class GetWorkPackagesResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem> GetWorkPackagesResult;
+        
+        public GetWorkPackagesResponseBody() {
+        }
+        
+        public GetWorkPackagesResponseBody(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem> GetWorkPackagesResult) {
+            this.GetWorkPackagesResult = GetWorkPackagesResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetWorkPackageTemplateRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetWorkPackageTemplate", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateRequestBody Body;
+        
+        public GetWorkPackageTemplateRequest() {
+        }
+        
+        public GetWorkPackageTemplateRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class GetWorkPackageTemplateRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string url;
+        
+        public GetWorkPackageTemplateRequestBody() {
+        }
+        
+        public GetWorkPackageTemplateRequestBody(string url) {
+            this.url = url;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetWorkPackageTemplateResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetWorkPackageTemplateResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateResponseBody Body;
+        
+        public GetWorkPackageTemplateResponse() {
+        }
+        
+        public GetWorkPackageTemplateResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class GetWorkPackageTemplateResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem GetWorkPackageTemplateResult;
+        
+        public GetWorkPackageTemplateResponseBody() {
+        }
+        
+        public GetWorkPackageTemplateResponseBody(Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem GetWorkPackageTemplateResult) {
+            this.GetWorkPackageTemplateResult = GetWorkPackageTemplateResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class AddWorkPackageRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="AddWorkPackage", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageRequestBody Body;
+        
+        public AddWorkPackageRequest() {
+        }
+        
+        public AddWorkPackageRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class AddWorkPackageRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem wps;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string url;
+        
+        public AddWorkPackageRequestBody() {
+        }
+        
+        public AddWorkPackageRequestBody(Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem wps, string url) {
+            this.wps = wps;
+            this.url = url;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class AddWorkPackageResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="AddWorkPackageResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageResponseBody Body;
+        
+        public AddWorkPackageResponse() {
+        }
+        
+        public AddWorkPackageResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class AddWorkPackageResponseBody {
+        
+        public AddWorkPackageResponseBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class DeleteWorkPackageRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="DeleteWorkPackage", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageRequestBody Body;
+        
+        public DeleteWorkPackageRequest() {
+        }
+        
+        public DeleteWorkPackageRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class DeleteWorkPackageRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public int wpId;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string url;
+        
+        public DeleteWorkPackageRequestBody() {
+        }
+        
+        public DeleteWorkPackageRequestBody(int wpId, string url) {
+            this.wpId = wpId;
+            this.url = url;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class DeleteWorkPackageResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="DeleteWorkPackageResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageResponseBody Body;
+        
+        public DeleteWorkPackageResponse() {
+        }
+        
+        public DeleteWorkPackageResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class DeleteWorkPackageResponseBody {
+        
+        public DeleteWorkPackageResponseBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class ApplyChangesRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="ApplyChanges", Namespace="http://tempuri.org/", Order=0)]
@@ -1409,6 +1663,42 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
+    public partial class GetWorkPackagesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetWorkPackagesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    public partial class GetWorkPackageTemplateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetWorkPackageTemplateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
     public partial class HasPendingChangesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -1507,6 +1797,30 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         private System.Threading.SendOrPostCallback onModifyContractCompletedDelegate;
         
+        private BeginOperationDelegate onBeginGetWorkPackagesDelegate;
+        
+        private EndOperationDelegate onEndGetWorkPackagesDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetWorkPackagesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetWorkPackageTemplateDelegate;
+        
+        private EndOperationDelegate onEndGetWorkPackageTemplateDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetWorkPackageTemplateCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginAddWorkPackageDelegate;
+        
+        private EndOperationDelegate onEndAddWorkPackageDelegate;
+        
+        private System.Threading.SendOrPostCallback onAddWorkPackageCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginDeleteWorkPackageDelegate;
+        
+        private EndOperationDelegate onEndDeleteWorkPackageDelegate;
+        
+        private System.Threading.SendOrPostCallback onDeleteWorkPackageCompletedDelegate;
+        
         private BeginOperationDelegate onBeginApplyChangesDelegate;
         
         private EndOperationDelegate onEndApplyChangesDelegate;
@@ -1575,6 +1889,14 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         public event System.EventHandler<GetContractSiteCompletedEventArgs> GetContractSiteCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ModifyContractCompleted;
+        
+        public event System.EventHandler<GetWorkPackagesCompletedEventArgs> GetWorkPackagesCompleted;
+        
+        public event System.EventHandler<GetWorkPackageTemplateCompletedEventArgs> GetWorkPackageTemplateCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddWorkPackageCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DeleteWorkPackageCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ApplyChangesCompleted;
         
@@ -2303,6 +2625,232 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
                         contract}, this.onEndModifyContractDelegate, this.onModifyContractCompletedDelegate, userState);
         }
         
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginGetWorkPackages(Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetWorkPackages(request, callback, asyncState);
+        }
+        
+        private System.IAsyncResult BeginGetWorkPackages(string url, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesRequestBody();
+            inValue.Body.url = url;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginGetWorkPackages(inValue, callback, asyncState);
+        }
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndGetWorkPackages(System.IAsyncResult result) {
+            return base.Channel.EndGetWorkPackages(result);
+        }
+        
+        private System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem> EndGetWorkPackages(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndGetWorkPackages(result);
+            return retVal.Body.GetWorkPackagesResult;
+        }
+        
+        private System.IAsyncResult OnBeginGetWorkPackages(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string url = ((string)(inValues[0]));
+            return this.BeginGetWorkPackages(url, callback, asyncState);
+        }
+        
+        private object[] OnEndGetWorkPackages(System.IAsyncResult result) {
+            System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem> retVal = this.EndGetWorkPackages(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetWorkPackagesCompleted(object state) {
+            if ((this.GetWorkPackagesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetWorkPackagesCompleted(this, new GetWorkPackagesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetWorkPackagesAsync(string url) {
+            this.GetWorkPackagesAsync(url, null);
+        }
+        
+        public void GetWorkPackagesAsync(string url, object userState) {
+            if ((this.onBeginGetWorkPackagesDelegate == null)) {
+                this.onBeginGetWorkPackagesDelegate = new BeginOperationDelegate(this.OnBeginGetWorkPackages);
+            }
+            if ((this.onEndGetWorkPackagesDelegate == null)) {
+                this.onEndGetWorkPackagesDelegate = new EndOperationDelegate(this.OnEndGetWorkPackages);
+            }
+            if ((this.onGetWorkPackagesCompletedDelegate == null)) {
+                this.onGetWorkPackagesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetWorkPackagesCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetWorkPackagesDelegate, new object[] {
+                        url}, this.onEndGetWorkPackagesDelegate, this.onGetWorkPackagesCompletedDelegate, userState);
+        }
+        
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginGetWorkPackageTemplate(Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetWorkPackageTemplate(request, callback, asyncState);
+        }
+        
+        private System.IAsyncResult BeginGetWorkPackageTemplate(string url, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateRequestBody();
+            inValue.Body.url = url;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginGetWorkPackageTemplate(inValue, callback, asyncState);
+        }
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndGetWorkPackageTemplate(System.IAsyncResult result) {
+            return base.Channel.EndGetWorkPackageTemplate(result);
+        }
+        
+        private Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem EndGetWorkPackageTemplate(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndGetWorkPackageTemplate(result);
+            return retVal.Body.GetWorkPackageTemplateResult;
+        }
+        
+        private System.IAsyncResult OnBeginGetWorkPackageTemplate(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string url = ((string)(inValues[0]));
+            return this.BeginGetWorkPackageTemplate(url, callback, asyncState);
+        }
+        
+        private object[] OnEndGetWorkPackageTemplate(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem retVal = this.EndGetWorkPackageTemplate(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetWorkPackageTemplateCompleted(object state) {
+            if ((this.GetWorkPackageTemplateCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetWorkPackageTemplateCompleted(this, new GetWorkPackageTemplateCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetWorkPackageTemplateAsync(string url) {
+            this.GetWorkPackageTemplateAsync(url, null);
+        }
+        
+        public void GetWorkPackageTemplateAsync(string url, object userState) {
+            if ((this.onBeginGetWorkPackageTemplateDelegate == null)) {
+                this.onBeginGetWorkPackageTemplateDelegate = new BeginOperationDelegate(this.OnBeginGetWorkPackageTemplate);
+            }
+            if ((this.onEndGetWorkPackageTemplateDelegate == null)) {
+                this.onEndGetWorkPackageTemplateDelegate = new EndOperationDelegate(this.OnEndGetWorkPackageTemplate);
+            }
+            if ((this.onGetWorkPackageTemplateCompletedDelegate == null)) {
+                this.onGetWorkPackageTemplateCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetWorkPackageTemplateCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetWorkPackageTemplateDelegate, new object[] {
+                        url}, this.onEndGetWorkPackageTemplateDelegate, this.onGetWorkPackageTemplateCompletedDelegate, userState);
+        }
+        
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginAddWorkPackage(Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAddWorkPackage(request, callback, asyncState);
+        }
+        
+        private System.IAsyncResult BeginAddWorkPackage(Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem wps, string url, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageRequestBody();
+            inValue.Body.wps = wps;
+            inValue.Body.url = url;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginAddWorkPackage(inValue, callback, asyncState);
+        }
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndAddWorkPackage(System.IAsyncResult result) {
+            return base.Channel.EndAddWorkPackage(result);
+        }
+        
+        private void EndAddWorkPackage(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndAddWorkPackage(result);
+        }
+        
+        private System.IAsyncResult OnBeginAddWorkPackage(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem wps = ((Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem)(inValues[0]));
+            string url = ((string)(inValues[1]));
+            return this.BeginAddWorkPackage(wps, url, callback, asyncState);
+        }
+        
+        private object[] OnEndAddWorkPackage(System.IAsyncResult result) {
+            this.EndAddWorkPackage(result);
+            return null;
+        }
+        
+        private void OnAddWorkPackageCompleted(object state) {
+            if ((this.AddWorkPackageCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.AddWorkPackageCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void AddWorkPackageAsync(Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem wps, string url) {
+            this.AddWorkPackageAsync(wps, url, null);
+        }
+        
+        public void AddWorkPackageAsync(Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem wps, string url, object userState) {
+            if ((this.onBeginAddWorkPackageDelegate == null)) {
+                this.onBeginAddWorkPackageDelegate = new BeginOperationDelegate(this.OnBeginAddWorkPackage);
+            }
+            if ((this.onEndAddWorkPackageDelegate == null)) {
+                this.onEndAddWorkPackageDelegate = new EndOperationDelegate(this.OnEndAddWorkPackage);
+            }
+            if ((this.onAddWorkPackageCompletedDelegate == null)) {
+                this.onAddWorkPackageCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAddWorkPackageCompleted);
+            }
+            base.InvokeAsync(this.onBeginAddWorkPackageDelegate, new object[] {
+                        wps,
+                        url}, this.onEndAddWorkPackageDelegate, this.onAddWorkPackageCompletedDelegate, userState);
+        }
+        
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginDeleteWorkPackage(Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginDeleteWorkPackage(request, callback, asyncState);
+        }
+        
+        private System.IAsyncResult BeginDeleteWorkPackage(int wpId, string url, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageRequestBody();
+            inValue.Body.wpId = wpId;
+            inValue.Body.url = url;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginDeleteWorkPackage(inValue, callback, asyncState);
+        }
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndDeleteWorkPackage(System.IAsyncResult result) {
+            return base.Channel.EndDeleteWorkPackage(result);
+        }
+        
+        private void EndDeleteWorkPackage(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndDeleteWorkPackage(result);
+        }
+        
+        private System.IAsyncResult OnBeginDeleteWorkPackage(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int wpId = ((int)(inValues[0]));
+            string url = ((string)(inValues[1]));
+            return this.BeginDeleteWorkPackage(wpId, url, callback, asyncState);
+        }
+        
+        private object[] OnEndDeleteWorkPackage(System.IAsyncResult result) {
+            this.EndDeleteWorkPackage(result);
+            return null;
+        }
+        
+        private void OnDeleteWorkPackageCompleted(object state) {
+            if ((this.DeleteWorkPackageCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.DeleteWorkPackageCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void DeleteWorkPackageAsync(int wpId, string url) {
+            this.DeleteWorkPackageAsync(wpId, url, null);
+        }
+        
+        public void DeleteWorkPackageAsync(int wpId, string url, object userState) {
+            if ((this.onBeginDeleteWorkPackageDelegate == null)) {
+                this.onBeginDeleteWorkPackageDelegate = new BeginOperationDelegate(this.OnBeginDeleteWorkPackage);
+            }
+            if ((this.onEndDeleteWorkPackageDelegate == null)) {
+                this.onEndDeleteWorkPackageDelegate = new EndOperationDelegate(this.OnEndDeleteWorkPackage);
+            }
+            if ((this.onDeleteWorkPackageCompletedDelegate == null)) {
+                this.onDeleteWorkPackageCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnDeleteWorkPackageCompleted);
+            }
+            base.InvokeAsync(this.onBeginDeleteWorkPackageDelegate, new object[] {
+                        wpId,
+                        url}, this.onEndDeleteWorkPackageDelegate, this.onDeleteWorkPackageCompletedDelegate, userState);
+        }
+        
         System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginApplyChanges(Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequest request, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginApplyChanges(request, callback, asyncState);
         }
@@ -2654,6 +3202,58 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             public Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse EndModifyContract(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse)(base.EndInvoke("ModifyContract", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetWorkPackages(Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("GetWorkPackages", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesResponse EndGetWorkPackages(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesResponse)(base.EndInvoke("GetWorkPackages", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetWorkPackageTemplate(Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("GetWorkPackageTemplate", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateResponse EndGetWorkPackageTemplate(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateResponse)(base.EndInvoke("GetWorkPackageTemplate", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginAddWorkPackage(Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("AddWorkPackage", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageResponse EndAddWorkPackage(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageResponse)(base.EndInvoke("AddWorkPackage", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginDeleteWorkPackage(Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("DeleteWorkPackage", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageResponse EndDeleteWorkPackage(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageResponse)(base.EndInvoke("DeleteWorkPackage", _args, result)));
                 return _result;
             }
             
