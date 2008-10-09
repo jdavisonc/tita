@@ -279,7 +279,7 @@ namespace Infocorp.TITA.SharePointUtilities
                         List<DTAttachment> attachmentCollectionIssue;
                         foreach (SPListItem item in listItemCollection)
                         {
-                            if (Convert.ToBoolean(item["ows_IsCurrent"]))
+                            if (Convert.ToBoolean(item["IsCurrent"]))
                             {
                                 List<DTField> fieldCollectionIssue = new List<DTField>(GetFieldsListItem(urlSite, listName));
                                 foreach (DTField field in fieldCollectionIssue)
