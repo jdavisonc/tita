@@ -53,6 +53,7 @@ namespace Infocorp.TITA.SilverlightUI
 
     public partial class Page : UserControl
     {
+
         public enum Option
         {
             WP,
@@ -82,12 +83,12 @@ namespace Infocorp.TITA.SilverlightUI
         {
             CanvasIncident.Visibility = Visibility.Collapsed;
             pnl_Contrato.Visibility = Visibility.Collapsed;
-            CanvasWP.Visibility = Visibility.Collapsed;
+            //CanvasWP.Visibility = Visibility.Collapsed;
             switch (o)
             {
-                case Option.WP:
-                    CanvasWP.Visibility = Visibility.Visible;
-                    break;
+                //case Option.WP:
+                //    CanvasWP.Visibility = Visibility.Visible;
+                //    break;
                 case Option.INCIDENT:
                     CanvasIncident.Visibility = Visibility.Visible;
                     break;
@@ -318,31 +319,58 @@ namespace Infocorp.TITA.SilverlightUI
         
         #region WorkPackage
 
-        //http://localhost:2030/Infocorp.TITA.SilverlightUIWeb/WSTita.asmx
-        //WSTitaReference
+        //private List<DTItem> lstWps = new List<DTItem>();
         private void ButtonWP_Click(object sender, RoutedEventArgs e)
         {
-            EnableOption(Option.WP);
-            GetWPS();
+            //EnableOption(Option.WP);
+            //GetWPS();
         }
 
-        public void GetWPS() 
-        {
-            grdWP.Columns.Clear();
-            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-            ws.GetWPSCompleted += new EventHandler<Infocorp.TITA.SilverlightUI.WSTitaReference.GetWPSCompletedEventArgs>(ws_GetWPSCompleted);
-            ws.GetWPSAsync();
-        }
+        //public void GetWPS() 
+        //{
+        //    WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+        //    ws.GetWorkPackagesCompleted += new EventHandler<GetWorkPackagesCompletedEventArgs>(ws_GetWorkPackagesCompleted);
+        //    ws.GetWorkPackagesAsync(url);
+        //}
 
-        void ws_GetWPSCompleted(object sender, Infocorp.TITA.SilverlightUI.WSTitaReference.GetWPSCompletedEventArgs e)
-        {
-            Dispatcher.BeginInvoke(LoadWPS(e.Result));
-        }
+        //void ws_GetWorkPackagesCompleted(object sender, GetWorkPackagesCompletedEventArgs e)
+        //{
+        //    lstWps = e.Result;
+        //    grd_WP.ItemsSource = lstWps;
+        //}
 
-        private Delegate LoadWPS(List<DTItem> list)
-        {
-            return null;
-        }
+        //private void BtnNuevoWP_Click(object sender, RoutedEventArgs e)
+        //{
+        //    PnlOption_WP.Visibility = Visibility.Collapsed;
+        //    PnlForm_WP.Visibility = Visibility.Visible;
+        //    PnlForm_WP.Children.Add(loading);
+        //    LoadFormsWP();
+        //}
+
+        //private void BtnChangeWP_Click(object sender, RoutedEventArgs e)
+        //{
+        //    string strMy_pnl = "PnlForm_" + Option.WP;
+        //    StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
+        //    my_pnl.Children.Add(loading);
+        //    PnlOption_WP.Visibility = Visibility.Collapsed;
+        //    if (item == null)
+        //    {
+        //        WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+        //        ws.GetWorkPackageTemplateCompleted += new EventHandler<GetWorkPackageTemplateCompletedEventArgs>(ws_GetWorkPackageTemplateCompleted);
+        //        ws.GetWorkPackageTemplateAsync(url);
+        //    }
+        //    else
+        //    {
+        //        LoadChangeFields(Option.WP);
+        //    }
+        //    PnlAction_WP.Visibility = Visibility.Visible;
+        //}
+
+        //void ws_GetWorkPackageTemplateCompleted(object sender, GetWorkPackageTemplateCompletedEventArgs e)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
 
         #endregion
         
@@ -375,46 +403,49 @@ namespace Infocorp.TITA.SilverlightUI
             foreach (DTItem issue in list)
             {
                 i = new Issue();
-                
+
                 foreach (DTField field in issue.Fields)
                 {
-                    switch (field.Name)
+                    if (!field.Hidden)
                     {
-                        case "ID":
-                            i.Id = int.Parse(((DTFieldCounter)field).Value.ToString());
-                            break;
-                        case "Title":
-                            i.Title = ((DTFieldAtomicString)field).Value;
-                            break;
-                        //case "Status":
-                        //    i.Status = ((DTFieldChoice)field).Value;
-                        //    break;
-                        case "Priority":
-                            i.Priority = ((DTFieldChoice)field).Value;
-                            break;
-                        case "Category":
-                            i.Category = ((DTFieldChoice)field).Value;
-                            break;
-                        case "Reported Date":
-                            i.ReportedDate = ((DTFieldAtomicDateTime)field).Value;
-                            break;
-                        case "WP":
-                            i.WP = ((DTFieldChoice)field).Value;
-                            break;
-                        case "Reported by":
-                            i.ReportedBy = ((DTFieldChoice)field).Value;
-                            break;
-                        case "Order":
-                            i.Ord = float.Parse(((DTFieldAtomicNumber)field).Value.ToString());
-                            break;
-                        case "Resolution":
-                            i.Resolution = ((DTFieldAtomicNote)field).Value;
-                            break;
-                        case "IsLocal":
-                            i.IsLocal = ((DTFieldAtomicBoolean)field).Value;
-                            break;
-                        default:
-                            break;
+                        switch (field.Name)
+                        {
+                            case "ID":
+                                i.Id = int.Parse(((DTFieldCounter)field).Value.ToString());
+                                break;
+                            case "Title":
+                                i.Title = ((DTFieldAtomicString)field).Value;
+                                break;
+                            //case "Status":
+                            //    i.Status = ((DTFieldChoice)field).Value;
+                            //    break;
+                            case "Priority":
+                                i.Priority = ((DTFieldChoice)field).Value;
+                                break;
+                            case "Category":
+                                i.Category = ((DTFieldChoice)field).Value;
+                                break;
+                            case "Reported Date":
+                                i.ReportedDate = ((DTFieldAtomicDateTime)field).Value;
+                                break;
+                            case "WP":
+                                i.WP = ((DTFieldChoice)field).Value;
+                                break;
+                            case "Reported by":
+                                i.ReportedBy = ((DTFieldChoice)field).Value;
+                                break;
+                            case "Order":
+                                i.Ord = float.Parse(((DTFieldAtomicNumber)field).Value.ToString());
+                                break;
+                            case "Resolution":
+                                i.Resolution = ((DTFieldAtomicNote)field).Value;
+                                break;
+                            case "IsLocal":
+                                i.IsLocal = ((DTFieldAtomicBoolean)field).Value;
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
                  lstIssue.Add(i);
@@ -484,9 +515,9 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_ModifyIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) 
         {
-            string strPnl = "PnlForm_" + Option.INCIDENT;
-            StackPanel cnv = (StackPanel)CanvasIncident.FindName("strPnl");
-            cnv.Children.Clear();
+            string strMy_pnl = "PnlForm_" + Option.INCIDENT;
+            StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
+            my_pnl.Children.Clear();
             PnlAction_INCIDENT.Visibility = Visibility.Collapsed;
             PnlOption_INCIDENT.Visibility = Visibility.Visible;
             GetIncidents(); 
@@ -535,15 +566,18 @@ namespace Infocorp.TITA.SilverlightUI
                 {
                     if (f.Name == "ID")
                     {
-                        if(((DTFieldCounter)f).Value == id)
-                            change = i; 
+                        if (((DTFieldCounter)f).Value == id)
+                        {
+                            change = i;
+                            item = change;
+                        }
                     }
                 }
             }
             isEdit = true;
             string str_grdForm = "grdForm_" + pnl.ToString();
             Grid grdForm = (Grid)GridPrincipal.FindName(str_grdForm);
-            LoadForms(pnl, grdForm, false);
+            bool ok = LoadForms(pnl, grdForm, false);
         }
 
         void ws_GetIssueTemplateCompleted2(object sender, GetIssueTemplateCompletedEventArgs e)
@@ -581,15 +615,19 @@ namespace Infocorp.TITA.SilverlightUI
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
             grd.ColumnDefinitions.Add(new ColumnDefinition());
             grd.ColumnDefinitions.Add(new ColumnDefinition());
+<<<<<<< .mine
+            if (!isCheck && !isEdit)
+=======
 
             if (!isCheck && !isEdit)
+>>>>>>> .r298
             {
                 int numCtrl = 0;
                 int row = 0;
 
                 foreach (DTField field in item.Fields)
                 {
-                    if (field.Name != "ID")
+                    if (field.Name != "ID" && !field.IsReadOnly && !field.Hidden)
                     {
                         Grid newGrd = new Grid();
                         newGrd.ColumnDefinitions.Add(new ColumnDefinition());
@@ -700,7 +738,7 @@ namespace Infocorp.TITA.SilverlightUI
                             newGrd.Children.Add(txt);
                             newGrd.Children.Add(cnt);
                         }
-                        else
+                        else 
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
@@ -721,12 +759,16 @@ namespace Infocorp.TITA.SilverlightUI
                 }
                 my_pnl.Children.Remove(loading);
             }
+<<<<<<< .mine
+            else if (isCheck)
+=======
             else if (isCheck && !isEdit)
+>>>>>>> .r298
             {
                 resulItem.Fields = new List<DTField>();
                 foreach (DTField field in item.Fields)
                 {
-                    if (field.Name != "ID")
+                    if (field.Name != "ID" && !field.Hidden && !field.IsReadOnly)
                     {
 
                         if (field is DTFieldAtomicBoolean)
@@ -966,6 +1008,152 @@ namespace Infocorp.TITA.SilverlightUI
                     }
                     my_pnl.Children.Remove(loading);
                 }
+            }
+            else if (isEdit && !isCheck)
+            {
+                int numCtrl = 0;
+                int row = 0;
+
+                foreach (DTField field in item.Fields)
+                {
+                    if (field.Name != "ID" && !field.IsReadOnly && !field.Hidden)
+                    {
+                        Grid newGrd = new Grid();
+                        newGrd.ColumnDefinitions.Add(new ColumnDefinition());
+                        newGrd.ColumnDefinitions.Add(new ColumnDefinition());
+                        newGrd.ColumnDefinitions[0].Width = new GridLength(200);
+                        TextBlock txt = new TextBlock();
+                        numCtrl = numCtrl + 1;
+                        row = row + 1;
+
+                        if (field is DTFieldAtomicBoolean)
+                        {
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+
+                            CheckBox chk = new CheckBox();
+                            chk.SetValue(NameProperty, "chk_" + field.Name);
+                            chk.IsChecked = ((DTFieldAtomicBoolean)field).Value;
+                            chk.Width = 40;
+                            chk.SetValue(Grid.ColumnProperty, 1);
+
+                            txt.SetValue(Grid.RowProperty, row);
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(chk);
+                        }
+                        else if (field is DTFieldChoice)
+                        {
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            ListBox lstbx = new ListBox();
+                            lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
+                            //lstbx.SelectedItem = ((DTFieldChoice)field).Value;
+                            lstbx.Width = 80;
+                            lstbx.ItemsSource = ((DTFieldChoice)field).Choices;
+                            lstbx.SelectedIndex = -1;
+                            lstbx.SetValue(Grid.ColumnProperty, 1);
+
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(lstbx);
+                        }
+                        else if (field is DTFieldAtomicDateTime)
+                        {
+                            numCtrl = numCtrl + 3;
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            Calendar cal = new Calendar();
+                            cal.SetValue(NameProperty, "cal_" + field.Name);
+                            cal.Width = 280;
+                            cal.Height = 200;
+                            cal.SelectedDate = DateTime.Today;
+                            cal.SelectedDate = ((DTFieldAtomicDateTime)field).Value;
+                            cal.SetValue(Grid.ColumnProperty, 1);
+
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(cal);
+                        }
+                        else if (field is DTFieldAtomicNote)
+                        {
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            TextBox nt = new TextBox();
+                            nt.SetValue(NameProperty, "nt_" + field.Name);
+                            nt.Text = ((DTFieldAtomicNote)field).Value;
+                            nt.Width = 300;
+                            nt.Height = 100;
+                            nt.TextWrapping = TextWrapping.Wrap;
+                            nt.SetValue(Grid.ColumnProperty, 1);
+
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(nt);
+                        }
+                        else if (field is DTFieldAtomicNumber)
+                        {
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            TextBox num = new TextBox();
+                            num.SetValue(NameProperty, "num_" + field.Name);
+                            num.Text = ((DTFieldAtomicNumber)field).Value.ToString();
+                            num.Width = 80;
+                            num.TextWrapping = TextWrapping.Wrap;
+                            num.SetValue(Grid.ColumnProperty, 1);
+
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(num);
+                        }
+                        else if (field is DTFieldCounter)
+                        {
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            TextBox cnt = new TextBox();
+                            cnt.SetValue(NameProperty, "cnt_" + field.Name);
+                            cnt.Text = ((DTFieldCounter)field).Value.ToString();
+                            cnt.Width = 80;
+                            cnt.TextWrapping = TextWrapping.Wrap;
+                            cnt.SetValue(Grid.ColumnProperty, 1);
+
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(cnt);
+                        }
+                        else 
+                        {
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            TextBox bx = new TextBox();
+                            bx.SetValue(NameProperty, "bx_" + field.Name);
+                            bx.Text = ((DTFieldAtomicString)field).Value;
+                            bx.Width = 80;
+                            bx.SetValue(Grid.ColumnProperty, 1);
+
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(bx);
+                        }
+
+                        my_pnl.Children.Add(newGrd);
+                    }
+                }
+                my_pnl.Children.Remove(loading);
             }
             return ok;
         }

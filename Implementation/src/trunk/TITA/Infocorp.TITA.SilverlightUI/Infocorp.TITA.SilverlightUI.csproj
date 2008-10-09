@@ -104,6 +104,9 @@
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -111,6 +114,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteIssueResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteWorkPackageResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.ExtendedDTSResponse.datasource">
@@ -128,6 +134,12 @@
     <None Include="Service References\WSTitaReference\configuration91.svcinfo" />
     <None Include="Service References\WSTitaReference\configuration.svcinfo" />
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssueTemplateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackageTemplateResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.GetWPSResponse.datasource">

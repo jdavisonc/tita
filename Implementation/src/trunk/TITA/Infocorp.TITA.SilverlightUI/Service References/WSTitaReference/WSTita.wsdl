@@ -278,6 +278,56 @@
       <s:element name="ModifyContractResponse">
         <s:complexType />
       </s:element>
+      <s:element name="GetWorkPackages">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWorkPackagesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetWorkPackagesResult" type="tns:ArrayOfDTItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWorkPackageTemplate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWorkPackageTemplateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetWorkPackageTemplateResult" type="tns:DTItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddWorkPackage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wps" type="tns:DTItem" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddWorkPackageResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteWorkPackage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="wpId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteWorkPackageResponse">
+        <s:complexType />
+      </s:element>
       <s:element name="ApplyChanges">
         <s:complexType>
           <s:sequence>
@@ -382,6 +432,30 @@
   <wsdl:message name="ModifyContractSoapOut">
     <wsdl:part name="parameters" element="tns:ModifyContractResponse" />
   </wsdl:message>
+  <wsdl:message name="GetWorkPackagesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetWorkPackages" />
+  </wsdl:message>
+  <wsdl:message name="GetWorkPackagesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetWorkPackagesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetWorkPackageTemplateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetWorkPackageTemplate" />
+  </wsdl:message>
+  <wsdl:message name="GetWorkPackageTemplateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetWorkPackageTemplateResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddWorkPackageSoapIn">
+    <wsdl:part name="parameters" element="tns:AddWorkPackage" />
+  </wsdl:message>
+  <wsdl:message name="AddWorkPackageSoapOut">
+    <wsdl:part name="parameters" element="tns:AddWorkPackageResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteWorkPackageSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteWorkPackage" />
+  </wsdl:message>
+  <wsdl:message name="DeleteWorkPackageSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteWorkPackageResponse" />
+  </wsdl:message>
   <wsdl:message name="ApplyChangesSoapIn">
     <wsdl:part name="parameters" element="tns:ApplyChanges" />
   </wsdl:message>
@@ -446,6 +520,22 @@
     <wsdl:operation name="ModifyContract">
       <wsdl:input message="tns:ModifyContractSoapIn" />
       <wsdl:output message="tns:ModifyContractSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkPackages">
+      <wsdl:input message="tns:GetWorkPackagesSoapIn" />
+      <wsdl:output message="tns:GetWorkPackagesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkPackageTemplate">
+      <wsdl:input message="tns:GetWorkPackageTemplateSoapIn" />
+      <wsdl:output message="tns:GetWorkPackageTemplateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddWorkPackage">
+      <wsdl:input message="tns:AddWorkPackageSoapIn" />
+      <wsdl:output message="tns:AddWorkPackageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteWorkPackage">
+      <wsdl:input message="tns:DeleteWorkPackageSoapIn" />
+      <wsdl:output message="tns:DeleteWorkPackageSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="ApplyChanges">
       <wsdl:input message="tns:ApplyChangesSoapIn" />
@@ -568,6 +658,42 @@
     </wsdl:operation>
     <wsdl:operation name="ModifyContract">
       <soap:operation soapAction="http://tempuri.org/ModifyContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkPackages">
+      <soap:operation soapAction="http://tempuri.org/GetWorkPackages" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkPackageTemplate">
+      <soap:operation soapAction="http://tempuri.org/GetWorkPackageTemplate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddWorkPackage">
+      <soap:operation soapAction="http://tempuri.org/AddWorkPackage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteWorkPackage">
+      <soap:operation soapAction="http://tempuri.org/DeleteWorkPackage" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -706,6 +832,42 @@
     </wsdl:operation>
     <wsdl:operation name="ModifyContract">
       <soap12:operation soapAction="http://tempuri.org/ModifyContract" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkPackages">
+      <soap12:operation soapAction="http://tempuri.org/GetWorkPackages" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkPackageTemplate">
+      <soap12:operation soapAction="http://tempuri.org/GetWorkPackageTemplate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddWorkPackage">
+      <soap12:operation soapAction="http://tempuri.org/AddWorkPackage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteWorkPackage">
+      <soap12:operation soapAction="http://tempuri.org/DeleteWorkPackage" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
