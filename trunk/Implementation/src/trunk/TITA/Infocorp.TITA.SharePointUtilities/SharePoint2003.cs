@@ -4,109 +4,130 @@ using Infocorp.TITA.DataTypes;
 using Microsoft.SharePoint;
 using System.Collections.Specialized;
 using System.Globalization;
+using Infocorp.TITA.DataBaseAccess;
 
 namespace Infocorp.TITA.SharePointUtilities
 {
     public class SharePoint2003:ISharePoint
     {
-        private const string _listIssues = "Issues";
-        private const string _listWorkPackages = "Work Packages";
-        private const string _listTasks = "Tasks";
+
+        private DataBaseAccess.DataBaseAccess _dbAccess = null;
+
+        public SharePoint2003()
+        {
+            _dbAccess = new DataBaseAccess.DataBaseAccess();
+        }
 
         #region ISharePoint Members
 
         #region ABM Issues
 
-        public List<DTItem> GetIssues(string urlSite, string CAMLQuery)
+        public List<DTItem> GetIssues(string idContract, string CAMLQuery)
         {
-            return GetListItems(urlSite, _listIssues, CAMLQuery);
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            return GetListItems(dtContract.Site, dtContract.issuesList, CAMLQuery);
         }
 
-        public List<DTField> GetFieldsIssue(string urlSite)
+        public List<DTField> GetFieldsIssue(string idContract)
         {
-            return GetFieldsListItem(urlSite, _listIssues);
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            return GetFieldsListItem(dtContract.Site, dtContract.issuesList);
         }
 
-        public bool AddIssue(string urlSite, DTItem issue)
+        public bool AddIssue(string idContract, DTItem issue)
         {
-            return UpdateListItem(urlSite, _listIssues, issue, false);
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            return UpdateListItem(dtContract.Site, dtContract.issuesList, issue, false);
         }
 
-        public bool DeleteIssue(string urlSite, int idIssue)
+        public bool DeleteIssue(string idContract, int idIssue)
         {
-            return DeleteListItem(urlSite, _listIssues, idIssue);
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            return DeleteListItem(dtContract.Site, dtContract.issuesList, idIssue);
         }
 
-        public bool UpdateIssue(string urlSite, DTItem issue)
+        public bool UpdateIssue(string idContract, DTItem issue)
         {
-            return UpdateListItem(urlSite, _listIssues, issue, true);
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            return UpdateListItem(dtContract.Site, dtContract.issuesList, issue, true);
         }
 
         #endregion
 
         #region ABM Work Packages
 
-        public List<DTItem> GetWorkPackages(string urlSite, string CAMLQuery)
+        public List<DTItem> GetWorkPackages(string idContract, string CAMLQuery)
         {
-            return GetListItems(urlSite, _listWorkPackages, CAMLQuery);
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            return GetListItems(dtContract.Site, dtContract.workPackageList, CAMLQuery);
         }
 
-        public List<DTField> GetFieldsWorkPackage(string urlSite)
+        public List<DTField> GetFieldsWorkPackage(string idContract)
         {
-            return GetFieldsListItem(urlSite, _listWorkPackages);
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            return GetFieldsListItem(dtContract.Site, dtContract.workPackageList);
         }
 
-        public bool AddWorkPackage(string urlSite, DTItem wp)
+        public bool AddWorkPackage(string idContract, DTItem wp)
         {
-            return UpdateListItem(urlSite, _listWorkPackages, wp, false);
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            return UpdateListItem(dtContract.Site, dtContract.workPackageList, wp, false);
         }
 
-        public bool DeleteWorkPackage(string urlSite, int idWp)
+        public bool DeleteWorkPackage(string idContract, int idWp)
         {
-            return DeleteListItem(urlSite, _listWorkPackages, idWp);
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            return DeleteListItem(dtContract.Site, dtContract.workPackageList, idWp);
         }
 
-        public bool UpdateWorkPackage(string urlSite, DTItem wp)
+        public bool UpdateWorkPackage(string idContract, DTItem wp)
         {
-            return UpdateListItem(urlSite, _listWorkPackages, wp, true);
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            return UpdateListItem(dtContract.Site, dtContract.workPackageList, wp, true);
         }
 
         #endregion
 
         #region ABM Tasks
 
-        public List<DTItem> GetTasks(string urlSite, string CAMLQuery)
+        public List<DTItem> GetTasks(string idContract, string CAMLQuery)
         {
-            return GetListItems(urlSite, _listTasks, CAMLQuery);
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            return GetListItems(dtContract.Site, dtContract.taskList, CAMLQuery);
         }
 
-        public List<DTField> GetFieldsTask(string urlSite)
+        public List<DTField> GetFieldsTask(string idContract)
         {
-            return GetFieldsListItem(urlSite, _listTasks);
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            return GetFieldsListItem(dtContract.Site, dtContract.taskList);
         }
 
-        public bool AddTask(string urlSite, DTItem task)
+        public bool AddTask(string idContract, DTItem task)
         {
-            return UpdateListItem(urlSite, _listTasks, task, false);
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            return UpdateListItem(dtContract.Site, dtContract.taskList, task, false);
         }
 
-        public bool DeleteTask(string urlSite, int idTask)
+        public bool DeleteTask(string idContract, int idTask)
         {
-            return DeleteListItem(urlSite, _listTasks, idTask);
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            return DeleteListItem(dtContract.Site, dtContract.taskList, idTask);
         }
 
-        public bool UpdateTask(string urlSite, DTItem task)
+        public bool UpdateTask(string idContract, DTItem task)
         {
-            return UpdateListItem(urlSite, _listTasks, task, true);
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            return UpdateListItem(dtContract.Site, dtContract.taskList, task, true);
         }
 
         #endregion
 
-        public CultureInfo GetSiteLocale(string urlSite)
+        public CultureInfo GetSiteLocale(string idContract)
         {
             try
             {
-                using (SPSite site = new SPSite(urlSite))
+                DTContract dtContract = _dbAccess.GetContract(idContract);
+                using (SPSite site = new SPSite(dtContract.Site))
                 {
                     using (SPWeb web = site.OpenWeb())
                     {
@@ -378,7 +399,6 @@ namespace Infocorp.TITA.SharePointUtilities
             {
                 result = Convert.ToBoolean(item["IsCurrent"]);
             }
-
             return result;
         }
 
@@ -513,6 +533,8 @@ namespace Infocorp.TITA.SharePointUtilities
             }
             return listLookupChoices;
         }
+
+
 
         #endregion
     }
