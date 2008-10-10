@@ -23,11 +23,11 @@ namespace Infocorp.TITA.SharePointUtilities.Test
         [Test]
         public void UnTest()
         {
-            string siteUrl = "http://localhost/infocorp";
+            string idContract = "2";
             ISharePoint sharepoint = SharePointUtilities.GetInstance().GetISharePoint();
             DTItem issue = new DTItem();
             issue.Attachments = new List<DTAttachment>();
-            issue.Fields = sharepoint.GetFieldsIssue(siteUrl);
+            issue.Fields = sharepoint.GetFieldsIssue(idContract);
             string name = string.Empty;
             foreach (DTField field in issue.Fields)
             {
@@ -41,7 +41,7 @@ namespace Infocorp.TITA.SharePointUtilities.Test
                                 (field as DTFieldAtomicNumber).Value = 0;
                                 break;
                             case DTField.Types.String:
-                                (field as DTFieldAtomicString).Value = "0";
+                                (field as DTFieldAtomicString).Value = "Test Funcional";
                                 break;
                             case DTField.Types.Choice:
                                 (field as DTFieldChoice).Value = (field as DTFieldChoice).Choices.First();
@@ -76,9 +76,9 @@ namespace Infocorp.TITA.SharePointUtilities.Test
             }
             try
             {
-                int originalCount = sharepoint.GetIssues(siteUrl, string.Empty).Count;
-                sharepoint.AddIssue(siteUrl, issue);
-                int newCount = sharepoint.GetIssues(siteUrl, string.Empty).Count;
+                int originalCount = sharepoint.GetIssues(idContract, string.Empty).Count;
+                sharepoint.AddIssue(idContract, issue);
+                int newCount = sharepoint.GetIssues(idContract, string.Empty).Count;
 
                 Assert.AreEqual(originalCount + 1, newCount);
             }
