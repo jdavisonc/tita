@@ -166,9 +166,54 @@ public class WSTita : System.Web.Services.WebService
         witInstance.DeleteWorkPackage(wpId,url);
     }
 
+    [WebMethod]
+    public void ModifyWP(DTItem wp, string url)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.UpdateWorkPackage(wp, url);
+    }
+
+
     #endregion
 
+    #region Task
 
+    [WebMethod]
+    public List<DTItem> GetTasks(string url)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        return witInstance.GetTasks(url);
+    }
+
+    [WebMethod]
+    public DTItem GetTaskTemplate(string url)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        return witInstance.GetTaskTemplate(url);
+    }
+
+    [WebMethod]
+    public void AddTask(DTItem tsk, string url)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.AddTask(tsk, url);
+    }
+
+    [WebMethod]
+    public void DeleteTask(int tskId, string url)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.DeleteTask(tskId, url);
+    }
+
+    [WebMethod]
+    public void ModifyTask(DTItem tsk, string url)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.UpdateTask(tsk, url);
+    }
+
+    #endregion
 
     #region Apply
 
