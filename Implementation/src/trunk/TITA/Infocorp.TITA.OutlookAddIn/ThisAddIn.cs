@@ -14,6 +14,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Infocorp.TITA.WpfOutlookAddin;
+using Microsoft.Office.Interop.Outlook;
 
 
 
@@ -46,10 +47,11 @@ namespace OutlookAddInTitaSoft
             if (Selection.Count > 0)
             {
                 mail = Selection[1] as Outlook.MailItem;
+                Attachments oAttach = mail.Attachments;
                 if (mail != null)
                 {
                     btn = CommandBar.Controls.Add(Office.MsoControlType.msoControlButton, missing, missing, missing, missing) as Office.CommandBarButton;
-                    btn.Caption = "Reportar Incidente";
+                    btn.Caption = "Reportar Incidente_MNU";
                     btn.Click += new Office._CommandBarButtonEvents_ClickEventHandler(btn_Click);
                 }
             }
@@ -270,31 +272,9 @@ namespace OutlookAddInTitaSoft
             //Grid.SetRow(button1, 1);
             #endregion
 
-            //try
-            //{
-            //    //Add all controls to Grid
-            //    newgrid.Children.Add(button1);
-            //    newgrid.Children.Add(label1);
-            //    newgrid.Children.Add(label2);
-            //    newgrid.Children.Add(label3);
-            //    newgrid.Children.Add(label4);
-            //    newgrid.Children.Add(label5);
-            //    newgrid.Children.Add(label6);
-            //    //newgrid.Children.Add(image1);
-            //    newgrid.Children.Add(TextBox1);
-            //    newgrid.Children.Add(TextBox2);
-            //    newgrid.Children.Add(TextBox4);
-            //    newgrid.Children.Add(labelCopyright);
-            //    window.Content = newgrid;
-            //    window.Show();
-            //}
-            //catch (Exception ex)
-            //{
-            //    System.Windows.Forms.MessageBox.Show(ex.Message.ToString());
-            //}
             #endregion
 
-
+            mail = null;
         }
          
         #region Button1 Event NO SE USA
@@ -326,7 +306,34 @@ namespace OutlookAddInTitaSoft
         /// <param name="ctrl">Create WPF Form runtime</param>
         private void buttonOne_Click(Office.CommandBarButton ctrl, ref bool cancel)
         {
-            FormWPFCreate();
+            Outlook.Selection Selection = Application.ActiveExplorer().Selection;
+            if (Selection.Count > 0)
+            {
+                mail = Selection[1] as Outlook.MailItem;
+               
+            }
+            if (mail != null)
+            {
+                string subject = mail.Subject;
+                string filter = @"@SQL=""urn:schemas:httpmail:subject"" like '%" + subject + "%'";
+                Outlook.Table tbl = Application.Session.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderInbox).GetTable(filter, Outlook.OlTableContents.olUserItems);
+                string result = "";
+                while (!tbl.EndOfTable)
+                {
+                    Outlook.Row row = tbl.GetNextRow();
+                    string EntryID = row["EntryID"].ToString();
+                    Outlook.MailItem oMail = (Outlook.MailItem)Application.Session.GetItemFromID(EntryID, Type.Missing);
+                    result += oMail.Subject + " from " + oMail.SenderName + " on " + oMail.SentOn.ToString() + System.Environment.NewLine;// + EntryID.ToString();
+                    // TODO: Actually delete it (oMail.Delete())
+                }
+
+                FormWPFCreate();
+               
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Debe seleccionar un mail");
+            }
         }
         #endregion
 
