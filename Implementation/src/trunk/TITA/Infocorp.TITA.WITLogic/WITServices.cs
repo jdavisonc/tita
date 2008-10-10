@@ -18,6 +18,7 @@ namespace Infocorp.TITA.WITLogic
         public WITServices()
         {
             _sharepoint = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint();
+            _db = new Infocorp.TITA.DataBaseAccess.DataBaseAccess();
         }
 
         public WITServices(DataBaseAccess.DataBaseAccess db, ISharePoint sharepoint)
@@ -241,14 +242,56 @@ namespace Infocorp.TITA.WITLogic
                 switch (command.CommandType)
                 {
                     case CommandType.ADD:
-                        result = spu.AddIssue(siteUrl, command.Item);
+                        switch (command.CommandItemType)
+                        {
+                            case ItemType.ISSUE:
+                                result = spu.AddIssue(siteUrl, command.Item);
+                                break;
+                            case ItemType.TASK:
+                                result = spu.AddTask(siteUrl, command.Item);
+                                break;
+                            case ItemType.WORKPACKAGE:
+                                result = spu.AddWorkPackage(siteUrl, command.Item);
+                                break;
+                            default:
+                                break;
+                        }
+                        
                         break;
                     case CommandType.MODIFY:
-                        result = spu.UpdateIssue(siteUrl, command.Item);
+                        switch (command.CommandItemType)
+                        {
+                            case ItemType.ISSUE:
+                                result = spu.UpdateIssue(siteUrl, command.Item);
+                                break;
+                            case ItemType.TASK:
+                                result = spu.UpdateTask(siteUrl, command.Item);
+                                break;
+                            case ItemType.WORKPACKAGE:
+                                result = spu.UpdateWorkPackage(siteUrl, command.Item);
+                                break;
+                            default:
+                                break;
+                        }
+                        
                         break;
                     case CommandType.DELETE:
                         int issueId = Convert.ToInt32((command.Item.Fields.Find(delegate(DTField f) { return f.Name.ToLower() == "id"; }) as DTFieldCounter).Value);
-                        result = spu.DeleteIssue(siteUrl, issueId);
+                        switch (command.CommandItemType)
+                        {
+                            case ItemType.ISSUE:
+                                result = spu.DeleteIssue(siteUrl, issueId);
+                                break;
+                            case ItemType.TASK:
+                                result = spu.DeleteTask(siteUrl, issueId);
+                                break;
+                            case ItemType.WORKPACKAGE: 
+                                result = spu.DeleteWorkPackage(siteUrl, issueId);
+                                break;
+                            default:
+                                break;
+                        }
+                        
                         break;
                     default:
                         break;
