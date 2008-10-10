@@ -83,22 +83,30 @@ namespace Infocorp.TITA.SilverlightUI
         public void EnableOption(Option o)
         {
             CanvasIncident.Visibility = Visibility.Collapsed;
+            scroll_INCIDENT.Visibility = Visibility.Collapsed;
             pnl_Contrato.Visibility = Visibility.Collapsed;
+            scroll_CONTRACT.Visibility = Visibility.Collapsed;
             CanvasTASK.Visibility = Visibility.Collapsed;
-            //CanvasWP.Visibility = Visibility.Collapsed;
+            scroll_TASK.Visibility = Visibility.Collapsed;
+            CanvasWP.Visibility = Visibility.Collapsed;
+            scroll_WP.Visibility = Visibility.Collapsed;
             switch (o)
             {
-                //case Option.WP:
-                //    CanvasWP.Visibility = Visibility.Visible;
-                //    break;
+                case Option.WP:
+                    CanvasWP.Visibility = Visibility.Visible;
+                    scroll_WP.Visibility = Visibility.Visible;
+                    break;
                 case Option.INCIDENT:
                     CanvasIncident.Visibility = Visibility.Visible;
+                    scroll_INCIDENT.Visibility = Visibility.Visible;
                     break;
                 case Option.CONTRACT:
                     pnl_Contrato.Visibility = Visibility.Visible;
+                    scroll_CONTRACT.Visibility = Visibility.Visible;
                     break;
                 case Option.TASK:
                     CanvasTASK.Visibility = Visibility.Visible;
+                    scroll_TASK.Visibility = Visibility.Visible;
                     break;
                 default:
                     break;
