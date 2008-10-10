@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Infocorp.TITA.DataTypes;
+using Microsoft.Office.Interop.Outlook;
 
 namespace Infocorp.TITA.WpfOutlookAddin
 {
