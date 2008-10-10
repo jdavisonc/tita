@@ -22,6 +22,12 @@ namespace Infocorp.TITA.SilverlightUI.Code
         private double estimation;
         private bool isLocal = false;
 
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
         public String Title
         {
             get { return title; }
@@ -58,12 +64,6 @@ namespace Infocorp.TITA.SilverlightUI.Code
             set { estimation = value; }
         }
 
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
-        
         public bool IsLocal
         {
             get { return isLocal; }
