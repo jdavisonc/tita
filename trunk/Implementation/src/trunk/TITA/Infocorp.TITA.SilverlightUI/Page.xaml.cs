@@ -90,6 +90,12 @@ namespace Infocorp.TITA.SilverlightUI
             scroll_TASK.Visibility = Visibility.Collapsed;
             CanvasWP.Visibility = Visibility.Collapsed;
             scroll_WP.Visibility = Visibility.Collapsed;
+            if (PnlForm_WP.Children != null)
+                PnlForm_WP.Children.Clear();
+            if (PnlForm_INCIDENT.Children != null)
+                PnlForm_INCIDENT.Children.Clear();
+            if (PnlForm_TASK.Children != null)
+                PnlForm_TASK.Children.Clear();
             switch (o)
             {
                 case Option.WP:
@@ -503,7 +509,7 @@ namespace Infocorp.TITA.SilverlightUI
         void ws_AddWorkPackageCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             string strPnl = "PnlForm_" + Option.WP;
-            StackPanel cnv = (StackPanel)CanvasIncident.FindName(strPnl);
+            StackPanel cnv = (StackPanel)CanvasWP.FindName(strPnl);
             cnv.Children.Clear();
             PnlAction_WP.Visibility = Visibility.Collapsed;
             PnlOption_WP.Visibility = Visibility.Visible;
@@ -1274,7 +1280,7 @@ namespace Infocorp.TITA.SilverlightUI
                                 t.AssignedTo = ((DTFieldAtomicString)field).Value;
                                 break;
                             case "Description":
-                                t.Description = ((DTFieldChoice)field).Value;
+                                t.Description = ((DTFieldAtomicNote)field).Value;
                                 break;
                             case "StartDate":
                                 t.StartDate = ((DTFieldAtomicDateTime)field).Value;
