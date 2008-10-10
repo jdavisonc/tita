@@ -167,10 +167,12 @@ namespace Infocorp.TITA.SharePointUtilities
                             listItem = list.Items.Add();
                         }
                         List<DTField> fieldCollection = item.Fields;
+                        #region Foreach DTField
                         foreach (DTField field in fieldCollection)
                         {
                             if (!(field.IsReadOnly || field.Hidden))
                             {
+                                #region Switch
                                 switch (field.GetCustomType())
                                 {
                                     case DTField.Types.Number:
@@ -228,28 +230,31 @@ namespace Infocorp.TITA.SharePointUtilities
                                     default:
                                         break;
                                 }
-
-                                SPAttachmentCollection listItemAttachmentCollection = listItem.Attachments;
-                                List<DTAttachment> attachmentCollection = item.Attachments;
-                                bool condition;
-                                int j;
-                                foreach (var attachment in attachmentCollection)
-                                {
-                                    condition = false;
-                                    j = 0;
-                                    while (!condition && j < listItemAttachmentCollection.Count)
-                                    {
-                                        if (listItemAttachmentCollection[j].CompareTo(attachment.Name) == 0)
-                                            condition = true;
-                                        j++;
-                                    }
-                                    if (!condition && j == listItemAttachmentCollection.Count)
-                                    {
-                                        listItemAttachmentCollection.Add(attachment.Name, attachment.Data);
-                                    }
-                                }
+                                #endregion
                             }
                         }
+                        #region Attachments
+                        SPAttachmentCollection listItemAttachmentCollection = listItem.Attachments;
+                        List<DTAttachment> attachmentCollection = item.Attachments;
+                        bool condition;
+                        int j;
+                        foreach (var attachment in attachmentCollection)
+                        {
+                            condition = false;
+                            j = 0;
+                            while (!condition && j < listItemAttachmentCollection.Count)
+                            {
+                                if (listItemAttachmentCollection[j].CompareTo(attachment.Name) == 0)
+                                    condition = true;
+                                j++;
+                            }
+                            if (!condition && j == listItemAttachmentCollection.Count)
+                            {
+                                listItemAttachmentCollection.Add(attachment.Name, attachment.Data);
+                            }
+                        }
+                        #endregion
+                        #endregion
                         listItem.Update();
                     }
                 }
