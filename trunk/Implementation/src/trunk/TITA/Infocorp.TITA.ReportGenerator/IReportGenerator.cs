@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Infocorp.TITA.SharePointUtilities;
+using Infocorp.TITA.DataTypes;
 
 namespace Infocorp.TITA.ReportGenerator
 {
-    /*interface IReportGenerator
+    public interface IReportGenerator
     {
-        DataReporte ReportDesvWorkPackage(); 
-    }*/
+        List<DTItem> ReportDesvWorkPackage(string urlSite);
+        List<DTItem> IssuesReport(string urlSite);
+    }
 }
