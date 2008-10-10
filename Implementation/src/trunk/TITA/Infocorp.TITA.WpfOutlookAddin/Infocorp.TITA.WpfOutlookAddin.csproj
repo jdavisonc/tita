@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Outlook, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -86,6 +87,7 @@
     <Compile Include="ControllerOutlookSharepoint.cs" />
     <Compile Include="DateHelper.cs" />
     <Compile Include="DatePicker.cs" />
+    <Compile Include="MyMail.cs" />
     <Compile Include="OneWayValueConverters.cs" />
     <Compile Include="DTUrl.cs" />
     <Compile Include="FabricOutlookSP.cs" />

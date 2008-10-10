@@ -9,6 +9,10 @@ using Infocorp.TITA.DataTypes;
 using System.Windows;
 using System.Windows.Controls;
 using AC.AvalonControlsLibrary.Controls;
+using Microsoft.Office.Interop.Outlook;
+
+
+
 
 
 
@@ -21,6 +25,13 @@ namespace Infocorp.TITA.WpfOutlookAddin
         private string _urlContract = string.Empty;
         private Contracts _contract;
         private Window1 _oIssueWindow;
+        private MyMail _mailSelected = null;
+
+
+        public MyMail MailSelected
+        {
+            set { _mailSelected = value; }
+        }
 
         private static HandlerAddIn _instanceHandlerAddIn = null;
 
@@ -150,7 +161,7 @@ namespace Infocorp.TITA.WpfOutlookAddin
                 path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\TITA Soft\\Contracts.xml";
                 doc.Load(path);
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 MessageBox.Show("No se ha podido acceder al archivo Contracts.xml.\n\n" +
                 "Verifique que el archivo se encuentre en " + path, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -186,6 +197,13 @@ namespace Infocorp.TITA.WpfOutlookAddin
             //tomar los valores de la ventana y crear el issue para enviar
             //a Sharepoint
             List<DTAttachment> attachments= new List<DTAttachment>();
+            if (_mailSelected != null)
+            {
+                DTAttachment oAttachToSend = new DTAttachment("mail.txt", _mailSelected.GetByteArrayWithObject());
+                attachments.Add(oAttachToSend);
+            }
+            
+            
             DTItem oIssue = new DTItem(fields, attachments);
             _outlookSP.AddIssue(_urlContract, oIssue);
         }
