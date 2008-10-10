@@ -93,13 +93,26 @@ namespace Infocorp.TITA.DataBaseAccess
                 dc.SubmitChanges();
             }
         }
-        /* public void Update()
-         { 
+        public DTContract GetContract(string idContract)
+        {
+            LinqDataContext dc = new LinqDataContext();
+            DTContract contractData = new DTContract();
+            var contract = from u in dc.Contracts
+                           where u.id_contract == int.Parse(idContract)
+                           select u;
+
+            if (contract.Count() > 0)
+            {
+                contractData.ContractId = idContract;
+                contractData.Site = contract.First().site;
+                contractData.UserName = contract.First().user;
+                contractData.issuesList = contract.First().issues_list;
+                contractData.workPackageList = contract.First().workpackage_list;
+                contractData.taskList = contract.First().task_list;
+                dc.SubmitChanges();
+            }
+            return contractData;
          }
-         public Contract FindContract(string idContract) 
-         { 
-        
-         }*/
 
 
     }
