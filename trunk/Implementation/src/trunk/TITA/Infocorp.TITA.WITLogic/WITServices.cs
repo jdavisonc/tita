@@ -211,7 +211,7 @@ namespace Infocorp.TITA.WITLogic
                 {
                     if (command.CommandType == CommandType.ADD || command.CommandType == CommandType.MODIFY)
                     {
-                        DTFieldAtomicBoolean isLocal = new DTFieldAtomicBoolean("IsLocal", false, true, true, true);
+                        DTFieldAtomicBoolean isLocal = new DTFieldAtomicBoolean("IsLocal", false,false, true, true);
                         command.Item.Fields.Add(isLocal);
                         //Si traigo uno que estoy modificando, devuelvo sólo la modificación
                         if (command.CommandType == CommandType.MODIFY)
