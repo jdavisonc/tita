@@ -275,11 +275,11 @@ namespace Infocorp.TITA.SharePointUtilities
                     using (SPWeb web = site.OpenWeb())
                     {
                         SPList list = web.Lists[listName];
-                        SPListItemCollection listItemCollection = list.GetItems(query);  
+                        SPListItemCollection listItemCollection = list.GetItems(query);
                         List<DTAttachment> attachmentCollectionIssue;
                         foreach (SPListItem item in listItemCollection)
                         {
-                            if (Convert.ToBoolean(item["IsCurrent"]))
+                            if (MustProcessItem(item))
                             {
                                 List<DTField> fieldCollectionIssue = new List<DTField>(GetFieldsListItem(urlSite, listName));
                                 foreach (DTField field in fieldCollectionIssue)
@@ -349,6 +349,7 @@ namespace Infocorp.TITA.SharePointUtilities
                                         }
                                     }
                                 }
+
                                 attachmentCollectionIssue = new List<DTAttachment>();
                                 SPAttachmentCollection attachmentCollection = item.Attachments;
                                 foreach (var attachment in attachmentCollection)
@@ -361,12 +362,24 @@ namespace Infocorp.TITA.SharePointUtilities
                         }
                     }
                 }
+
                 return items;
             }
             catch (Exception e)
             {
                 throw new Exception("Error en GetListItems: " + e.Message);
             }
+        }
+
+        private bool MustProcessItem(SPListItem item)
+        {
+            bool result = true;
+            if (item.Xml.Contains("IsCurrent"))
+            {
+                result = Convert.ToBoolean(item["IsCurrent"]);
+            }
+
+            return result;
         }
 
         private List<DTField> GetFieldsListItem(string urlSite, string listName)
