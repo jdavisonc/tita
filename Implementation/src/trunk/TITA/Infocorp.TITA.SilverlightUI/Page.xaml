@@ -105,6 +105,23 @@
             </StackPanel>
         </ScrollViewer>
         
+        <!--Reportes--> 
+        <!--<ScrollViewer Margin="-1,4,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_REPORTE">
+            <StackPanel x:Name="CanvasREPORTE" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
+                <my:DataGrid x:Name="grd_REPORTE" AutoGenerateColumns="True" Width="auto"/>
+                <StackPanel  x:Name="PnlOption_REPORTE" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal">
+                    <TextBlock Text="Fecha inicial: " x:Name="txt_fechaInicial"></TextBlock>
+                    <my1:Calendar x:Name="cal_inicial"></my1:Calendar>
+                    <TextBlock Text="Fecha final: " x:Name="txt_fechaFinal"></TextBlock>
+                    <my1:Calendar x:Name="cal_final"></my1:Calendar>
+                    <Button  Content="Generar" VerticalAlignment="Center" Canvas.Left="112" Click="BtnGenerarREPORTE_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnGenerarReporte" Background="#FF0B97F9" Margin="20,0,0,0"/>
+                </StackPanel>
+                <StackPanel  x:Name="PnlExportar_REPORTE" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
+                    <Button  Content="Exportar" VerticalAlignment="Center" Click="BtnExportar_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnExportar" Background="#FF0B97F9"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>-->
+        
         <!--Error -->
         <Canvas x:Name="CanvasError" Margin="138,0,0,0" Visibility="Collapsed" VerticalAlignment="Top"> 
             <TextBlock x:Name="lblError"/>

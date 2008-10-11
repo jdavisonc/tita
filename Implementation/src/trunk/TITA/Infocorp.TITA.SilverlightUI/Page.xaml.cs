@@ -82,6 +82,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         public void EnableOption(Option o)
         {
+            isEdit = false;
             CanvasIncident.Visibility = Visibility.Collapsed;
             scroll_INCIDENT.Visibility = Visibility.Collapsed;
             pnl_Contrato.Visibility = Visibility.Collapsed;
@@ -1021,7 +1022,7 @@ namespace Infocorp.TITA.SilverlightUI
                                 ok = false;
                             }
                             DTFieldAtomicNumber resultField = new DTFieldAtomicNumber();
-                            resultField.Value = float.Parse(num.Text.ToString());
+                            resultField.Value = double.Parse(num.Text.ToString());
                             resultField.Name = field.Name;
                             resulItem.Fields.Add(resultField);
                         }
@@ -1422,6 +1423,25 @@ namespace Infocorp.TITA.SilverlightUI
 
         #endregion
 
+        #region Reports
+
+        //private void ButtonRporte_Click(object sender, RoutedEventArgs e) EVENTO DEL MENU
+        //{
+        //    EnableOption(Option.REPORTS);
+        //}
+
+        //private void BtnExportar_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //}
+
+        //private void BtnGenerarREPORTE_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //}
+
+        #endregion
+
         #region Apply
         private void ButtonApply_Click(object sender, RoutedEventArgs e)
         {
@@ -1442,7 +1462,6 @@ namespace Infocorp.TITA.SilverlightUI
             GetIncidents();
         }
         #endregion
-
 
     }
 }
