@@ -12,13 +12,22 @@
         		</LinearGradientBrush>
         	</Rectangle.Fill>
         </Rectangle>
-        <Button Height="26" HorizontalAlignment="Left" Margin="18,102,0,0" VerticalAlignment="Top" Width="112" Click="ButtonContract_Click" Content="Contrato" x:Name="ButtonContract" Background="#FF6FC1F3"/>
+        <!--<Button Height="26" HorizontalAlignment="Left" Margin="18,102,0,0" VerticalAlignment="Top" Width="112" Click="ButtonContract_Click" Content="Contrato" x:Name="ButtonContract" Background="#FF6FC1F3"/>
         <Button HorizontalAlignment="Left" Margin="18,132,0,0" VerticalAlignment="Top" Content="Incidente" Width="112" Height="26" x:Name="ButtonIncident" Click="ButtonIncident_Click" Background="#FF1297F5"/>
         <Button HorizontalAlignment="Left" Margin="18,196,0,184" VerticalAlignment="Top" Content="Reportes" Width="112" Height="26" x:Name="ButtonReports" Background="#FF0994F5"/>
         <Button Margin="18,166,0,0"  VerticalAlignment="Top" Click="ButtonWP_Click" Content="WorkPackage" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonWP" Background="#FF0B97F9"/>
         <Button Margin="18,230,0,0"  VerticalAlignment="Top" Click="ButtonApply_Click" Content="Aplicar" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonApply" Background="#FF0B97F9"/>
         <Button HorizontalAlignment="Left" Margin="18,310,0,0" VerticalAlignment="Top" Content="Task" Width="112" Height="26" x:Name="ButtonTask" Click="ButtonTask_Click" Background="#FF1297F5"/>
-        <TextBlock Margin="18,530,0,0"  VerticalAlignment="Top" x:Name="lblPending" Visibility="Collapsed" Width="112" HorizontalAlignment="Left" Height="26"/>
+        <TextBlock Margin="18,530,0,0"  VerticalAlignment="Top" x:Name="lblPending" Visibility="Collapsed" Width="112" HorizontalAlignment="Left" Height="26"/>-->
+        
+        <Button Height="26" HorizontalAlignment="Left" Margin="18,100,0,0" VerticalAlignment="Top" Width="112" Click="ButtonContract_Click" Content="Contrato" x:Name="ButtonContract" Background="#FF6FC1F3"/>
+        <Button HorizontalAlignment="Left" Margin="18,130,0,0" VerticalAlignment="Top" Content="Incidente" Width="112" Height="26" x:Name="ButtonIncident" Click="ButtonIncident_Click" Background="#FF1297F5"/>
+        <Button Margin="18,160,0,0"  VerticalAlignment="Top" Click="ButtonWP_Click" Content="WorkPackage" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonWP" Background="#FF0B97F9"/>
+        <Button HorizontalAlignment="Left" Margin="18,190,0,0" VerticalAlignment="Top" Content="Tarea" Width="112" Height="26" x:Name="ButtonTask" Click="ButtonTask_Click" Background="#FF1297F5"/>
+        <Button HorizontalAlignment="Left" Margin="18,223,0,0" VerticalAlignment="Top" Content="Reportes" Width="112" Height="26" x:Name="ButtonReports" Background="#FF0994F5"/>
+        <Button Margin="18,285,0,0"  VerticalAlignment="Top" Click="ButtonApply_Click" Content="Aplicar" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonApply" Background="#FF0B97F9"/>
+        
+        <TextBlock Margin="18,350,0,0"  VerticalAlignment="Top" x:Name="lblPending" Visibility="Collapsed" Width="112" HorizontalAlignment="Left" Height="26"/>
         
        <!--WP--> 
         <ScrollViewer Margin="-1,4,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_WP">
