@@ -208,7 +208,7 @@ namespace Infocorp.TITA.WpfOutlookAddin
             List<DTAttachment> attachments= new List<DTAttachment>();
             if (_mailSelected != null)
             {
-                DTAttachment oAttachToSend = new DTAttachment("mail.txt", _mailSelected.GetByteArrayWithObject());
+                DTAttachment oAttachToSend = new DTAttachment("mail.msg", _mailSelected.GetByteArrayWithObject());
                 attachments.Add(oAttachToSend);
             }
             
