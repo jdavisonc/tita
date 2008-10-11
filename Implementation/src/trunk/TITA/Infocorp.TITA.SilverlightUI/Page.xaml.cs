@@ -60,6 +60,7 @@ namespace Infocorp.TITA.SilverlightUI
             INCIDENT,
             CONTRACT,
             TASK,
+            REPORT,
         }
         private string url ="http://localhost/infocorp";
         private DTItem item = new DTItem();
@@ -91,6 +92,7 @@ namespace Infocorp.TITA.SilverlightUI
             scroll_TASK.Visibility = Visibility.Collapsed;
             CanvasWP.Visibility = Visibility.Collapsed;
             scroll_WP.Visibility = Visibility.Collapsed;
+            scroll_REPORT.Visibility = Visibility.Collapsed;
             if (PnlForm_WP.Children != null)
                 PnlForm_WP.Children.Clear();
             if (PnlForm_INCIDENT.Children != null)
@@ -114,6 +116,11 @@ namespace Infocorp.TITA.SilverlightUI
                 case Option.TASK:
                     CanvasTASK.Visibility = Visibility.Visible;
                     scroll_TASK.Visibility = Visibility.Visible;
+                    break;
+                case Option.REPORT:
+                    CanvasREPORT.Visibility = Visibility.Visible;
+                    scroll_REPORT.Visibility = Visibility.Visible;
+                    PnlOption_REPORT.Visibility = Visibility.Visible;
                     break;
                 default:
                     break;
@@ -1425,20 +1432,22 @@ namespace Infocorp.TITA.SilverlightUI
 
         #region Reports
 
-        //private void ButtonRporte_Click(object sender, RoutedEventArgs e) EVENTO DEL MENU
-        //{
-        //    EnableOption(Option.REPORTS);
-        //}
+        private void ButtonRport_Click(object sender, RoutedEventArgs e)
+        {
+            EnableOption(Option.REPORT);
+        }
+
+        private void BtnGenerarREPORT_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         //private void BtnExportar_Click(object sender, RoutedEventArgs e)
         //{
 
         //}
 
-        //private void BtnGenerarREPORTE_Click(object sender, RoutedEventArgs e)
-        //{
 
-        //}
 
         #endregion
 
