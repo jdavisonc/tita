@@ -64,24 +64,24 @@ namespace Infocorp.TITA.WITLogic
             _commands.Remove(command);
         }
 
-        public List<DTCommandInfo> GetCommands(string siteUrl)
+        public List<DTCommandInfo> GetCommands(string contractId)
         {
-            return _commands.FindAll(delegate(DTCommandInfo cinfo) { return cinfo.SiteUrl.ToLower().Trim() == siteUrl.ToLower().Trim(); });
+            return _commands.FindAll(delegate(DTCommandInfo cinfo) { return cinfo.ContractId.ToLower().Trim() == contractId.ToLower().Trim(); });
         }
 
-        public List<DTCommandInfo> GetCommands(ItemType itemType, string siteUrl)
+        public List<DTCommandInfo> GetCommands(ItemType itemType, string contractId)
         {
             List<DTCommandInfo> commands = null;
             switch (itemType)
             {
                 case Infocorp.TITA.WITLogic.ItemType.ISSUE:
-                    commands = _commands.FindAll(delegate(DTCommandInfo cinfo) { return cinfo.CommandItemType == ItemType.ISSUE && cinfo.SiteUrl.ToLower().Trim() == siteUrl.ToLower().Trim(); });
+                    commands = _commands.FindAll(delegate(DTCommandInfo cinfo) { return cinfo.CommandItemType == ItemType.ISSUE && cinfo.ContractId.ToLower().Trim() == contractId.ToLower().Trim(); });
                     break;
                 case Infocorp.TITA.WITLogic.ItemType.TASK:
-                    commands = _commands.FindAll(delegate(DTCommandInfo cinfo) { return cinfo.CommandItemType == ItemType.TASK && cinfo.SiteUrl.ToLower().Trim() == siteUrl.ToLower().Trim(); });
+                    commands = _commands.FindAll(delegate(DTCommandInfo cinfo) { return cinfo.CommandItemType == ItemType.TASK && cinfo.ContractId.ToLower().Trim() == contractId.ToLower().Trim(); });
                     break;
                 case Infocorp.TITA.WITLogic.ItemType.WORKPACKAGE:
-                    commands = _commands.FindAll(delegate(DTCommandInfo cinfo) { return cinfo.CommandItemType == ItemType.WORKPACKAGE && cinfo.SiteUrl.ToLower().Trim() == siteUrl.ToLower().Trim(); });
+                    commands = _commands.FindAll(delegate(DTCommandInfo cinfo) { return cinfo.CommandItemType == ItemType.WORKPACKAGE && cinfo.ContractId.ToLower().Trim() == contractId.ToLower().Trim(); });
                     break;
                 default:
                     //No debería pasar...
