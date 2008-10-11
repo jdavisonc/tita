@@ -43,12 +43,13 @@
         <!--CONTRATO -->
         <ScrollViewer Margin="-1,4,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_CONTRACT">
             <StackPanel x:Name="pnl_Contrato" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
-               <my:DataGrid x:Name="lstContratos" AutoGenerateColumns="True" Width="auto"/>
+               <my:DataGrid x:Name="lstContratos" AutoGenerateColumns="True" Visibility="Collapsed" Width="auto"/>
                <TextBlock x:Name="lblErrorContract" Visibility="Collapsed"/>            
                 <StackPanel  x:Name="PnlbtnsContrato" Background="White" Width="auto" Visibility="Visible" Orientation="Horizontal">
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Nuevo" Click="BtnNuevoContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoContrato"  Background="#FF0B97F9"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnModificarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnModificarContrato"  Background="#FF0B97F9"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnEliminarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEliminarContrato"  Background="#FF0B97F9"/>
+                    <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Conectar" Canvas.Left="326" Click="BtnConectarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnConectarContrato"  Background="#FF0B97F9"/>
                 </StackPanel>
                 <StackPanel  x:Name="pnlEditContrato" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Vertical">
                     <TextBlock Text="Nombre:" Width="160" Height="30"/>
@@ -108,12 +109,13 @@
         <!--Reports--> 
         <ScrollViewer Margin="-1,4,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_REPORT">
             <StackPanel x:Name="CanvasREPORT" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
+                <my:DataGrid x:Name="contractsReport" Margin="100,0,0,0" Visibility="Collapsed" AutoGenerateColumns="True" Width="auto"/> 
                 <StackPanel  x:Name="PnlOption_REPORT" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal">
                     <TextBlock Text="Fecha inicial: " x:Name="txt_fechaInicial"></TextBlock>
                     <my1:Calendar x:Name="cal_inicial"></my1:Calendar>
-                    <TextBlock Margin="80,0,0,0" Text="Fecha final: " x:Name="txt_fechaFinal"></TextBlock>
+                    <TextBlock Margin="65,0,0,0" Text="Fecha final: " x:Name="txt_fechaFinal"></TextBlock>
                     <my1:Calendar x:Name="cal_final"></my1:Calendar>
-                    <Button  Content="Generar" Margin="150,120,0,0" VerticalAlignment="Center" Click="BtnGenerarREPORT_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnGenerarReporte" Background="#FF0B97F9" />
+                    <Button  Content="Generar" Margin="50,127,0,0" HorizontalAlignment="Left" Click="BtnGenerarREPORT_Click" Width="112" Height="26" x:Name="BtnGenerarReporte" Background="#FF0B97F9" />
                 </StackPanel>
                 <my:DataGrid x:Name="grd_REPORT" AutoGenerateColumns="True" Visibility="Collapsed" Width="auto"/>
                 <!--<StackPanel  x:Name="PnlExportar_REPORT" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
