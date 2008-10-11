@@ -12,20 +12,12 @@
         		</LinearGradientBrush>
         	</Rectangle.Fill>
         </Rectangle>
-        <!--<Button Height="26" HorizontalAlignment="Left" Margin="18,102,0,0" VerticalAlignment="Top" Width="112" Click="ButtonContract_Click" Content="Contrato" x:Name="ButtonContract" Background="#FF6FC1F3"/>
-        <Button HorizontalAlignment="Left" Margin="18,132,0,0" VerticalAlignment="Top" Content="Incidente" Width="112" Height="26" x:Name="ButtonIncident" Click="ButtonIncident_Click" Background="#FF1297F5"/>
-        <Button HorizontalAlignment="Left" Margin="18,196,0,184" VerticalAlignment="Top" Content="Reportes" Width="112" Height="26" x:Name="ButtonReports" Background="#FF0994F5"/>
-        <Button Margin="18,166,0,0"  VerticalAlignment="Top" Click="ButtonWP_Click" Content="WorkPackage" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonWP" Background="#FF0B97F9"/>
-        <Button Margin="18,230,0,0"  VerticalAlignment="Top" Click="ButtonApply_Click" Content="Aplicar" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonApply" Background="#FF0B97F9"/>
-        <Button HorizontalAlignment="Left" Margin="18,310,0,0" VerticalAlignment="Top" Content="Task" Width="112" Height="26" x:Name="ButtonTask" Click="ButtonTask_Click" Background="#FF1297F5"/>
-        <TextBlock Margin="18,530,0,0"  VerticalAlignment="Top" x:Name="lblPending" Visibility="Collapsed" Width="112" HorizontalAlignment="Left" Height="26"/>-->
-        
-        <Button Height="26" HorizontalAlignment="Left" Margin="18,100,0,0" VerticalAlignment="Top" Width="112" Click="ButtonContract_Click" Content="Contrato" x:Name="ButtonContract" Background="#FF6FC1F3"/>
-        <Button HorizontalAlignment="Left" Margin="18,130,0,0" VerticalAlignment="Top" Content="Incidente" Width="112" Height="26" x:Name="ButtonIncident" Click="ButtonIncident_Click" Background="#FF1297F5"/>
+        <Button Height="26" HorizontalAlignment="Left" Margin="18,100,0,0" VerticalAlignment="Top" Width="112" Click="ButtonContract_Click" Content="Contract" x:Name="ButtonContract" Background="#FF6FC1F3"/>
+        <Button HorizontalAlignment="Left" Margin="18,130,0,0" VerticalAlignment="Top" Content="Incident" Width="112" Height="26" x:Name="ButtonIncident" Click="ButtonIncident_Click" Background="#FF1297F5"/>
         <Button Margin="18,160,0,0"  VerticalAlignment="Top" Click="ButtonWP_Click" Content="WorkPackage" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonWP" Background="#FF0B97F9"/>
-        <Button HorizontalAlignment="Left" Margin="18,190,0,0" VerticalAlignment="Top" Content="Tarea" Width="112" Height="26" x:Name="ButtonTask" Click="ButtonTask_Click" Background="#FF1297F5"/>
-        <Button HorizontalAlignment="Left" Margin="18,223,0,0" VerticalAlignment="Top" Content="Reportes" Width="112" Height="26" x:Name="ButtonReports" Background="#FF0994F5"/>
-        <Button Margin="18,285,0,0"  VerticalAlignment="Top" Click="ButtonApply_Click" Content="Aplicar" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonApply" Background="#FF0B97F9"/>
+        <Button HorizontalAlignment="Left" Margin="18,190,0,0" VerticalAlignment="Top" Content="Task" Width="112" Height="26" x:Name="ButtonTask" Click="ButtonTask_Click" Background="#FF1297F5"/>
+        <Button HorizontalAlignment="Left" Margin="18,223,0,0" VerticalAlignment="Top" Click="ButtonRport_Click" Content="Reports" Width="112" Height="26" x:Name="ButtonReports" Background="#FF0994F5"/>
+        <Button Margin="18,285,0,0"  VerticalAlignment="Top" Click="ButtonApply_Click" Content="Apply" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonApply" Background="#FF0B97F9"/>
         
         <TextBlock Margin="18,350,0,0"  VerticalAlignment="Top" x:Name="lblPending" Visibility="Collapsed" Width="112" HorizontalAlignment="Left" Height="26"/>
         
@@ -47,7 +39,6 @@
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
-
 
         <!--CONTRATO -->
         <ScrollViewer Margin="-1,4,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_CONTRACT">
@@ -114,22 +105,22 @@
             </StackPanel>
         </ScrollViewer>
         
-        <!--Reportes--> 
-        <!--<ScrollViewer Margin="-1,4,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_REPORTE">
-            <StackPanel x:Name="CanvasREPORTE" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
-                <my:DataGrid x:Name="grd_REPORTE" AutoGenerateColumns="True" Width="auto"/>
-                <StackPanel  x:Name="PnlOption_REPORTE" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal">
+        <!--Reports--> 
+        <ScrollViewer Margin="-1,4,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_REPORT">
+            <StackPanel x:Name="CanvasREPORT" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
+                <StackPanel  x:Name="PnlOption_REPORT" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal">
                     <TextBlock Text="Fecha inicial: " x:Name="txt_fechaInicial"></TextBlock>
                     <my1:Calendar x:Name="cal_inicial"></my1:Calendar>
-                    <TextBlock Text="Fecha final: " x:Name="txt_fechaFinal"></TextBlock>
+                    <TextBlock Margin="80,0,0,0" Text="Fecha final: " x:Name="txt_fechaFinal"></TextBlock>
                     <my1:Calendar x:Name="cal_final"></my1:Calendar>
-                    <Button  Content="Generar" VerticalAlignment="Center" Canvas.Left="112" Click="BtnGenerarREPORTE_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnGenerarReporte" Background="#FF0B97F9" Margin="20,0,0,0"/>
+                    <Button  Content="Generar" Margin="150,120,0,0" VerticalAlignment="Center" Click="BtnGenerarREPORT_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnGenerarReporte" Background="#FF0B97F9" />
                 </StackPanel>
-                <StackPanel  x:Name="PnlExportar_REPORTE" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
+                <my:DataGrid x:Name="grd_REPORT" AutoGenerateColumns="True" Visibility="Collapsed" Width="auto"/>
+                <!--<StackPanel  x:Name="PnlExportar_REPORT" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
                     <Button  Content="Exportar" VerticalAlignment="Center" Click="BtnExportar_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnExportar" Background="#FF0B97F9"/>
-                </StackPanel>
+                </StackPanel>-->
             </StackPanel>
-        </ScrollViewer>-->
+        </ScrollViewer>
         
         <!--Error -->
         <Canvas x:Name="CanvasError" Margin="138,0,0,0" Visibility="Collapsed" VerticalAlignment="Top"> 
