@@ -21,10 +21,19 @@ namespace Infocorp.TITA.WpfOutlookAddin
             get { return _contractUrl; }
         }
 
-        public DTUrl(string contractName, string contractUrl)
+        private string _issueList;
+
+        public string IssueList
+        {
+            get { return _issueList; }
+            set { _issueList = value; }
+        }
+
+        public DTUrl(string contractName, string contractUrl, string issueList)
         {
             _contractName = contractName;
             _contractUrl = contractUrl;
+            _issueList = issueList;
         }        
         
 

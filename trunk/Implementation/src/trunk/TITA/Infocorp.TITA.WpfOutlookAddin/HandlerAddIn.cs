@@ -167,18 +167,27 @@ namespace Infocorp.TITA.WpfOutlookAddin
                 "Verifique que el archivo se encuentre en " + path, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 throw e;
             }
-
-            XmlNodeList bookList = doc.GetElementsByTagName("Contract");
-            foreach (XmlNode node in bookList)
+            try
             {
-                XmlElement bookElement = (XmlElement)node;
-                string title = string.Empty;
-                string url = string.Empty;
-                if (bookElement.HasAttributes)
+                XmlNodeList bookList = doc.GetElementsByTagName("Contract");
+                foreach (XmlNode node in bookList)
                 {
-                    DTUrl oElementUrl = new DTUrl(bookElement.Attributes["Name"].InnerText, bookElement.Attributes["Url"].InnerText);
-                    oListDataUrl.Add(oElementUrl);
+                    XmlElement bookElement = (XmlElement)node;
+                    string title = string.Empty;
+                    string url = string.Empty;
+                    if (bookElement.HasAttributes)
+                    {
+                        XmlElement issueListElement = (XmlElement)bookElement.GetElementsByTagName("IssueList")[0];
+                        DTUrl oElementUrl = new DTUrl(bookElement.Attributes["Name"].InnerText, bookElement.Attributes["Url"].InnerText,
+                            issueListElement.Attributes["Name"].InnerText);
+                        oListDataUrl.Add(oElementUrl);
+                    }
                 }
+            }
+            catch (System.Exception e)
+            {
+                MessageBox.Show("El archivo Contracts.xml esta mal formado.", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw e;
             }
             return oListDataUrl;
         }
