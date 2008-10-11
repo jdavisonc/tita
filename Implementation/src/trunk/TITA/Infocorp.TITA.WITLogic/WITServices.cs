@@ -31,29 +31,29 @@ namespace Infocorp.TITA.WITLogic
 
         #region IssueMethods
 
-        public DTItem GetIssueTemplate(string siteUrl)
+        public DTItem GetIssueTemplate(string contractId)
         {
-            return GetItemTemplate(siteUrl, ItemType.ISSUE);
+            return GetItemTemplate(contractId, ItemType.ISSUE);
         }
 
-        public List<DTItem> GetIssues(string siteUrl)
+        public List<DTItem> GetIssues(string contractId)
         {
-            return GetItems(siteUrl, ItemType.ISSUE);
+            return GetItems(contractId, ItemType.ISSUE);
         }
 
-        public void AddIssue(DTItem issue, string siteUrl)
+        public void AddIssue(DTItem issue, string contractId)
         {
-            AddCommand(issue, ItemType.ISSUE, siteUrl);
+            AddCommand(issue, ItemType.ISSUE, contractId);
         }
 
-        public void ModifyIssue(DTItem issue, string siteUrl)
+        public void ModifyIssue(DTItem issue, string contractId)
         {
-            ModifyItem(issue,ItemType.ISSUE, siteUrl);
+            ModifyItem(issue,ItemType.ISSUE, contractId);
         }
 
-        public void DeleteIssue(int issueId, string siteUrl)
+        public void DeleteIssue(int issueId, string contractId)
         {
-            DeleteItem(issueId, ItemType.ISSUE, siteUrl);
+            DeleteItem(issueId, ItemType.ISSUE, contractId);
         }
 
         #endregion
@@ -104,77 +104,77 @@ namespace Infocorp.TITA.WITLogic
 
         #region TaskMethods
 
-        public DTItem GetTaskTemplate(string siteUrl)
+        public DTItem GetTaskTemplate(string contractId)
         {
-            return GetItemTemplate(siteUrl, ItemType.TASK);
+            return GetItemTemplate(contractId, ItemType.TASK);
         }
         
-        public List<DTItem> GetTasks(string siteUrl)
+        public List<DTItem> GetTasks(string contractId)
         {
-            return GetItems(siteUrl, ItemType.TASK);
+            return GetItems(contractId, ItemType.TASK);
         }
 
-        public void AddTask( DTItem task, string siteUrl)
+        public void AddTask( DTItem task, string contractId)
         {
-            AddCommand(task, ItemType.TASK, siteUrl);
+            AddCommand(task, ItemType.TASK, contractId);
         }
 
-        public void DeleteTask(int taskId, string siteUrl)
+        public void DeleteTask(int taskId, string contractId)
         {
-             DeleteItem(taskId, ItemType.TASK,siteUrl);
+             DeleteItem(taskId, ItemType.TASK,contractId);
         }
 
-        public void UpdateTask(DTItem task, string siteUrl)
+        public void UpdateTask(DTItem task, string contractId)
         {
-            ModifyItem(task, ItemType.TASK, siteUrl);
+            ModifyItem(task, ItemType.TASK, contractId);
         }
 
         #endregion
 
         #region IWITServices Members
 
-        public DTItem GetWorkPackageTemplate(string siteUrl)
+        public DTItem GetWorkPackageTemplate(string contractId)
         {
-            return GetItemTemplate(siteUrl, ItemType.WORKPACKAGE);
+            return GetItemTemplate(contractId, ItemType.WORKPACKAGE);
         }
 
-        public List<DTItem> GetWorkPackages(string siteUrl)
+        public List<DTItem> GetWorkPackages(string contractId)
         {
-            return GetItems(siteUrl, ItemType.WORKPACKAGE);
+            return GetItems(contractId, ItemType.WORKPACKAGE);
         }
 
-        public void AddWorkPackage(DTItem workPackage, string siteUrl)
+        public void AddWorkPackage(DTItem workPackage, string contractId)
         {
-            AddCommand(workPackage, ItemType.WORKPACKAGE, siteUrl);
+            AddCommand(workPackage, ItemType.WORKPACKAGE, contractId);
         }
 
-        public void DeleteWorkPackage(int workPackageId, string siteUrl)
+        public void DeleteWorkPackage(int workPackageId, string contractId)
         {
-             DeleteItem(workPackageId, ItemType.WORKPACKAGE, siteUrl);
+             DeleteItem(workPackageId, ItemType.WORKPACKAGE, contractId);
         }
 
-        public void UpdateWorkPackage(DTItem workPackage, string siteUrl)
+        public void UpdateWorkPackage(DTItem workPackage, string contractId)
         {
-             ModifyItem(workPackage, ItemType.WORKPACKAGE, siteUrl);
+             ModifyItem(workPackage, ItemType.WORKPACKAGE, contractId);
         }
 
         #endregion
 
         #region GenericMethods
 
-        private DTItem GetItemTemplate(string siteUrl, ItemType itemType)
+        private DTItem GetItemTemplate(string contractId, ItemType itemType)
         {
             DTItem issue = new DTItem();
             switch (itemType)
             {
                 case ItemType.ISSUE:
-                    issue.Fields = _sharepoint.GetFieldsIssue(siteUrl);
+                    issue.Fields = _sharepoint.GetFieldsIssue(contractId);
                     break;
                 case ItemType.TASK:
-                    issue.Fields = _sharepoint.GetFieldsTask(siteUrl);
+                    issue.Fields = _sharepoint.GetFieldsTask(contractId);
                     break;
                 case ItemType.WORKPACKAGE:
-                    issue.Fields = _sharepoint.GetFieldsWorkPackage(siteUrl);
+                    issue.Fields = _sharepoint.GetFieldsWorkPackage(contractId);
                     break;
                 default:
                     //No debería pasar...
@@ -185,21 +185,21 @@ namespace Infocorp.TITA.WITLogic
             return issue;
         }
 
-        private List<DTItem> GetItems(string siteUrl, ItemType itemType)
+        private List<DTItem> GetItems(string contractId, ItemType itemType)
         {
             List<DTItem> result = new List<DTItem>();
-            List<DTCommandInfo> commands = WITCommandState.Instance().GetCommands(itemType, siteUrl);
+            List<DTCommandInfo> commands = WITCommandState.Instance().GetCommands(itemType, contractId);
             string camlQuery = string.Empty;
             switch (itemType)
             {
                 case ItemType.ISSUE:
-                    result = _sharepoint.GetIssues(siteUrl,camlQuery);
+                    result = _sharepoint.GetIssues(contractId,camlQuery);
                     break;
                 case ItemType.TASK:
-                    result = _sharepoint.GetTasks(siteUrl, camlQuery);
+                    result = _sharepoint.GetTasks(contractId, camlQuery);
                     break;
                 case ItemType.WORKPACKAGE:
-                    result = _sharepoint.GetWorkPackages(siteUrl, camlQuery);
+                    result = _sharepoint.GetWorkPackages(contractId, camlQuery);
                     break;
                 default:
                     //No debería pasar...
@@ -207,7 +207,7 @@ namespace Infocorp.TITA.WITLogic
             }
             commands.ForEach(delegate(DTCommandInfo command)
             {
-                if (command.CommandItemType == itemType && command.SiteUrl.ToLower().Trim() == siteUrl.ToLower().Trim())
+                if (command.CommandItemType == itemType && command.ContractId.ToLower().Trim() == contractId.ToLower().Trim())
                 {
                     if (command.CommandType == CommandType.ADD || command.CommandType == CommandType.MODIFY)
                     {
@@ -230,9 +230,9 @@ namespace Infocorp.TITA.WITLogic
             return result;
         }
 
-        public bool ApplyChanges(string siteUrl)
+        public bool ApplyChanges(string contractId)
         {
-            List<DTCommandInfo> commands = WITCommandState.Instance().GetCommands(siteUrl);
+            List<DTCommandInfo> commands = WITCommandState.Instance().GetCommands(contractId);
             ISharePoint spu = _sharepoint;
             commands.Sort();
             bool result = true;
@@ -245,13 +245,13 @@ namespace Infocorp.TITA.WITLogic
                         switch (command.CommandItemType)
                         {
                             case ItemType.ISSUE:
-                                result = spu.AddIssue(siteUrl, command.Item);
+                                result = spu.AddIssue(contractId, command.Item);
                                 break;
                             case ItemType.TASK:
-                                result = spu.AddTask(siteUrl, command.Item);
+                                result = spu.AddTask(contractId, command.Item);
                                 break;
                             case ItemType.WORKPACKAGE:
-                                result = spu.AddWorkPackage(siteUrl, command.Item);
+                                result = spu.AddWorkPackage(contractId, command.Item);
                                 break;
                             default:
                                 break;
@@ -262,13 +262,13 @@ namespace Infocorp.TITA.WITLogic
                         switch (command.CommandItemType)
                         {
                             case ItemType.ISSUE:
-                                result = spu.UpdateIssue(siteUrl, command.Item);
+                                result = spu.UpdateIssue(contractId, command.Item);
                                 break;
                             case ItemType.TASK:
-                                result = spu.UpdateTask(siteUrl, command.Item);
+                                result = spu.UpdateTask(contractId, command.Item);
                                 break;
                             case ItemType.WORKPACKAGE:
-                                result = spu.UpdateWorkPackage(siteUrl, command.Item);
+                                result = spu.UpdateWorkPackage(contractId, command.Item);
                                 break;
                             default:
                                 break;
@@ -280,13 +280,13 @@ namespace Infocorp.TITA.WITLogic
                         switch (command.CommandItemType)
                         {
                             case ItemType.ISSUE:
-                                result = spu.DeleteIssue(siteUrl, issueId);
+                                result = spu.DeleteIssue(contractId, issueId);
                                 break;
                             case ItemType.TASK:
-                                result = spu.DeleteTask(siteUrl, issueId);
+                                result = spu.DeleteTask(contractId, issueId);
                                 break;
                             case ItemType.WORKPACKAGE: 
-                                result = spu.DeleteWorkPackage(siteUrl, issueId);
+                                result = spu.DeleteWorkPackage(contractId, issueId);
                                 break;
                             default:
                                 break;
@@ -302,18 +302,18 @@ namespace Infocorp.TITA.WITLogic
             return result;
         }
 
-        public bool HasPendingChanges(string siteUrl)
+        public bool HasPendingChanges(string contractId)
         {
-            return WITCommandState.Instance().GetCommands(siteUrl).Count > 0;
+            return WITCommandState.Instance().GetCommands(contractId).Count > 0;
         }
 
-        private void AddCommand(DTItem issue, ItemType itemType, string siteUrl)
+        private void AddCommand(DTItem issue, ItemType itemType, string contractId)
         {
             DTCommandInfo command = new DTCommandInfo();
             command.CommandType = CommandType.ADD;
             command.CreationDate = DateTime.Now;
             command.CommandItemType = itemType;
-            command.SiteUrl = siteUrl;
+            command.ContractId = contractId;
 
             DTField field = new DTField();
             field.Name = "ID";
@@ -328,26 +328,26 @@ namespace Infocorp.TITA.WITLogic
             WITCommandState.Instance().AddCommand(command);
         }
 
-        private void ModifyItem(DTItem issue, ItemType itemType, string siteUrl)
+        private void ModifyItem(DTItem issue, ItemType itemType, string contractId)
         {
             DTCommandInfo command = new DTCommandInfo();
             command.CommandType = CommandType.MODIFY;
             command.CreationDate = DateTime.Now;
             command.Item = issue;
-            command.SiteUrl = siteUrl;
+            command.ContractId = contractId;
             command.CommandItemType = itemType;
 
             WITCommandState.Instance().AddCommand(command);
         }
 
-        private void DeleteItem(int issueId, ItemType itemType, string siteUrl)
+        private void DeleteItem(int issueId, ItemType itemType, string contractId)
         {
             DTCommandInfo command = new DTCommandInfo();
             command.CommandType = CommandType.DELETE;
             command.CreationDate = DateTime.Now;
             command.Item = new DTItem();
             command.CommandItemType = itemType;
-            command.SiteUrl = siteUrl;
+            command.ContractId = contractId;
 
             DTFieldCounter field = new DTFieldCounter();
             field.Hidden = true;

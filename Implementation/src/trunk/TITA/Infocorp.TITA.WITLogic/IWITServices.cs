@@ -9,49 +9,49 @@ namespace Infocorp.TITA.WITLogic
     public interface IWITServices
     {
 
-        bool ApplyChanges(string siteUrl);
+        bool ApplyChanges(string contractId);
 
-        bool HasPendingChanges(string siteUrl);
+        bool HasPendingChanges(string contractId);
 
         #region WorkPackages
 
-        List<DTItem> GetWorkPackages(string siteUrl);
+        List<DTItem> GetWorkPackages(string contractId);
 
-        DTItem GetWorkPackageTemplate(string siteUrl);
+        DTItem GetWorkPackageTemplate(string contractId);
 
-        void AddWorkPackage(DTItem workPackage, string siteUrl);
+        void AddWorkPackage(DTItem workPackage, string contractId);
 
-        void DeleteWorkPackage(int workPackageId, string siteUrl);
+        void DeleteWorkPackage(int workPackageId, string contractId);
 
-        void UpdateWorkPackage(DTItem workPackage, string siteUrl);
+        void UpdateWorkPackage(DTItem workPackage, string contractId);
 
         #endregion
 
         #region Issues
 
-        DTItem GetIssueTemplate(string siteUrl);
+        DTItem GetIssueTemplate(string contractId);
 
-        List<DTItem> GetIssues(string siteUrl);
+        List<DTItem> GetIssues(string contractId);
 
-        void AddIssue(DTItem issue, string siteUrl);
+        void AddIssue(DTItem issue, string contractId);
 
-        void ModifyIssue(DTItem issue, string siteUrl);
+        void ModifyIssue(DTItem issue, string contractId);
 
-        void DeleteIssue(int issueId, string siteUrl);
+        void DeleteIssue(int issueId, string contractId);
 
         #endregion
 
         #region Tasks
 
-        List<DTItem> GetTasks(string siteUrl);
+        List<DTItem> GetTasks(string contractId);
 
-        DTItem GetTaskTemplate(string siteUrl);
+        DTItem GetTaskTemplate(string contractId);
 
-        void AddTask(DTItem task, string siteUrl);
+        void AddTask(DTItem task, string contractId);
 
-        void DeleteTask(int taskId, string siteUrl);
+        void DeleteTask(int taskId, string contractId);
 
-        void UpdateTask(DTItem task, string siteUrl);
+        void UpdateTask(DTItem task, string contractId);
 
         #endregion
 

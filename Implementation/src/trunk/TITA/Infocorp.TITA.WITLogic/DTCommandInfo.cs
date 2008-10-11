@@ -34,11 +34,11 @@ namespace Infocorp.TITA.WITLogic
             set { _commandItemType = value; }
         }
 
-        private string _siteUrl;
-        public string SiteUrl
+        private string _contractId;
+        public string ContractId
         {
-            get { return _siteUrl; }
-            set { _siteUrl = value; }
+            get { return _contractId; }
+            set { _contractId = value; }
         }
 
         public override bool Equals(object obj)
@@ -52,7 +52,7 @@ namespace Infocorp.TITA.WITLogic
                 result =
                     this.CommandItemType == (obj as DTCommandInfo).CommandItemType &&
                     (f1 as DTFieldCounter).Value == (f2 as DTFieldCounter).Value &&
-                    this.SiteUrl.ToLower().Trim() == (obj as DTCommandInfo).SiteUrl.ToLower().Trim();
+                    this.ContractId.ToLower().Trim() == (obj as DTCommandInfo).ContractId.ToLower().Trim();
             }
 
             return result;
