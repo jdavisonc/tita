@@ -22,7 +22,8 @@ namespace Infocorp.TITA.DataTypes
         {
             _name = name;
             _data = new byte[data.Length];
-            Data.CopyTo(_data, data.Length);
+            data.CopyTo(_data, 0); 
+            
         }
 
         public DTAttachment(string name, string url)
