@@ -14,8 +14,8 @@ namespace Infocorp.TITA.WITLogic.Tests
         [Test]
         public void AddWP()
         {
-            string siteUrl = "http://localhost/infocorp";
-            ISharePoint sharepoint = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint();
+            string siteUrl = "1";
+            ISharePoint sharepoint = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint();            
             DTItem issue = new DTItem();
             issue.Attachments = new List<DTAttachment>();
             issue.Fields = sharepoint.GetFieldsWorkPackage(siteUrl);
