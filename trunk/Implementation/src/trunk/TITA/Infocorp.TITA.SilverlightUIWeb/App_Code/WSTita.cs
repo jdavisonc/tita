@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using System.Collections.Generic;
 using Infocorp.TITA.DataTypes;
 using Infocorp.TITA.WITLogic;
+using Infocorp.TITA.ReportGenerator;
 
 /// <summary>
 /// Summary description for WSTita
@@ -213,6 +214,16 @@ public class WSTita : System.Web.Services.WebService
         witInstance.UpdateTask(tsk, url);
     }
 
+    #endregion
+
+    #region Reports
+    [WebMethod]
+    public List<DTWorkPackageReport> ReportDesvWorkPackage(String idContract, DateTime fch_inicial, DateTime fch_final)
+    {
+        IReportGenerator reportInstance = FactoryReport.GetInstance();
+        //return reportInstance.ReportDesvWorkPackage(idContract, fch_inicial, fch_final);
+        return null;
+    }
     #endregion
 
     #region Apply
