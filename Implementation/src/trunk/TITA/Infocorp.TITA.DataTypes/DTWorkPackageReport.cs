@@ -21,7 +21,10 @@ namespace Infocorp.TITA.DataTypes
         private int _desviation;
         [DataMember]
         public int Desviation { get { return _desviation; } }
-       
+
+
+        public DTWorkPackageReport() { }
+        
         public DTWorkPackageReport(string site, string idWorkPackage, string title, int desviation)
         {
             _site = site;
