@@ -54,8 +54,14 @@
                 <StackPanel  x:Name="pnlEditContrato" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Vertical">
                     <TextBlock Text="Nombre:" Width="160" Height="30"/>
                     <TextBox x:Name="txtNombre" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130"/>
-                    <TextBlock Text="Url:" Width="160" Height="30" Canvas.Top="50"/>
-                    <TextBox x:Name="txtUrl" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130" Canvas.Top="50"/>
+                    <TextBlock Text="Site:" Width="160" Height="30" Canvas.Top="50"/>
+                    <TextBox x:Name="txtSite" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130" Canvas.Top="50"/>
+                    <TextBlock Text="Lista de Incidentes:" Width="160" Height="30" Canvas.Top="100"/>
+                    <TextBox x:Name="txtIssuesList" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130" Canvas.Top="100"/>
+                    <TextBlock Text="Lista de WorkPackage:" Width="160" Height="30" Canvas.Top="150"/>
+                    <TextBox x:Name="txtWorkPackageList" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130" Canvas.Top="150"/>
+                    <TextBlock Text="Lista de Tareas:" Width="160" Height="30" Canvas.Top="200"/>
+                    <TextBox x:Name="txtTaskList" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130" Canvas.Top="200"/>
                 </StackPanel>
                 <StackPanel  x:Name="PnlActionContrato" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
                     <Button  Content="Aceptar" VerticalAlignment="Center" Click="BtnAceptarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnAceptarContrato" Background="#FF0B97F9"/>
