@@ -213,8 +213,7 @@ public class WSTita : System.Web.Services.WebService
     public List<DTWorkPackageReport> ReportDesvWorkPackage(String idContract, DateTime fch_inicial, DateTime fch_final)
     {
         IReportGenerator reportInstance = FactoryReport.GetInstance();
-        //return reportInstance.ReportDesvWorkPackage(idContract, fch_inicial, fch_final);
-        return null;
+        return reportInstance.ReportDesvWorkPackage(idContract, fch_inicial, fch_final);
     }
     #endregion
 
