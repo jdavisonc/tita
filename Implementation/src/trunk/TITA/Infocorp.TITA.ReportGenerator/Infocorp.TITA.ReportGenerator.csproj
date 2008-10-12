@@ -31,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Infocorp.TITA.DataBaseAccess, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Infocorp.TITA.DataBaseAccess\obj\Debug\Infocorp.TITA.DataBaseAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Infocorp.TITA.OutlookSharePoint, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Infocorp.TITA.OutlookSharePoint\obj\Debug\Infocorp.TITA.OutlookSharePoint.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
