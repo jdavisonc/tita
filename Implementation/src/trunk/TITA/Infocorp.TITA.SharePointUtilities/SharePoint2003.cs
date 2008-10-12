@@ -5,6 +5,7 @@ using Microsoft.SharePoint;
 using System.Collections.Specialized;
 using System.Globalization;
 using Infocorp.TITA.DataBaseAccess;
+using System.Collections.ObjectModel;
 
 namespace Infocorp.TITA.SharePointUtilities
 {
@@ -138,6 +139,31 @@ namespace Infocorp.TITA.SharePointUtilities
             catch (Exception e)
             {
                 throw new Exception("Error en GetSiteLocale: " + e.Message);
+            }
+        }
+
+        public List<String> GetLists(string urlSite)
+        {
+            List<String> listCollection = new List<string>();
+            try
+            {
+                List<DTItem> items = new List<DTItem>();
+                using (SPSite site = new SPSite(urlSite))
+                {
+                    using (SPWeb web = site.OpenWeb())
+                    {
+                        SPListCollection spListCollection = web.Lists;
+                        foreach (SPList item in spListCollection)
+                        {
+                            listCollection.Add(item.Title);
+                        }
+                    }
+                }
+                return listCollection;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error en GetLists: " + e.Message);
             }
         }
 
