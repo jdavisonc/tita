@@ -18,14 +18,14 @@ namespace Infocorp.TITA.DataTypes
         private string _title;
         [DataMember]
         public string Title { get { return _title; } }
-        private int _desviation;
+        private string _desviation;
         [DataMember]
-        public int Desviation { get { return _desviation; } }
+        public string Desviation { get { return _desviation; } }
 
 
         public DTWorkPackageReport() { }
         
-        public DTWorkPackageReport(string site, string idWorkPackage, string title, int desviation)
+        public DTWorkPackageReport(string site, string idWorkPackage, string title, string desviation)
         {
             _site = site;
             _idWorkPackage = idWorkPackage;
