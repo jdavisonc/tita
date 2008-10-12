@@ -78,7 +78,10 @@ namespace Infocorp.TITA.SilverlightUI
         public Page()
         {
             InitializeComponent();
-            ViewPendingChanges();
+            if (url != null)
+            {
+                ViewPendingChanges();
+            }
         }
 
         public void EnableOption(Option o)
@@ -1546,7 +1549,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_ApplyChangesCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            GetIncidents();
+            //GetIncidents();
         }
         #endregion
 
