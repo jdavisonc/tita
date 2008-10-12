@@ -39,19 +39,10 @@ namespace Infocorp.TITA.ReportGenerator
       "</And>"+
    "</Where>"+
 "</Query>";*/
-   string caml = @"<Query>
-   <Where>
-     
-         <Lt>  
-            <FieldRef Name='End_x0020_Date' />  
-            <Value Type='DateTime'>2009-12-25T12:00:00Z</Value> 
-         </Lt>  
         
-   </Where> 
-</Query>";
+   string caml = @"<Query>
+   <Where><Lt><FieldRef Name='End_x0020_Date' /><Value Type='DateTime'>2009-12-25T12:00:00Z</Value></Lt></Where></Query>";
             List<DTItem> workPackageList = sp.GetWorkPackages(contractId, caml);
-            
-            
             List<DTWorkPackageReport> workPackageDesviation = new List<DTWorkPackageReport>();
             foreach (var workPackage in workPackageList)
             {
@@ -61,38 +52,51 @@ namespace Infocorp.TITA.ReportGenerator
                 DateTime final = new DateTime();
                 int id = 0;
                 string title = "";
+                bool isValid = true;
                 foreach (var fields in listFields)
                 {
-                    
-                    
-                    
-                    if (fields.Name.Equals("ID"))
-                    {
-                        id = ((DTFieldCounter)fields).Value;
-                    }
-                    else
-                        if (fields.Name.Equals("Title"))
+                    if (fields.Name.Equals("End Date"))
+                        if ((((DTFieldAtomicDateTime)fields).Value > finalDate) || ((DTFieldAtomicDateTime)fields).Value < initialDate)
                         {
-                           title = ((DTFieldAtomicString)fields).Value;
+                            isValid = false;
+                            break;
+                        }
+                }
+                if (isValid)    
+                {    
+                    foreach (var fields in listFields)
+                    {
+                           
+                        if (fields.Name.Equals("ID"))
+                        {
+                            id = ((DTFieldCounter)fields).Value;
                         }
                         else
-                            if (fields.Name.Equals("End Date"))
+                            if (fields.Name.Equals("Title"))
                             {
-                                init = ((DTFieldAtomicDateTime)fields).Value;
+                               title = ((DTFieldAtomicString)fields).Value;
                             }
                             else
-                                if (fields.Name.Equals("Proposed End Date"))
+                                if (fields.Name.Equals("End Date"))
                                 {
-                                    final = ((DTFieldAtomicDateTime)fields).Value;
-                                    
+                                    init = ((DTFieldAtomicDateTime)fields).Value;
                                 }
+                                else
+                                    if (fields.Name.Equals("Proposed End Date"))
+                                    {
+                                        final = ((DTFieldAtomicDateTime)fields).Value;
+                                        
+                                    }
+                    }
+                    String formatDesviation = "ddd-hh:mm:ss";
+                    var desviation = (init - final).Days.ToString(); 
+                    
+                    
+                    DTWorkPackageReport dataWorkPackage = new DTWorkPackageReport(site,id.ToString(),title,desviation.ToString());
+                    workPackageDesviation.Add(dataWorkPackage);
                 }
-                var desviation = init - final; 
-                
-                
-                DTWorkPackageReport dataWorkPackage = new DTWorkPackageReport(site,id.ToString(),title,desviation.ToString());
-                workPackageDesviation.Add(dataWorkPackage);
-            }
+            
+                }
 
 
             return workPackageDesviation;
