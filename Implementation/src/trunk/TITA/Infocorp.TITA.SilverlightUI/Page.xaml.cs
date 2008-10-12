@@ -62,6 +62,7 @@ namespace Infocorp.TITA.SilverlightUI
             TASK,
             REPORT,
         }
+        
         private string url = null;
         private DTItem item = new DTItem();
         List<DTItem> lstItem = new List<DTItem>();
@@ -244,8 +245,11 @@ namespace Infocorp.TITA.SilverlightUI
             if (lstContratos.SelectedItem != null)
             {
                 DTContract cont = (DTContract)lstContratos.SelectedItem;
-                txtNombre.Text = cont.UserName.ToString();
-                txtUrl.Text = cont.Site.ToString();
+                txtNombre.Text = cont.UserName;
+                txtSite.Text = cont.Site;
+                txtIssuesList.Text = cont.issuesList;
+                txtWorkPackageList.Text = cont.workPackageList;
+                txtTaskList.Text = cont.taskList;
             }
             else 
             {
@@ -258,7 +262,10 @@ namespace Infocorp.TITA.SilverlightUI
         private void CleanPanel()
         {
             txtNombre.Text = "";
-            txtUrl.Text = "";
+            txtSite.Text = "";
+            txtIssuesList.Text = "";
+            txtWorkPackageList.Text = "";
+            txtTaskList.Text = "";
         }
 
         private void BtnConectarContrato_Click(object sender, RoutedEventArgs e)
@@ -312,7 +319,8 @@ namespace Infocorp.TITA.SilverlightUI
 
         bool ValidarCampos(DTContract cont)
         {
-            return ((cont.UserName.ToString() != "") && (cont.Site.ToString() != ""));
+            return ((cont.UserName != "") && (cont.Site != "") && (cont.workPackageList != "") &&
+                    (cont.taskList != "") && (cont.issuesList != ""));
         }
 
         private void BtnAceptarContrato_Click(object sender, RoutedEventArgs e)
@@ -321,8 +329,11 @@ namespace Infocorp.TITA.SilverlightUI
             {
                 DTContract cont = new DTContract
                 {
-                    UserName = txtNombre.Text.ToString(),
-                    Site = txtUrl.Text.ToString()
+                    UserName = txtNombre.Text,
+                    Site = txtSite.Text,
+                    issuesList = txtIssuesList.Text,
+                    workPackageList = txtWorkPackageList.Text,
+                    taskList = txtTaskList.Text
                 };
                 if (ValidarCampos(cont))
                 {
@@ -338,8 +349,14 @@ namespace Infocorp.TITA.SilverlightUI
                 {
                     if (txtNombre.Text == "")
                         txtNombre.Text = "Campo requerido";
-                    if (txtUrl.Text == "")
-                        txtUrl.Text = "Campo requerido";
+                    if (txtSite.Text == "")
+                        txtSite.Text = "Campo requerido";
+                    if (txtTaskList.Text == "")
+                        txtTaskList.Text = "Campo requerido";
+                    if (txtIssuesList.Text == "")
+                        txtIssuesList.Text = "Campo requerido";
+                    if (txtWorkPackageList.Text == "")
+                        txtWorkPackageList.Text = "Campo requerido";
                     pnlEditContrato.Visibility = Visibility.Visible;
                     PnlbtnsContrato.Visibility = Visibility.Collapsed;
                     PnlActionContrato.Visibility = Visibility.Visible;
@@ -351,14 +368,16 @@ namespace Infocorp.TITA.SilverlightUI
 
                 DTContract c = new DTContract();
                 c.ContractId = cont.ContractId;
-                c.Site = txtUrl.Text.ToString();
-                c.UserName = txtNombre.Text.ToString();
+                c.Site = txtSite.Text;
+                c.UserName = txtNombre.Text;
+                c.taskList = txtTaskList.Text;
+                c.workPackageList = txtWorkPackageList.Text;
+                c.issuesList = txtIssuesList.Text;
 
                 WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
                 ws.ModifyContractCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ModifyContractCompleted);
                 ws.ModifyContractAsync(c);
 
-                
                 PnlbtnsContrato.Visibility = Visibility.Visible;
                 pnlEditContrato.Visibility = Visibility.Collapsed;
                 PnlActionContrato.Visibility = Visibility.Collapsed;
