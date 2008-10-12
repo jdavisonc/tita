@@ -62,7 +62,7 @@ namespace Infocorp.TITA.SilverlightUI
             TASK,
             REPORT,
         }
-        private string url ="http://localhost/infocorp";
+        private string url = null;
         private DTItem item = new DTItem();
         List<DTItem> lstItem = new List<DTItem>();
         List<DTItem> lstTask = new List<DTItem>();
@@ -84,6 +84,9 @@ namespace Infocorp.TITA.SilverlightUI
         public void EnableOption(Option o)
         {
             isEdit = false;
+            ShowError("", false);
+            lblConectContract.Text = "";
+            lblConectContract.Visibility = Visibility.Collapsed;
             CanvasIncident.Visibility = Visibility.Collapsed;
             scroll_INCIDENT.Visibility = Visibility.Collapsed;
             pnl_Contrato.Visibility = Visibility.Collapsed;
@@ -242,6 +245,8 @@ namespace Infocorp.TITA.SilverlightUI
         {
             DTContract contract = (DTContract)lstContratos.SelectedItem;
             url = contract.ContractId;
+            lblConectContract.Text = "Se ha conectado a " + contract.Site;
+            lblConectContract.Visibility = Visibility.Visible;
         }
 
         private void BtnNuevoContrato_Click(object sender, RoutedEventArgs e)
@@ -371,8 +376,15 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void ButtonWP_Click(object sender, RoutedEventArgs e)
         {
-            EnableOption(Option.WP);
-            GetWPS();
+            if (url != null)
+            {
+                EnableOption(Option.WP);
+                GetWPS();
+            }
+            else 
+            {
+                ShowError("Debe conectarse previamente a un contrato.",true);        
+            }
         }
 
         public void GetWPS()
@@ -561,8 +573,15 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void ButtonIncident_Click(object sender, RoutedEventArgs e)
         {
-            EnableOption(Option.INCIDENT);
-            GetIncidents();
+            if (url != null)
+            {
+                EnableOption(Option.INCIDENT);
+                GetIncidents();
+            }
+            else 
+            {
+                ShowError("Debe conectarse previamente a un contrato.",true);        
+            }
         }
 
         private void GetIncidents()
@@ -570,7 +589,7 @@ namespace Infocorp.TITA.SilverlightUI
             grd_INCIDENT.Columns.Clear();
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
             ws.GetIssuesCompleted += new EventHandler<Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesCompletedEventArgs>(ws_GetIssuesCompleted);
-            ws.GetIssuesAsync();
+            ws.GetIssuesAsync(url);
         }
 
         void ws_GetIssuesCompleted(object sender, Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesCompletedEventArgs e)
@@ -666,7 +685,7 @@ namespace Infocorp.TITA.SilverlightUI
         {
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
             ws.GetIssueTemplateCompleted += new EventHandler<GetIssueTemplateCompletedEventArgs>(ws_GetIssueTemplateCompleted);
-            ws.GetIssueTemplateAsync();
+            ws.GetIssueTemplateAsync(url);
         }
 
         void ws_GetIssueTemplateCompleted(object sender, GetIssueTemplateCompletedEventArgs e)
@@ -726,7 +745,7 @@ namespace Infocorp.TITA.SilverlightUI
             {
                 WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
                 ws.GetIssueTemplateCompleted += new EventHandler<GetIssueTemplateCompletedEventArgs>(ws_GetIssueTemplateCompleted2);
-                ws.GetIssueTemplateAsync();
+                ws.GetIssueTemplateAsync(url);
             }
             else
             {
@@ -1260,8 +1279,15 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void ButtonTask_Click(object sender, RoutedEventArgs e)
         {
-            EnableOption(Option.TASK);
-            GetTask();
+            if (url != null)
+            {
+                EnableOption(Option.TASK);
+                GetTask();
+            }
+            else 
+            {
+                ShowError("Debe conectarse previamente a un contrato.",true);        
+            }
         }
 
         private void GetTask()
@@ -1304,19 +1330,19 @@ namespace Infocorp.TITA.SilverlightUI
                             case "Priority":
                                 t.Priority = ((DTFieldChoice)field).Value;
                                 break;
-                            case "PorComplete":
+                            case "% Complete":
                                 t.PorComplete = ((DTFieldAtomicNumber)field).Value;
                                 break;
-                            case "AssignedTo":
-                                t.AssignedTo = ((DTFieldAtomicString)field).Value;
+                            case "Assigned To":
+                                t.AssignedTo = ((DTFieldChoice)field).Value;
                                 break;
                             case "Description":
                                 t.Description = ((DTFieldAtomicNote)field).Value;
                                 break;
-                            case "StartDate":
+                            case "Start Date":
                                 t.StartDate = ((DTFieldAtomicDateTime)field).Value;
                                 break;
-                            case "DueDate":
+                            case "Due Date":
                                 t.DueDate = ((DTFieldAtomicDateTime)field).Value;
                                 break;
                             case "IsLocal":
@@ -1369,7 +1395,7 @@ namespace Infocorp.TITA.SilverlightUI
             {
                 WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
                 ws.GetTaskTemplateCompleted +=new EventHandler<GetTaskTemplateCompletedEventArgs>(ws_GetTaskTemplateCompleted2);
-                ws.GetIssueTemplateAsync();
+                ws.GetIssueTemplateAsync(url);
             }
             else
             {
@@ -1435,7 +1461,7 @@ namespace Infocorp.TITA.SilverlightUI
         void ws_AddTaskCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             string strPnl = "PnlForm_" + Option.TASK;
-            StackPanel cnv = (StackPanel)CanvasIncident.FindName(strPnl);
+            StackPanel cnv = (StackPanel)CanvasTASK.FindName(strPnl);
             cnv.Children.Clear();
             PnlAction_TASK.Visibility = Visibility.Collapsed;
             PnlOption_TASK.Visibility = Visibility.Visible;
@@ -1457,7 +1483,6 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void ButtonRport_Click(object sender, RoutedEventArgs e)
         {
-
             EnableOption(Option.REPORT);
             forReport = true;
             GetContract();
@@ -1490,15 +1515,17 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_ReportDesvWorkPackageCompleted(object sender, ReportDesvWorkPackageCompletedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (e.Result != null)
+            {
+                grd_REPORT.Visibility = Visibility.Visible;
+                grd_REPORT.ItemsSource = e.Result; 
+            }
         }
 
-        //private void BtnExportar_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //}
-
-
+        private void BtnExportar_Click(object sender, RoutedEventArgs e)
+        {
+            // obtener archivo en formato ccs
+        }
 
         #endregion
 
