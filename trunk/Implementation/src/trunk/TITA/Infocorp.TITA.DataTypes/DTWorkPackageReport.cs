@@ -11,17 +11,35 @@ namespace Infocorp.TITA.DataTypes
     {
         private string _site;
         [DataMember]
-        public string Site {get {return _site;}}
+        public string Site 
+        {
+            get {return _site;}
+            set { _site = value.Trim(); }
+        }
+
         private string _idWorkPackage;
         [DataMember]
-        public string IdWorkPackage { get { return _idWorkPackage; } }
+        public string IdWorkPackage 
+        { 
+            get { return _idWorkPackage; }
+            set { _idWorkPackage = value.Trim(); }
+        }
+
         private string _title;
         [DataMember]
-        public string Title { get { return _title; } }
+        public string Title 
+        { 
+            get { return _title; }
+            set { _title = value.Trim(); }
+        }
+
         private string _desviation;
         [DataMember]
-        public string Desviation { get { return _desviation; } }
-
+        public string Desviation 
+        { 
+            get { return _desviation; }
+            set { _desviation = value.Trim(); }
+        }
 
         public DTWorkPackageReport() { }
         
