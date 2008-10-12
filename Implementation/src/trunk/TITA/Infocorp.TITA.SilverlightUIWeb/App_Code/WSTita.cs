@@ -47,19 +47,11 @@ public class WSTita : System.Web.Services.WebService
 
     #region Issue
     [WebMethod]
-    public List<DTItem> GetWPS()
-    {
-        // retorna una lista de incidentes... igual creo q es lo mismo xq dtissue es generico
-        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
-        return witInstance.GetIssues("http://localhost/infocorp");
-    }
-
-    [WebMethod]
-    public List<DTItem> GetIssues()
+    public List<DTItem> GetIssues(string idContract)
     {
 
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
-        return witInstance.GetIssues("http://localhost/infocorp");
+        return witInstance.GetIssues(idContract);
     }
 
     [WebMethod]
@@ -71,11 +63,11 @@ public class WSTita : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public DTItem GetIssueTemplate()
+    public DTItem GetIssueTemplate(string idContract)
     {
 
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
-        return witInstance.GetIssueTemplate("http://localhost/infocorp");
+        return witInstance.GetIssueTemplate(idContract);
     }
 
     [WebMethod]
