@@ -73,7 +73,10 @@ namespace Infocorp.TITA.SilverlightUI
         private DTItem my_issue_template = null;
         List<DTContract> my_contract = new List<DTContract>();
         private bool isDelete;
-       
+
+        private bool isVisibleWP = false;
+        private bool isVisibleINCIDENT = false;
+        private bool isVisibleTASK = false;
 
         public Page()
         {
@@ -87,6 +90,9 @@ namespace Infocorp.TITA.SilverlightUI
         public void EnableOption(Option o)
         {
             isEdit = false;
+            isVisibleWP = false;
+            isVisibleINCIDENT = false;
+            isVisibleTASK = false;
             ShowError("", false);
             lblConectContract.Text = "";
             lblConectContract.Visibility = Visibility.Collapsed;
@@ -101,6 +107,7 @@ namespace Infocorp.TITA.SilverlightUI
             scroll_REPORT.Visibility = Visibility.Collapsed;
             contractsReport.Visibility = Visibility.Collapsed;
             lstContratos.Visibility = Visibility.Collapsed;
+            ClearReport();
             if (PnlForm_WP.Children != null)
                 PnlForm_WP.Children.Clear();
             if (PnlForm_INCIDENT.Children != null)
@@ -112,10 +119,12 @@ namespace Infocorp.TITA.SilverlightUI
                 case Option.WP:
                     CanvasWP.Visibility = Visibility.Visible;
                     scroll_WP.Visibility = Visibility.Visible;
+                    isVisibleWP = true;
                     break;
                 case Option.INCIDENT:
                     CanvasIncident.Visibility = Visibility.Visible;
                     scroll_INCIDENT.Visibility = Visibility.Visible;
+                    isVisibleINCIDENT = true;
                     break;
                 case Option.CONTRACT:
                     pnl_Contrato.Visibility = Visibility.Visible;
@@ -125,6 +134,7 @@ namespace Infocorp.TITA.SilverlightUI
                 case Option.TASK:
                     CanvasTASK.Visibility = Visibility.Visible;
                     scroll_TASK.Visibility = Visibility.Visible;
+                    isVisibleTASK = true;
                     break;
                 case Option.REPORT:
                     CanvasREPORT.Visibility = Visibility.Visible;
@@ -134,6 +144,13 @@ namespace Infocorp.TITA.SilverlightUI
                 default:
                     break;
             }
+        }
+
+        public void ClearReport()
+        {
+            contractsReport.Visibility = Visibility.Collapsed;
+            PnlOption_REPORT.Visibility = Visibility.Collapsed;
+            grd_REPORT.Visibility = Visibility.Collapsed;
         }
 
         public void ShowError(string msg, bool show)
@@ -379,6 +396,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void ButtonWP_Click(object sender, RoutedEventArgs e)
         {
+            ClearReport();
             if (url != null)
             {
                 EnableOption(Option.WP);
@@ -576,6 +594,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void ButtonIncident_Click(object sender, RoutedEventArgs e)
         {
+            ClearReport();
             if (url != null)
             {
                 EnableOption(Option.INCIDENT);
@@ -1282,6 +1301,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void ButtonTask_Click(object sender, RoutedEventArgs e)
         {
+            ClearReport();
             if (url != null)
             {
                 EnableOption(Option.TASK);
@@ -1493,6 +1513,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnGenerarREPORT_Click(object sender, RoutedEventArgs e)
         {
+            ShowError("", false);
             if ((cal_inicial.SelectedDate == null || 
                 cal_final.SelectedDate == null) || 
                 (contractsReport.SelectedItem == null))
@@ -1512,16 +1533,17 @@ namespace Infocorp.TITA.SilverlightUI
         {
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
             ws.ReportDesvWorkPackageCompleted += new EventHandler<ReportDesvWorkPackageCompletedEventArgs>(ws_ReportDesvWorkPackageCompleted);
-            ws.DeleteTaskCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_DeleteTaskCompleted);
-            ws.ReportDesvWorkPackageAsync(contractId, fch_inicial, fch_final);
+            ws.ReportDesvWorkPackageAsync(contractId,fch_inicial,fch_final);
         }
 
         void ws_ReportDesvWorkPackageCompleted(object sender, ReportDesvWorkPackageCompletedEventArgs e)
         {
             if (e.Result != null)
             {
+                grd_REPORT.Columns.Clear();
+                List<DTWorkPackageReport> lst = e.Result;
                 grd_REPORT.Visibility = Visibility.Visible;
-                grd_REPORT.ItemsSource = e.Result; 
+                grd_REPORT.ItemsSource = lst;
             }
         }
 
@@ -1549,7 +1571,19 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_ApplyChangesCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            //GetIncidents();
+
+            if (isVisibleTASK)
+            {
+                GetTask();
+            }
+            else if (isVisibleWP)
+            {
+                GetWPS();
+            }
+            else if (isVisibleINCIDENT)
+            {
+                GetIncidents();
+            }
         }
         #endregion
 
