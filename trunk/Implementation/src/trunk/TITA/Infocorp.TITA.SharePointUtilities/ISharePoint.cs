@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Infocorp.TITA.DataTypes;
 using System.Globalization;
+using System.Collections.Generic;
 
 namespace Infocorp.TITA.SharePointUtilities
 {
@@ -142,5 +143,12 @@ namespace Infocorp.TITA.SharePointUtilities
         /// <param name="urlSite">Url de Sitio</param>
         /// <returns>Retorna la informacion sobre la cultura del sitio</returns>
         CultureInfo GetSiteLocale(string idContract);
+
+        /// <summary>
+        /// Retorna la coleccion de listas existente en un Sitio SharePoint
+        /// </summary>
+        /// <param name="urlSite">URL del Sitio</param>
+        /// <returns>Coleccion de string que representa los nombre de las listas</returns>
+        List<String> GetLists(string urlSite);
     }
 }
