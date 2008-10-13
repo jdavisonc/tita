@@ -18,8 +18,9 @@ namespace Infocorp.TITA.OutlookSharePoint
         /// Retorna una coleccion de campos que contiene un incidente
         /// </summary>
         /// <param name="urlSite">Url del Sitio</param>
+        /// <param name="nameListIssues">nombre de la lista para los Issues</param>
         /// <returns>Coleccion de campos</returns>
-        List<DTField> GetFieldsIssue(string urlSite);
+        List<DTField> GetFieldsIssue(string urlSite, string nameListIssues);
 
     }
 }
