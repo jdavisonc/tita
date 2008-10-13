@@ -58,8 +58,19 @@ namespace Infocorp.TITA.WpfOutlookAddin
         private void btnContracts_Click(object sender, RoutedEventArgs e)
         {
 
-            _urlContract = GetUrlContracts()[_contract.comboBox1.SelectedIndex].ContractUrl;
-            List<DTField> oListaAtrib = _outlookSP.GetFieldsIssue(_urlContract);
+            DTUrl oUrlSelected = GetUrlContracts()[_contract.comboBox1.SelectedIndex];
+
+            _urlContract = oUrlSelected.ContractUrl;
+            
+            List<DTField> oListaAtrib = _outlookSP.GetFieldsIssue(_urlContract, oUrlSelected.IssueList);
+            foreach (DTField item in oListaAtrib)
+            {
+                if (item.Name==oUrlSelected.MailBodyField)
+                {
+                    ((DTFieldAtomicNote)item).Value=_mailSelected.GetMail().Body;
+                }
+            }
+
             _contract.Close();
 
             //aca genera la ventana para mostrar los campos del Issue
@@ -178,8 +189,9 @@ namespace Infocorp.TITA.WpfOutlookAddin
                     if (bookElement.HasAttributes)
                     {
                         XmlElement issueListElement = (XmlElement)bookElement.GetElementsByTagName("IssueList")[0];
+                        XmlElement mailBodyFieldElement = (XmlElement)bookElement.GetElementsByTagName("MailField")[0];
                         DTUrl oElementUrl = new DTUrl(bookElement.Attributes["Name"].InnerText, bookElement.Attributes["Url"].InnerText,
-                            issueListElement.Attributes["Name"].InnerText);
+                            issueListElement.Attributes["Name"].InnerText, mailBodyFieldElement.Attributes["Name"].InnerText);
                         oListDataUrl.Add(oElementUrl);
                     }
                 }
@@ -214,7 +226,11 @@ namespace Infocorp.TITA.WpfOutlookAddin
             
             
             DTItem oIssue = new DTItem(fields, attachments);
-            _outlookSP.AddIssue(_urlContract, oIssue);
+            if (_outlookSP.AddIssue(_urlContract, oIssue)) 
+            {
+                MessageBox.Show("Se reporto el incidente exitosamente", "Reporte inicidente", MessageBoxButton.OK, MessageBoxImage.Information);
+                
+            }
         }
 
         #endregion
