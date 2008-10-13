@@ -5,12 +5,13 @@ using Microsoft.SharePoint;
 using System.IO;
 using Infocorp.TITA.DataTypes;
 using System.Collections.Specialized;
+using System.Windows.Forms;
 
 namespace Infocorp.TITA.OutlookSharePoint
 {
     public class OutlookSharePoint2003: IOutlookSharePoint
     {
-        private const string _listIssues = "Incidentes";
+        private string _listIssues = null;
 
         public OutlookSharePoint2003() { }
 
@@ -106,12 +107,16 @@ namespace Infocorp.TITA.OutlookSharePoint
             }
             catch (Exception e)
             {
+                
+                MessageBox.Show("No se pudo impactar el incidente", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
 
-        public List<DTField> GetFieldsIssue(string urlSite)
+        //, DTUrl addInConfig
+        public List<DTField> GetFieldsIssue(string urlSite, string nameListIssues)
         {
+            _listIssues = nameListIssues;
             List<DTField> fieldsCollection = new List<DTField>();
             using (SPSite site = new SPSite(urlSite))
             {
