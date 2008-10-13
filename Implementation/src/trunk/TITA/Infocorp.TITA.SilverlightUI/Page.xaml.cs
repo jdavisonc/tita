@@ -605,6 +605,7 @@ namespace Infocorp.TITA.SilverlightUI
             PnlForm_WP.Visibility = Visibility.Collapsed;
             PnlAction_WP.Visibility = Visibility.Collapsed;
             PnlForm_WP.Visibility = Visibility.Visible;
+            PnlOption_WP.Visibility = Visibility.Visible;
         }
 
         #endregion
@@ -659,9 +660,9 @@ namespace Infocorp.TITA.SilverlightUI
                             case "Title":
                                 i.Title = ((DTFieldAtomicString)field).Value;
                                 break;
-                            //case "Status":
-                            //    i.Status = ((DTFieldChoice)field).Value;
-                            //    break;
+                            case "Status":
+                                i.Status = ((DTFieldChoice)field).Value;
+                                break;
                             case "Priority":
                                 i.Priority = ((DTFieldChoice)field).Value;
                                 break;
@@ -712,6 +713,7 @@ namespace Infocorp.TITA.SilverlightUI
             PnlForm_INCIDENT.Visibility = Visibility.Collapsed;
             PnlAction_INCIDENT.Visibility = Visibility.Collapsed;
             PnlForm_INCIDENT.Visibility = Visibility.Visible;
+            PnlOption_INCIDENT.Visibility = Visibility.Visible;
         }
 
         private void BtnNuevo_Click(object sender, RoutedEventArgs e)
@@ -1046,20 +1048,6 @@ namespace Infocorp.TITA.SilverlightUI
                             resultField.Name = field.Name;
                             resulItem.Fields.Add(resultField);
                         }
-                        else if (field is DTFieldChoice)
-                        {
-                            ListBox lst = (ListBox)my_pnl.FindName("lstbx_" + field.Name);
-                            if ((field.Required) && (lst.SelectedItem == null))
-                            {
-                                TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
-                                txt.Text = field.Name + "*";
-                                ok = false;
-                            }
-                            DTFieldChoice resultField = new DTFieldChoice();
-                            resultField.Value = lst.SelectedItem.ToString();
-                            resultField.Name = field.Name;
-                            resulItem.Fields.Add(resultField);
-                        }
                         else if (field is DTFieldChoiceUser)
                         {
                             ListBox chuser = (ListBox)my_pnl.FindName("chuser_" + field.Name);
@@ -1074,6 +1062,20 @@ namespace Infocorp.TITA.SilverlightUI
                             resultField.Name = field.Name;
                             resulItem.Fields.Add(resultField);
                         }
+                        else if (field is DTFieldChoice)
+                        {
+                            ListBox lst = (ListBox)my_pnl.FindName("lstbx_" + field.Name);
+                            if ((field.Required) && (lst.SelectedItem == null))
+                            {
+                                TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
+                                txt.Text = field.Name + "*";
+                                ok = false;
+                            }
+                            DTFieldChoice resultField = new DTFieldChoice();
+                            resultField.Value = lst.SelectedItem.ToString();
+                            resultField.Name = field.Name;
+                            resulItem.Fields.Add(resultField);
+                        }
                         else if (field is DTFieldAtomicDateTime)
                         {
                             Calendar cal = (Calendar)my_pnl.FindName("cal_" + field.Name);
@@ -1084,7 +1086,16 @@ namespace Infocorp.TITA.SilverlightUI
                                 ok = false;
                             }
                             DTFieldAtomicDateTime resultField = new DTFieldAtomicDateTime();
-                            resultField.Value = cal.SelectedDate.Value;
+
+                            if (cal.SelectedDate == null)
+                            {
+                                resultField.Value = new DateTime(2008, 1, 1);
+                            }
+                            else 
+                            {
+                                resultField.Value = cal.SelectedDate.Value;
+                            }
+
                             resultField.Name = field.Name;
                             resulItem.Fields.Add(resultField);
                         }
@@ -1112,7 +1123,8 @@ namespace Infocorp.TITA.SilverlightUI
                                 ok = false;
                             }
                             DTFieldAtomicNumber resultField = new DTFieldAtomicNumber();
-                            resultField.Value = double.Parse(num.Text.ToString());
+                            resultField.Value = double.Parse(num.Text.Trim());
+                            
                             resultField.Name = field.Name;
                             resulItem.Fields.Add(resultField);
                         }
@@ -1182,24 +1194,6 @@ namespace Infocorp.TITA.SilverlightUI
                             newGrd.Children.Add(txt);
                             newGrd.Children.Add(chk);
                         }
-                        else if (field is DTFieldChoice)
-                        {
-                            txt.Text = field.Name;
-                            txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
-                            txt.SetValue(Grid.ColumnProperty, 0);
-
-                            ListBox lstbx = new ListBox();
-                            lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
-                            lstbx.ItemsSource = ((DTFieldChoice)field).Choices;
-                            lstbx.SelectedIndex = lstbx.Items.IndexOf(((DTFieldChoice)field).Value);
-                            lstbx.SelectedIndexWorkaround();
-                            lstbx.Width = 80;
-                            lstbx.SetValue(Grid.ColumnProperty, 1);
-
-                            newGrd.Children.Add(txt);
-                            newGrd.Children.Add(lstbx);
-                        }
                         else if (field is DTFieldChoiceUser)
                         {
                             txt.Text = field.Name;
@@ -1218,6 +1212,24 @@ namespace Infocorp.TITA.SilverlightUI
                             newGrd.Children.Add(txt);
                             newGrd.Children.Add(chuser);
                         }
+                        else if (field is DTFieldChoice)
+                        {
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            ListBox lstbx = new ListBox();
+                            lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
+                            lstbx.ItemsSource = ((DTFieldChoice)field).Choices;
+                            lstbx.SelectedIndex = lstbx.Items.IndexOf(((DTFieldChoice)field).Value);
+                            lstbx.SelectedIndexWorkaround();
+                            lstbx.Width = 80;
+                            lstbx.SetValue(Grid.ColumnProperty, 1);
+
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(lstbx);
+                        }
                         else if (field is DTFieldAtomicDateTime)
                         {
                             numCtrl = numCtrl + 3;
@@ -1230,8 +1242,8 @@ namespace Infocorp.TITA.SilverlightUI
                             cal.SetValue(NameProperty, "cal_" + field.Name);
                             cal.Width = 280;
                             cal.Height = 200;
-                            cal.SelectedDate = DateTime.Today;
                             cal.SelectedDate = ((DTFieldAtomicDateTime)field).Value;
+                            cal.DisplayDate = cal.SelectedDate.Value;
                             cal.SetValue(Grid.ColumnProperty, 1);
 
                             newGrd.Children.Add(txt);
