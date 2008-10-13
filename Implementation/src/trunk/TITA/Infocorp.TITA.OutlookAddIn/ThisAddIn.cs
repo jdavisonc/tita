@@ -51,7 +51,7 @@ namespace OutlookAddInTitaSoft
                 if (mail != null)
                 {
                     btn = CommandBar.Controls.Add(Office.MsoControlType.msoControlButton, missing, missing, missing, missing) as Office.CommandBarButton;
-                    btn.Caption = "Reportar Incidente_MNU";
+                    btn.Caption = "Reportar Incidente";
                     btn.Click += new Office._CommandBarButtonEvents_ClickEventHandler(btn_Click);
                 }
             }
@@ -91,7 +91,6 @@ namespace OutlookAddInTitaSoft
         {
             //Create a Windows form with WPF namespace
             HandlerAddIn oHandlerAddIn = HandlerAddIn.GetInstanceHandlerAddIn();
-            //DTUrl oURL = new DTUrl("infotest", "http://localhost/infocorp");
             if (mail != null)
             { 
                 //MyMail oMyMailSelected =
