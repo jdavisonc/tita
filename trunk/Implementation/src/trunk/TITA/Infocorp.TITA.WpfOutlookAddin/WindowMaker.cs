@@ -81,7 +81,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
 
         }
 
-        private Control InsertTextNote(int height, int width)
+        private Control InsertTextNote(int height, int width, string text)
         {
             TextBox textBox = new TextBox();
             textBox.Height = height;
@@ -93,10 +93,11 @@ namespace Infocorp.TITA.WpfOutlookAddIn
             //textBox.Margin = new System.Windows.Thickness(left, top, right, bottom);
             //textBox.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             //textBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            textBox.Text = text;
             textBox.AcceptsReturn = true;
             textBox.AcceptsTab = false;
             textBox.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-
+            textBox.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
             return textBox;
         }
 
@@ -129,14 +130,24 @@ namespace Infocorp.TITA.WpfOutlookAddIn
                     break;
                 case DTField.Types.Note:
                     //Richtexbox
-                    oReturn = InsertTextNote(100,150);
+                    oReturn = InsertTextNote(100,150,((DTFieldAtomicNote)lineField).Value);
                     break;
                 case DTField.Types.User:
                     //combo
                     oReturn = InsertCombo(((DTFieldChoice)lineField).Choices);
                     break;
                 case DTField.Types.Lookup:
-                    oReturn = InsertCombo(((DTFieldChoice)lineField).Choices);
+                    if (((DTFieldChoice)lineField).Choices.Count==0)
+                    {
+                        List<string> oText = new List<string>();
+                        oText.Add(" ");
+                        DTFieldChoice oDTFieldChoice = new DTFieldChoice(((DTFieldChoice)lineField).Name, false, false, true, oText);
+                        oReturn = InsertCombo(oDTFieldChoice.Choices);
+                    }
+                    else
+                    {
+                        oReturn = InsertCombo(((DTFieldChoice)lineField).Choices);
+                    }
                     break;
                 case DTField.Types.Default:
                     break;
