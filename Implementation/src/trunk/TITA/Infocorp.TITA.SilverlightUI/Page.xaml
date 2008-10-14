@@ -115,15 +115,15 @@
         <!--Reports--> 
         <ScrollViewer Margin="-1,4,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_REPORT">
             <StackPanel x:Name="CanvasREPORT" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
-                <my:DataGrid x:Name="contractsReport" Margin="100,0,0,0" Visibility="Collapsed" AutoGenerateColumns="True" Width="auto"/> 
-                <StackPanel x:Name="PnlOption_REPORT" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal">
+                <my:DataGrid x:Name="contractsReport" Margin="100,0,0,70" Visibility="Collapsed" AutoGenerateColumns="True" Width="auto"/> 
+                <StackPanel x:Name="PnlOption_REPORT" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal" Margin="100,0,0,0">
                     <TextBlock Text="Fecha inicial: " x:Name="txt_fechaInicial"></TextBlock>
                     <my1:Calendar x:Name="cal_inicial"></my1:Calendar>
                     <TextBlock Margin="65,0,0,0" Text="Fecha final: " x:Name="txt_fechaFinal"></TextBlock>
                     <my1:Calendar x:Name="cal_final"></my1:Calendar>
                     <Button  Content="Generar" Margin="50,127,0,0" HorizontalAlignment="Left" Click="BtnGenerarREPORT_Click" Width="112" Height="26" x:Name="BtnGenerarReporte" Background="#FF0B97F9" />
                 </StackPanel>
-                <my:DataGrid x:Name="grd_REPORT" AutoGenerateColumns="True" Visibility="Collapsed" Width="auto"/>
+                <my:DataGrid x:Name="grd_REPORT" Margin="100,50,0,0" AutoGenerateColumns="True" Visibility="Collapsed" Width="auto"/>
                 <StackPanel  x:Name="PnlExportar_REPORT" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
                     <Button  Content="Exportar" VerticalAlignment="Center" Click="BtnExportar_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnExportar" Background="#FF0B97F9"/>
                 </StackPanel>
