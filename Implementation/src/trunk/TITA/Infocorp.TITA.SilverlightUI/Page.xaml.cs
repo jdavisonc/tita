@@ -450,7 +450,7 @@ namespace Infocorp.TITA.SilverlightUI
                 wp = new WorkPackage();
                 foreach (DTField field in w.Fields)
                {
-                    if (!field.Hidden)
+                    if ((!field.Hidden) || (field.Name == "ID" && field.Hidden))  
                     {
                         switch (field.Name)
                         {
@@ -496,6 +496,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnNuevoWP_Click(object sender, RoutedEventArgs e)
         {
+            isEdit = false;
             PnlOption_WP.Visibility = Visibility.Collapsed;
             PnlForm_WP.Visibility = Visibility.Visible;
             PnlForm_WP.Children.Add(loading);
@@ -536,6 +537,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnChangeWP_Click(object sender, RoutedEventArgs e)
         {
+            isEdit = true;
             string strMy_pnl = "PnlForm_" + Option.WP;
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
             my_pnl.Children.Add(loading);
@@ -650,7 +652,7 @@ namespace Infocorp.TITA.SilverlightUI
 
                 foreach (DTField field in issue.Fields)
                 {
-                    if (!field.Hidden)
+                    if ((!field.Hidden) || (field.Name == "ID" && field.Hidden))  
                     {
                         switch (field.Name)
                         {
@@ -718,6 +720,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnNuevo_Click(object sender, RoutedEventArgs e)
         {
+            isEdit = false;
             PnlOption_INCIDENT.Visibility = Visibility.Collapsed;
             PnlForm_INCIDENT.Visibility = Visibility.Visible;
             PnlForm_INCIDENT.Children.Add(loading);
@@ -780,6 +783,7 @@ namespace Infocorp.TITA.SilverlightUI
         
         private void BtnChange_Click(object sender, RoutedEventArgs e)
         {
+            isEdit = true;
             string strMy_pnl = "PnlForm_" + Option.INCIDENT;
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
             my_pnl.Children.Add(loading);
@@ -908,24 +912,6 @@ namespace Infocorp.TITA.SilverlightUI
                             newGrd.Children.Add(txt);
                             newGrd.Children.Add(chk);
                         }
-                        else if (field is DTFieldChoice)
-                        {
-                            txt.Text = field.Name;
-                            txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
-                            txt.SetValue(Grid.ColumnProperty, 0);
-
-                            ListBox lstbx = new ListBox();
-                            lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
-                            lstbx.Width = 80;
-                            lstbx.ItemsSource = ((DTFieldChoice)field).Choices;
-                            lstbx.SelectedIndex = -1;
-                            lstbx.SelectedIndexWorkaround();
-                            lstbx.SetValue(Grid.ColumnProperty, 1);
-
-                            newGrd.Children.Add(txt);
-                            newGrd.Children.Add(lstbx);
-                        }
                         else if (field is DTFieldChoiceUser)
                         {
                             txt.Text = field.Name;
@@ -943,6 +929,24 @@ namespace Infocorp.TITA.SilverlightUI
 
                             newGrd.Children.Add(txt);
                             newGrd.Children.Add(chuser);
+                        }
+                        else if (field is DTFieldChoice)
+                        {
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            ListBox lstbx = new ListBox();
+                            lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
+                            lstbx.Width = 80;
+                            lstbx.ItemsSource = ((DTFieldChoice)field).Choices;
+                            lstbx.SelectedIndex = -1;
+                            lstbx.SelectedIndexWorkaround();
+                            lstbx.SetValue(Grid.ColumnProperty, 1);
+
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(lstbx);
                         }
                         else if (field is DTFieldAtomicDateTime)
                         {
@@ -1059,6 +1063,7 @@ namespace Infocorp.TITA.SilverlightUI
                             }
                             DTFieldChoiceUser resultField = new DTFieldChoiceUser();
                             resultField.Value = chuser.SelectedItem.ToString();
+                            resultField.Choices = ((DTFieldChoiceUser)field).Choices;
                             resultField.Name = field.Name;
                             resulItem.Fields.Add(resultField);
                         }
@@ -1073,6 +1078,7 @@ namespace Infocorp.TITA.SilverlightUI
                             }
                             DTFieldChoice resultField = new DTFieldChoice();
                             resultField.Value = lst.SelectedItem.ToString();
+                            resultField.Choices = ((DTFieldChoice)field).Choices;
                             resultField.Name = field.Name;
                             resulItem.Fields.Add(resultField);
                         }
@@ -1156,6 +1162,12 @@ namespace Infocorp.TITA.SilverlightUI
 
                             resulItem.Fields.Add(resultField);
                         }
+                    }
+                    else if (field.Name == "ID")
+                    {
+                        DTFieldCounter resultField = new DTFieldCounter();
+                        resultField = ((DTFieldCounter)field);
+                        resulItem.Fields.Add(resultField);
                     }
                 }
             }
@@ -1368,7 +1380,7 @@ namespace Infocorp.TITA.SilverlightUI
 
                 foreach (DTField field in task.Fields)
                 {
-                    if (!field.Hidden)
+                    if ((!field.Hidden) || (field.Name == "ID" && field.Hidden))  
                     {
                         switch (field.Name)
                         {
@@ -1419,6 +1431,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnNuevoTASK_Click(object sender, RoutedEventArgs e)
         {
+            isEdit = false;
             PnlOption_TASK.Visibility = Visibility.Collapsed;
             PnlForm_TASK.Visibility = Visibility.Visible;
             PnlForm_TASK.Children.Add(loading);
@@ -1441,6 +1454,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnChangeTASK_Click(object sender, RoutedEventArgs e)
         {
+            isEdit = true;
             string strMy_pnl = "PnlForm_" + Option.TASK;
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
             my_pnl.Children.Add(loading);
