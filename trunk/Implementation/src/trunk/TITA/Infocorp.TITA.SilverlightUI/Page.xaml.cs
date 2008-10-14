@@ -437,7 +437,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_GetWorkPackagesCompleted(object sender, GetWorkPackagesCompletedEventArgs e)
         {
-            lstItem = e.Result;
+            lstItem = e.Result; 
             Dispatcher.BeginInvoke(LoadWPS(e.Result));
         }
 
@@ -1366,7 +1366,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_GetTasksCompleted(object sender, GetTasksCompletedEventArgs e)
         {
-            lstTask = e.Result;
+            lstItem = e.Result;
             Dispatcher.BeginInvoke(LoadTask(e.Result));
         }
 
@@ -1463,7 +1463,7 @@ namespace Infocorp.TITA.SilverlightUI
             {
                 WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
                 ws.GetTaskTemplateCompleted +=new EventHandler<GetTaskTemplateCompletedEventArgs>(ws_GetTaskTemplateCompleted2);
-                ws.GetIssueTemplateAsync(url);
+                ws.GetTaskTemplateAsync(url);
             }
             else
             {
