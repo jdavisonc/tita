@@ -49,6 +49,7 @@ namespace Infocorp.TITA.DataTypes
         public List<string> Choices
         {
             get { return _choices; }
+            set { _choices = value; }
         }
     }
 }
