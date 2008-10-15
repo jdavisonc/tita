@@ -68,7 +68,7 @@ namespace Infocorp.TITA.SilverlightUI
         List<DTItem> lstItem = new List<DTItem>();
         List<DTItem> lstTask = new List<DTItem>();
         private DTItem resulItem = new DTItem();
-        private Loading loading = new Loading();
+        private Progress progress = new Progress();
         private bool isEdit;
         private bool forReport = false;
         private DTItem my_issue_template = null;
@@ -499,7 +499,8 @@ namespace Infocorp.TITA.SilverlightUI
             isEdit = false;
             PnlOption_WP.Visibility = Visibility.Collapsed;
             PnlForm_WP.Visibility = Visibility.Visible;
-            PnlForm_WP.Children.Add(loading);
+            progress.play();
+            PnlForm_WP.Children.Add(progress);
             LoadFormsWP();
         }
 
@@ -540,7 +541,8 @@ namespace Infocorp.TITA.SilverlightUI
             isEdit = true;
             string strMy_pnl = "PnlForm_" + Option.WP;
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
-            my_pnl.Children.Add(loading);
+            progress.play();
+            my_pnl.Children.Add(progress);
             PnlOption_WP.Visibility = Visibility.Collapsed;
             if (item == null)
             {
@@ -723,7 +725,8 @@ namespace Infocorp.TITA.SilverlightUI
             isEdit = false;
             PnlOption_INCIDENT.Visibility = Visibility.Collapsed;
             PnlForm_INCIDENT.Visibility = Visibility.Visible;
-            PnlForm_INCIDENT.Children.Add(loading);
+            progress.play();
+            PnlForm_INCIDENT.Children.Add(progress);
             LoadFormsIncedent();
         }
 
@@ -786,7 +789,8 @@ namespace Infocorp.TITA.SilverlightUI
             isEdit = true;
             string strMy_pnl = "PnlForm_" + Option.INCIDENT;
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
-            my_pnl.Children.Add(loading);
+            progress.play();
+            my_pnl.Children.Add(progress);
             PnlOption_INCIDENT.Visibility = Visibility.Collapsed;
             if (item == null)
             {
@@ -1044,7 +1048,8 @@ namespace Infocorp.TITA.SilverlightUI
                         my_pnl.Children.Add(newGrd);
                     }
                 }
-                my_pnl.Children.Remove(loading);
+                my_pnl.Children.Remove(progress);
+                progress.stop();
             }
             else if (isCheck)
             {
@@ -1353,7 +1358,8 @@ namespace Infocorp.TITA.SilverlightUI
                         my_pnl.Children.Add(newGrd);
                     }
                 }
-                my_pnl.Children.Remove(loading);
+                my_pnl.Children.Remove(progress);
+                progress.stop();
             }
             return ok;
         }
@@ -1454,7 +1460,8 @@ namespace Infocorp.TITA.SilverlightUI
             isEdit = false;
             PnlOption_TASK.Visibility = Visibility.Collapsed;
             PnlForm_TASK.Visibility = Visibility.Visible;
-            PnlForm_TASK.Children.Add(loading);
+            progress.play();
+            PnlForm_TASK.Children.Add(progress);
             LoadFormsTask();
         }
 
@@ -1477,7 +1484,8 @@ namespace Infocorp.TITA.SilverlightUI
             isEdit = true;
             string strMy_pnl = "PnlForm_" + Option.TASK;
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
-            my_pnl.Children.Add(loading);
+            progress.play();
+            my_pnl.Children.Add(progress);
             PnlOption_TASK.Visibility = Visibility.Collapsed;
             if (item == null)
             {
