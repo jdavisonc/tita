@@ -892,6 +892,7 @@ namespace Infocorp.TITA.SilverlightUI
                         newGrd.ColumnDefinitions.Add(new ColumnDefinition());
                         newGrd.ColumnDefinitions[0].Width = new GridLength(200);
                         TextBlock txt = new TextBlock();
+                        txt.Margin = new Thickness(0, 10, 0, 10);
                         numCtrl = numCtrl + 1;
                         row = row + 1;
 
@@ -904,6 +905,7 @@ namespace Infocorp.TITA.SilverlightUI
                             CheckBox chk = new CheckBox();
                             chk.SetValue(NameProperty, "chk_" + field.Name);
                             chk.Width = 40;
+                            chk.Margin = new Thickness(0,10, 0, 10);
                             chk.SetValue(Grid.ColumnProperty, 1);
 
                             txt.SetValue(Grid.RowProperty, row);
@@ -922,7 +924,9 @@ namespace Infocorp.TITA.SilverlightUI
                             ListBox chuser = new ListBox();
                             chuser.SetValue(NameProperty, "chuser_" + field.Name);
                             chuser.ItemsSource = ((DTFieldChoiceUser)field).Choices;
-                            chuser.Width = 80;
+                            chuser.Width = 150;
+                            chuser.Height = 80;
+                            chuser.Margin = new Thickness(0, 10, 0, 10);
                             chuser.SelectedIndex = -1;
                             chuser.SelectedIndexWorkaround();
                             chuser.SetValue(Grid.ColumnProperty, 1);
@@ -939,7 +943,9 @@ namespace Infocorp.TITA.SilverlightUI
 
                             ListBox lstbx = new ListBox();
                             lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
-                            lstbx.Width = 80;
+                            lstbx.Width = 150;
+                            lstbx.Height = 80;
+                            lstbx.Margin = new Thickness(0, 10, 0, 10);
                             lstbx.ItemsSource = ((DTFieldChoice)field).Choices;
                             lstbx.SelectedIndex = -1;
                             lstbx.SelectedIndexWorkaround();
@@ -977,6 +983,7 @@ namespace Infocorp.TITA.SilverlightUI
                             nt.SetValue(NameProperty, "nt_" + field.Name);
                             nt.Width = 300;
                             nt.Height = 100;
+                            nt.Margin = new Thickness(0, 10, 0, 10);
                             nt.TextWrapping = TextWrapping.Wrap;
                             nt.SetValue(Grid.ColumnProperty, 1);
 
@@ -993,6 +1000,7 @@ namespace Infocorp.TITA.SilverlightUI
                             TextBox num = new TextBox();
                             num.SetValue(NameProperty, "num_" + field.Name);
                             num.Width = 80;
+                            num.Margin = new Thickness(0, 10, 0, 10);
                             num.TextWrapping = TextWrapping.Wrap;
                             num.SetValue(Grid.ColumnProperty, 1);
 
@@ -1009,6 +1017,7 @@ namespace Infocorp.TITA.SilverlightUI
                             TextBox cnt = new TextBox();
                             cnt.SetValue(NameProperty, "cnt_" + field.Name);
                             cnt.Width = 80;
+                            cnt.Margin = new Thickness(0, 10, 0, 10);
                             cnt.TextWrapping = TextWrapping.Wrap;
                             cnt.SetValue(Grid.ColumnProperty, 1);
 
@@ -1024,7 +1033,8 @@ namespace Infocorp.TITA.SilverlightUI
 
                             TextBox bx = new TextBox();
                             bx.SetValue(NameProperty, "bx_" + field.Name);
-                            bx.Width = 80;
+                            bx.Width = 300;
+                            bx.Margin = new Thickness(0, 10, 0, 10);
                             bx.SetValue(Grid.ColumnProperty, 1);
 
                             newGrd.Children.Add(txt);
@@ -1185,6 +1195,7 @@ namespace Infocorp.TITA.SilverlightUI
                         newGrd.ColumnDefinitions.Add(new ColumnDefinition());
                         newGrd.ColumnDefinitions[0].Width = new GridLength(200);
                         TextBlock txt = new TextBlock();
+                        txt.Margin = new Thickness(0, 10, 0, 10);
                         numCtrl = numCtrl + 1;
                         row = row + 1;
 
@@ -1198,6 +1209,7 @@ namespace Infocorp.TITA.SilverlightUI
                             chk.SetValue(NameProperty, "chk_" + field.Name);
                             chk.IsChecked = ((DTFieldAtomicBoolean)field).Value;
                             chk.Width = 40;
+                            chk.Margin = new Thickness(0, 10, 0, 10);
                             chk.SetValue(Grid.ColumnProperty, 1);
 
                             txt.SetValue(Grid.RowProperty, row);
@@ -1218,7 +1230,9 @@ namespace Infocorp.TITA.SilverlightUI
                             chuser.ItemsSource = ((DTFieldChoiceUser)field).Choices;
                             chuser.SelectedIndex = chuser.Items.IndexOf(((DTFieldChoiceUser)field).Value);
                             chuser.SelectedIndexWorkaround();
-                            chuser.Width = 80;
+                            chuser.Width = 150;
+                            chuser.Height = 80;
+                            chuser.Margin = new Thickness(0, 10, 0, 10);
                             chuser.SetValue(Grid.ColumnProperty, 1);
 
                             newGrd.Children.Add(txt);
@@ -1236,7 +1250,9 @@ namespace Infocorp.TITA.SilverlightUI
                             lstbx.ItemsSource = ((DTFieldChoice)field).Choices;
                             lstbx.SelectedIndex = lstbx.Items.IndexOf(((DTFieldChoice)field).Value);
                             lstbx.SelectedIndexWorkaround();
-                            lstbx.Width = 80;
+                            lstbx.Width = 150;
+                            lstbx.Height = 80;
+                            lstbx.Margin = new Thickness(0, 10, 0, 10);
                             lstbx.SetValue(Grid.ColumnProperty, 1);
 
                             newGrd.Children.Add(txt);
@@ -1273,6 +1289,7 @@ namespace Infocorp.TITA.SilverlightUI
                             nt.Text = ((DTFieldAtomicNote)field).Value;
                             nt.Width = 300;
                             nt.Height = 100;
+                            nt.Margin = new Thickness(0, 10, 0, 10);
                             nt.TextWrapping = TextWrapping.Wrap;
                             nt.SetValue(Grid.ColumnProperty, 1);
 
@@ -1290,6 +1307,7 @@ namespace Infocorp.TITA.SilverlightUI
                             num.SetValue(NameProperty, "num_" + field.Name);
                             num.Text = ((DTFieldAtomicNumber)field).Value.ToString();
                             num.Width = 80;
+                            num.Margin = new Thickness(0, 10, 0, 10);
                             num.TextWrapping = TextWrapping.Wrap;
                             num.SetValue(Grid.ColumnProperty, 1);
 
@@ -1307,6 +1325,7 @@ namespace Infocorp.TITA.SilverlightUI
                             cnt.SetValue(NameProperty, "cnt_" + field.Name);
                             cnt.Text = ((DTFieldCounter)field).Value.ToString();
                             cnt.Width = 80;
+                            cnt.Margin = new Thickness(0, 10, 0, 10);
                             cnt.TextWrapping = TextWrapping.Wrap;
                             cnt.SetValue(Grid.ColumnProperty, 1);
 
@@ -1323,7 +1342,8 @@ namespace Infocorp.TITA.SilverlightUI
                             TextBox bx = new TextBox();
                             bx.SetValue(NameProperty, "bx_" + field.Name);
                             bx.Text = ((DTFieldAtomicString)field).Value;
-                            bx.Width = 80;
+                            bx.Width = 300;
+                            bx.Margin = new Thickness(0, 10, 0, 10);
                             bx.SetValue(Grid.ColumnProperty, 1);
 
                             newGrd.Children.Add(txt);
