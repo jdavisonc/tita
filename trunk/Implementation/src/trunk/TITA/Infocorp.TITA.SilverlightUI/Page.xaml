@@ -4,20 +4,44 @@
     <Grid x:Name="GridPrincipal" Background="#FFFFFFFF" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Visible">
 
         <!--MENU-->
-        <Rectangle HorizontalAlignment="Left" Margin="-1,0,0,0" VerticalAlignment="Stretch" Stroke="#00000000" Width="139" x:Name="RectangleMenu">
+        <Rectangle HorizontalAlignment="Left" Margin="-0.828000009059906,0,0,-99.9929962158203" VerticalAlignment="Stretch" Stroke="#00000000" Width="139" x:Name="RectangleMenu" RenderTransformOrigin="0.5,0.5">
+        	<Rectangle.RenderTransform>
+        		<TransformGroup>
+        			<ScaleTransform/>
+        			<SkewTransform/>
+        			<RotateTransform Angle="179.805"/>
+        			<TranslateTransform/>
+        		</TransformGroup>
+        	</Rectangle.RenderTransform>
         	<Rectangle.Fill>
-        		<LinearGradientBrush EndPoint="0.540000021457672,0.809000015258789" StartPoint="0.514999985694885,0.164000004529953">
-        			<GradientStop Color="#FF426EC8"/>
+        		<LinearGradientBrush EndPoint="0.540000021457672,0.809000015258789" StartPoint="0.514999985694885,0.164000004529953" SpreadMethod="Pad" MappingMode="RelativeToBoundingBox">
+        			<GradientStop Color="#FF426EC8" Offset="0.124"/>
         			<GradientStop Color="#FFFFFFFF" Offset="1"/>
+        			<GradientStop Color="#FFE4EAF7" Offset="0.8619999885559082"/>
+        			<GradientStop Color="#FF5179CC" Offset="0.071"/>
+        			<GradientStop Color="#FFDFE6F5" Offset="0.658"/>
+        			<GradientStop Color="#FFF1F4FB" Offset="0.93300002813339233"/>
+        			<GradientStop Color="#FFF7F9FC" Offset="0.96399998664855957"/>
+        			<GradientStop Color="#FFD6DFF2" Offset="0.79600000381469727"/>
+        			<GradientStop Color="#FFC1CFEC" Offset="0.68400001525878906"/>
+        			<GradientStop Color="#FFA4B9E3" Offset="0.52899998426437378"/>
+        			<GradientStop Color="#FFBBCAEA" Offset="0.742"/>
+        			<GradientStop Color="#FFD4DDF1" Offset="0.78700000047683716"/>
+        			<GradientStop Color="#FF0E3FA3" Offset="0.19599999487400055"/>
+        			<GradientStop Color="#FFFCFCFD" Offset="0.969"/>
         		</LinearGradientBrush>
         	</Rectangle.Fill>
         </Rectangle>
-        <Button Height="26" HorizontalAlignment="Left" Margin="18,100,0,0" VerticalAlignment="Top" Width="112" Click="ButtonContract_Click" Content="Contrato" x:Name="ButtonContract" Background="#FF6FC1F3"/>
+        <Image Source="imgs/logo.jpg" Width="138.995" Margin="0,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="32.585" d:LayoutOverrides="Width, Height"/>
+        <StackPanel x:Name="logo" Margin="256.171997070313,0,119,-191.99299621582" VerticalAlignment="Bottom" Width="335.828" HorizontalAlignment="Stretch" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment, Width, Height" Height="366.993">
+            <Image Source="imgs/logo.jpg" Width="300" />
+        </StackPanel>
+        <Button Height="26" HorizontalAlignment="Left" Margin="18,84,0,0" VerticalAlignment="Top" Width="112" Click="ButtonContract_Click" Content="Contrato" x:Name="ButtonContract" Background="#FF6FC1F3"/>
         <Button HorizontalAlignment="Left" Margin="18,130,0,0" VerticalAlignment="Top" Content="Incidente" Width="112" Height="26" x:Name="ButtonIncident" Click="ButtonIncident_Click" Background="#FF1297F5"/>
-        <Button Margin="18,160,0,0"  VerticalAlignment="Top" Click="ButtonWP_Click" Content="WorkPackage" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonWP" Background="#FF0B97F9"/>
-        <Button HorizontalAlignment="Left" Margin="18,190,0,0" VerticalAlignment="Top" Content="Tarea" Width="112" Height="26" x:Name="ButtonTask" Click="ButtonTask_Click" Background="#FF1297F5"/>
-        <Button HorizontalAlignment="Left" Margin="18,223,0,0" VerticalAlignment="Top" Click="ButtonRport_Click" Content="Reportes" Width="112" Height="26" x:Name="ButtonReports" Background="#FF0994F5"/>
-        <Button Margin="18,285,0,0"  VerticalAlignment="Top" Click="ButtonApply_Click" Content="Aplicar" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonApply" Background="#FF0B97F9"/>
+        <Button Margin="18,178,0,0"  VerticalAlignment="Top" Click="ButtonWP_Click" Content="WorkPackage" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonWP" Background="#FF0B97F9"/>
+        <Button HorizontalAlignment="Left" Margin="18,219,0,0" VerticalAlignment="Top" Content="Tarea" Width="112" Height="26" x:Name="ButtonTask" Click="ButtonTask_Click" Background="#FF1297F5"/>
+        <Button HorizontalAlignment="Left" Margin="18,263,0,0" VerticalAlignment="Top" Click="ButtonRport_Click" Content="Reportes" Width="112" Height="26" x:Name="ButtonReports" Background="#FF0994F5" RenderTransformOrigin="0.49099999666214,1.61500000953674"/>
+        <Button Margin="18.9950008392334,312,0,0"  VerticalAlignment="Top" Click="ButtonApply_Click" Content="Aplicar" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonApply" Background="#FF0B97F9" RenderTransformOrigin="0.455000013113022,1.69200003147125"/>
         
         <TextBlock Margin="18,350,0,0"  VerticalAlignment="Top" x:Name="lblPending" Visibility="Collapsed" Width="112" HorizontalAlignment="Left" Height="26"/>
         
