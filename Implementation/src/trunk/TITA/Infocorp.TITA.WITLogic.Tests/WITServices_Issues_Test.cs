@@ -13,6 +13,39 @@ namespace Infocorp.TITA.WITLogic.Tests
     public class WITServices_Issues_Test
     {
 
+        IWITServices witServices;
+        MockRepository mocks;
+        DataBaseAccess.DataBaseAccess dbMock;
+        ISharePoint suMock;
+
+        [TestFixtureSetUp]
+        public void TestFixtureSetUp()
+        {
+
+        }
+
+        [TestFixtureTearDown]
+        public void TestFixtureTearDown()
+        {
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            mocks = new MockRepository();
+            dbMock = mocks.CreateMock<DataBaseAccess.DataBaseAccess>();
+            suMock = mocks.CreateMock<ISharePoint>();
+            witServices = WITFactory.Instance().WITServicesInstance(dbMock, suMock);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            mocks.VerifyAll();
+        }
+
+        #region FunctionalTests
+
         [Test]
         public void AddIssue()
         {
@@ -86,87 +119,131 @@ namespace Infocorp.TITA.WITLogic.Tests
 
         }
 
+        [Test]
+        public void ModifyIssue()
+        {
+            string siteUrl = "1";
+            string newTitle  = DateTime.Now.ToString("ddMMyyyyhhmmss");
+            ISharePoint sharepoint = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint();
+            List<DTItem> issues =sharepoint.GetIssues(siteUrl, string.Empty);
+            if (issues.Count > 0)
+            {
+                DTItem issue = sharepoint.GetIssues(siteUrl, string.Empty).First();
+                (issue.GetField("Title") as DTFieldAtomicString).Value = newTitle;
+                bool result = true;
+                try
+                {
+                    result &= sharepoint.UpdateIssue(siteUrl, issue);
+                    result &= WITFactory.Instance().WITServicesInstance().ApplyChanges(siteUrl);
 
-        //    IWITServices witServices;
-        //    MockRepository mocks;
-        //    DataBaseAccess.DataBaseAccess dbMock;
-        //    ISharePoint suMock;
+                    issue = sharepoint.GetIssues(siteUrl, string.Empty).First();
+                }
+                catch (Exception exc)
+                {
+                    Assert.Fail("No se agregó el issue. ", exc.Message);
 
-        //    [TestFixtureSetUp]
-        //    public void TestFixtureSetUp()
-        //    {
+                }
 
-        //    }
+                Assert.AreEqual(newTitle, (issue.GetField("Title") as DTFieldAtomicString).Value);
+                Assert.IsTrue(result);
+            }
+            else
+            {
+                Assert.Fail("No hay items en sharepoint");
+            }
 
-        //    [TestFixtureTearDown]
-        //    public void TestFixtureTearDown()
-        //    {
-        //    }
+        }
 
-        //    [SetUp]
-        //    public void SetUp()
-        //    {
-        //        mocks = new MockRepository();
-        //        dbMock = mocks.CreateMock<DataBaseAccess.DataBaseAccess>();
-        //        suMock = mocks.CreateMock<ISharePoint>();
-        //        witServices = WITFactory.Instance().WITServicesInstance(dbMock, suMock);
-        //    }
+        [Test]
+        public void DeleteIssue()
+        {
+            string siteUrl = "1";
+            ISharePoint sharepoint = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint();
+            List<DTItem> issues =sharepoint.GetIssues(siteUrl, string.Empty);
+            if (issues.Count > 0)
+            {
+                DTItem issue = issues.First();
 
-        //    [TearDown]
-        //    public void TearDown()
-        //    {
-        //        mocks.VerifyAll();
-        //    }
+                int issueId = (issue.GetField("ID") as DTFieldCounter).Value;
+                bool result = true;
+                try
+                {
+                    result &= sharepoint.DeleteIssue(siteUrl, issueId);
+                    result &= WITFactory.Instance().WITServicesInstance().ApplyChanges(siteUrl);
 
-        //    [Test]
-        //    public void MustGetIssueTemplate()
-        //    {
-        //        string url = "http://www.testurl.com";
-        //        List<DTField> fields = new List<DTField>() { new DTField("Test", DTField.Types.Boolean, true, null, "true") };
-        //        using (mocks.Record())
-        //        {
-        //            Expect.On(suMock).Call(suMock.GetFieldsIssue(url)).Return(fields);
-        //        }
+                    issues = sharepoint.GetIssues(siteUrl, string.Empty);
+                }
+                catch (Exception exc)
+                {
+                    Assert.Fail("No se agregó el issue. ", exc.Message);
+                }
 
-        //        DTIssue issueTemplate = witServices.GetIssueTemplate(url);
+                Assert.IsTrue(result);
+                Assert.IsFalse(issues.Contains(issue));
+            }
+            else
+            {
+                Assert.Fail("No hay items en sharepoint");
+            }
 
-        //        Assert.AreEqual(fields.Count, issueTemplate.Fields.Count);
-        //        foreach (DTField field in issueTemplate.Fields)
-        //        {
-        //            Assert.Contains(field, fields);
-        //        }
+        }
 
-        //    }
+        #endregion
 
-        //    [Test]
-        //    public void MustGetIssues()
-        //    {
-        //        string url = "http://www.testurl.com";
-        //        List<DTIssue> issues = new List<DTIssue>() { new DTIssue(new List<DTField>(), new List<DTAttachment>()) };
-        //        using (mocks.Record())
-        //        {
-        //            Expect.On(suMock).Call(suMock.GetIssues(url)).Return(issues);
-        //        }
+        #region UnitTests
 
-        //        List<DTIssue> result = witServices.GetIssues(url);
 
-        //        Assert.AreEqual(issues.Count, result.Count);
-        //    }
+        [Test]
+        public void MustGetIssueTemplate()
+        {
+            string siteId = "1";
+            List<DTField> fields = new List<DTField>() { new DTFieldAtomicString("Test", true, false, true) };
+            using (mocks.Record())
+            {
+                Expect.On(suMock).Call(suMock.GetFieldsIssue(siteId)).Return(fields);
+            }
 
-        //    [Test, Ignore("Not ready")]
-        //    public void MustAddNewIssue()
-        //    {
-        //    }
+            DTItem issueTemplate = witServices.GetIssueTemplate(siteId);
 
-        //    [Test, Ignore("Not ready")]
-        //    public void MustModifyIssue()
-        //    {
-        //    }
+            Assert.AreEqual(fields.Count, issueTemplate.Fields.Count);
+            foreach (DTField field in issueTemplate.Fields)
+            {
+                Assert.Contains(field, fields);
+            }
 
-        //    [Test, Ignore("Not ready")]
-        //    public void MustDeleteIssue()
-        //    {
-        //    }
-        //}
+        }
+
+        [Test]
+        public void MustGetIssues()
+        {
+            string siteId = "1";
+            List<DTItem> issues = new List<DTItem>() { new DTItem(new List<DTField>(), new List<DTAttachment>()) };
+            using (mocks.Record())
+            {
+                Expect.On(suMock).Call(suMock.GetIssues(siteId,string.Empty)).Return(issues);
+            }
+
+            List<DTItem> result = witServices.GetIssues(siteId);
+
+            Assert.AreEqual(issues.Count, result.Count);
+        }
+
+            [Test, Ignore("Not ready")]
+            public void MustAddNewIssue()
+            {
+            }
+
+            [Test, Ignore("Not ready")]
+            public void MustModifyIssue()
+            {
+            }
+
+            [Test, Ignore("Not ready")]
+            public void MustDeleteIssue()
+            {
+            }
+        }
+
+        #endregion
     }
 }
