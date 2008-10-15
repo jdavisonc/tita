@@ -13,6 +13,7 @@ using Infocorp.TITA.SilverlightUI.Code;
 using Infocorp.TITA.SilverlightUI.WSTitaReference;
 using Liquid;
 using Infocorp.TITA.SilverlightUI.UserControls;
+using Cooper.Silverlight.Controls;
 
 namespace Infocorp.TITA.SilverlightUI
 {
@@ -82,6 +83,12 @@ namespace Infocorp.TITA.SilverlightUI
         public Page()
         {
             InitializeComponent();
+            ScrollViewerMouseWheelSupport.Initialize(GridPrincipal, MouseWheelAssociationMode.OnHover);
+            ScrollViewerMouseWheelSupport.AddMouseWheelSupport(scroll_WP);
+            ScrollViewerMouseWheelSupport.AddMouseWheelSupport(scroll_CONTRACT);
+            ScrollViewerMouseWheelSupport.AddMouseWheelSupport(scroll_INCIDENT);
+            ScrollViewerMouseWheelSupport.AddMouseWheelSupport(scroll_TASK);
+            ScrollViewerMouseWheelSupport.AddMouseWheelSupport(scroll_REPORT);
             if (url != null)
             {
                 ViewPendingChanges();
@@ -115,6 +122,7 @@ namespace Infocorp.TITA.SilverlightUI
                 PnlForm_INCIDENT.Children.Clear();
             if (PnlForm_TASK.Children != null)
                 PnlForm_TASK.Children.Clear();
+            logo.Visibility = Visibility.Collapsed;
             switch (o)
             {
                 case Option.WP:
@@ -143,6 +151,7 @@ namespace Infocorp.TITA.SilverlightUI
                     PnlOption_REPORT.Visibility = Visibility.Visible;
                     break;
                 default:
+                    logo.Visibility = Visibility.Visible;
                     break;
             }
         }
@@ -384,6 +393,7 @@ namespace Infocorp.TITA.SilverlightUI
                 isEdit = false;
             }
             GetContract();
+            scroll_CONTRACT.ScrollToVerticalOffset(0);
         }
 
         void ws_ModifyContractCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -541,8 +551,6 @@ namespace Infocorp.TITA.SilverlightUI
             isEdit = true;
             string strMy_pnl = "PnlForm_" + Option.WP;
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
-            progress.play();
-            my_pnl.Children.Add(progress);
             PnlOption_WP.Visibility = Visibility.Collapsed;
             if (item == null)
             {
@@ -555,6 +563,7 @@ namespace Infocorp.TITA.SilverlightUI
                 LoadChangeFields(Option.WP);
             }
             PnlAction_WP.Visibility = Visibility.Visible;
+            scroll_WP.ScrollToVerticalOffset(0);
         }
 
         void ws_GetWorkPackageTemplateCompleted2(object sender, GetWorkPackageTemplateCompletedEventArgs e)
@@ -581,6 +590,7 @@ namespace Infocorp.TITA.SilverlightUI
                     ws.ModifyWPAsync(resulItem, url);
                 }
             }
+            scroll_WP.ScrollToVerticalOffset(0);
         }
 
         void ws_ModifyWPCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -762,6 +772,7 @@ namespace Infocorp.TITA.SilverlightUI
                     ws.ModifyIssueAsync(resulItem,url);
                 }
             }
+            scroll_INCIDENT.ScrollToVerticalOffset(0);
         }
 
         void ws_ModifyIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) 
@@ -803,6 +814,7 @@ namespace Infocorp.TITA.SilverlightUI
                 LoadChangeFields(Option.INCIDENT);
             }
             PnlAction_INCIDENT.Visibility = Visibility.Visible;
+            scroll_INCIDENT.ScrollToVerticalOffset(0);
         }
 
         private void LoadChangeFields(Option pnl)
@@ -1498,6 +1510,7 @@ namespace Infocorp.TITA.SilverlightUI
                 LoadChangeFields(Option.TASK);
             }
             PnlAction_TASK.Visibility = Visibility.Visible;
+            scroll_TASK.ScrollToVerticalOffset(0);
         }
 
         void ws_GetTaskTemplateCompleted2(object sender, GetTaskTemplateCompletedEventArgs e)
@@ -1542,6 +1555,7 @@ namespace Infocorp.TITA.SilverlightUI
                     ws.ModifyTaskAsync(resulItem, url);
                 }
             }
+            scroll_TASK.ScrollToVerticalOffset(0);
         }
 
         void ws_ModifyTaskCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
