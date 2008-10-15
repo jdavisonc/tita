@@ -147,7 +147,6 @@ namespace Infocorp.TITA.SharePointUtilities
             List<String> listCollection = new List<string>();
             try
             {
-                List<DTItem> items = new List<DTItem>();
                 using (SPSite site = new SPSite(urlSite))
                 {
                     using (SPWeb web = site.OpenWeb())
@@ -164,6 +163,61 @@ namespace Infocorp.TITA.SharePointUtilities
             catch (Exception e)
             {
                 throw new Exception("Error en GetLists: " + e.Message);
+            }
+        }
+
+        public List<DTRol> GetPermissions(string idContract, string username)
+        {
+            try
+            {
+                List<DTRol> dtRolCollection = new List<DTRol>();
+                DTContract dtContract = _dbAccess.GetContract(idContract);
+                using (SPSite site = new SPSite(dtContract.Site))
+                {
+                    using (SPWeb web = site.OpenWeb())
+                    {
+                        SPUserCollection spUserCollection = web.AllUsers;
+                        foreach (SPUser user in spUserCollection)
+                        {
+                            if (user.Name.CompareTo(username) == 0)
+                            {
+                                SPRoleCollection roles = user.Roles;
+                                foreach (SPRole rol in roles)
+                                {
+                                    switch (rol.Type)
+	                                {
+		                                case SPRoleType.Administrator:
+                                            dtRolCollection.Add(new DTRol(rol.Name, rol.PermissionMask.ToString(), DTRol.RolType.Administrator));
+                                            break;
+                                        case SPRoleType.Contributor:
+                                            dtRolCollection.Add(new DTRol(rol.Name, rol.PermissionMask.ToString(), DTRol.RolType.Contributor));
+                                            break;
+                                        case SPRoleType.Guest:
+                                            dtRolCollection.Add(new DTRol(rol.Name, rol.PermissionMask.ToString(), DTRol.RolType.Guest));
+                                            break;
+                                        case SPRoleType.None:
+                                            dtRolCollection.Add(new DTRol(rol.Name, rol.PermissionMask.ToString(), DTRol.RolType.None));
+                                            break;
+                                        case SPRoleType.Reader:
+                                            dtRolCollection.Add(new DTRol(rol.Name, rol.PermissionMask.ToString(), DTRol.RolType.Reader));
+                                            break;
+                                        case SPRoleType.WebDesigner:
+                                            dtRolCollection.Add(new DTRol(rol.Name,rol.PermissionMask.ToString(),DTRol.RolType.WebDesigner));
+                                            break;
+                                        default:
+                                            break;
+	                                }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+                return dtRolCollection;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error en GetPermissions: " + e.Message);
             }
         }
 
