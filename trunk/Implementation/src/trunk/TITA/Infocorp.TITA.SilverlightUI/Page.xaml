@@ -84,7 +84,7 @@
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnDelete_Action_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDelete_Action"  Background="#FF0B97F9"/>
                 </StackPanel>
                 <StackPanel  x:Name="PnlForm_INCIDENT" Width="auto" Height="auto"  Visibility="Visible" HorizontalAlignment="Center">
-                    <Grid x:Name="grdForm_INCIDENT" Background="Transparent" VerticalAlignment="Top" Height="auto" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,0,50"/>
+                    <Grid x:Name="grdForm_INCIDENT" Background="Transparent" VerticalAlignment="Top" Height="auto" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
                 </StackPanel>   
                 <StackPanel  x:Name="PnlAction_INCIDENT" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
                     <Button  Content="Aceptar" VerticalAlignment="Center" Click="BtnAccept_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEditAction" Background="#FF0B97F9"/>
