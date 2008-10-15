@@ -59,7 +59,7 @@ namespace Infocorp.TITA.WITLogic.Tests
             {
                 try
                 {
-                    if (!field.Hidden && !field.IsReadOnly )
+                    if (!field.Hidden && !field.IsReadOnly)
                     {
                         switch (field.GetCustomType())
                         {
@@ -85,7 +85,7 @@ namespace Infocorp.TITA.WITLogic.Tests
                                 (field as DTFieldChoiceUser).Value = (field as DTFieldChoiceUser).Choices.First();
                                 break;
                             case DTField.Types.Counter:
-                                
+
                                 break;
                             case DTField.Types.Lookup:
                                 break;
@@ -106,15 +106,15 @@ namespace Infocorp.TITA.WITLogic.Tests
                 int originalCount = sharepoint.GetIssues(siteUrl, string.Empty).Count;
                 WITFactory.Instance().WITServicesInstance().AddIssue(issue, siteUrl);
                 WITFactory.Instance().WITServicesInstance().ApplyChanges(siteUrl);
-               // sharepoint.AddIssue(siteUrl, issue);
+                // sharepoint.AddIssue(siteUrl, issue);
                 int newCount = sharepoint.GetIssues(siteUrl, string.Empty).Count;
 
                 Assert.AreEqual(originalCount + 1, newCount);
             }
             catch (Exception exc)
             {
-                Assert.Fail("No se agregó el issue. ",  exc.Message);
-                
+                Assert.Fail("No se agregó el issue. ", exc.Message);
+
             }
 
         }
@@ -123,9 +123,9 @@ namespace Infocorp.TITA.WITLogic.Tests
         public void ModifyIssue()
         {
             string siteUrl = "1";
-            string newTitle  = DateTime.Now.ToString("ddMMyyyyhhmmss");
+            string newTitle = DateTime.Now.ToString("ddMMyyyyhhmmss");
             ISharePoint sharepoint = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint();
-            List<DTItem> issues =sharepoint.GetIssues(siteUrl, string.Empty);
+            List<DTItem> issues = sharepoint.GetIssues(siteUrl, string.Empty);
             if (issues.Count > 0)
             {
                 DTItem issue = sharepoint.GetIssues(siteUrl, string.Empty).First();
@@ -159,7 +159,7 @@ namespace Infocorp.TITA.WITLogic.Tests
         {
             string siteUrl = "1";
             ISharePoint sharepoint = SharePointUtilities.SharePointUtilities.GetInstance().GetISharePoint();
-            List<DTItem> issues =sharepoint.GetIssues(siteUrl, string.Empty);
+            List<DTItem> issues = sharepoint.GetIssues(siteUrl, string.Empty);
             if (issues.Count > 0)
             {
                 DTItem issue = issues.First();
@@ -220,7 +220,7 @@ namespace Infocorp.TITA.WITLogic.Tests
             List<DTItem> issues = new List<DTItem>() { new DTItem(new List<DTField>(), new List<DTAttachment>()) };
             using (mocks.Record())
             {
-                Expect.On(suMock).Call(suMock.GetIssues(siteId,string.Empty)).Return(issues);
+                Expect.On(suMock).Call(suMock.GetIssues(siteId, string.Empty)).Return(issues);
             }
 
             List<DTItem> result = witServices.GetIssues(siteId);
@@ -228,22 +228,21 @@ namespace Infocorp.TITA.WITLogic.Tests
             Assert.AreEqual(issues.Count, result.Count);
         }
 
-            [Test, Ignore("Not ready")]
-            public void MustAddNewIssue()
-            {
-            }
-
-            [Test, Ignore("Not ready")]
-            public void MustModifyIssue()
-            {
-            }
-
-            [Test, Ignore("Not ready")]
-            public void MustDeleteIssue()
-            {
-            }
+        [Test, Ignore("Not ready")]
+        public void MustAddNewIssue()
+        {
         }
 
-        #endregion
+        [Test, Ignore("Not ready")]
+        public void MustModifyIssue()
+        {
+        }
+
+        [Test, Ignore("Not ready")]
+        public void MustDeleteIssue()
+        {
+        }
     }
+
+        #endregion
 }
