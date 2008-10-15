@@ -10,8 +10,6 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
-using Microsoft.SharePoint;
-using Microsoft.SharePoint.Security;
 using Infocorp.TITA.DataTypes;
 using System.Collections.Specialized;
 using Infocorp.TITA.SharePointUtilities;
@@ -111,22 +109,9 @@ namespace TestSharePoint
                 }*/
                 ISharePoint isp = SharePointUtilities.GetInstance().GetISharePoint();
                 //List<DTItem> col = isp.GetIssues("http://localhost/infocorp");
-                List<DTItem> items = isp.GetIssues(SiteUrl,"");
+                isp.GetPermissions("1","tita");
             }
 
-        }
-        private List<string> GetChoicesFromList(SPWeb web, string listId, string fieldName)
-        {
-            List<string> listLookupChoices = new List<string>();
-            SPListCollection listCollection = web.Lists;
-            Guid listGuid = new Guid(listId);
-            SPList list = listCollection.GetList(listGuid, false);
-            SPListItemCollection itemCollection = list.Items;
-            foreach (SPListItem item in itemCollection)
-            {
-                listLookupChoices.Add(item[fieldName].ToString());
-            }
-            return listLookupChoices;
         }
     }
 }
