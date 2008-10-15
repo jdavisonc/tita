@@ -111,13 +111,17 @@
       <s:element name="ExtendedDTSResponse">
         <s:complexType />
       </s:element>
-      <s:element name="GetWPS">
-        <s:complexType />
-      </s:element>
-      <s:element name="GetWPSResponse">
+      <s:element name="GetIssues">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetWPSResult" type="tns:ArrayOfDTItem" />
+            <s:element minOccurs="0" maxOccurs="1" name="idContract" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetIssuesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetIssuesResult" type="tns:ArrayOfDTItem" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -149,16 +153,6 @@
           <s:element minOccurs="0" maxOccurs="unbounded" name="DTField" nillable="true" type="tns:DTField" />
         </s:sequence>
       </s:complexType>
-      <s:element name="GetIssues">
-        <s:complexType />
-      </s:element>
-      <s:element name="GetIssuesResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetIssuesResult" type="tns:ArrayOfDTItem" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
       <s:element name="AddIssue">
         <s:complexType>
           <s:sequence>
@@ -171,7 +165,11 @@
         <s:complexType />
       </s:element>
       <s:element name="GetIssueTemplate">
-        <s:complexType />
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idContract" type="s:string" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
       <s:element name="GetIssueTemplateResponse">
         <s:complexType>
@@ -403,6 +401,35 @@
       <s:element name="ModifyTaskResponse">
         <s:complexType />
       </s:element>
+      <s:element name="ReportDesvWorkPackage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idContract" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="fch_inicial" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="fch_final" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReportDesvWorkPackageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReportDesvWorkPackageResult" type="tns:ArrayOfDTWorkPackageReport" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDTWorkPackageReport">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DTWorkPackageReport" nillable="true" type="tns:DTWorkPackageReport" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DTWorkPackageReport">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Site" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdWorkPackage" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Desviation" type="s:string" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="ApplyChanges">
         <s:complexType>
           <s:sequence>
@@ -434,12 +461,6 @@
   </wsdl:message>
   <wsdl:message name="ExtendedDTSSoapOut">
     <wsdl:part name="parameters" element="tns:ExtendedDTSResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetWPSSoapIn">
-    <wsdl:part name="parameters" element="tns:GetWPS" />
-  </wsdl:message>
-  <wsdl:message name="GetWPSSoapOut">
-    <wsdl:part name="parameters" element="tns:GetWPSResponse" />
   </wsdl:message>
   <wsdl:message name="GetIssuesSoapIn">
     <wsdl:part name="parameters" element="tns:GetIssues" />
@@ -567,6 +588,12 @@
   <wsdl:message name="ModifyTaskSoapOut">
     <wsdl:part name="parameters" element="tns:ModifyTaskResponse" />
   </wsdl:message>
+  <wsdl:message name="ReportDesvWorkPackageSoapIn">
+    <wsdl:part name="parameters" element="tns:ReportDesvWorkPackage" />
+  </wsdl:message>
+  <wsdl:message name="ReportDesvWorkPackageSoapOut">
+    <wsdl:part name="parameters" element="tns:ReportDesvWorkPackageResponse" />
+  </wsdl:message>
   <wsdl:message name="ApplyChangesSoapIn">
     <wsdl:part name="parameters" element="tns:ApplyChanges" />
   </wsdl:message>
@@ -583,10 +610,6 @@
     <wsdl:operation name="ExtendedDTS">
       <wsdl:input message="tns:ExtendedDTSSoapIn" />
       <wsdl:output message="tns:ExtendedDTSSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetWPS">
-      <wsdl:input message="tns:GetWPSSoapIn" />
-      <wsdl:output message="tns:GetWPSSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="GetIssues">
       <wsdl:input message="tns:GetIssuesSoapIn" />
@@ -672,6 +695,10 @@
       <wsdl:input message="tns:ModifyTaskSoapIn" />
       <wsdl:output message="tns:ModifyTaskSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="ReportDesvWorkPackage">
+      <wsdl:input message="tns:ReportDesvWorkPackageSoapIn" />
+      <wsdl:output message="tns:ReportDesvWorkPackageSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="ApplyChanges">
       <wsdl:input message="tns:ApplyChangesSoapIn" />
       <wsdl:output message="tns:ApplyChangesSoapOut" />
@@ -685,15 +712,6 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="ExtendedDTS">
       <soap:operation soapAction="http://tempuri.org/ExtendedDTS" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetWPS">
-      <soap:operation soapAction="http://tempuri.org/GetWPS" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -890,6 +908,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ReportDesvWorkPackage">
+      <soap:operation soapAction="http://tempuri.org/ReportDesvWorkPackage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ApplyChanges">
       <soap:operation soapAction="http://tempuri.org/ApplyChanges" style="document" />
       <wsdl:input>
@@ -913,15 +940,6 @@
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="ExtendedDTS">
       <soap12:operation soapAction="http://tempuri.org/ExtendedDTS" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetWPS">
-      <soap12:operation soapAction="http://tempuri.org/GetWPS" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1111,6 +1129,15 @@
     </wsdl:operation>
     <wsdl:operation name="ModifyTask">
       <soap12:operation soapAction="http://tempuri.org/ModifyTask" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReportDesvWorkPackage">
+      <soap12:operation soapAction="http://tempuri.org/ReportDesvWorkPackage" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
