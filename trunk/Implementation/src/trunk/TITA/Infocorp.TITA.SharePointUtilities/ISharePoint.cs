@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Infocorp.TITA.DataTypes;
 using System.Globalization;
-using System.Collections.Generic;
 
 namespace Infocorp.TITA.SharePointUtilities
 {
@@ -150,5 +149,7 @@ namespace Infocorp.TITA.SharePointUtilities
         /// <param name="urlSite">URL del Sitio</param>
         /// <returns>Coleccion de string que representa los nombre de las listas</returns>
         List<String> GetLists(string urlSite);
+
+        List<DTRol> GetPermissions(string idContract, string username);
     }
 }
