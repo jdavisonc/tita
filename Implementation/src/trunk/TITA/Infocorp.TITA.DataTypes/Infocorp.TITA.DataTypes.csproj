@@ -62,6 +62,7 @@
     <Compile Include="DTFieldChoiceUser.cs" />
     <Compile Include="DTFieldCounter.cs" />
     <Compile Include="DTItem.cs" />
+    <Compile Include="DTRol.cs" />
     <Compile Include="DTWorkPackageReport.cs" />
     <Compile Include="Gui\DTGuiIssue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
