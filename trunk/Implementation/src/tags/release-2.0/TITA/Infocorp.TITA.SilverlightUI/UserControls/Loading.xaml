@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Infocorp.TITA.SilverlightUI.UserControls.Loading"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    Width="400" Height="300">
+	<UserControl.Resources>
+		<Storyboard x:Name="loadingAnim" RepeatBehavior="Forever">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="recLoading" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
+				<SplineDoubleKeyFrame KeyTime="00:00:01" Value="360"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+	</UserControl.Resources>
+    <Grid x:Name="LayoutRoot">
+    	<Grid.Background>
+    		<SolidColorBrush/>
+    	</Grid.Background>
+    	<Ellipse HorizontalAlignment="Stretch" Margin="165.332992553711,126,172.667007446289,117.166000366211" VerticalAlignment="Stretch" Stroke="#00000000" Width="50" Height="50">
+    		<Ellipse.Fill>
+    			<RadialGradientBrush>
+    				<GradientStop Color="#FF7B98B5"/>
+    				<GradientStop Color="#FFE0DEDE" Offset="1"/>
+    			</RadialGradientBrush>
+    		</Ellipse.Fill>
+    	</Ellipse>
+    	<Rectangle HorizontalAlignment="Left" Margin="195.332992553711,129.417007446289,0,144.667007446289" VerticalAlignment="Stretch" Width="2" Fill="#FF1A3570" Stroke="#00000000" Height="25" RenderTransformOrigin="0.541999995708466,0.975000023841858" x:Name="recLoading">
+    		<Rectangle.RenderTransform>
+    			<TransformGroup>
+    				<ScaleTransform/>
+    				<SkewTransform/>
+    				<RotateTransform/>
+    				<TranslateTransform/>
+    			</TransformGroup>
+    		</Rectangle.RenderTransform>
+    	</Rectangle>
+
+    </Grid>
+</UserControl>

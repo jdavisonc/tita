@@ -1,0 +1,1175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="ExtendedDTS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="str" type="tns:DTFieldAtomicString" />
+            <s:element minOccurs="0" maxOccurs="1" name="bl" type="tns:DTFieldAtomicBoolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="num" type="tns:DTFieldAtomicNumber" />
+            <s:element minOccurs="0" maxOccurs="1" name="time" type="tns:DTFieldAtomicDateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="note" type="tns:DTFieldAtomicNote" />
+            <s:element minOccurs="0" maxOccurs="1" name="counter" type="tns:DTFieldCounter" />
+            <s:element minOccurs="0" maxOccurs="1" name="ch" type="tns:DTFieldChoiceUser" />
+            <s:element minOccurs="0" maxOccurs="1" name="look" type="tns:DTFieldChoiceLookup" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DTFieldAtomicString">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTFieldAtomic">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTFieldAtomic">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTField" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTField">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Required" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Hidden" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsReadOnly" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DTFieldChoice">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTField">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Choices" type="tns:ArrayOfString" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DTFieldChoiceLookup">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTFieldChoice" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTFieldChoiceUser">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTFieldChoice" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTFieldCounter">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTField">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTFieldAtomicNote">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTFieldAtomic">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTFieldAtomicDateTime">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTFieldAtomic">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTFieldAtomicNumber">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTFieldAtomic">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:double" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DTFieldAtomicBoolean">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DTFieldAtomic">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ExtendedDTSResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetIssues">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idContract" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetIssuesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetIssuesResult" type="tns:ArrayOfDTItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDTItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DTItem" nillable="true" type="tns:DTItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DTItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Attachments" type="tns:ArrayOfDTAttachment" />
+          <s:element minOccurs="0" maxOccurs="1" name="Fields" type="tns:ArrayOfDTField" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDTAttachment">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DTAttachment" nillable="true" type="tns:DTAttachment" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DTAttachment">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Data" type="s:base64Binary" />
+          <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDTField">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DTField" nillable="true" type="tns:DTField" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddIssue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="issue" type="tns:DTItem" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddIssueResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetIssueTemplate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idContract" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetIssueTemplateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetIssueTemplateResult" type="tns:DTItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyIssue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="issue" type="tns:DTItem" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyIssueResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteIssue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteIssueResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="AddNewContract">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="contract" type="tns:DTContract" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DTContract">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ContractId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Site" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="issuesList" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="workPackageList" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="taskList" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddNewContractResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteContract">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="contractId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteContractResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ChangeCurrentContract">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="contractId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeCurrentContractResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetContracts">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetContractsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetContractsResult" type="tns:ArrayOfDTContract" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDTContract">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DTContract" nillable="true" type="tns:DTContract" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetContractSite">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="contractId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetContractSiteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetContractSiteResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyContract">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="contract" type="tns:DTContract" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyContractResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetWorkPackages">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWorkPackagesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetWorkPackagesResult" type="tns:ArrayOfDTItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWorkPackageTemplate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWorkPackageTemplateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetWorkPackageTemplateResult" type="tns:DTItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddWorkPackage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wps" type="tns:DTItem" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddWorkPackageResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteWorkPackage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="wpId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteWorkPackageResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ModifyWP">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wp" type="tns:DTItem" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyWPResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetTasks">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTasksResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTasksResult" type="tns:ArrayOfDTItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTaskTemplate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTaskTemplateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTaskTemplateResult" type="tns:DTItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddTask">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="tsk" type="tns:DTItem" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddTaskResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteTask">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="tskId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteTaskResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ModifyTask">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="tsk" type="tns:DTItem" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyTaskResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReportDesvWorkPackage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idContract" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="fch_inicial" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="fch_final" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReportDesvWorkPackageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReportDesvWorkPackageResult" type="tns:ArrayOfDTWorkPackageReport" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDTWorkPackageReport">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DTWorkPackageReport" nillable="true" type="tns:DTWorkPackageReport" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DTWorkPackageReport">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Site" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdWorkPackage" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Desviation" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ApplyChanges">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ApplyChangesResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="HasPendingChanges">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HasPendingChangesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="HasPendingChangesResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ExtendedDTSSoapIn">
+    <wsdl:part name="parameters" element="tns:ExtendedDTS" />
+  </wsdl:message>
+  <wsdl:message name="ExtendedDTSSoapOut">
+    <wsdl:part name="parameters" element="tns:ExtendedDTSResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetIssuesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetIssues" />
+  </wsdl:message>
+  <wsdl:message name="GetIssuesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetIssuesResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddIssueSoapIn">
+    <wsdl:part name="parameters" element="tns:AddIssue" />
+  </wsdl:message>
+  <wsdl:message name="AddIssueSoapOut">
+    <wsdl:part name="parameters" element="tns:AddIssueResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetIssueTemplateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetIssueTemplate" />
+  </wsdl:message>
+  <wsdl:message name="GetIssueTemplateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetIssueTemplateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModifyIssueSoapIn">
+    <wsdl:part name="parameters" element="tns:ModifyIssue" />
+  </wsdl:message>
+  <wsdl:message name="ModifyIssueSoapOut">
+    <wsdl:part name="parameters" element="tns:ModifyIssueResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteIssueSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteIssue" />
+  </wsdl:message>
+  <wsdl:message name="DeleteIssueSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteIssueResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddNewContractSoapIn">
+    <wsdl:part name="parameters" element="tns:AddNewContract" />
+  </wsdl:message>
+  <wsdl:message name="AddNewContractSoapOut">
+    <wsdl:part name="parameters" element="tns:AddNewContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteContractSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteContract" />
+  </wsdl:message>
+  <wsdl:message name="DeleteContractSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCurrentContractSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeCurrentContract" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCurrentContractSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeCurrentContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetContractsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetContracts" />
+  </wsdl:message>
+  <wsdl:message name="GetContractsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetContractsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetContractSiteSoapIn">
+    <wsdl:part name="parameters" element="tns:GetContractSite" />
+  </wsdl:message>
+  <wsdl:message name="GetContractSiteSoapOut">
+    <wsdl:part name="parameters" element="tns:GetContractSiteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModifyContractSoapIn">
+    <wsdl:part name="parameters" element="tns:ModifyContract" />
+  </wsdl:message>
+  <wsdl:message name="ModifyContractSoapOut">
+    <wsdl:part name="parameters" element="tns:ModifyContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetWorkPackagesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetWorkPackages" />
+  </wsdl:message>
+  <wsdl:message name="GetWorkPackagesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetWorkPackagesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetWorkPackageTemplateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetWorkPackageTemplate" />
+  </wsdl:message>
+  <wsdl:message name="GetWorkPackageTemplateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetWorkPackageTemplateResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddWorkPackageSoapIn">
+    <wsdl:part name="parameters" element="tns:AddWorkPackage" />
+  </wsdl:message>
+  <wsdl:message name="AddWorkPackageSoapOut">
+    <wsdl:part name="parameters" element="tns:AddWorkPackageResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteWorkPackageSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteWorkPackage" />
+  </wsdl:message>
+  <wsdl:message name="DeleteWorkPackageSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteWorkPackageResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModifyWPSoapIn">
+    <wsdl:part name="parameters" element="tns:ModifyWP" />
+  </wsdl:message>
+  <wsdl:message name="ModifyWPSoapOut">
+    <wsdl:part name="parameters" element="tns:ModifyWPResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTasksSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTasks" />
+  </wsdl:message>
+  <wsdl:message name="GetTasksSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTasksResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTaskTemplateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTaskTemplate" />
+  </wsdl:message>
+  <wsdl:message name="GetTaskTemplateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTaskTemplateResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddTaskSoapIn">
+    <wsdl:part name="parameters" element="tns:AddTask" />
+  </wsdl:message>
+  <wsdl:message name="AddTaskSoapOut">
+    <wsdl:part name="parameters" element="tns:AddTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTaskSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteTask" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTaskSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModifyTaskSoapIn">
+    <wsdl:part name="parameters" element="tns:ModifyTask" />
+  </wsdl:message>
+  <wsdl:message name="ModifyTaskSoapOut">
+    <wsdl:part name="parameters" element="tns:ModifyTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReportDesvWorkPackageSoapIn">
+    <wsdl:part name="parameters" element="tns:ReportDesvWorkPackage" />
+  </wsdl:message>
+  <wsdl:message name="ReportDesvWorkPackageSoapOut">
+    <wsdl:part name="parameters" element="tns:ReportDesvWorkPackageResponse" />
+  </wsdl:message>
+  <wsdl:message name="ApplyChangesSoapIn">
+    <wsdl:part name="parameters" element="tns:ApplyChanges" />
+  </wsdl:message>
+  <wsdl:message name="ApplyChangesSoapOut">
+    <wsdl:part name="parameters" element="tns:ApplyChangesResponse" />
+  </wsdl:message>
+  <wsdl:message name="HasPendingChangesSoapIn">
+    <wsdl:part name="parameters" element="tns:HasPendingChanges" />
+  </wsdl:message>
+  <wsdl:message name="HasPendingChangesSoapOut">
+    <wsdl:part name="parameters" element="tns:HasPendingChangesResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WSTitaSoap">
+    <wsdl:operation name="ExtendedDTS">
+      <wsdl:input message="tns:ExtendedDTSSoapIn" />
+      <wsdl:output message="tns:ExtendedDTSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIssues">
+      <wsdl:input message="tns:GetIssuesSoapIn" />
+      <wsdl:output message="tns:GetIssuesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddIssue">
+      <wsdl:input message="tns:AddIssueSoapIn" />
+      <wsdl:output message="tns:AddIssueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIssueTemplate">
+      <wsdl:input message="tns:GetIssueTemplateSoapIn" />
+      <wsdl:output message="tns:GetIssueTemplateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ModifyIssue">
+      <wsdl:input message="tns:ModifyIssueSoapIn" />
+      <wsdl:output message="tns:ModifyIssueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteIssue">
+      <wsdl:input message="tns:DeleteIssueSoapIn" />
+      <wsdl:output message="tns:DeleteIssueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddNewContract">
+      <wsdl:input message="tns:AddNewContractSoapIn" />
+      <wsdl:output message="tns:AddNewContractSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContract">
+      <wsdl:input message="tns:DeleteContractSoapIn" />
+      <wsdl:output message="tns:DeleteContractSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCurrentContract">
+      <wsdl:input message="tns:ChangeCurrentContractSoapIn" />
+      <wsdl:output message="tns:ChangeCurrentContractSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContracts">
+      <wsdl:input message="tns:GetContractsSoapIn" />
+      <wsdl:output message="tns:GetContractsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContractSite">
+      <wsdl:input message="tns:GetContractSiteSoapIn" />
+      <wsdl:output message="tns:GetContractSiteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ModifyContract">
+      <wsdl:input message="tns:ModifyContractSoapIn" />
+      <wsdl:output message="tns:ModifyContractSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkPackages">
+      <wsdl:input message="tns:GetWorkPackagesSoapIn" />
+      <wsdl:output message="tns:GetWorkPackagesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkPackageTemplate">
+      <wsdl:input message="tns:GetWorkPackageTemplateSoapIn" />
+      <wsdl:output message="tns:GetWorkPackageTemplateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddWorkPackage">
+      <wsdl:input message="tns:AddWorkPackageSoapIn" />
+      <wsdl:output message="tns:AddWorkPackageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteWorkPackage">
+      <wsdl:input message="tns:DeleteWorkPackageSoapIn" />
+      <wsdl:output message="tns:DeleteWorkPackageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ModifyWP">
+      <wsdl:input message="tns:ModifyWPSoapIn" />
+      <wsdl:output message="tns:ModifyWPSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTasks">
+      <wsdl:input message="tns:GetTasksSoapIn" />
+      <wsdl:output message="tns:GetTasksSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskTemplate">
+      <wsdl:input message="tns:GetTaskTemplateSoapIn" />
+      <wsdl:output message="tns:GetTaskTemplateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddTask">
+      <wsdl:input message="tns:AddTaskSoapIn" />
+      <wsdl:output message="tns:AddTaskSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTask">
+      <wsdl:input message="tns:DeleteTaskSoapIn" />
+      <wsdl:output message="tns:DeleteTaskSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ModifyTask">
+      <wsdl:input message="tns:ModifyTaskSoapIn" />
+      <wsdl:output message="tns:ModifyTaskSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReportDesvWorkPackage">
+      <wsdl:input message="tns:ReportDesvWorkPackageSoapIn" />
+      <wsdl:output message="tns:ReportDesvWorkPackageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ApplyChanges">
+      <wsdl:input message="tns:ApplyChangesSoapIn" />
+      <wsdl:output message="tns:ApplyChangesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="HasPendingChanges">
+      <wsdl:input message="tns:HasPendingChangesSoapIn" />
+      <wsdl:output message="tns:HasPendingChangesSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSTitaSoap" type="tns:WSTitaSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ExtendedDTS">
+      <soap:operation soapAction="http://tempuri.org/ExtendedDTS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIssues">
+      <soap:operation soapAction="http://tempuri.org/GetIssues" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddIssue">
+      <soap:operation soapAction="http://tempuri.org/AddIssue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIssueTemplate">
+      <soap:operation soapAction="http://tempuri.org/GetIssueTemplate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyIssue">
+      <soap:operation soapAction="http://tempuri.org/ModifyIssue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteIssue">
+      <soap:operation soapAction="http://tempuri.org/DeleteIssue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddNewContract">
+      <soap:operation soapAction="http://tempuri.org/AddNewContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContract">
+      <soap:operation soapAction="http://tempuri.org/DeleteContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCurrentContract">
+      <soap:operation soapAction="http://tempuri.org/ChangeCurrentContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContracts">
+      <soap:operation soapAction="http://tempuri.org/GetContracts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContractSite">
+      <soap:operation soapAction="http://tempuri.org/GetContractSite" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyContract">
+      <soap:operation soapAction="http://tempuri.org/ModifyContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkPackages">
+      <soap:operation soapAction="http://tempuri.org/GetWorkPackages" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkPackageTemplate">
+      <soap:operation soapAction="http://tempuri.org/GetWorkPackageTemplate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddWorkPackage">
+      <soap:operation soapAction="http://tempuri.org/AddWorkPackage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteWorkPackage">
+      <soap:operation soapAction="http://tempuri.org/DeleteWorkPackage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyWP">
+      <soap:operation soapAction="http://tempuri.org/ModifyWP" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTasks">
+      <soap:operation soapAction="http://tempuri.org/GetTasks" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskTemplate">
+      <soap:operation soapAction="http://tempuri.org/GetTaskTemplate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTask">
+      <soap:operation soapAction="http://tempuri.org/AddTask" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTask">
+      <soap:operation soapAction="http://tempuri.org/DeleteTask" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyTask">
+      <soap:operation soapAction="http://tempuri.org/ModifyTask" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReportDesvWorkPackage">
+      <soap:operation soapAction="http://tempuri.org/ReportDesvWorkPackage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyChanges">
+      <soap:operation soapAction="http://tempuri.org/ApplyChanges" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HasPendingChanges">
+      <soap:operation soapAction="http://tempuri.org/HasPendingChanges" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WSTitaSoap12" type="tns:WSTitaSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ExtendedDTS">
+      <soap12:operation soapAction="http://tempuri.org/ExtendedDTS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIssues">
+      <soap12:operation soapAction="http://tempuri.org/GetIssues" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddIssue">
+      <soap12:operation soapAction="http://tempuri.org/AddIssue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIssueTemplate">
+      <soap12:operation soapAction="http://tempuri.org/GetIssueTemplate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyIssue">
+      <soap12:operation soapAction="http://tempuri.org/ModifyIssue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteIssue">
+      <soap12:operation soapAction="http://tempuri.org/DeleteIssue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddNewContract">
+      <soap12:operation soapAction="http://tempuri.org/AddNewContract" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContract">
+      <soap12:operation soapAction="http://tempuri.org/DeleteContract" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCurrentContract">
+      <soap12:operation soapAction="http://tempuri.org/ChangeCurrentContract" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContracts">
+      <soap12:operation soapAction="http://tempuri.org/GetContracts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContractSite">
+      <soap12:operation soapAction="http://tempuri.org/GetContractSite" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyContract">
+      <soap12:operation soapAction="http://tempuri.org/ModifyContract" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkPackages">
+      <soap12:operation soapAction="http://tempuri.org/GetWorkPackages" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkPackageTemplate">
+      <soap12:operation soapAction="http://tempuri.org/GetWorkPackageTemplate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddWorkPackage">
+      <soap12:operation soapAction="http://tempuri.org/AddWorkPackage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteWorkPackage">
+      <soap12:operation soapAction="http://tempuri.org/DeleteWorkPackage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyWP">
+      <soap12:operation soapAction="http://tempuri.org/ModifyWP" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTasks">
+      <soap12:operation soapAction="http://tempuri.org/GetTasks" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskTemplate">
+      <soap12:operation soapAction="http://tempuri.org/GetTaskTemplate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTask">
+      <soap12:operation soapAction="http://tempuri.org/AddTask" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTask">
+      <soap12:operation soapAction="http://tempuri.org/DeleteTask" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyTask">
+      <soap12:operation soapAction="http://tempuri.org/ModifyTask" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReportDesvWorkPackage">
+      <soap12:operation soapAction="http://tempuri.org/ReportDesvWorkPackage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyChanges">
+      <soap12:operation soapAction="http://tempuri.org/ApplyChanges" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HasPendingChanges">
+      <soap12:operation soapAction="http://tempuri.org/HasPendingChanges" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSTita">
+    <wsdl:port name="WSTitaSoap" binding="tns:WSTitaSoap">
+      <soap:address location="http://localhost:8082/WSTita.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WSTitaSoap12" binding="tns:WSTitaSoap12">
+      <soap12:address location="http://localhost:8082/WSTita.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
