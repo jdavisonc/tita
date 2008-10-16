@@ -51,7 +51,7 @@ namespace OutlookAddInTitaSoft
                 if (mail != null)
                 {
                     btn = CommandBar.Controls.Add(Office.MsoControlType.msoControlButton, missing, missing, missing, missing) as Office.CommandBarButton;
-                    btn.Caption = "Reportar Incidente";
+                    btn.Caption = "Reportar &Incidente";
                     btn.Click += new Office._CommandBarButtonEvents_ClickEventHandler(btn_Click);
                 }
             }
@@ -62,20 +62,17 @@ namespace OutlookAddInTitaSoft
         {
             if (mail != null)
             {
-                string subject = mail.Subject;
-                string filter = @"@SQL=""urn:schemas:httpmail:subject"" like '%" + subject + "%'";
-                Outlook.Table tbl = Application.Session.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderInbox).GetTable(filter, Outlook.OlTableContents.olUserItems);
-                string result = "";
-
-                while (!tbl.EndOfTable)
-                {
-                    Outlook.Row row = tbl.GetNextRow();
-                    string EntryID = row["EntryID"].ToString();
-                    Outlook.MailItem oMail = (Outlook.MailItem)Application.Session.GetItemFromID(EntryID, Type.Missing);
-                    result += oMail.Subject + " from " + oMail.SenderName + " on " + oMail.SentOn.ToString() + System.Environment.NewLine;// + EntryID.ToString();
-                    // TODO: Actually delete it (oMail.Delete())
-                }
-                //System.Windows.Forms.MessageBox.Show("Deberia Abrir Menu Alta_Inicidente: " + System.Environment.NewLine + result);
+                //string subject = mail.Subject;
+                //string filter = @"@SQL=""urn:schemas:httpmail:subject"" like '%" + subject + "%'";
+                //Outlook.Table tbl = Application.Session.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderInbox).GetTable(filter, Outlook.OlTableContents.olUserItems);
+                //string result = "";
+                //while (!tbl.EndOfTable)
+                //{
+                //    Outlook.Row row = tbl.GetNextRow();
+                //    string EntryID = row["EntryID"].ToString();
+                //    Outlook.MailItem oMail = (Outlook.MailItem)Application.Session.GetItemFromID(EntryID, Type.Missing);
+                //    result += oMail.Subject + " from " + oMail.SenderName + " on " + oMail.SentOn.ToString() + System.Environment.NewLine;// + EntryID.ToString();
+                //}
                 FormWPFCreate();
             }
             //sos emo ??
@@ -97,11 +94,7 @@ namespace OutlookAddInTitaSoft
                 oHandlerAddIn.MailSelected = new MyMail(mail);
             }
             oHandlerAddIn.BuildIncidentWindow();
-            //window.Title = "TITA Soft ";
-            //Set the dimension
-            //window.Height = 306;
-            //window.Width = 464;
-
+            
             #region Comentada No va MAS
             ////Create the Grid Control
             //Grid newgrid = new Grid();
@@ -318,25 +311,24 @@ namespace OutlookAddInTitaSoft
             }
             if (mail != null)
             {
-                string subject = mail.Subject;
-                string filter = @"@SQL=""urn:schemas:httpmail:subject"" like '%" + subject + "%'";
-                Outlook.Table tbl = Application.Session.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderInbox).GetTable(filter, Outlook.OlTableContents.olUserItems);
-                string result = "";
-                while (!tbl.EndOfTable)
-                {
-                    Outlook.Row row = tbl.GetNextRow();
-                    string EntryID = row["EntryID"].ToString();
-                    Outlook.MailItem oMail = (Outlook.MailItem)Application.Session.GetItemFromID(EntryID, Type.Missing);
-                    result += oMail.Subject + " from " + oMail.SenderName + " on " + oMail.SentOn.ToString() + System.Environment.NewLine;// + EntryID.ToString();
-                    // TODO: Actually delete it (oMail.Delete())
-                }
+                //string subject = mail.Subject;
+                //string filter = @"@SQL=""urn:schemas:httpmail:subject"" like '%" + subject + "%'";
+                //Outlook.Table tbl = Application.Session.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderInbox).GetTable(filter, Outlook.OlTableContents.olUserItems);
+                //string result = "";
+                //while (!tbl.EndOfTable)
+                //{
+                //    Outlook.Row row = tbl.GetNextRow();
+                //    string EntryID = row["EntryID"].ToString();
+                //    Outlook.MailItem oMail = (Outlook.MailItem)Application.Session.GetItemFromID(EntryID, Type.Missing);
+                //    result += oMail.Subject + " from " + oMail.SenderName + " on " + oMail.SentOn.ToString() + System.Environment.NewLine;// + EntryID.ToString();
+                //}
 
                 FormWPFCreate();
                
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("Debe seleccionar un mail");
+                System.Windows.Forms.MessageBox.Show("Debe seleccionar un mail","ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -368,20 +360,10 @@ namespace OutlookAddInTitaSoft
                     1, missing, missing, missing, missing);
 
                 firstButton.Style = Office.MsoButtonStyle.msoButtonCaption;
-                firstButton.Caption = "Reportar Incidente";
+                firstButton.Caption = "Reportar &Incidente";
                 firstButton.Tag = "Reportar Incidente";
                 firstButton.Click += new Office._CommandBarButtonEvents_ClickEventHandler(buttonOne_Click);
-                //firstButton.Click += new Office._CommandBarButtonEvents_ClickEventHandler(ButtonClick);
-                
-                // Add a second button to the command bar and an event handler.
-                //secondButton = (Office.CommandBarButton)commandBar.Controls.Add(
-                //    1, missing, missing, missing, missing);
-
-                //secondButton.Style = Office.MsoButtonStyle.msoButtonCaption;
-                //secondButton.Caption = "button 2";
-                //secondButton.Tag = "button2";
-                //secondButton.Click += new Office._CommandBarButtonEvents_ClickEventHandler(ButtonClick);
-
+                //commandBar
                 commandBar.Visible = true;
             }
             catch (ArgumentException e)
