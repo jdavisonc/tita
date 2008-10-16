@@ -199,6 +199,7 @@
     <None Include="Service References\WSTitaReference\WSTita.disco" />
     <Resource Include="imgs\logo.jpg" />
     <Content Include="ServiceReferences.ClientConfig" />
+    <Resource Include="UserControls\imgTita.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
