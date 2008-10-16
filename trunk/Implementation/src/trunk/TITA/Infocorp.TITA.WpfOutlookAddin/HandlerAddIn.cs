@@ -57,26 +57,34 @@ namespace Infocorp.TITA.WpfOutlookAddin
 
         private void btnContracts_Click(object sender, RoutedEventArgs e)
         {
-
-            DTUrl oUrlSelected = GetUrlContracts()[_contract.comboBox1.SelectedIndex];
-
-            _urlContract = oUrlSelected.ContractUrl;
-            
-            List<DTField> oListaAtrib = _outlookSP.GetFieldsIssue(_urlContract, oUrlSelected.IssueList);
-            foreach (DTField item in oListaAtrib)
+            if (_contract.comboBox1.SelectedIndex != -1)
             {
-                if (item.Name==oUrlSelected.MailBodyField)
+
+                DTUrl oUrlSelected = GetUrlContracts()[_contract.comboBox1.SelectedIndex];
+
+                _urlContract = oUrlSelected.ContractUrl;
+                
+                List<DTField> oListaAtrib = _outlookSP.GetFieldsIssue(_urlContract, oUrlSelected.IssueList);
+                foreach (DTField item in oListaAtrib)
                 {
-                    ((DTFieldAtomicNote)item).Value=_mailSelected.GetMail().Body;
+                    if (item.Name==oUrlSelected.MailBodyField)
+                    {
+                        ((DTFieldAtomicNote)item).Value=_mailSelected.GetMail().Body;
+                    }
                 }
+
+                _contract.Close();
+
+                //aca genera la ventana para mostrar los campos del Issue
+                _oIssueWindow = new Window1(oListaAtrib);
+
+                _oIssueWindow.SendIssueButton.Click += new RoutedEventHandler(SendIssueButton_Click);
+                _oIssueWindow.Show();
             }
-
-            _contract.Close();
-
-            //aca genera la ventana para mostrar los campos del Issue
-            _oIssueWindow = new Window1(oListaAtrib);
-            _oIssueWindow.SendIssueButton.Click += new RoutedEventHandler(SendIssueButton_Click);
-            _oIssueWindow.Show();
+            else
+            {
+                MessageBox.Show("Debe seleccionar un contrato", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
 

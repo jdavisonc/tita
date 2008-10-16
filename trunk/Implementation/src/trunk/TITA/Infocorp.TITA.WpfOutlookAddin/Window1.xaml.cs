@@ -46,6 +46,7 @@ namespace Infocorp.TITA.WpfOutlookAddin
           
             _mapElements = new Dictionary<DTField, Control>();
 
+            //StackPanelDT.Background = Brushes.SteelBlue;
             WindowMaker oWindow = new WindowMaker(StackPanelDT, issueFields, _mapElements);
             
             oWindow.GenerateWindow(_sendIssueButton, this.Height);
