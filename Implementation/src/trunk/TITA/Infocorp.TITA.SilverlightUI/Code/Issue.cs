@@ -42,12 +42,12 @@ namespace Infocorp.TITA.SilverlightUI.Code
             get { return reportedDate; }
             set { reportedDate = value; }
         }
-        private string wP;
+        private string workPackage;
 
-        public string WP
+        public string WorkPackage
         {
-            get { return wP; }
-            set { wP = value; }
+            get { return workPackage; }
+            set { workPackage = value; }
         }
         private float ord;
 

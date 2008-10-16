@@ -136,6 +136,36 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Runtime.Serialization.DataContractAttribute(Name="DTFieldChoiceLookup", Namespace="http://tempuri.org/")]
     public partial class DTFieldChoiceLookup : Infocorp.TITA.SilverlightUI.WSTitaReference.DTFieldChoice {
+        
+        private string LookupFieldField;
+        
+        private string LookupListField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string LookupField {
+            get {
+                return this.LookupFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LookupFieldField, value) != true)) {
+                    this.LookupFieldField = value;
+                    this.RaisePropertyChanged("LookupField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string LookupList {
+            get {
+                return this.LookupListField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LookupListField, value) != true)) {
+                    this.LookupListField = value;
+                    this.RaisePropertyChanged("LookupList");
+                }
+            }
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]

@@ -44,12 +44,14 @@ namespace Infocorp.TITA.DataTypes
         public string LookupField
         {
             get { return _lookupField; }
+            set { _lookupField = value; }
         }
 
         [DataMember]
         public string LookupList
         {
             get { return _lookupList; }
+            set { _lookupList = value; }
         }
     }
 }
