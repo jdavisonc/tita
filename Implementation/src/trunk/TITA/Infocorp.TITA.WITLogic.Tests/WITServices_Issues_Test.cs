@@ -192,7 +192,6 @@ namespace Infocorp.TITA.WITLogic.Tests
 
         #region UnitTests
 
-
         [Test]
         public void MustGetIssueTemplate()
         {
@@ -228,19 +227,42 @@ namespace Infocorp.TITA.WITLogic.Tests
             Assert.AreEqual(issues.Count, result.Count);
         }
 
-        [Test, Ignore("Not ready")]
+        [Test]
         public void MustAddNewIssue()
         {
+            List<DTItem> issues = new List<DTItem>() { new DTItem(new List<DTField>(), new List<DTAttachment>()) };
+            DTItem issue = new DTItem(new List<DTField>(), new List<DTAttachment>());
+            string contractId = "1";
+            using (mocks.Record())
+            {
+                Expect.On(suMock).Call(suMock.AddIssue(contractId, issue)).Return(true);
+                Expect.On(suMock).Call(suMock.GetIssues(contractId, string.Empty)).Return(issues).Repeat.Twice();
+            }
+
+            int originalCount = witServices.GetIssues(contractId).Count;
+            witServices.AddIssue(issue, contractId);
+            witServices.ApplyChanges(contractId);
+            int newCount = witServices.GetIssues(contractId).Count;
+
+            Assert.AreEqual(newCount, originalCount + 1);
         }
 
         [Test, Ignore("Not ready")]
         public void MustModifyIssue()
         {
+            using (mocks.Record())
+            {
+            }
+
         }
 
-        [Test, Ignore("Not ready")]
+        [Test]
         public void MustDeleteIssue()
         {
+            using (mocks.Record())
+            {
+            }
+
         }
     }
 
