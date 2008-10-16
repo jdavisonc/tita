@@ -686,8 +686,8 @@ namespace Infocorp.TITA.SilverlightUI
                             case "Reported Date":
                                 i.ReportedDate = ((DTFieldAtomicDateTime)field).Value;
                                 break;
-                            case "WP":
-                                i.WP = ((DTFieldChoice)field).Value;
+                            case "Work Package":
+                                i.WorkPackage = ((DTFieldChoiceLookup)field).Value;
                                 break;
                             case "Reported by":
                                 i.ReportedBy = ((DTFieldChoice)field).Value;
@@ -930,6 +930,26 @@ namespace Infocorp.TITA.SilverlightUI
                             newGrd.Children.Add(txt);
                             newGrd.Children.Add(chk);
                         }
+                        else if (field is DTFieldChoiceLookup)
+                        {
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            ListBox chlkp = new ListBox();
+                            chlkp.SetValue(NameProperty, "chlkp_" + field.Name);
+                            chlkp.ItemsSource = ((DTFieldChoiceLookup)field).Choices;
+                            chlkp.Width = 150;
+                            chlkp.Height = 80;
+                            chlkp.Margin = new Thickness(0, 10, 0, 10);
+                            chlkp.SelectedIndex = -1;
+                            chlkp.SelectedIndexWorkaround();
+                            chlkp.SetValue(Grid.ColumnProperty, 1);
+
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(chlkp);
+                        }
                         else if (field is DTFieldChoiceUser)
                         {
                             txt.Text = field.Name;
@@ -1040,6 +1060,7 @@ namespace Infocorp.TITA.SilverlightUI
                             newGrd.Children.Add(txt);
                             newGrd.Children.Add(cnt);
                         }
+                      
                         else 
                         {
                             txt.Text = field.Name;
@@ -1055,7 +1076,7 @@ namespace Infocorp.TITA.SilverlightUI
 
                             newGrd.Children.Add(txt);
                             newGrd.Children.Add(bx);
-                        }
+                        }                       
 
                         my_pnl.Children.Add(newGrd);
                     }
@@ -1076,6 +1097,23 @@ namespace Infocorp.TITA.SilverlightUI
                             CheckBox info = (CheckBox)my_pnl.FindName("chk_" + field.Name);
                             DTFieldAtomicBoolean resultField = new DTFieldAtomicBoolean();
                             resultField.Value = info.IsChecked.Value;
+                            resultField.Name = field.Name;
+                            resulItem.Fields.Add(resultField);
+                        }
+                        else if (field is DTFieldChoiceLookup)
+                        {
+                            ListBox chlkp = (ListBox)my_pnl.FindName("chlkp_" + field.Name);
+                            if ((field.Required) && (chlkp.SelectedItem == null))
+                            {
+                                TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
+                                txt.Text = field.Name + "*";
+                                ok = false;
+                            }
+                            DTFieldChoiceLookup resultField = new DTFieldChoiceLookup();
+                            resultField.Value = chlkp.SelectedItem.ToString();
+                            resultField.LookupField = ((DTFieldChoiceLookup)field).LookupField;
+                            resultField.LookupList = ((DTFieldChoiceLookup)field).LookupList;
+                            resultField.Choices = ((DTFieldChoiceLookup)field).Choices;
                             resultField.Name = field.Name;
                             resulItem.Fields.Add(resultField);
                         }
@@ -1234,6 +1272,26 @@ namespace Infocorp.TITA.SilverlightUI
 
                             newGrd.Children.Add(txt);
                             newGrd.Children.Add(chk);
+                        }
+                        else if (field is DTFieldChoiceLookup)
+                        {
+                            txt.Text = field.Name;
+                            txt.SetValue(NameProperty, "txt_" + field.Name);
+                            txt.Width = 80;
+                            txt.SetValue(Grid.ColumnProperty, 0);
+
+                            ListBox chlkp = new ListBox();
+                            chlkp.SetValue(NameProperty, "chlkp_" + field.Name);
+                            chlkp.ItemsSource = ((DTFieldChoiceLookup)field).Choices;
+                            chlkp.SelectedIndex = chlkp.Items.IndexOf(((DTFieldChoiceLookup)field).Value);
+                            chlkp.SelectedIndexWorkaround();
+                            chlkp.Width = 150;
+                            chlkp.Height = 80;
+                            chlkp.Margin = new Thickness(0, 10, 0, 10);
+                            chlkp.SetValue(Grid.ColumnProperty, 1);
+
+                            newGrd.Children.Add(txt);
+                            newGrd.Children.Add(chlkp);
                         }
                         else if (field is DTFieldChoiceUser)
                         {
