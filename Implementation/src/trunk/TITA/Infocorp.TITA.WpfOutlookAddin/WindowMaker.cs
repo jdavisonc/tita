@@ -31,13 +31,6 @@ namespace Infocorp.TITA.WpfOutlookAddIn
             _grid.ColumnDefinitions.Add(new ColumnDefinition());
             _grid.ColumnDefinitions.Add(new ColumnDefinition());
             _grid.ColumnDefinitions[0].Width = new GridLength(100, GridUnitType.Pixel);
-
-            
-            //_grid.SetValue( ScrollViewer.VerticalScrollBarVisibilityProperty ,);
-            //_grid.Height = 24;
-        
-            //IHandlerAddIn oHandlerAddIn = new HandlerAddIn();
-            //InsertCombo(oHandlerAddIn.GetUrlContracts());
         }
 
         private ComboBox InsertCombo(List<DTUrl> listChoice)
@@ -69,30 +62,13 @@ namespace Infocorp.TITA.WpfOutlookAddIn
         private Control InsertTextBox() 
         {
             TextBox textBox = new TextBox();
-            //textBox.Height = 19;
-            //textBox.Width = 150;
-            //textBox.Name = boxName;
-            // register textbox2's name with newgrid
-            //newgrid.registername(textbox.name, textbox);
-            //textBox.Margin = new System.Windows.Thickness(0, 3, 3, 3);
-            //textBox.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            //textBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             return textBox;
-
         }
 
         private Control InsertTextNote(int height, int width, string text)
         {
             TextBox textBox = new TextBox();
             textBox.Height = height;
-            //textBox.Width = width;
-            //textBox.Name = nameTextBox;
-            //Register TextBox3's Name with newgrid
-           // newgrid.RegisterName(TextBox4.Name, TextBox4);
-            //textBox.Margin = new System.Windows.Thickness(0, 3, 3, 3);
-            //textBox.Margin = new System.Windows.Thickness(left, top, right, bottom);
-            //textBox.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            //textBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             textBox.Text = text;
             textBox.AcceptsReturn = true;
             textBox.AcceptsTab = false;
@@ -221,8 +197,8 @@ namespace Infocorp.TITA.WpfOutlookAddIn
         }
 
 
-        private void BuildIssueToSend(string urlIssue)
-        {
+        //private void BuildIssueToSend(string urlIssue)
+        //{
            
             //List<DTAttachment> oMailListAttachments = new List<DTAttachment>();
             //DTIssue oDTIssueInfo = new DTIssue(_issueFields, oMailListAttachments);
@@ -230,7 +206,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
 
            // oHandlerAddIn.BuildIssue(urlIssue,DTIssue issue);
             //url, DTIssue
-        }
+        //}
 
 
     }
