@@ -11,7 +11,8 @@ namespace Infocorp.TITA.SharePointUtilities.Test
     [TestFixture]
     public class TestSharePointUtilities
     {
-        private const string _idContract = "2";
+        private const string _idContract = "1";
+        private const string _idName = "ID"; /* Depende de si es el template en espanol o ingles. */
 
         [TestFixtureSetUp]
         public void Init()
@@ -91,7 +92,6 @@ namespace Infocorp.TITA.SharePointUtilities.Test
             catch (Exception exc)
             {
                 Assert.Fail("No se agregó el issue. ", exc.Message);
-
             }
         }
 
@@ -117,21 +117,50 @@ namespace Infocorp.TITA.SharePointUtilities.Test
                     }
                     if (isIn)
                     {
-                        id = ((DTFieldCounter)item.GetField("ID")).Value;
+                        id = ((DTFieldCounter)item.GetField(_idName)).Value;
                         break;
                     }
                 }
                 if (id == 0)
                 {
-                    ISharePoint sharepoint1 = SharePointUtilities.GetInstance().GetISharePoint();
-                    DTItem issue = CreateItem(sharepoint1);
+                    DTItem issue = CreateItem(sharepoint);
                     sharepoint.AddIssue(_idContract, issue);
+                    List<DTItem> items2 = sharepoint.GetIssues(_idContract, string.Empty);
+                    isIn = false;
+                    foreach (DTItem item in items2)
+                    {
+                        foreach (DTField field in item.Fields)
+                        {
+                            if ((field.GetCustomType() == DTField.Types.String) &&
+                                (((DTFieldAtomicString)field).Value.CompareTo("Test Funcional") == 0))
+                            {
+                                isIn = true;
+                                break;
+                            }
+                        }
+                        if (isIn)
+                        {
+                            id = ((DTFieldCounter)item.GetField(_idName)).Value;
+                            break;
+                        }
+                    }
+                }
+                if (id == 0)
+                {
+                    Assert.Fail("No se borro el issue. ");
+                }
+                else
+                {
+                    int originalCount = sharepoint.GetIssues(_idContract, string.Empty).Count;
+                    sharepoint.DeleteIssue(_idContract, id);
+                    int newCount = sharepoint.GetIssues(_idContract, string.Empty).Count;
+
+                    Assert.AreEqual(originalCount - 1, newCount);
                 }
             }
             catch (Exception exc)
             {
                 Assert.Fail("No se elimino el issue. ", exc.Message);
-
             }
         }
     }
