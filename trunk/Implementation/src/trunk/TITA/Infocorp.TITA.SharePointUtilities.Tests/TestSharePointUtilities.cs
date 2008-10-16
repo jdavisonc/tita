@@ -11,6 +11,7 @@ namespace Infocorp.TITA.SharePointUtilities.Test
     [TestFixture]
     public class TestSharePointUtilities
     {
+        private const string _idContract = "2";
 
         [TestFixtureSetUp]
         public void Init()
@@ -20,14 +21,11 @@ namespace Infocorp.TITA.SharePointUtilities.Test
         public void Cleanup()
         { /* Para liberar partes que se hayan usado en los test comunes ... */ }
 
-        [Test]
-        public void UnTest()
+        private DTItem CreateItem(ISharePoint sharepoint)
         {
-            string idContract = "2";
-            ISharePoint sharepoint = SharePointUtilities.GetInstance().GetISharePoint();
             DTItem issue = new DTItem();
             issue.Attachments = new List<DTAttachment>();
-            issue.Fields = sharepoint.GetFieldsIssue(idContract);
+            issue.Fields = sharepoint.GetFieldsIssue(_idContract);
             string name = string.Empty;
             foreach (DTField field in issue.Fields)
             {
@@ -74,11 +72,19 @@ namespace Infocorp.TITA.SharePointUtilities.Test
                     string msg = exc.Message;
                 }
             }
+            return issue;
+        }
+
+        [Test]
+        public void TestAddItem()
+        {
+            ISharePoint sharepoint = SharePointUtilities.GetInstance().GetISharePoint();
+            DTItem issue = CreateItem(sharepoint);
             try
             {
-                int originalCount = sharepoint.GetIssues(idContract, string.Empty).Count;
-                sharepoint.AddIssue(idContract, issue);
-                int newCount = sharepoint.GetIssues(idContract, string.Empty).Count;
+                int originalCount = sharepoint.GetIssues(_idContract, string.Empty).Count;
+                sharepoint.AddIssue(_idContract, issue);
+                int newCount = sharepoint.GetIssues(_idContract, string.Empty).Count;
 
                 Assert.AreEqual(originalCount + 1, newCount);
             }
@@ -87,18 +93,46 @@ namespace Infocorp.TITA.SharePointUtilities.Test
                 Assert.Fail("No se agregó el issue. ", exc.Message);
 
             }
-
-
         }
 
         [Test]
-        public void UnTestOK()
+        public void TestRemoveItem()
         {
-          /*Suma oSuma = new Suma(2, 3);
-            Assert.AreEqual(5, oSuma.SumaElem());
-            Suma oSuma2 = new Suma(3, 3);
-            Assert.AreEqual(6, oSuma2.SumaElem());*/
+            try
+            {
+                ISharePoint sharepoint = SharePointUtilities.GetInstance().GetISharePoint();
+                List<DTItem> items = sharepoint.GetIssues(_idContract, string.Empty);
+                bool isIn = false;
+                int id = 0;
+                foreach (DTItem item in items)
+                {
+                    foreach (DTField field in item.Fields)
+                    {
+                        if ((field.GetCustomType() == DTField.Types.String) &&
+                            (((DTFieldAtomicString)field).Value.CompareTo("Test Funcional") == 0))
+                        {
+                            isIn = true;
+                            break;
+                        }
+                    }
+                    if (isIn)
+                    {
+                        id = ((DTFieldCounter)item.GetField("ID")).Value;
+                        break;
+                    }
+                }
+                if (id == 0)
+                {
+                    ISharePoint sharepoint1 = SharePointUtilities.GetInstance().GetISharePoint();
+                    DTItem issue = CreateItem(sharepoint1);
+                    sharepoint.AddIssue(_idContract, issue);
+                }
+            }
+            catch (Exception exc)
+            {
+                Assert.Fail("No se elimino el issue. ", exc.Message);
 
+            }
         }
     }
 }
