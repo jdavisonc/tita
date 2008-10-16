@@ -90,5 +90,10 @@ namespace Infocorp.TITA.WITLogic
 
             return commands;
         }
+
+        public void ClearCommands(string contractId)
+        {
+            _commands.RemoveAll(delegate(DTCommandInfo cinfo) { return cinfo.ContractId.ToLower().Trim() == contractId.ToLower().Trim(); });
+        }
     }
 }

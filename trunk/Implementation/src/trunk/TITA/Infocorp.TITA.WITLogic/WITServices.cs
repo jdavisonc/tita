@@ -298,7 +298,8 @@ namespace Infocorp.TITA.WITLogic
                 }
             }
 
-            commands.Clear();
+            WITCommandState.Instance().ClearCommands(contractId);
+            
             return result;
         }
 
