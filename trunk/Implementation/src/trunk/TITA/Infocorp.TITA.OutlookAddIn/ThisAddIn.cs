@@ -340,7 +340,7 @@ namespace OutlookAddInTitaSoft
         {
             try
             {
-                commandBar = ((CommandBars)this.Application.ActiveExplorer().CommandBars)["Test"];
+                commandBar = ((CommandBars)this.Application.ActiveExplorer().CommandBars)["TITA Soft Toolbar"];
             }
             catch (ArgumentException e)
             {
@@ -350,7 +350,7 @@ namespace OutlookAddInTitaSoft
             if (commandBar == null)
             {
                 // Add a commandbar named Test.
-                commandBar = Application.ActiveExplorer().CommandBars.Add("Test", 1, missing, true);
+                commandBar = Application.ActiveExplorer().CommandBars.Add("TITA Soft Toolbar", 1, missing, true);
             }
 
             try
