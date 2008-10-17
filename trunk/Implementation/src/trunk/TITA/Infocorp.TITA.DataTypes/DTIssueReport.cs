@@ -38,7 +38,7 @@ namespace Infocorp.TITA.DataTypes
             set{ _workPackage = value;}
         }
 
-        public DTIssueReport(string idIssue, string tite, string site, string workPackage)
+        public DTIssueReport(string idIssue, string title, string site, string workPackage)
         {
             _idIssue = idIssue;
             _title = title;
