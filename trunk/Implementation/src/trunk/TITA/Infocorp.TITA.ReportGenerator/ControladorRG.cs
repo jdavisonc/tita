@@ -17,29 +17,10 @@ namespace Infocorp.TITA.ReportGenerator
         {
             ISharePoint sp = new SharePoint2003();
             String format = "yyyy-MM-ddThh:mm:ssZ";
-
             DataBaseAccess.DataBaseAccess db = new DataBaseAccess.DataBaseAccess();
-            string site = db.ContractSite(contractId).Trim(); 
-            // Converts the local DateTime to a string 
-            // using the custom format string and display.
+            string site = db.ContractSite(contractId).Trim();
             String str = initialDate.ToString(format);
-            String str2 = finalDate.ToString(format);
-            
-            /*string caml = "<Query>"+
-   "<Where>"+
-      "<And>"+
-         "<Lt>"+
-            "<FieldRef Name=\"End_x0020_Date\" />"+
-            "<Value Type=\"DateTime\">"+str2+"</Value>"+
-         "</Lt>"+
-         "<Gt>"+
-            "<FieldRef Name=\"End_x0020_Date\" />"+
-            "<Value Type=\"DateTime\">"+str+"</Value>"+
-         "</Gt>"+
-      "</And>"+
-   "</Where>"+
-"</Query>";*/
-        
+            String str2 = finalDate.ToString(format); 
    string caml = @"<Query>
    <Where><Lt><FieldRef Name='End_x0020_Date' /><Value Type='DateTime'>2009-12-25T12:00:00Z</Value></Lt></Where></Query>";
             List<DTItem> workPackageList = sp.GetWorkPackages(contractId, caml);
@@ -101,12 +82,58 @@ namespace Infocorp.TITA.ReportGenerator
 
             return workPackageDesviation;
         }
-        public List<DTItem> IssuesReport(string urlSite) 
+        public List<DTIssueReport> IssuesReport(string contractId, DateTime initialDate, DateTime finalDate)
         {
             ISharePoint sp = new SharePoint2003();
-            List<DTItem> issuesReportList = sp.GetIssues(urlSite,"");
-            return issuesReportList;
+            String format = "yyyy-MM-ddThh:mm:ssZ";
+            DataBaseAccess.DataBaseAccess db = new DataBaseAccess.DataBaseAccess();
+            string site = db.ContractSite(contractId).Trim();
+            String str = initialDate.ToString(format);
+            String str2 = finalDate.ToString(format);
+            List<DTItem> issueList = sp.GetIssues(contractId,"");
+            List<DTIssueReport> issuesListReport = new List<DTIssueReport>();
+            foreach (var issues in issueList)
+            {
+                List<DTField> fields = issues.Fields;
+                bool isValid = true;
+                int id = 0;
+                string title = null;
+                string workPackage = null;
+                foreach (var fieldsIncident in fields)
+                {
+                    if (fieldsIncident.Name.Equals("Due Date"))
+                        if ((((DTFieldAtomicDateTime)fieldsIncident).Value > finalDate) || ((DTFieldAtomicDateTime)fieldsIncident).Value < initialDate)
+                        {
+                            isValid = false;
+                            break;
+                        }
+                }
+                if (isValid)
+                {
+                    foreach (var fieldsOfIncident in fields)
+                    {
+
+                        if (fieldsOfIncident.Name.Equals("ID"))
+                        {
+                            id = ((DTFieldCounter)fieldsOfIncident).Value;
+                        }
+                        else
+                            if (fieldsOfIncident.Name.Equals("Title"))
+                            {
+                                title = ((DTFieldAtomicString)fieldsOfIncident).Value;
+                            }
+                            else
+                                if (fieldsOfIncident.Name.Equals("Work Package"))
+                                {
+                                    workPackage = ((DTFieldChoiceLookup)fieldsOfIncident).Value;
+                                }
+                    }
+                    DTIssueReport dataIssueReport = new DTIssueReport(id.ToString(), title, site, workPackage);
+                    issuesListReport.Add(dataIssueReport);
+                }
+            
+            }
+            return issuesListReport;                
         }
-        
     }
 }
