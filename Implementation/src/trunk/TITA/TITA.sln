@@ -32,7 +32,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Infocorp.TITA.SilverlightUI
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "1144"
 		DefaultWebSiteLanguage = "Visual C#"
 		ProjOutputReferences = "{E878AFE4-21F8-4025-BFF9-E7CB036B8A46}|ClientBin|false;"
 	EndProjectSection
@@ -50,6 +49,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.WITLogic.Tests", "Infocorp.TITA.WITLogic.Tests\Infocorp.TITA.WITLogic.Tests.csproj", "{83766577-E33F-4C12-B0A5-E15A11EBE29F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.SharePointUtilities.Tests", "Infocorp.TITA.SharePointUtilities.Tests\Infocorp.TITA.SharePointUtilities.Tests.csproj", "{52D7C966-9648-474A-B7FF-C7E72C0D141B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infocorp.TITA.ReportPersistence", "Infocorp.TITA.ReportPersistence\Infocorp.TITA.ReportPersistence.csproj", "{A75F5506-32DF-447E-A0D2-847FEEF0B335}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -189,6 +190,16 @@ Global
 		{52D7C966-9648-474A-B7FF-C7E72C0D141B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{52D7C966-9648-474A-B7FF-C7E72C0D141B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{52D7C966-9648-474A-B7FF-C7E72C0D141B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A75F5506-32DF-447E-A0D2-847FEEF0B335}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{A75F5506-32DF-447E-A0D2-847FEEF0B335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A75F5506-32DF-447E-A0D2-847FEEF0B335}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A75F5506-32DF-447E-A0D2-847FEEF0B335}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A75F5506-32DF-447E-A0D2-847FEEF0B335}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A75F5506-32DF-447E-A0D2-847FEEF0B335}.Release|.NET.ActiveCfg = Release|Any CPU
+		{A75F5506-32DF-447E-A0D2-847FEEF0B335}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A75F5506-32DF-447E-A0D2-847FEEF0B335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A75F5506-32DF-447E-A0D2-847FEEF0B335}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A75F5506-32DF-447E-A0D2-847FEEF0B335}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
