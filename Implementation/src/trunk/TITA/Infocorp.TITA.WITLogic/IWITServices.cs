@@ -9,7 +9,7 @@ namespace Infocorp.TITA.WITLogic
     public interface IWITServices
     {
 
-        bool ApplyChanges(string contractId);
+        bool ApplyChanges(string contractId, ItemType itemType);
 
         bool HasPendingChanges(string contractId);
 
