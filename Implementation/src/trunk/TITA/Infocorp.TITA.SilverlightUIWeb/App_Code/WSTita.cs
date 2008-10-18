@@ -215,6 +215,13 @@ public class WSTita : System.Web.Services.WebService
         IReportGenerator reportInstance = FactoryReport.GetInstance().GetIReportGenerator();
         return reportInstance.ReportDesvWorkPackage(idContract, fch_inicial, fch_final);
     }
+
+    [WebMethod]
+    public List<DTIssueReport> IssuesReport(String idContract, DateTime fch_inicial, DateTime fch_final)
+    {
+        IReportGenerator reportInstance = FactoryReport.GetInstance().GetIReportGenerator();
+        return reportInstance.IssuesReport(idContract, fch_inicial, fch_final);
+    }
     #endregion
 
     #region Apply
