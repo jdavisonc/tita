@@ -230,10 +230,11 @@ namespace Infocorp.TITA.WITLogic
             return result;
         }
 
-        public bool ApplyChanges(string contractId)
-        {
+        public bool ApplyChanges(string contractId, ItemType itemType)
+        {            
             List<DTCommandInfo> commands = WITCommandState.Instance().GetCommands(contractId);
             ISharePoint spu = _sharepoint;
+            commands = commands.FindAll(delegate(DTCommandInfo dt) { return dt.CommandItemType == itemType; });
             commands.Sort();
             bool result = true;
             foreach (DTCommandInfo command in commands)
