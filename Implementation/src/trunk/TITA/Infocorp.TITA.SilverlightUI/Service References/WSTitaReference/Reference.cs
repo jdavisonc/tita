@@ -589,6 +589,19 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
     }
     
+    [System.Runtime.Serialization.DataContractAttribute(Name="ItemType", Namespace="http://tempuri.org/")]
+    public enum ItemType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ISSUE = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        TASK = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        WORKPACKAGE = 2,
+    }
+    
     [System.ServiceModel.ServiceContractAttribute()]
     public interface WSTitaSoap {
         
@@ -2034,11 +2047,15 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
         public string url;
         
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.ItemType itemType;
+        
         public ApplyChangesRequestBody() {
         }
         
-        public ApplyChangesRequestBody(string url) {
+        public ApplyChangesRequestBody(string url, Infocorp.TITA.SilverlightUI.WSTitaReference.ItemType itemType) {
             this.url = url;
+            this.itemType = itemType;
         }
     }
     
@@ -3850,10 +3867,11 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             return base.Channel.BeginApplyChanges(request, callback, asyncState);
         }
         
-        private System.IAsyncResult BeginApplyChanges(string url, System.AsyncCallback callback, object asyncState) {
+        private System.IAsyncResult BeginApplyChanges(string url, Infocorp.TITA.SilverlightUI.WSTitaReference.ItemType itemType, System.AsyncCallback callback, object asyncState) {
             Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequest();
             inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequestBody();
             inValue.Body.url = url;
+            inValue.Body.itemType = itemType;
             return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginApplyChanges(inValue, callback, asyncState);
         }
         
@@ -3867,7 +3885,8 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         private System.IAsyncResult OnBeginApplyChanges(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string url = ((string)(inValues[0]));
-            return this.BeginApplyChanges(url, callback, asyncState);
+            Infocorp.TITA.SilverlightUI.WSTitaReference.ItemType itemType = ((Infocorp.TITA.SilverlightUI.WSTitaReference.ItemType)(inValues[1]));
+            return this.BeginApplyChanges(url, itemType, callback, asyncState);
         }
         
         private object[] OnEndApplyChanges(System.IAsyncResult result) {
@@ -3882,11 +3901,11 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             }
         }
         
-        public void ApplyChangesAsync(string url) {
-            this.ApplyChangesAsync(url, null);
+        public void ApplyChangesAsync(string url, Infocorp.TITA.SilverlightUI.WSTitaReference.ItemType itemType) {
+            this.ApplyChangesAsync(url, itemType, null);
         }
         
-        public void ApplyChangesAsync(string url, object userState) {
+        public void ApplyChangesAsync(string url, Infocorp.TITA.SilverlightUI.WSTitaReference.ItemType itemType, object userState) {
             if ((this.onBeginApplyChangesDelegate == null)) {
                 this.onBeginApplyChangesDelegate = new BeginOperationDelegate(this.OnBeginApplyChanges);
             }
@@ -3897,7 +3916,8 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
                 this.onApplyChangesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnApplyChangesCompleted);
             }
             base.InvokeAsync(this.onBeginApplyChangesDelegate, new object[] {
-                        url}, this.onEndApplyChangesDelegate, this.onApplyChangesCompletedDelegate, userState);
+                        url,
+                        itemType}, this.onEndApplyChangesDelegate, this.onApplyChangesCompletedDelegate, userState);
         }
         
         System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginHasPendingChanges(Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesRequest request, System.AsyncCallback callback, object asyncState) {
