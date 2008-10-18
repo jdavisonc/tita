@@ -41,7 +41,6 @@
         <Button Margin="18,178,0,0"  VerticalAlignment="Top" Click="ButtonWP_Click" Content="WorkPackage" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonWP" Background="#FF0B97F9"/>
         <Button HorizontalAlignment="Left" Margin="18,219,0,0" VerticalAlignment="Top" Content="Tarea" Width="112" Height="26" x:Name="ButtonTask" Click="ButtonTask_Click" Background="#FF1297F5"/>
         <Button HorizontalAlignment="Left" Margin="18,263,0,0" VerticalAlignment="Top" Click="ButtonRport_Click" Content="Reportes" Width="112" Height="26" x:Name="ButtonReports" Background="#FF0994F5" RenderTransformOrigin="0.49099999666214,1.61500000953674"/>
-        <Button Margin="18.9950008392334,312,0,0"  VerticalAlignment="Top" Click="ButtonApply_Click" Content="Aplicar" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonApply" Background="#FF0B97F9" RenderTransformOrigin="0.455000013113022,1.69200003147125"/>
         
         <TextBlock Margin="18,350,0,0"  VerticalAlignment="Top" x:Name="lblPending" Visibility="Collapsed" Width="112" HorizontalAlignment="Left" Height="26"/>
         
@@ -53,6 +52,7 @@
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top"  Content="Nuevo" Click="BtnNuevoWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoWP"  Background="#FF0B97F9"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnChangeWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnChangeWP"  Background="#FF0B97F9"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnDeleteWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDeleteWP"  Background="#FF0B97F9"/>
+                    <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Aplicar" Canvas.Left="336" Click="BtnApplyWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnApplyWP"  Background="#FF0B97F9"/>
                 </StackPanel>
                 <StackPanel  x:Name="PnlForm_WP" Width="auto" Height="auto"  Visibility="Visible" HorizontalAlignment="Center">
                     <Grid x:Name="grdForm_WP" Background="Transparent" VerticalAlignment="Top" Height="auto" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,0,50"/>
@@ -106,6 +106,7 @@
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top"  Content="Nuevo" Click="BtnNuevo_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevo"  Background="#FF0B97F9"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnChange_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnChange"  Background="#FF0B97F9"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnDelete_Action_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDelete_Action"  Background="#FF0B97F9"/>
+                    <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Aplicar" Canvas.Left="336" Click="BtnApplyINCIDENT_Click"  Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnApplyINCIDENT"  Background="#FF0B97F9"/>
                 </StackPanel>
                 <StackPanel  x:Name="PnlForm_INCIDENT" Width="auto" Height="auto"  Visibility="Visible" HorizontalAlignment="Center">
                     <Grid x:Name="grdForm_INCIDENT" Background="Transparent" VerticalAlignment="Top" Height="auto" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
@@ -125,6 +126,7 @@
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top"  Content="Nuevo" Click="BtnNuevoTASK_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoTASK"  Background="#FF0B97F9"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnChangeTASK_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnChangeTASK"  Background="#FF0B97F9"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnDeleteTASK_Action_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDeleteTASK"  Background="#FF0B97F9"/>
+                    <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Aplicar" Canvas.Left="336" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnApplyTASK" Click="BtnApplyTASK_Click" Background="#FF0B97F9"/>
                 </StackPanel>
                 <StackPanel  x:Name="PnlForm_TASK" Width="auto" Height="auto"  Visibility="Visible" HorizontalAlignment="Center">
                     <Grid x:Name="grdForm_TASK" Background="Transparent" VerticalAlignment="Top" Height="auto" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,0,50"/>

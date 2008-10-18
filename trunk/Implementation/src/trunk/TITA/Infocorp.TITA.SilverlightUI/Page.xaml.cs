@@ -17,41 +17,7 @@ using Cooper.Silverlight.Controls;
 
 namespace Infocorp.TITA.SilverlightUI
 {
-    public static class ListBoxExtensions 
-    {
-        public static void SelectedIndexWorkaround(this ListBox listBox)
-        {
-            int selectedIndex = listBox.SelectedIndex;
-            bool set = false;
-            listBox.LayoutUpdated += delegate
-            {
-                if (!set)
-                {
-                    // Toggle value to force the change
-                    listBox.SelectedIndex = -1;
-                    listBox.SelectedIndex = selectedIndex;
-                    set = true;
-                }
-            };
-        }
-
-        public static void IsSelectedWorkaround(this ListBoxItem listBoxItem)
-        {
-            bool isSelected = listBoxItem.IsSelected;
-            bool set = false;
-            listBoxItem.LayoutUpdated += delegate
-            {
-                if (!set)
-                {
-                    // Toggle value to force the change
-                    listBoxItem.IsSelected = !isSelected;
-                    listBoxItem.IsSelected = isSelected;
-                    set = true;
-                }
-            };
-        }
-    }
-
+    
     public partial class Page : UserControl
     {
 
@@ -620,6 +586,25 @@ namespace Infocorp.TITA.SilverlightUI
             PnlAction_WP.Visibility = Visibility.Collapsed;
             PnlForm_WP.Visibility = Visibility.Visible;
             PnlOption_WP.Visibility = Visibility.Visible;
+        }
+
+        private void BtnApplyWP_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                ws.ApplyChangesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ApplyChangesWPCompleted);
+                ws.ApplyChangesAsync(url, ItemType.WORKPACKAGE);
+            }
+            catch (Exception exp)
+            {
+                ShowError("Error al impactar cambios:" + exp.Message, true);
+            }
+        }
+
+        void ws_ApplyChangesWPCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            GetWPS();
         }
 
         #endregion
@@ -1502,6 +1487,18 @@ namespace Infocorp.TITA.SilverlightUI
             return ok;
         }
 
+        private void BtnApplyINCIDENT_Click(object sender, RoutedEventArgs e)
+        {
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.ApplyChangesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ApplyChangesINCIDENTCompleted);
+            ws.ApplyChangesAsync(url, ItemType.ISSUE);
+        }
+
+        void ws_ApplyChangesINCIDENTCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            GetIncidents();
+        }
+
         #endregion
 
         #region Task
@@ -1713,6 +1710,18 @@ namespace Infocorp.TITA.SilverlightUI
             GetTask();
         }
 
+        private void BtnApplyTASK_Click(object sender, RoutedEventArgs e)
+        {
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.ApplyChangesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ApplyChangesTASKCompleted);
+            ws.ApplyChangesAsync(url, ItemType.TASK);
+        }
+
+        void ws_ApplyChangesTASKCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            GetTask();
+        }
+
         #endregion
 
         #region Reports
@@ -1767,38 +1776,40 @@ namespace Infocorp.TITA.SilverlightUI
 
         #endregion
 
-        #region Apply
-        private void ButtonApply_Click(object sender, RoutedEventArgs e)
+    }
+
+    public static class ListBoxExtensions
+    {
+        public static void SelectedIndexWorkaround(this ListBox listBox)
         {
-            try 
-            { 
-                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-                ws.ApplyChangesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ApplyChangesCompleted);
-                ws.ApplyChangesAsync(url);
-            }
-            catch(Exception exp)
+            int selectedIndex = listBox.SelectedIndex;
+            bool set = false;
+            listBox.LayoutUpdated += delegate
             {
-                ShowError("Error al impactar cambios:" + exp.Message, true);
-            }
+                if (!set)
+                {
+                    // Toggle value to force the change
+                    listBox.SelectedIndex = -1;
+                    listBox.SelectedIndex = selectedIndex;
+                    set = true;
+                }
+            };
         }
 
-        void ws_ApplyChangesCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        public static void IsSelectedWorkaround(this ListBoxItem listBoxItem)
         {
-
-            if (isVisibleTASK)
+            bool isSelected = listBoxItem.IsSelected;
+            bool set = false;
+            listBoxItem.LayoutUpdated += delegate
             {
-                GetTask();
-            }
-            else if (isVisibleWP)
-            {
-                GetWPS();
-            }
-            else if (isVisibleINCIDENT)
-            {
-                GetIncidents();
-            }
+                if (!set)
+                {
+                    // Toggle value to force the change
+                    listBoxItem.IsSelected = !isSelected;
+                    listBoxItem.IsSelected = isSelected;
+                    set = true;
+                }
+            };
         }
-        #endregion
-
     }
 }
