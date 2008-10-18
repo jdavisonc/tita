@@ -34,6 +34,10 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         private bool IsReadOnlyField;
         
+        private bool ShowInGridField;
+        
+        private int GridOrderField;
+        
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
         public string Name {
             get {
@@ -82,6 +86,32 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
                 if ((this.IsReadOnlyField.Equals(value) != true)) {
                     this.IsReadOnlyField = value;
                     this.RaisePropertyChanged("IsReadOnly");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=4)]
+        public bool ShowInGrid {
+            get {
+                return this.ShowInGridField;
+            }
+            set {
+                if ((this.ShowInGridField.Equals(value) != true)) {
+                    this.ShowInGridField = value;
+                    this.RaisePropertyChanged("ShowInGrid");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=5)]
+        public int GridOrder {
+            get {
+                return this.GridOrderField;
+            }
+            set {
+                if ((this.GridOrderField.Equals(value) != true)) {
+                    this.GridOrderField = value;
+                    this.RaisePropertyChanged("GridOrder");
                 }
             }
         }
@@ -589,6 +619,80 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DTIssueReport", Namespace="http://tempuri.org/")]
+    public partial class DTIssueReport : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string IdIssueField;
+        
+        private string TitleField;
+        
+        private string SiteField;
+        
+        private string WorkPackageField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string IdIssue {
+            get {
+                return this.IdIssueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdIssueField, value) != true)) {
+                    this.IdIssueField = value;
+                    this.RaisePropertyChanged("IdIssue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string Title {
+            get {
+                return this.TitleField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TitleField, value) != true)) {
+                    this.TitleField = value;
+                    this.RaisePropertyChanged("Title");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string Site {
+            get {
+                return this.SiteField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SiteField, value) != true)) {
+                    this.SiteField = value;
+                    this.RaisePropertyChanged("Site");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        public string WorkPackage {
+            get {
+                return this.WorkPackageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WorkPackageField, value) != true)) {
+                    this.WorkPackageField = value;
+                    this.RaisePropertyChanged("WorkPackage");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.Runtime.Serialization.DataContractAttribute(Name="ItemType", Namespace="http://tempuri.org/")]
     public enum ItemType : int {
         
@@ -719,6 +823,16 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         System.IAsyncResult BeginReportDesvWorkPackage(Infocorp.TITA.SilverlightUI.WSTitaReference.ReportDesvWorkPackageRequest request, System.AsyncCallback callback, object asyncState);
         
         Infocorp.TITA.SilverlightUI.WSTitaReference.ReportDesvWorkPackageResponse EndReportDesvWorkPackage(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IssuesReport", ReplyAction="*")]
+        System.IAsyncResult BeginIssuesReport(Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportResponse EndIssuesReport(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/AllIssuesReport", ReplyAction="*")]
+        System.IAsyncResult BeginAllIssuesReport(Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponse EndAllIssuesReport(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ApplyChanges", ReplyAction="*")]
         System.IAsyncResult BeginApplyChanges(Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequest request, System.AsyncCallback callback, object asyncState);
@@ -2027,6 +2141,138 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class IssuesReportRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="IssuesReport", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportRequestBody Body;
+        
+        public IssuesReportRequest() {
+        }
+        
+        public IssuesReportRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class IssuesReportRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string idContract;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public System.DateTime fch_inicial;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+        public System.DateTime fch_final;
+        
+        public IssuesReportRequestBody() {
+        }
+        
+        public IssuesReportRequestBody(string idContract, System.DateTime fch_inicial, System.DateTime fch_final) {
+            this.idContract = idContract;
+            this.fch_inicial = fch_inicial;
+            this.fch_final = fch_final;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class IssuesReportResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="IssuesReportResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportResponseBody Body;
+        
+        public IssuesReportResponse() {
+        }
+        
+        public IssuesReportResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class IssuesReportResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> IssuesReportResult;
+        
+        public IssuesReportResponseBody() {
+        }
+        
+        public IssuesReportResponseBody(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> IssuesReportResult) {
+            this.IssuesReportResult = IssuesReportResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class AllIssuesReportRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="AllIssuesReport", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequestBody Body;
+        
+        public AllIssuesReportRequest() {
+        }
+        
+        public AllIssuesReportRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class AllIssuesReportRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public System.DateTime fch_inicial;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public System.DateTime fch_final;
+        
+        public AllIssuesReportRequestBody() {
+        }
+        
+        public AllIssuesReportRequestBody(System.DateTime fch_inicial, System.DateTime fch_final) {
+            this.fch_inicial = fch_inicial;
+            this.fch_final = fch_final;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class AllIssuesReportResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="AllIssuesReportResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponseBody Body;
+        
+        public AllIssuesReportResponse() {
+        }
+        
+        public AllIssuesReportResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class AllIssuesReportResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> AllIssuesReportResult;
+        
+        public AllIssuesReportResponseBody() {
+        }
+        
+        public AllIssuesReportResponseBody(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> AllIssuesReportResult) {
+            this.AllIssuesReportResult = AllIssuesReportResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class ApplyChangesRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="ApplyChanges", Namespace="http://tempuri.org/", Order=0)]
@@ -2308,6 +2554,42 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
+    public partial class IssuesReportCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public IssuesReportCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    public partial class AllIssuesReportCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public AllIssuesReportCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
     public partial class HasPendingChangesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -2466,6 +2748,18 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         private System.Threading.SendOrPostCallback onReportDesvWorkPackageCompletedDelegate;
         
+        private BeginOperationDelegate onBeginIssuesReportDelegate;
+        
+        private EndOperationDelegate onEndIssuesReportDelegate;
+        
+        private System.Threading.SendOrPostCallback onIssuesReportCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginAllIssuesReportDelegate;
+        
+        private EndOperationDelegate onEndAllIssuesReportDelegate;
+        
+        private System.Threading.SendOrPostCallback onAllIssuesReportCompletedDelegate;
+        
         private BeginOperationDelegate onBeginApplyChangesDelegate;
         
         private EndOperationDelegate onEndApplyChangesDelegate;
@@ -2554,6 +2848,10 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ModifyTaskCompleted;
         
         public event System.EventHandler<ReportDesvWorkPackageCompletedEventArgs> ReportDesvWorkPackageCompleted;
+        
+        public event System.EventHandler<IssuesReportCompletedEventArgs> IssuesReportCompleted;
+        
+        public event System.EventHandler<AllIssuesReportCompletedEventArgs> AllIssuesReportCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ApplyChangesCompleted;
         
@@ -3863,6 +4161,127 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
                         fch_final}, this.onEndReportDesvWorkPackageDelegate, this.onReportDesvWorkPackageCompletedDelegate, userState);
         }
         
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginIssuesReport(Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginIssuesReport(request, callback, asyncState);
+        }
+        
+        private System.IAsyncResult BeginIssuesReport(string idContract, System.DateTime fch_inicial, System.DateTime fch_final, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportRequestBody();
+            inValue.Body.idContract = idContract;
+            inValue.Body.fch_inicial = fch_inicial;
+            inValue.Body.fch_final = fch_final;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginIssuesReport(inValue, callback, asyncState);
+        }
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndIssuesReport(System.IAsyncResult result) {
+            return base.Channel.EndIssuesReport(result);
+        }
+        
+        private System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> EndIssuesReport(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndIssuesReport(result);
+            return retVal.Body.IssuesReportResult;
+        }
+        
+        private System.IAsyncResult OnBeginIssuesReport(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string idContract = ((string)(inValues[0]));
+            System.DateTime fch_inicial = ((System.DateTime)(inValues[1]));
+            System.DateTime fch_final = ((System.DateTime)(inValues[2]));
+            return this.BeginIssuesReport(idContract, fch_inicial, fch_final, callback, asyncState);
+        }
+        
+        private object[] OnEndIssuesReport(System.IAsyncResult result) {
+            System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> retVal = this.EndIssuesReport(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnIssuesReportCompleted(object state) {
+            if ((this.IssuesReportCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.IssuesReportCompleted(this, new IssuesReportCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void IssuesReportAsync(string idContract, System.DateTime fch_inicial, System.DateTime fch_final) {
+            this.IssuesReportAsync(idContract, fch_inicial, fch_final, null);
+        }
+        
+        public void IssuesReportAsync(string idContract, System.DateTime fch_inicial, System.DateTime fch_final, object userState) {
+            if ((this.onBeginIssuesReportDelegate == null)) {
+                this.onBeginIssuesReportDelegate = new BeginOperationDelegate(this.OnBeginIssuesReport);
+            }
+            if ((this.onEndIssuesReportDelegate == null)) {
+                this.onEndIssuesReportDelegate = new EndOperationDelegate(this.OnEndIssuesReport);
+            }
+            if ((this.onIssuesReportCompletedDelegate == null)) {
+                this.onIssuesReportCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnIssuesReportCompleted);
+            }
+            base.InvokeAsync(this.onBeginIssuesReportDelegate, new object[] {
+                        idContract,
+                        fch_inicial,
+                        fch_final}, this.onEndIssuesReportDelegate, this.onIssuesReportCompletedDelegate, userState);
+        }
+        
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginAllIssuesReport(Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAllIssuesReport(request, callback, asyncState);
+        }
+        
+        private System.IAsyncResult BeginAllIssuesReport(System.DateTime fch_inicial, System.DateTime fch_final, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequestBody();
+            inValue.Body.fch_inicial = fch_inicial;
+            inValue.Body.fch_final = fch_final;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginAllIssuesReport(inValue, callback, asyncState);
+        }
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndAllIssuesReport(System.IAsyncResult result) {
+            return base.Channel.EndAllIssuesReport(result);
+        }
+        
+        private System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> EndAllIssuesReport(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndAllIssuesReport(result);
+            return retVal.Body.AllIssuesReportResult;
+        }
+        
+        private System.IAsyncResult OnBeginAllIssuesReport(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.DateTime fch_inicial = ((System.DateTime)(inValues[0]));
+            System.DateTime fch_final = ((System.DateTime)(inValues[1]));
+            return this.BeginAllIssuesReport(fch_inicial, fch_final, callback, asyncState);
+        }
+        
+        private object[] OnEndAllIssuesReport(System.IAsyncResult result) {
+            System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> retVal = this.EndAllIssuesReport(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnAllIssuesReportCompleted(object state) {
+            if ((this.AllIssuesReportCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.AllIssuesReportCompleted(this, new AllIssuesReportCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void AllIssuesReportAsync(System.DateTime fch_inicial, System.DateTime fch_final) {
+            this.AllIssuesReportAsync(fch_inicial, fch_final, null);
+        }
+        
+        public void AllIssuesReportAsync(System.DateTime fch_inicial, System.DateTime fch_final, object userState) {
+            if ((this.onBeginAllIssuesReportDelegate == null)) {
+                this.onBeginAllIssuesReportDelegate = new BeginOperationDelegate(this.OnBeginAllIssuesReport);
+            }
+            if ((this.onEndAllIssuesReportDelegate == null)) {
+                this.onEndAllIssuesReportDelegate = new EndOperationDelegate(this.OnEndAllIssuesReport);
+            }
+            if ((this.onAllIssuesReportCompletedDelegate == null)) {
+                this.onAllIssuesReportCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAllIssuesReportCompleted);
+            }
+            base.InvokeAsync(this.onBeginAllIssuesReportDelegate, new object[] {
+                        fch_inicial,
+                        fch_final}, this.onEndAllIssuesReportDelegate, this.onAllIssuesReportCompletedDelegate, userState);
+        }
+        
         System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginApplyChanges(Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequest request, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginApplyChanges(request, callback, asyncState);
         }
@@ -4347,6 +4766,32 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             public Infocorp.TITA.SilverlightUI.WSTitaReference.ReportDesvWorkPackageResponse EndReportDesvWorkPackage(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 Infocorp.TITA.SilverlightUI.WSTitaReference.ReportDesvWorkPackageResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.ReportDesvWorkPackageResponse)(base.EndInvoke("ReportDesvWorkPackage", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginIssuesReport(Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("IssuesReport", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportResponse EndIssuesReport(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportResponse)(base.EndInvoke("IssuesReport", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginAllIssuesReport(Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("AllIssuesReport", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponse EndAllIssuesReport(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponse)(base.EndInvoke("AllIssuesReport", _args, result)));
                 return _result;
             }
             
