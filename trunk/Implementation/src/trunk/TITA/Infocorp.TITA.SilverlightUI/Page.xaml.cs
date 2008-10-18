@@ -29,7 +29,7 @@ namespace Infocorp.TITA.SilverlightUI
             TASK,
             REPORT,
         }
-        
+
         private string url = null;
         private DTItem item = new DTItem();
         List<DTItem> lstItem = new List<DTItem>();
@@ -41,10 +41,6 @@ namespace Infocorp.TITA.SilverlightUI
         private DTItem my_issue_template = null;
         List<DTContract> my_contract = new List<DTContract>();
         private bool isDelete;
-
-        private bool isVisibleWP = false;
-        private bool isVisibleINCIDENT = false;
-        private bool isVisibleTASK = false;
 
         public Page()
         {
@@ -64,9 +60,6 @@ namespace Infocorp.TITA.SilverlightUI
         public void EnableOption(Option o)
         {
             isEdit = false;
-            isVisibleWP = false;
-            isVisibleINCIDENT = false;
-            isVisibleTASK = false;
             ShowError("", false);
             lblConectContract.Text = "";
             lblConectContract.Visibility = Visibility.Collapsed;
@@ -94,12 +87,10 @@ namespace Infocorp.TITA.SilverlightUI
                 case Option.WP:
                     CanvasWP.Visibility = Visibility.Visible;
                     scroll_WP.Visibility = Visibility.Visible;
-                    isVisibleWP = true;
                     break;
                 case Option.INCIDENT:
                     CanvasIncident.Visibility = Visibility.Visible;
                     scroll_INCIDENT.Visibility = Visibility.Visible;
-                    isVisibleINCIDENT = true;
                     break;
                 case Option.CONTRACT:
                     pnl_Contrato.Visibility = Visibility.Visible;
@@ -109,12 +100,11 @@ namespace Infocorp.TITA.SilverlightUI
                 case Option.TASK:
                     CanvasTASK.Visibility = Visibility.Visible;
                     scroll_TASK.Visibility = Visibility.Visible;
-                    isVisibleTASK = true;
                     break;
                 case Option.REPORT:
-                    CanvasREPORT.Visibility = Visibility.Visible;
                     scroll_REPORT.Visibility = Visibility.Visible;
-                    PnlOption_REPORT.Visibility = Visibility.Visible;
+                    CanvasREPORT.Visibility = Visibility.Visible;
+                    PnlOptionREPORT.Visibility = Visibility.Visible;
                     break;
                 default:
                     logo.Visibility = Visibility.Visible;
@@ -125,7 +115,7 @@ namespace Infocorp.TITA.SilverlightUI
         public void ClearReport()
         {
             contractsReport.Visibility = Visibility.Collapsed;
-            PnlOption_REPORT.Visibility = Visibility.Collapsed;
+            PnlOptionREPORT.Visibility = Visibility.Collapsed;
             grd_REPORT.Visibility = Visibility.Collapsed;
         }
 
@@ -1726,14 +1716,21 @@ namespace Infocorp.TITA.SilverlightUI
 
         #region Reports
 
-        private void ButtonRport_Click(object sender, RoutedEventArgs e)
+        #region Desviacion de work package
+        
+        private void ButtonRport_Click_DESWP(object sender, RoutedEventArgs e)
         {
+            cal_inicial.SelectedDate = null;
+            cal_final.SelectedDate = null;
+            BtnGenerateReport_ALLISSUES.Visibility = Visibility.Collapsed;
+            BtnGenerateReport_ISSUES.Visibility = Visibility.Collapsed;
             EnableOption(Option.REPORT);
             forReport = true;
             GetContract();
+            BtnGenerateReport_DESWP.Visibility = Visibility.Visible;
         }
 
-        private void BtnGenerarREPORT_Click(object sender, RoutedEventArgs e)
+        private void BtnGenerateReportClick_DESWP(object sender, RoutedEventArgs e)
         {
             ShowError("", false);
             if ((cal_inicial.SelectedDate == null || 
@@ -1747,11 +1744,11 @@ namespace Infocorp.TITA.SilverlightUI
                 DateTime fch_inicial = cal_inicial.SelectedDate.Value;
                 DateTime fch_final = cal_final.SelectedDate.Value;
                 DTContract contract = (DTContract)contractsReport.SelectedItem;
-                LoadReportResult(contract.ContractId, fch_inicial, fch_final);
+                LoadReportResult_DESWP(contract.ContractId, fch_inicial, fch_final);
             }
         }
 
-        private void LoadReportResult(string contractId, DateTime fch_inicial, DateTime fch_final)
+        private void LoadReportResult_DESWP(string contractId, DateTime fch_inicial, DateTime fch_final)
         {
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
             ws.ReportDesvWorkPackageCompleted += new EventHandler<ReportDesvWorkPackageCompletedEventArgs>(ws_ReportDesvWorkPackageCompleted);
@@ -1763,11 +1760,109 @@ namespace Infocorp.TITA.SilverlightUI
             if (e.Result != null)
             {
                 grd_REPORT.Columns.Clear();
-                List<DTWorkPackageReport> lst = e.Result;
                 grd_REPORT.Visibility = Visibility.Visible;
-                grd_REPORT.ItemsSource = lst;
+                grd_REPORT.ItemsSource = e.Result;
             }
         }
+
+        #endregion
+
+        #region Incidentes para un contrato
+        
+        private void ButtonRport_Click_ISSUESREPORT(object sender, RoutedEventArgs e)
+        {
+            cal_inicial.SelectedDate = null;
+            cal_final.SelectedDate = null;
+            BtnGenerateReport_ALLISSUES.Visibility = Visibility.Collapsed;
+            BtnGenerateReport_DESWP.Visibility = Visibility.Collapsed;
+            EnableOption(Option.REPORT);
+            forReport = true;
+            GetContract();
+            BtnGenerateReport_ISSUES.Visibility = Visibility.Visible;
+        }
+        
+        private void BtnGenerateReportClick_ISSUES(object sender, RoutedEventArgs e)
+        {
+            ShowError("", false);
+            if ((cal_inicial.SelectedDate == null ||
+                cal_final.SelectedDate == null) ||
+                (contractsReport.SelectedItem == null))
+            {
+                ShowError("Debe ingresar todos los datos.", true);
+            }
+            else
+            {
+                DateTime fch_inicial = cal_inicial.SelectedDate.Value;
+                DateTime fch_final = cal_final.SelectedDate.Value;
+                DTContract contract = (DTContract)contractsReport.SelectedItem;
+                LoadReportResult_ISSUES(contract.ContractId, fch_inicial, fch_final);
+            }
+        }
+
+        private void LoadReportResult_ISSUES(string contractId, DateTime fch_inicial, DateTime fch_final)
+        {
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.IssuesReportCompleted += new EventHandler<IssuesReportCompletedEventArgs>(ws_IssuesReportCompleted);
+            ws.IssuesReportAsync(contractId, fch_inicial, fch_final);
+        }
+
+        void ws_IssuesReportCompleted(object sender, IssuesReportCompletedEventArgs e)
+        {
+            if (e.Result != null)
+            {
+                grd_REPORT.Columns.Clear();
+                grd_REPORT.Visibility = Visibility.Visible;
+                grd_REPORT.ItemsSource = e.Result;
+            }
+        }
+        
+        #endregion
+
+        #region Incidentes de todos los contratos
+        
+        private void ButtonRport_Click_ALLISSUESREPORT(object sender, RoutedEventArgs e)
+        {
+            cal_inicial.SelectedDate = null;
+            cal_final.SelectedDate = null;
+            BtnGenerateReport_ISSUES.Visibility = Visibility.Collapsed;
+            BtnGenerateReport_DESWP.Visibility = Visibility.Collapsed;
+            EnableOption(Option.REPORT);
+            BtnGenerateReport_ALLISSUES.Visibility = Visibility.Visible;
+        }
+
+        private void BtnGenerateReportClick_ALLISSUES(object sender, RoutedEventArgs e)
+        {
+            ShowError("", false);
+            if ((cal_inicial.SelectedDate == null) || (cal_final.SelectedDate == null))
+            {
+                ShowError("Debe ingresar todos los datos.", true);
+            }
+            else
+            {
+                DateTime fch_inicial = cal_inicial.SelectedDate.Value;
+                DateTime fch_final = cal_final.SelectedDate.Value;
+                LoadReportResult_ALLISSUES(fch_inicial, fch_final);
+            }
+        }
+
+        private void LoadReportResult_ALLISSUES(DateTime fch_inicial, DateTime fch_final)
+        {
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.AllIssuesReportCompleted += new EventHandler<AllIssuesReportCompletedEventArgs>(ws_AllIssuesReportCompleted);
+            ws.AllIssuesReportAsync(fch_inicial, fch_final);
+        }
+
+        void ws_AllIssuesReportCompleted(object sender, AllIssuesReportCompletedEventArgs e)
+        {
+            if (e.Result != null)
+            {
+                grd_REPORT.Columns.Clear();
+                grd_REPORT.Visibility = Visibility.Visible;
+                grd_REPORT.ItemsSource = e.Result;
+            }
+        }
+
+        #endregion
 
         private void BtnExportar_Click(object sender, RoutedEventArgs e)
         {

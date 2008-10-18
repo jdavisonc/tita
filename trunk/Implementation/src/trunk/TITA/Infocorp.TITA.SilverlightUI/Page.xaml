@@ -40,7 +40,9 @@
         <Button HorizontalAlignment="Left" Margin="18,130,0,0" VerticalAlignment="Top" Content="Incidente" Width="112" Height="26" x:Name="ButtonIncident" Click="ButtonIncident_Click" Background="#FF1297F5"/>
         <Button Margin="18,178,0,0"  VerticalAlignment="Top" Click="ButtonWP_Click" Content="WorkPackage" Width="112" HorizontalAlignment="Left" Height="26" x:Name="ButtonWP" Background="#FF0B97F9"/>
         <Button HorizontalAlignment="Left" Margin="18,219,0,0" VerticalAlignment="Top" Content="Tarea" Width="112" Height="26" x:Name="ButtonTask" Click="ButtonTask_Click" Background="#FF1297F5"/>
-        <Button HorizontalAlignment="Left" Margin="18,263,0,0" VerticalAlignment="Top" Click="ButtonRport_Click" Content="Reportes" Width="112" Height="26" x:Name="ButtonReports" Background="#FF0994F5" RenderTransformOrigin="0.49099999666214,1.61500000953674"/>
+        <Button HorizontalAlignment="Left" Margin="18,263,0,0" VerticalAlignment="Top" Click="ButtonRport_Click_DESWP" Content="Desviacion WP" Width="112" Height="26" x:Name="ButtonReportDESWP" Background="#FF0994F5" RenderTransformOrigin="0.49099999666214,1.61500000953674"/>
+        <Button HorizontalAlignment="Left" Margin="18,307,0,0" VerticalAlignment="Top" Click="ButtonRport_Click_ISSUESREPORT" Content="Inc. Contrato" Width="112" Height="26" x:Name="ButtonReportISSUESREPORT" Background="#FF0994F5" RenderTransformOrigin="0.49099999666214,1.61500000953674"/>
+        <Button HorizontalAlignment="Left" Margin="18,351,0,0" VerticalAlignment="Top" Click="ButtonRport_Click_ALLISSUESREPORT" Content="Inc. Todos Contrato" Width="112" Height="26" x:Name="ButtonReportALLISSUESREPORT" Background="#FF0994F5" RenderTransformOrigin="0.49099999666214,1.61500000953674"/>
         
         <TextBlock Margin="18,350,0,0"  VerticalAlignment="Top" x:Name="lblPending" Visibility="Collapsed" Width="112" HorizontalAlignment="Left" Height="26"/>
         
@@ -142,12 +144,14 @@
         <ScrollViewer Margin="-1,4,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_REPORT">
             <StackPanel x:Name="CanvasREPORT" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
                 <my:DataGrid x:Name="contractsReport" Margin="100,0,0,70" Visibility="Collapsed" AutoGenerateColumns="True" Width="auto"/> 
-                <StackPanel x:Name="PnlOption_REPORT" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal" Margin="100,0,0,0">
+                <StackPanel x:Name="PnlOptionREPORT" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal" Margin="100,0,0,0">
                     <TextBlock Text="Fecha inicial: " x:Name="txt_fechaInicial"></TextBlock>
                     <my1:Calendar x:Name="cal_inicial"></my1:Calendar>
                     <TextBlock Margin="65,0,0,0" Text="Fecha final: " x:Name="txt_fechaFinal"></TextBlock>
                     <my1:Calendar x:Name="cal_final"></my1:Calendar>
-                    <Button  Content="Generar" Margin="50,127,0,0" HorizontalAlignment="Left" Click="BtnGenerarREPORT_Click" Width="112" Height="26" x:Name="BtnGenerarReporte" Background="#FF0B97F9" />
+                    <Button  Content="Generar" Margin="50,127,0,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_DESWP" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_DESWP" Background="#FF0B97F9" />
+                    <Button  Content="Generar" Margin="50,127,0,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_ISSUES" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_ISSUES" Background="#FF0B97F9" />
+                    <Button  Content="Generar" Margin="50,127,0,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_ALLISSUES" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_ALLISSUES" Background="#FF0B97F9" />
                 </StackPanel>
                 <my:DataGrid x:Name="grd_REPORT" Margin="100,50,0,0" AutoGenerateColumns="True" Visibility="Collapsed" Width="auto"/>
                 <StackPanel  x:Name="PnlExportar_REPORT" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
