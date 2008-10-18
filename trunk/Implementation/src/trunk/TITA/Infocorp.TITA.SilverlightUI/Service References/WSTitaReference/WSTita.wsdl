@@ -36,6 +36,8 @@
           <s:element minOccurs="1" maxOccurs="1" name="Required" type="s:boolean" />
           <s:element minOccurs="1" maxOccurs="1" name="Hidden" type="s:boolean" />
           <s:element minOccurs="1" maxOccurs="1" name="IsReadOnly" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ShowInGrid" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="GridOrder" type="s:int" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="DTFieldChoice">
@@ -435,6 +437,50 @@
           <s:element minOccurs="0" maxOccurs="1" name="Desviation" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="IssuesReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idContract" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="fch_inicial" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="fch_final" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IssuesReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IssuesReportResult" type="tns:ArrayOfDTIssueReport" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDTIssueReport">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DTIssueReport" nillable="true" type="tns:DTIssueReport" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DTIssueReport">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="IdIssue" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Site" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WorkPackage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AllIssuesReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="fch_inicial" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="fch_final" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AllIssuesReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AllIssuesReportResult" type="tns:ArrayOfDTIssueReport" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="ApplyChanges">
         <s:complexType>
           <s:sequence>
@@ -607,6 +653,18 @@
   <wsdl:message name="ReportDesvWorkPackageSoapOut">
     <wsdl:part name="parameters" element="tns:ReportDesvWorkPackageResponse" />
   </wsdl:message>
+  <wsdl:message name="IssuesReportSoapIn">
+    <wsdl:part name="parameters" element="tns:IssuesReport" />
+  </wsdl:message>
+  <wsdl:message name="IssuesReportSoapOut">
+    <wsdl:part name="parameters" element="tns:IssuesReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="AllIssuesReportSoapIn">
+    <wsdl:part name="parameters" element="tns:AllIssuesReport" />
+  </wsdl:message>
+  <wsdl:message name="AllIssuesReportSoapOut">
+    <wsdl:part name="parameters" element="tns:AllIssuesReportResponse" />
+  </wsdl:message>
   <wsdl:message name="ApplyChangesSoapIn">
     <wsdl:part name="parameters" element="tns:ApplyChanges" />
   </wsdl:message>
@@ -711,6 +769,14 @@
     <wsdl:operation name="ReportDesvWorkPackage">
       <wsdl:input message="tns:ReportDesvWorkPackageSoapIn" />
       <wsdl:output message="tns:ReportDesvWorkPackageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IssuesReport">
+      <wsdl:input message="tns:IssuesReportSoapIn" />
+      <wsdl:output message="tns:IssuesReportSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AllIssuesReport">
+      <wsdl:input message="tns:AllIssuesReportSoapIn" />
+      <wsdl:output message="tns:AllIssuesReportSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="ApplyChanges">
       <wsdl:input message="tns:ApplyChangesSoapIn" />
@@ -923,6 +989,24 @@
     </wsdl:operation>
     <wsdl:operation name="ReportDesvWorkPackage">
       <soap:operation soapAction="http://tempuri.org/ReportDesvWorkPackage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IssuesReport">
+      <soap:operation soapAction="http://tempuri.org/IssuesReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AllIssuesReport">
+      <soap:operation soapAction="http://tempuri.org/AllIssuesReport" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1151,6 +1235,24 @@
     </wsdl:operation>
     <wsdl:operation name="ReportDesvWorkPackage">
       <soap12:operation soapAction="http://tempuri.org/ReportDesvWorkPackage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IssuesReport">
+      <soap12:operation soapAction="http://tempuri.org/IssuesReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AllIssuesReport">
+      <soap12:operation soapAction="http://tempuri.org/AllIssuesReport" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
