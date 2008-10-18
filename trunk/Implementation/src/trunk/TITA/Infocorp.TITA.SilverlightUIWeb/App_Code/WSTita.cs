@@ -220,10 +220,10 @@ public class WSTita : System.Web.Services.WebService
     #region Apply
 
     [WebMethod]
-    public void ApplyChanges(string url)
+    public void ApplyChanges(string url, ItemType itemType)
     {
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
-        witInstance.ApplyChanges(url);
+        witInstance.ApplyChanges(url, itemType);
     }
 
     [WebMethod]
