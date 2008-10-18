@@ -21,8 +21,8 @@ namespace Infocorp.TITA.ReportGenerator
             string site = db.ContractSite(contractId).Trim();
             String str = initialDate.ToString(format);
             String str2 = finalDate.ToString(format); 
-   string caml = @"<Query>
-   <Where><Lt><FieldRef Name='End_x0020_Date' /><Value Type='DateTime'>2009-12-25T12:00:00Z</Value></Lt></Where></Query>";
+            string caml = @"<Query>
+            <Where><Lt><FieldRef Name='End_x0020_Date' /><Value Type='DateTime'>2009-12-25T12:00:00Z</Value></Lt></Where></Query>";
             List<DTItem> workPackageList = sp.GetWorkPackages(contractId, caml);
             List<DTWorkPackageReport> workPackageDesviation = new List<DTWorkPackageReport>();
             foreach (var workPackage in workPackageList)
@@ -134,6 +134,62 @@ namespace Infocorp.TITA.ReportGenerator
             
             }
             return issuesListReport;                
+        }
+        public List<DTIssueReport> AllIssuesReport(DateTime initialDate, DateTime finalDate)
+        {
+            ISharePoint sp = new SharePoint2003();
+            String format = "yyyy-MM-ddThh:mm:ssZ";
+            DataBaseAccess.DataBaseAccess db = new DataBaseAccess.DataBaseAccess();
+            List<DTContract> contracts = db.ContractList();
+            List<DTIssueReport> issuesListReport = new List<DTIssueReport>();
+            String str = initialDate.ToString(format);
+            String str2 = finalDate.ToString(format);
+            foreach(var contract in contracts)
+            {
+                    List<DTItem> issueList = sp.GetIssues(contract.ContractId,"");
+                    foreach (var issues in issueList)
+                    {
+                        List<DTField> fields = issues.Fields;
+                        bool isValid = true;
+                        int id = 0;
+                        string title = null;
+                        string workPackage = null;
+                        foreach (var fieldsIncident in fields)
+                        {
+                            if (fieldsIncident.Name.Equals("Due Date"))
+                                if ((((DTFieldAtomicDateTime)fieldsIncident).Value > finalDate) || ((DTFieldAtomicDateTime)fieldsIncident).Value < initialDate)
+                                {
+                                    isValid = false;
+                                    break;
+                                }
+                        }
+                        if (isValid)
+                        {
+                            foreach (var fieldsOfIncident in fields)
+                            {
+
+                                if (fieldsOfIncident.Name.Equals("ID"))
+                                {
+                                    id = ((DTFieldCounter)fieldsOfIncident).Value;
+                                }
+                                else
+                                    if (fieldsOfIncident.Name.Equals("Title"))
+                                    {
+                                        title = ((DTFieldAtomicString)fieldsOfIncident).Value;
+                                    }
+                                    else
+                                        if (fieldsOfIncident.Name.Equals("Work Package"))
+                                        {
+                                            workPackage = ((DTFieldChoiceLookup)fieldsOfIncident).Value;
+                                        }
+                            }
+                            DTIssueReport dataIssueReport = new DTIssueReport(id.ToString(), title, contract.Site, workPackage);
+                            issuesListReport.Add(dataIssueReport);
+                        }
+                    
+                    }
+           } 
+           return issuesListReport;                
         }
     }
 }
