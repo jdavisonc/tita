@@ -894,6 +894,7 @@ namespace Infocorp.TITA.SilverlightUI
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
             grd.ColumnDefinitions.Add(new ColumnDefinition());
             grd.ColumnDefinitions.Add(new ColumnDefinition());
+            double width = 180;
             if (!isCheck && !isEdit)
             {
                 int numCtrl = 0;
@@ -916,7 +917,7 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
 
                             CheckBox chk = new CheckBox();
                             chk.SetValue(NameProperty, "chk_" + field.Name);
@@ -934,7 +935,7 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             ListBox chlkp = new ListBox();
@@ -943,7 +944,14 @@ namespace Infocorp.TITA.SilverlightUI
                             chlkp.Width = 150;
                             chlkp.Height = 80;
                             chlkp.Margin = new Thickness(0, 10, 0, 10);
-                            chlkp.SelectedIndex = -1;
+                            if (field.Required)
+                            {
+                                chlkp.SelectedIndex = -1;
+                            }
+                            else
+                            {
+                                chlkp.SelectedIndex = 0;
+                            }
                             chlkp.SelectedIndexWorkaround();
                             chlkp.SetValue(Grid.ColumnProperty, 1);
 
@@ -954,7 +962,7 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             ListBox chuser = new ListBox();
@@ -963,7 +971,14 @@ namespace Infocorp.TITA.SilverlightUI
                             chuser.Width = 150;
                             chuser.Height = 80;
                             chuser.Margin = new Thickness(0, 10, 0, 10);
-                            chuser.SelectedIndex = -1;
+                            if (field.Required)
+                            {
+                                chuser.SelectedIndex = -1;
+                            }
+                            else
+                            {
+                                chuser.SelectedIndex = 0;
+                            }
                             chuser.SelectedIndexWorkaround();
                             chuser.SetValue(Grid.ColumnProperty, 1);
 
@@ -974,7 +989,7 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             ListBox lstbx = new ListBox();
@@ -983,7 +998,14 @@ namespace Infocorp.TITA.SilverlightUI
                             lstbx.Height = 80;
                             lstbx.Margin = new Thickness(0, 10, 0, 10);
                             lstbx.ItemsSource = ((DTFieldChoice)field).Choices;
-                            lstbx.SelectedIndex = -1;
+                            if (field.Required)
+                            {
+                                lstbx.SelectedIndex = -1;
+                            }
+                            else
+                            {
+                                lstbx.SelectedIndex = 0;
+                            }
                             lstbx.SelectedIndexWorkaround();
                             lstbx.SetValue(Grid.ColumnProperty, 1);
 
@@ -995,7 +1017,7 @@ namespace Infocorp.TITA.SilverlightUI
                             numCtrl = numCtrl + 3;
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             Calendar cal = new Calendar();
@@ -1012,11 +1034,12 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             TextBox nt = new TextBox();
                             nt.SetValue(NameProperty, "nt_" + field.Name);
+                            nt.Text = "";
                             nt.Width = 300;
                             nt.Height = 100;
                             nt.Margin = new Thickness(0, 10, 0, 10);
@@ -1030,11 +1053,12 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             TextBox num = new TextBox();
                             num.SetValue(NameProperty, "num_" + field.Name);
+                            num.Text = "";
                             num.Width = 80;
                             num.Margin = new Thickness(0, 10, 0, 10);
                             num.TextWrapping = TextWrapping.Wrap;
@@ -1047,11 +1071,12 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             TextBox cnt = new TextBox();
                             cnt.SetValue(NameProperty, "cnt_" + field.Name);
+                            cnt.Text = "";
                             cnt.Width = 80;
                             cnt.Margin = new Thickness(0, 10, 0, 10);
                             cnt.TextWrapping = TextWrapping.Wrap;
@@ -1065,11 +1090,12 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             TextBox bx = new TextBox();
                             bx.SetValue(NameProperty, "bx_" + field.Name);
+                            bx.Text = "";
                             bx.Width = 300;
                             bx.Margin = new Thickness(0, 10, 0, 10);
                             bx.SetValue(Grid.ColumnProperty, 1);
@@ -1109,13 +1135,16 @@ namespace Infocorp.TITA.SilverlightUI
                                 txt.Text = field.Name + "*";
                                 ok = false;
                             }
-                            DTFieldChoiceLookup resultField = new DTFieldChoiceLookup();
-                            resultField.Value = chlkp.SelectedItem.ToString();
-                            resultField.LookupField = ((DTFieldChoiceLookup)field).LookupField;
-                            resultField.LookupList = ((DTFieldChoiceLookup)field).LookupList;
-                            resultField.Choices = ((DTFieldChoiceLookup)field).Choices;
-                            resultField.Name = field.Name;
-                            resulItem.Fields.Add(resultField);
+                            else
+                            {
+                                DTFieldChoiceLookup resultField = new DTFieldChoiceLookup();
+                                resultField.Value = chlkp.SelectedItem.ToString();
+                                resultField.LookupField = ((DTFieldChoiceLookup)field).LookupField;
+                                resultField.LookupList = ((DTFieldChoiceLookup)field).LookupList;
+                                resultField.Choices = ((DTFieldChoiceLookup)field).Choices;
+                                resultField.Name = field.Name;
+                                resulItem.Fields.Add(resultField);
+                            }
                         }
                         else if (field is DTFieldChoiceUser)
                         {
@@ -1123,14 +1152,17 @@ namespace Infocorp.TITA.SilverlightUI
                             if ((field.Required) && (chuser.SelectedItem == null))
                             {
                                 TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
-                                txt.Text = field.Name + "*";
+                                txt.Text = field.Name + " *";
                                 ok = false;
                             }
-                            DTFieldChoiceUser resultField = new DTFieldChoiceUser();
-                            resultField.Value = chuser.SelectedItem.ToString();
-                            resultField.Choices = ((DTFieldChoiceUser)field).Choices;
-                            resultField.Name = field.Name;
-                            resulItem.Fields.Add(resultField);
+                            else
+                            {
+                                DTFieldChoiceUser resultField = new DTFieldChoiceUser();
+                                resultField.Value = chuser.SelectedItem.ToString();
+                                resultField.Choices = ((DTFieldChoiceUser)field).Choices;
+                                resultField.Name = field.Name;
+                                resulItem.Fields.Add(resultField);
+                            }
                         }
                         else if (field is DTFieldChoice)
                         {
@@ -1138,14 +1170,17 @@ namespace Infocorp.TITA.SilverlightUI
                             if ((field.Required) && (lst.SelectedItem == null))
                             {
                                 TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
-                                txt.Text = field.Name + "*";
+                                txt.Text = field.Name + " *";
                                 ok = false;
                             }
-                            DTFieldChoice resultField = new DTFieldChoice();
-                            resultField.Value = lst.SelectedItem.ToString();
-                            resultField.Choices = ((DTFieldChoice)field).Choices;
-                            resultField.Name = field.Name;
-                            resulItem.Fields.Add(resultField);
+                            else
+                            {
+                                DTFieldChoice resultField = new DTFieldChoice();
+                                resultField.Value = lst.SelectedItem.ToString();
+                                resultField.Choices = ((DTFieldChoice)field).Choices;
+                                resultField.Name = field.Name;
+                                resulItem.Fields.Add(resultField);
+                            }
                         }
                         else if (field is DTFieldAtomicDateTime)
                         {
@@ -1153,22 +1188,16 @@ namespace Infocorp.TITA.SilverlightUI
                             if ((field.Required) && (cal.SelectedDate.Value.ToShortDateString().ToString() == ""))
                             {
                                 TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
-                                txt.Text = field.Name + "*";
+                                txt.Text = field.Name + " *";
                                 ok = false;
                             }
-                            DTFieldAtomicDateTime resultField = new DTFieldAtomicDateTime();
-
-                            if (cal.SelectedDate == null)
+                            else
                             {
-                                resultField.Value = new DateTime(2008, 1, 1);
-                            }
-                            else 
-                            {
+                                DTFieldAtomicDateTime resultField = new DTFieldAtomicDateTime();
                                 resultField.Value = cal.SelectedDate.Value;
+                                resultField.Name = field.Name;
+                                resulItem.Fields.Add(resultField);
                             }
-
-                            resultField.Name = field.Name;
-                            resulItem.Fields.Add(resultField);
                         }
                         else if (field is DTFieldAtomicNote)
                         {
@@ -1176,56 +1205,95 @@ namespace Infocorp.TITA.SilverlightUI
                             if ((field.Required) && (nt.Text == ""))
                             {
                                 TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
-                                txt.Text = field.Name + "*";
+                                txt.Text = field.Name + " *";
                                 ok = false;
                             }
-                            DTFieldAtomicNote resultField = new DTFieldAtomicNote();
-                            resultField.Value = nt.Text;
-                            resultField.Name = field.Name;
-                            resulItem.Fields.Add(resultField);
+                            else
+                            {
+                                DTFieldAtomicNote resultField = new DTFieldAtomicNote();
+                                resultField.Value = nt.Text;
+                                resultField.Name = field.Name;
+                                resulItem.Fields.Add(resultField);
+                            }
                         }
                         else if (field is DTFieldAtomicNumber)
                         {
                             TextBox num = (TextBox)my_pnl.FindName("num_" + field.Name);
-                            if ((field.Required) && (num.Text == ""))
+                            try
                             {
-                                TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
-                                txt.Text = field.Name + "*";
-                                ok = false;
+                                double value = double.Parse(num.Text.Trim());
+
+                                DTFieldAtomicNumber resultField = new DTFieldAtomicNumber();
+                                resultField.Value = value;
+                                resultField.Name = field.Name;
+                                resulItem.Fields.Add(resultField);
                             }
-                            DTFieldAtomicNumber resultField = new DTFieldAtomicNumber();
-                            resultField.Value = double.Parse(num.Text.Trim());
-                            
-                            resultField.Name = field.Name;
-                            resulItem.Fields.Add(resultField);
+                            catch (Exception)
+                            {
+                                if (field.Required) // mal formato o vacio
+                                {
+                                    TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
+                                    if (num.Text == "")
+                                        txt.Text = field.Name + " *";
+                                    else
+                                        txt.Text = field.Name + " (Formato invalido)";
+                                    ok = false;
+                                }
+                                else if ((num.Text != ""))
+                                {
+                                    TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
+                                    txt.Text = field.Name + " (Formato invalido)";
+                                    ok = false;
+                                }
+                            }
                         }
                         else if (field is DTFieldCounter)
                         {
                             TextBox cnt = (TextBox)my_pnl.FindName("cnt_" + field.Name);
-                            if ((field.Required) && (cnt.Text == ""))
+                            try
                             {
-                                TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
-                                txt.Text = field.Name + "*";
-                                ok = false;
+                                int value = int.Parse(cnt.Text);
+
+                                DTFieldCounter resultField = new DTFieldCounter();
+                                resultField.Value = value;
+                                resultField.Name = field.Name;
+                                resulItem.Fields.Add(resultField);
                             }
-                            DTFieldCounter resultField = new DTFieldCounter();
-                            resultField.Value = int.Parse(cnt.Text);
-                            resultField.Name = field.Name;
-                            resulItem.Fields.Add(resultField);
+                            catch (Exception)
+                            {
+                                if (field.Required)//mal formato o vacio
+                                {
+                                    TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
+                                    if (cnt.Text == "")
+                                        txt.Text = field.Name + " *";
+                                    else
+                                        txt.Text = field.Name + " (Formato invalido)";
+                                    ok = false;
+                                }
+                                else if ((cnt.Text != ""))
+                                {
+                                    TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
+                                    txt.Text = field.Name + " (Formato invalido)";
+                                    ok = false;
+                                }
+                            }
                         }
                         else
                         {
                             TextBox txt = (TextBox)my_pnl.FindName("bx_" + field.Name);
                             if ((field.Required) && (txt.Text.ToString() == ""))
                             {
-                                txt.Text = field.Name + "*";
+                                TextBlock t = (TextBlock)my_pnl.FindName("txt_" + field.Name);
+                                t.Text = field.Name + " *";
                                 ok = false;
                             }
-                            DTFieldAtomicString resultField = new DTFieldAtomicString();
-                            resultField.Value = txt.Text;
-                            resultField.Name = field.Name;
-
-                            resulItem.Fields.Add(resultField);
+                            else
+                            {
+                                DTFieldAtomicString resultField = new DTFieldAtomicString();
+                                resultField.Value = txt.Text;
+                                resultField.Name = field.Name;
+                                resulItem.Fields.Add(resultField);
+                            }
                         }
                     }
                     else if (field.Name == "ID")
@@ -1258,7 +1326,7 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
 
                             CheckBox chk = new CheckBox();
                             chk.SetValue(NameProperty, "chk_" + field.Name);
@@ -1277,7 +1345,7 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             ListBox chlkp = new ListBox();
@@ -1297,7 +1365,7 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             ListBox chuser = new ListBox();
@@ -1317,7 +1385,7 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             ListBox lstbx = new ListBox();
@@ -1338,7 +1406,7 @@ namespace Infocorp.TITA.SilverlightUI
                             numCtrl = numCtrl + 3;
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             Calendar cal = new Calendar();
@@ -1356,7 +1424,7 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             TextBox nt = new TextBox();
@@ -1375,7 +1443,7 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             TextBox num = new TextBox();
@@ -1393,7 +1461,7 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             TextBox cnt = new TextBox();
@@ -1411,7 +1479,7 @@ namespace Infocorp.TITA.SilverlightUI
                         {
                             txt.Text = field.Name;
                             txt.SetValue(NameProperty, "txt_" + field.Name);
-                            txt.Width = 80;
+                            txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
                             TextBox bx = new TextBox();
