@@ -70,7 +70,7 @@ namespace Infocorp.TITA.WITLogic.Tests
             {
                 int originalCount = sharepoint.GetWorkPackages(siteUrl, string.Empty).Count;
                 WITFactory.Instance().WITServicesInstance().AddWorkPackage(issue, siteUrl);
-                WITFactory.Instance().WITServicesInstance().ApplyChanges(siteUrl);
+                WITFactory.Instance().WITServicesInstance().ApplyChanges(siteUrl, ItemType.WORKPACKAGE);
 
                 int newCount = sharepoint.GetWorkPackages(siteUrl, string.Empty).Count;
 

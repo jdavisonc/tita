@@ -105,7 +105,7 @@ namespace Infocorp.TITA.WITLogic.Tests
             {
                 int originalCount = sharepoint.GetIssues(siteUrl, string.Empty).Count;
                 WITFactory.Instance().WITServicesInstance().AddIssue(issue, siteUrl);
-                WITFactory.Instance().WITServicesInstance().ApplyChanges(siteUrl);
+                WITFactory.Instance().WITServicesInstance().ApplyChanges(siteUrl, ItemType.ISSUE);
                 // sharepoint.AddIssue(siteUrl, issue);
                 int newCount = sharepoint.GetIssues(siteUrl, string.Empty).Count;
 
@@ -134,7 +134,7 @@ namespace Infocorp.TITA.WITLogic.Tests
                 try
                 {
                     result &= sharepoint.UpdateIssue(siteUrl, issue);
-                    result &= WITFactory.Instance().WITServicesInstance().ApplyChanges(siteUrl);
+                    result &= WITFactory.Instance().WITServicesInstance().ApplyChanges(siteUrl,ItemType.ISSUE);
 
                     issue = sharepoint.GetIssues(siteUrl, string.Empty).First();
                 }
@@ -169,7 +169,7 @@ namespace Infocorp.TITA.WITLogic.Tests
                 try
                 {
                     result &= sharepoint.DeleteIssue(siteUrl, issueId);
-                    result &= WITFactory.Instance().WITServicesInstance().ApplyChanges(siteUrl);
+                    result &= WITFactory.Instance().WITServicesInstance().ApplyChanges(siteUrl, ItemType.ISSUE);
 
                     issues = sharepoint.GetIssues(siteUrl, string.Empty);
                 }
@@ -241,7 +241,7 @@ namespace Infocorp.TITA.WITLogic.Tests
 
             int originalCount = witServices.GetIssues(contractId).Count;
             witServices.AddIssue(issue, contractId);
-            witServices.ApplyChanges(contractId);
+            witServices.ApplyChanges(contractId, ItemType.ISSUE);
             int newCount = witServices.GetIssues(contractId).Count;
 
             Assert.AreEqual(newCount, originalCount + 1);
