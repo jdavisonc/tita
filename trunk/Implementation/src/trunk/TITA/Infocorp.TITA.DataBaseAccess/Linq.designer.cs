@@ -33,6 +33,9 @@ namespace Infocorp.TITA.DataBaseAccess
     partial void InsertContract(Contract instance);
     partial void UpdateContract(Contract instance);
     partial void DeleteContract(Contract instance);
+    partial void InsertCurrent(Current instance);
+    partial void UpdateCurrent(Current instance);
+    partial void DeleteCurrent(Current instance);
     #endregion
 		
 		public LinqDataContext() : 
@@ -265,8 +268,10 @@ namespace Infocorp.TITA.DataBaseAccess
 	}
 	
 	[Table(Name="dbo.[Current]")]
-	public partial class Current
+	public partial class Current : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private string _site;
 		
@@ -276,11 +281,26 @@ namespace Infocorp.TITA.DataBaseAccess
 		
 		private string _last_modification;
 		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnsiteChanging(string value);
+    partial void OnsiteChanged();
+    partial void Oncurrent_userChanging(string value);
+    partial void Oncurrent_userChanged();
+    partial void Onlogged_dateChanging(string value);
+    partial void Onlogged_dateChanged();
+    partial void Onlast_modificationChanging(string value);
+    partial void Onlast_modificationChanged();
+    #endregion
+		
 		public Current()
 		{
+			OnCreated();
 		}
 		
-		[Column(Storage="_site", DbType="NChar(40)")]
+		[Column(Storage="_site", DbType="NChar(40) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string site
 		{
 			get
@@ -291,12 +311,16 @@ namespace Infocorp.TITA.DataBaseAccess
 			{
 				if ((this._site != value))
 				{
+					this.OnsiteChanging(value);
+					this.SendPropertyChanging();
 					this._site = value;
+					this.SendPropertyChanged("site");
+					this.OnsiteChanged();
 				}
 			}
 		}
 		
-		[Column(Name="[current_user]", Storage="_current_user", DbType="NChar(40)")]
+		[Column(Name="[current_user]", Storage="_current_user", DbType="NChar(40) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string current_user
 		{
 			get
@@ -307,12 +331,16 @@ namespace Infocorp.TITA.DataBaseAccess
 			{
 				if ((this._current_user != value))
 				{
+					this.Oncurrent_userChanging(value);
+					this.SendPropertyChanging();
 					this._current_user = value;
+					this.SendPropertyChanged("current_user");
+					this.Oncurrent_userChanged();
 				}
 			}
 		}
 		
-		[Column(Storage="_logged_date", DbType="NChar(40)")]
+		[Column(Storage="_logged_date", DbType="NChar(40) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string logged_date
 		{
 			get
@@ -323,12 +351,16 @@ namespace Infocorp.TITA.DataBaseAccess
 			{
 				if ((this._logged_date != value))
 				{
+					this.Onlogged_dateChanging(value);
+					this.SendPropertyChanging();
 					this._logged_date = value;
+					this.SendPropertyChanged("logged_date");
+					this.Onlogged_dateChanged();
 				}
 			}
 		}
 		
-		[Column(Storage="_last_modification", DbType="NChar(40)")]
+		[Column(Storage="_last_modification", DbType="NChar(40) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string last_modification
 		{
 			get
@@ -339,8 +371,32 @@ namespace Infocorp.TITA.DataBaseAccess
 			{
 				if ((this._last_modification != value))
 				{
+					this.Onlast_modificationChanging(value);
+					this.SendPropertyChanging();
 					this._last_modification = value;
+					this.SendPropertyChanged("last_modification");
+					this.Onlast_modificationChanged();
 				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
