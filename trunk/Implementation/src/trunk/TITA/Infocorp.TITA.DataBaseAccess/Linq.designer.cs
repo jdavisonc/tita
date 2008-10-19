@@ -72,6 +72,14 @@ namespace Infocorp.TITA.DataBaseAccess
 				return this.GetTable<Contract>();
 			}
 		}
+		
+		public System.Data.Linq.Table<Current> Currents
+		{
+			get
+			{
+				return this.GetTable<Current>();
+			}
+		}
 	}
 	
 	[Table(Name="dbo.Contracts")]
@@ -252,6 +260,87 @@ namespace Infocorp.TITA.DataBaseAccess
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="dbo.[Current]")]
+	public partial class Current
+	{
+		
+		private string _site;
+		
+		private string _current_user;
+		
+		private string _logged_date;
+		
+		private string _last_modification;
+		
+		public Current()
+		{
+		}
+		
+		[Column(Storage="_site", DbType="NChar(40)")]
+		public string site
+		{
+			get
+			{
+				return this._site;
+			}
+			set
+			{
+				if ((this._site != value))
+				{
+					this._site = value;
+				}
+			}
+		}
+		
+		[Column(Name="[current_user]", Storage="_current_user", DbType="NChar(40)")]
+		public string current_user
+		{
+			get
+			{
+				return this._current_user;
+			}
+			set
+			{
+				if ((this._current_user != value))
+				{
+					this._current_user = value;
+				}
+			}
+		}
+		
+		[Column(Storage="_logged_date", DbType="NChar(40)")]
+		public string logged_date
+		{
+			get
+			{
+				return this._logged_date;
+			}
+			set
+			{
+				if ((this._logged_date != value))
+				{
+					this._logged_date = value;
+				}
+			}
+		}
+		
+		[Column(Storage="_last_modification", DbType="NChar(40)")]
+		public string last_modification
+		{
+			get
+			{
+				return this._last_modification;
+			}
+			set
+			{
+				if ((this._last_modification != value))
+				{
+					this._last_modification = value;
+				}
 			}
 		}
 	}

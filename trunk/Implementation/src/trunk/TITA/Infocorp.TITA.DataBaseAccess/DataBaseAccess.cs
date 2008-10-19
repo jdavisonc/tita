@@ -10,6 +10,7 @@ namespace Infocorp.TITA.DataBaseAccess
 
     public class DataBaseAccess
     {
+        #region ABM CONTRACTS
         public void AddContract(DTContract c)
         {
             LinqDataContext dc = new LinqDataContext();
@@ -113,7 +114,39 @@ namespace Infocorp.TITA.DataBaseAccess
             }
             return contractData;
          }
+        #endregion
 
+        # region CONCURRENCE OPERATIONS
+        public void AddCurrentUser(DTCurrentUser user)
+        {
+            LinqDataContext dc = new LinqDataContext();
+            Current cUser = new Current(); 
+            cUser.site = user.Site;
+            cUser.current_user = user.CurrentUser;
+            cUser.logged_date = user.LoggedDate;
+            cUser.last_modification = user.LastModification;
+            dc.Currents.InsertOnSubmit(cUser);
+            dc.SubmitChanges();
+        }
+        public List<DTCurrentUser> getCurrentsUsersList()
+        {
+            LinqDataContext dc = new LinqDataContext();
+            List<Current> currents = dc.Currents.ToList();
+            List<DTCurrentUser> result = new List<DTCurrentUser>();
+            foreach (Current current in currents)
+            {
+                DTCurrentUser dtCurrent = new DTCurrentUser();
+                
+                dtCurrent.Site = current.site;
+                dtCurrent.CurrentUse = current.current_user;
+                dtCurrent.LoggedDate = current.logged_date;
+                dtCurrent.LastModification = current.last_modification;
+                result.Add(dtCurrent);
+            }
 
+            return result;
+        }
+        #endregion
+    
     }
 }
