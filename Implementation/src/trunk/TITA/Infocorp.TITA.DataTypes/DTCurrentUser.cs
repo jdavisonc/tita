@@ -35,7 +35,7 @@ namespace Infocorp.TITA.DataTypes
         [DataMember]
         public string LastModification
         {
-            set { _lastModificated = value; }
+            set { _lastModification = value; }
             get { return _lastModification; }
         }
 
