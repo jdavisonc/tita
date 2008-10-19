@@ -11,4 +11,12 @@
       <Column Name="task_list" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.[Current]" Member="Currents">
+    <Type Name="Current">
+      <Column Name="site" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
+      <Column Name="[current_user]" Member="current_user" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
+      <Column Name="logged_date" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
+      <Column Name="last_modification" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>
