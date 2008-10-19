@@ -228,8 +228,7 @@ public class WSTita : System.Web.Services.WebService
     public List<DTIssueReport> AllIssuesReport(DateTime fch_inicial, DateTime fch_final)
     {
         IReportGenerator reportInstance = FactoryReport.GetInstance().GetIReportGenerator();
-        //return reportInstance.AllIssuesReport(fch_inicial, fch_final);
-        return null;
+        return reportInstance.AllIssuesReport(fch_inicial, fch_final);
     }
 
     #endregion
