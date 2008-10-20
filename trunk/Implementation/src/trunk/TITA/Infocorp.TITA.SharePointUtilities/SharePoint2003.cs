@@ -257,7 +257,7 @@ namespace Infocorp.TITA.SharePointUtilities
                         SPListItemCollection itemCollection = list.Items;
                         foreach (SPListItem item in itemCollection)
                         {
-                            if (MustProcessItem(item) && item[property].ToString().CompareTo(initialValue) == 0)
+                            if (MustProcessItem(item) && item.Xml.Contains(property) && item[property].ToString().CompareTo(initialValue) == 0)
                             {
                                 item[property] = endValue;
                                 item.Update();
