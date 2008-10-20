@@ -254,13 +254,16 @@ namespace Infocorp.TITA.SharePointUtilities
                     {
                         web.AllowUnsafeUpdates = true;
                         SPList list = web.Lists[listName];
-                        SPListItemCollection itemCollection = list.Items;
-                        foreach (SPListItem item in itemCollection)
+                        if (list.Fields.SchemaXml.Contains(property))
                         {
-                            if (MustProcessItem(item) && item.Xml.Contains(property) && item[property].ToString().CompareTo(initialValue) == 0)
+                            SPListItemCollection itemCollection = list.Items;
+                            foreach (SPListItem item in itemCollection)
                             {
-                                item[property] = endValue;
-                                item.Update();
+                                if (MustProcessItem(item) && item[property].ToString().CompareTo(initialValue) == 0)
+                                {
+                                    item[property] = endValue;
+                                    item.Update();
+                                }
                             }
                         }
                     }
