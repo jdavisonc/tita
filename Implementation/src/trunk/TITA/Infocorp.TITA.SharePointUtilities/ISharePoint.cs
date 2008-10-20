@@ -18,6 +18,15 @@ namespace Infocorp.TITA.SharePointUtilities
         List<DTItem> GetIssues(string idContract, string CAMLQuery);
 
         /// <summary>
+        /// Mapeo y cambio de valor de una propiedad en particular de los items de la lista Issues
+        /// </summary>
+        /// <param name="idContract">ID de contrato</param>
+        /// <param name="property">Propiedad</param>
+        /// <param name="initialValue">Valor inicial</param>
+        /// <param name="endValue">Valor por el cual cambiar</param>
+        void SiteMapPropertyValueIssues(string idContract, string property, string initialValue, string endValue);
+
+        /// <summary>
         /// Retorna la definicion de los campos de un incidente
         /// </summary>
         /// <param name="idContract">ID de contrato</param>
@@ -61,6 +70,15 @@ namespace Infocorp.TITA.SharePointUtilities
         List<DTItem> GetWorkPackages(string idContract, string CAMLQuery);
 
         /// <summary>
+        /// Mapeo y cambio de valor de una propiedad en particular de los items de la lista WorkPackages
+        /// </summary>
+        /// <param name="idContract">ID de contrato</param>
+        /// <param name="property">Propiedad</param>
+        /// <param name="initialValue">Valor inicial</param>
+        /// <param name="endValue">Valor por el cual cambiar</param>
+        void SiteMapPropertyValueWorkPackages(string idContract, string property, string initialValue, string endValue);
+
+        /// <summary>
         /// Retorna la definicion de los campos de un work package
         /// </summary>
         /// <param name="idContract">ID de contrato</param>
@@ -102,6 +120,15 @@ namespace Infocorp.TITA.SharePointUtilities
         /// <param name="CAMLQuery">CAML Query es el filtro a aplicar sobre la coleccion.</param>
         /// <returns>Lista de DataType Tasks</returns>
         List<DTItem> GetTasks(string idContract, string CAMLQuery);
+
+        /// <summary>
+        /// Mapeo y cambio de valor de una propiedad en particular de los items de la lista Tasks
+        /// </summary>
+        /// <param name="idContract">ID de contrato</param>
+        /// <param name="property">Propiedad</param>
+        /// <param name="initialValue">Valor inicial</param>
+        /// <param name="endValue">Valor por el cual cambiar</param>
+        void SiteMapPropertyValueTasks(string idContract, string property, string initialValue, string endValue);
 
         /// <summary>
         /// Retorna la definicion de los campos de un Task
@@ -150,6 +177,13 @@ namespace Infocorp.TITA.SharePointUtilities
         /// <returns>Coleccion de string que representa los nombre de las listas</returns>
         List<String> GetLists(string urlSite);
 
+        /// <summary>
+        /// Retorna los permisos de un usuario, segun el sitio del contrato
+        /// </summary>
+        /// <param name="idContract">ID contrato</param>
+        /// <param name="username">Nombre de usuario</param>
+        /// <returns>Lista de roles</returns>
         List<DTRol> GetPermissions(string idContract, string username);
+
     }
 }
