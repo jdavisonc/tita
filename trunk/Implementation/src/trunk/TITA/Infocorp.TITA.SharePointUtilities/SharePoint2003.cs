@@ -29,6 +29,12 @@ namespace Infocorp.TITA.SharePointUtilities
             return GetListItems(dtContract.Site, dtContract.issuesList, CAMLQuery);
         }
 
+        public void SiteMapPropertyValueIssues(string idContract, string property, string initialValue, string endValue)
+        {
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            SiteMapPropertyValue(dtContract.Site, dtContract.issuesList, property, initialValue, endValue);    
+        }
+
         public List<DTField> GetFieldsIssue(string idContract)
         {
             DTContract dtContract = _dbAccess.GetContract(idContract);
@@ -63,6 +69,12 @@ namespace Infocorp.TITA.SharePointUtilities
             return GetListItems(dtContract.Site, dtContract.workPackageList, CAMLQuery);
         }
 
+        public void SiteMapPropertyValueWorkPackages(string idContract, string property, string initialValue, string endValue)
+        {
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            SiteMapPropertyValue(dtContract.Site, dtContract.workPackageList, property, initialValue, endValue);
+        }
+
         public List<DTField> GetFieldsWorkPackage(string idContract)
         {
             DTContract dtContract = _dbAccess.GetContract(idContract);
@@ -95,6 +107,12 @@ namespace Infocorp.TITA.SharePointUtilities
         {
             DTContract dtContract = _dbAccess.GetContract(idContract);
             return GetListItems(dtContract.Site, dtContract.taskList, CAMLQuery);
+        }
+
+        public void SiteMapPropertyValueTasks(string idContract, string property, string initialValue, string endValue)
+        {
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            SiteMapPropertyValue(dtContract.Site, dtContract.taskList, property, initialValue, endValue);
         }
 
         public List<DTField> GetFieldsTask(string idContract)
@@ -224,6 +242,35 @@ namespace Infocorp.TITA.SharePointUtilities
         #endregion
 
         #region Auxiliar Methods
+
+        void SiteMapPropertyValue(string urlSite, string listName, string property, string initialValue, string endValue)
+        {
+            try
+            {
+                using (SPSite site = new SPSite(urlSite))
+                {
+                    site.AllowUnsafeUpdates = true;
+                    using (SPWeb web = site.OpenWeb())
+                    {
+                        web.AllowUnsafeUpdates = true;
+                        SPList list = web.Lists[listName];
+                        SPListItemCollection itemCollection = list.Items;
+                        foreach (SPListItem item in itemCollection)
+                        {
+                            if (MustProcessItem(item) && item[property].ToString().CompareTo(initialValue) == 0)
+                            {
+                                item[property] = endValue;
+                                item.Update();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error en SiteMapPropertyValue: " + e.Message);
+            }
+        }
 
         private bool UpdateListItem(string urlSite, string listName, DTItem item, bool isUpdate)
         {
@@ -618,8 +665,6 @@ namespace Infocorp.TITA.SharePointUtilities
             }
             return listLookupChoices;
         }
-
-
 
         #endregion
     }
