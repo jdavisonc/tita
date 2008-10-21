@@ -45,8 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IReportPersistence.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="ControllerReportPersistenceCSV.cs" />
+    <Compile Include="FabricControllerReportPersistence.cs" />
+    <Compile Include="IFabricControllerReportPersistence.cs" />
+    <Compile Include="IReportPersistenceCSV.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportPersistenceCSV.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infocorp.TITA.DataTypes\Infocorp.TITA.DataTypes.csproj">
