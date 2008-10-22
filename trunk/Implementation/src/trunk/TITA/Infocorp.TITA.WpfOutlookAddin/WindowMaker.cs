@@ -64,6 +64,13 @@ namespace Infocorp.TITA.WpfOutlookAddIn
             TextBox textBox = new TextBox();
             return textBox;
         }
+        
+        private Control InsertTextBox(string text)
+        {
+            TextBox textBox = new TextBox();
+            textBox.Text = text;
+            return textBox;
+        }
 
         private Control InsertTextNote(int height, int width, string text)
         {
@@ -89,7 +96,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
                     break;
                 case DTField.Types.String:
                     //textbox
-                    oReturn = InsertTextBox();
+                    oReturn = InsertTextBox(((DTFieldAtomicString)lineField).Value);
                     break;
                 case DTField.Types.Choice:
                     //combo

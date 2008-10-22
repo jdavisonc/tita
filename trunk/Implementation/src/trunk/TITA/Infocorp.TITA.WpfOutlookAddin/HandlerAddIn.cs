@@ -59,27 +59,38 @@ namespace Infocorp.TITA.WpfOutlookAddin
         {
             if (_contract.comboBox1.SelectedIndex != -1)
             {
-
-                DTUrl oUrlSelected = GetUrlContracts()[_contract.comboBox1.SelectedIndex];
-
-                _urlContract = oUrlSelected.ContractUrl;
-                
-                List<DTField> oListaAtrib = _outlookSP.GetFieldsIssue(_urlContract, oUrlSelected.IssueList);
-                foreach (DTField item in oListaAtrib)
+                try
                 {
-                    if (item.Name==oUrlSelected.MailBodyField)
+
+                    DTUrl oUrlSelected = GetUrlContracts()[_contract.comboBox1.SelectedIndex];
+
+                    _urlContract = oUrlSelected.ContractUrl;
+
+                    List<DTField> oListaAtrib = _outlookSP.GetFieldsIssue(_urlContract, oUrlSelected.IssueList);
+                    foreach (DTField item in oListaAtrib)
                     {
-                        ((DTFieldAtomicNote)item).Value=_mailSelected.GetMail().Body;
+                        if (item.Name == oUrlSelected.MailBodyField)
+                        {
+                            ((DTFieldAtomicNote)item).Value = _mailSelected.GetMail().Body;
+                        }
+                        else if (item.Name == oUrlSelected.TitleField)
+                        {
+                            ((DTFieldAtomicString)item).Value = _mailSelected.GetMail().Subject;
+                        }
+
                     }
+
+                    _contract.Close();
+
+                    //aca genera la ventana para mostrar los campos del Issue
+                    _oIssueWindow = new Window1(oListaAtrib);
+
+                    _oIssueWindow.SendIssueButton.Click += new RoutedEventHandler(SendIssueButton_Click);
+                    _oIssueWindow.Show();
                 }
-
-                _contract.Close();
-
-                //aca genera la ventana para mostrar los campos del Issue
-                _oIssueWindow = new Window1(oListaAtrib);
-
-                _oIssueWindow.SendIssueButton.Click += new RoutedEventHandler(SendIssueButton_Click);
-                _oIssueWindow.Show();
+                catch {
+                    MessageBox.Show("Verifique parametros en el archivo de configuracion contracts.xml", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
@@ -197,9 +208,10 @@ namespace Infocorp.TITA.WpfOutlookAddin
                     if (bookElement.HasAttributes)
                     {
                         XmlElement issueListElement = (XmlElement)bookElement.GetElementsByTagName("IssueList")[0];
+                        XmlElement titleFieldElement = (XmlElement)bookElement.GetElementsByTagName("TitleField")[0];
                         XmlElement mailBodyFieldElement = (XmlElement)bookElement.GetElementsByTagName("MailField")[0];
                         DTUrl oElementUrl = new DTUrl(bookElement.Attributes["Name"].InnerText, bookElement.Attributes["Url"].InnerText,
-                            issueListElement.Attributes["Name"].InnerText, mailBodyFieldElement.Attributes["Name"].InnerText);
+                            issueListElement.Attributes["Name"].InnerText, titleFieldElement.Attributes["Name"].InnerText, mailBodyFieldElement.Attributes["Name"].InnerText);
                         oListDataUrl.Add(oElementUrl);
                     }
                 }

@@ -37,11 +37,21 @@ namespace Infocorp.TITA.WpfOutlookAddin
             set { _mailBodyField = value; }
         }
 
-        public DTUrl(string contractName, string contractUrl, string issueList, string mailBodyField)
+        private string _titleField;
+
+        public string TitleField
+        {
+            get { return _titleField; }
+            set { _titleField = value; }
+        }
+
+
+        public DTUrl(string contractName, string contractUrl, string issueList, string titleField, string mailBodyField)
         {
             _contractName = contractName;
             _contractUrl = contractUrl;
             _issueList = issueList;
+            _titleField = titleField;
             _mailBodyField = mailBodyField;
 
         }        
