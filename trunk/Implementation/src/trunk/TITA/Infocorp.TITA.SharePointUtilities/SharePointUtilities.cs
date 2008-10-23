@@ -23,7 +23,7 @@ namespace Infocorp.TITA.SharePointUtilities
         {
             if (_instanceISharePoint == null)
             {
-                _instanceISharePoint = new SharePoint2003();
+                _instanceISharePoint = new SharePoint2003WS();
             }
             return _instanceISharePoint;
         }
