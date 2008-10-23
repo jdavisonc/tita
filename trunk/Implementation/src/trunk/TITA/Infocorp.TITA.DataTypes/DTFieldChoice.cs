@@ -14,14 +14,14 @@ namespace Infocorp.TITA.DataTypes
 
         public DTFieldChoice() : base() {}
 
-        public DTFieldChoice(string name, bool required, bool hidden, bool isReadOnly, List<string> choices)
-            : base(name, required, hidden, isReadOnly)
+        public DTFieldChoice(string name, string internalName, bool required, bool hidden, bool isReadOnly, List<string> choices)
+            : base(name, internalName, required, hidden, isReadOnly)
         {
             _choices = new List<string>(choices);
         }
 
-        public DTFieldChoice(string name, bool required, bool hidden, bool isReadOnly, List<string> choices, string value)
-            : base(name, required, hidden, isReadOnly)
+        public DTFieldChoice(string name, string internalName, bool required, bool hidden, bool isReadOnly, List<string> choices, string value)
+            : base(name, internalName, required, hidden, isReadOnly)
         {
             _choices = new List<string>(choices);
             _value = value;

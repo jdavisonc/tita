@@ -23,7 +23,6 @@ namespace Infocorp.TITA.DataTypes
             _name = name;
             _data = new byte[data.Length];
             data.CopyTo(_data, 0); 
-            
         }
 
         public DTAttachment(string name, string url)
@@ -31,6 +30,26 @@ namespace Infocorp.TITA.DataTypes
             _name = name;
             _url = Url;
             _data = null;
+        }
+
+        public DTAttachment(string url)
+        {
+            _url = url;
+            _data = null;
+            int index = _url.Length - 1;
+            bool found = false;
+            while (index >= 0 && !found)
+            {
+                if (_url[index].CompareTo('/') == 0)
+                {
+                    found = true;
+                }
+                else
+                {
+                    index--;
+                }
+            }
+            _name = _url.Substring(index + 1);
         }
 
         public DTAttachment(DTAttachment attachment)

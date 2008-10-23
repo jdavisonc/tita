@@ -14,15 +14,15 @@ namespace Infocorp.TITA.DataTypes
 
         public DTFieldChoiceLookup() : base() {}
 
-        public DTFieldChoiceLookup(string name, bool required, bool hidden, bool isReadOnly, List<string> choices, string lookupField, string lookupList)
-            : base(name, required, hidden, isReadOnly, choices)
+        public DTFieldChoiceLookup(string name, string internalName, bool required, bool hidden, bool isReadOnly, List<string> choices, string lookupField, string lookupList)
+            : base(name, internalName, required, hidden, isReadOnly, choices)
         {
             _lookupField = lookupField;
             _lookupList = lookupList;
         }
 
-        public DTFieldChoiceLookup(string name, bool required, bool hidden, bool isReadOnly, List<string> choices, string lookupField, string lookupList, string value)
-            : base(name, required, hidden, isReadOnly, choices, value)
+        public DTFieldChoiceLookup(string name, string internalName, bool required, bool hidden, bool isReadOnly, List<string> choices, string lookupField, string lookupList, string value)
+            : base(name, internalName, required, hidden, isReadOnly, choices, value)
         {
             _lookupField = lookupField;
             _lookupList = lookupList;

@@ -15,14 +15,14 @@ namespace Infocorp.TITA.DataTypes
         public DTFieldAtomicDateTime() : base()
         {}
 
-        public DTFieldAtomicDateTime(string name, bool required, bool hidden, bool isReadOnly, bool isDateOnly)
-            : base(name, required, hidden, isReadOnly)
+        public DTFieldAtomicDateTime(string name, string internalName, bool required, bool hidden, bool isReadOnly, bool isDateOnly)
+            : base(name, internalName, required, hidden, isReadOnly)
         {
             _isDateOnly = isDateOnly;
         }
 
-        public DTFieldAtomicDateTime(string name, bool required, bool hidden, bool isReadOnly, bool isDateOnly, DateTime value)
-            : base(name, required, hidden, isReadOnly)
+        public DTFieldAtomicDateTime(string name, string internalName, bool required, bool hidden, bool isReadOnly, bool isDateOnly, DateTime value)
+            : base(name, internalName, required, hidden, isReadOnly)
         {
             _value = value;
             _isDateOnly = isDateOnly;

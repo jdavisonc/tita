@@ -13,12 +13,12 @@ namespace Infocorp.TITA.DataTypes
 
         public DTFieldCounter() : base() {}
 
-        public DTFieldCounter(string name, bool required, bool hidden, bool isReadOnly)
-            : base(name, required, hidden, isReadOnly)
+        public DTFieldCounter(string name, string internalName, bool required, bool hidden, bool isReadOnly)
+            : base(name, internalName, required, hidden, isReadOnly)
         {}
 
-        public DTFieldCounter(string name, bool required, bool hidden, bool isReadOnly, int value)
-            : base(name, required, hidden, isReadOnly)
+        public DTFieldCounter(string name, string internalName, bool required, bool hidden, bool isReadOnly, int value)
+            : base(name, internalName, required, hidden, isReadOnly)
         {
             _value = value;
         }
