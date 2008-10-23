@@ -554,6 +554,7 @@ namespace Infocorp.TITA.SharePointUtilities
                             bool required = field.Required;
                             bool hidden = field.Hidden;
                             bool isReadOnly = field.ReadOnlyField;
+                            string internalName = field.InternalName;
                             SPFieldType type = field.Type;
                             List<string> choices;
                             switch (type)
@@ -561,7 +562,7 @@ namespace Infocorp.TITA.SharePointUtilities
                                 case SPFieldType.Attachments:
                                     break;
                                 case SPFieldType.Boolean:
-                                    fieldsCollection.Add(new DTFieldAtomicBoolean(name, required, hidden, isReadOnly));
+                                    fieldsCollection.Add(new DTFieldAtomicBoolean(name, internalName, required, hidden, isReadOnly));
                                     break;
                                 case SPFieldType.Calculated:
                                     break;
@@ -572,12 +573,12 @@ namespace Infocorp.TITA.SharePointUtilities
                                     {
                                         choices.Add(choice);
                                     }
-                                    fieldsCollection.Add(new DTFieldChoice(name, required, hidden, isReadOnly, choices));
+                                    fieldsCollection.Add(new DTFieldChoice(name, internalName, required, hidden, isReadOnly, choices));
                                     break;
                                 case SPFieldType.Computed:
                                     break;
                                 case SPFieldType.Counter:
-                                    fieldsCollection.Add(new DTFieldCounter(name, required, hidden, isReadOnly));
+                                    fieldsCollection.Add(new DTFieldCounter(name, internalName, required, hidden, isReadOnly));
                                     break;
                                 case SPFieldType.CrossProjectLink:
                                     break;
@@ -589,7 +590,7 @@ namespace Infocorp.TITA.SharePointUtilities
                                     {
                                         isDateOnly = true;
                                     }
-                                    fieldsCollection.Add(new DTFieldAtomicDateTime(name, required, hidden, isReadOnly, isDateOnly));
+                                    fieldsCollection.Add(new DTFieldAtomicDateTime(name, internalName, required, hidden, isReadOnly, isDateOnly));
                                     break;
                                 case SPFieldType.Error:
                                     break;
@@ -609,7 +610,7 @@ namespace Infocorp.TITA.SharePointUtilities
                                     string lookupField = fieldLookup.LookupField;
                                     string lookupList = fieldLookup.LookupList;
                                     choices.AddRange(GetChoicesFromList(web, lookupList, lookupField));
-                                    fieldsCollection.Add(new DTFieldChoiceLookup(name, required, hidden, isReadOnly, choices, lookupField, lookupList));
+                                    fieldsCollection.Add(new DTFieldChoiceLookup(name, internalName, required, hidden, isReadOnly, choices, lookupField, lookupList));
                                     break;
                                 case SPFieldType.MaxItems:
                                     break;
@@ -618,15 +619,15 @@ namespace Infocorp.TITA.SharePointUtilities
                                 case SPFieldType.MultiChoice:
                                     break;
                                 case SPFieldType.Note:
-                                    fieldsCollection.Add(new DTFieldAtomicNote(name, required, hidden, isReadOnly));
+                                    fieldsCollection.Add(new DTFieldAtomicNote(name, internalName, required, hidden, isReadOnly));
                                     break;
                                 case SPFieldType.Number:
-                                    fieldsCollection.Add(new DTFieldAtomicNumber(name, required, hidden, isReadOnly));
+                                    fieldsCollection.Add(new DTFieldAtomicNumber(name, internalName, required, hidden, isReadOnly));
                                     break;
                                 case SPFieldType.Recurrence:
                                     break;
                                 case SPFieldType.Text:
-                                    fieldsCollection.Add(new DTFieldAtomicString(name, required, hidden, isReadOnly));
+                                    fieldsCollection.Add(new DTFieldAtomicString(name, internalName, required, hidden, isReadOnly));
                                     break;
                                 case SPFieldType.Threading:
                                     break;
@@ -639,7 +640,7 @@ namespace Infocorp.TITA.SharePointUtilities
                                     {
                                         choices.Add(user.Name);
                                     }
-                                    fieldsCollection.Add(new DTFieldChoiceUser(name, required, hidden, isReadOnly, choices));
+                                    fieldsCollection.Add(new DTFieldChoiceUser(name, internalName, required, hidden, isReadOnly, choices));
                                     break;
                                 default:
                                     break;
