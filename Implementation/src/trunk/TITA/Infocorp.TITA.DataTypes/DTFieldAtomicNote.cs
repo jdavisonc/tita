@@ -14,12 +14,12 @@ namespace Infocorp.TITA.DataTypes
         public DTFieldAtomicNote() : base()
         {}
 
-        public DTFieldAtomicNote(string name, bool required, bool hidden, bool isReadOnly)
-            : base(name, required, hidden, isReadOnly)
+        public DTFieldAtomicNote(string name, string internalName, bool required, bool hidden, bool isReadOnly)
+            : base(name, internalName, required, hidden, isReadOnly)
         {}
 
-        public DTFieldAtomicNote(string name, bool required, bool hidden, bool isReadOnly, string value)
-            : base(name, required, hidden, isReadOnly)
+        public DTFieldAtomicNote(string name, string internalName, bool required, bool hidden, bool isReadOnly, string value)
+            : base(name, internalName, required, hidden, isReadOnly)
         {
             _value = value;
         }

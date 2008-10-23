@@ -12,8 +12,8 @@ namespace Infocorp.TITA.DataTypes
         public DTFieldAtomic() : base()
         {}
 
-        public DTFieldAtomic(string name, bool required, bool hidden, bool isReadOnly)
-            : base(name, required, hidden, isReadOnly)
+        public DTFieldAtomic(string name, string internalName, bool required, bool hidden, bool isReadOnly)
+            : base(name, internalName, required, hidden, isReadOnly)
         { }
 
         public DTFieldAtomic(DTFieldAtomic dtFieldAtomic)

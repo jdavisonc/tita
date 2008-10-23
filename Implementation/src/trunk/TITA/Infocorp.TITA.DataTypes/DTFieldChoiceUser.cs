@@ -12,12 +12,12 @@ namespace Infocorp.TITA.DataTypes
 
         public DTFieldChoiceUser() : base() {}
 
-        public DTFieldChoiceUser(string name, bool required, bool hidden, bool isReadOnly, List<string> choices)
-            : base(name, required, hidden, isReadOnly, choices)
+        public DTFieldChoiceUser(string name, string internalName, bool required, bool hidden, bool isReadOnly, List<string> choices)
+            : base(name, internalName, required, hidden, isReadOnly, choices)
         {}
 
-        public DTFieldChoiceUser(string name, bool required, bool hidden, bool isReadOnly, List<string> choices, string value)
-            : base(name, required, hidden, isReadOnly, choices, value)
+        public DTFieldChoiceUser(string name, string internalName, bool required, bool hidden, bool isReadOnly, List<string> choices, string value)
+            : base(name, internalName, required, hidden, isReadOnly, choices, value)
         {}
 
         public DTFieldChoiceUser(DTFieldChoiceUser dtFieldChoiceUser)

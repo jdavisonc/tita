@@ -10,6 +10,7 @@ namespace Infocorp.TITA.DataTypes
     public class DTField
     {
         private string _name = string.Empty;
+        private string _internalName = string.Empty;
         private bool _required = false;
         private bool _hidden = false;
         private bool _isReadOnly = false;
@@ -28,9 +29,10 @@ namespace Infocorp.TITA.DataTypes
             Default = 9
         }
 
-        public DTField(string name, bool required, bool hidden, bool isReadOnly)
+        public DTField(string name, string internalName, bool required, bool hidden, bool isReadOnly)
         {
             _name = name;
+            _internalName = internalName;
             _required = required;
             _hidden = hidden;
             _isReadOnly = isReadOnly;
@@ -41,6 +43,7 @@ namespace Infocorp.TITA.DataTypes
         public DTField(DTField field)
         {
             _name = field.Name;
+            _internalName = field.InternalName;
             _required = field.Required;
             _hidden = field.Hidden;
             _isReadOnly = field.IsReadOnly;
@@ -51,6 +54,13 @@ namespace Infocorp.TITA.DataTypes
         {
             get { return _name; }
             set { _name = value; }
+        }
+
+        [DataMember]
+        public string InternalName
+        {
+            get { return _internalName; }
+            set { _internalName = value; }
         }
 
         public virtual Types GetCustomType()
