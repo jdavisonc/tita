@@ -166,16 +166,16 @@ namespace Infocorp.TITA.SharePointUtilities
         /// <summary>
         /// Retorna informacion sobre la cultura del sitio
         /// </summary>
-        /// <param name="urlSite">Url de Sitio</param>
+        /// <param name="urlSite">ID Contrato</param>
         /// <returns>Retorna la informacion sobre la cultura del sitio</returns>
         CultureInfo GetSiteLocale(string idContract);
 
         /// <summary>
         /// Retorna la coleccion de listas existente en un Sitio SharePoint
         /// </summary>
-        /// <param name="urlSite">URL del Sitio</param>
+        /// <param name="urlSite">ID Contrato</param>
         /// <returns>Coleccion de string que representa los nombre de las listas</returns>
-        List<String> GetLists(string urlSite);
+        List<String> GetLists(string idContract);
 
         /// <summary>
         /// Retorna los permisos de un usuario, segun el sitio del contrato
