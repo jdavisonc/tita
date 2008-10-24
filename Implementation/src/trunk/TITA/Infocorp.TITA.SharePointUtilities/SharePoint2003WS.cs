@@ -144,14 +144,98 @@ namespace Infocorp.TITA.SharePointUtilities
             throw new NotImplementedException();
         }
 
-        public List<string> GetLists(string urlSite)
+        public List<string> GetLists(string idContract)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<string> listCollection = new List<string>();
+                DTContract dtContract = _dbAccess.GetContract(idContract);
+
+                ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists();
+                listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                XmlNode xmlNode = listsWS.GetListCollection();
+                foreach (XmlNode childNode in xmlNode)
+                {
+                    if ((childNode.Attributes != null) && (childNode.Attributes.GetNamedItem("Title") != null))
+                    {
+                        listCollection.Add(childNode.Attributes.GetNamedItem("Title").Value);
+                    }
+                }
+                return listCollection;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("GetList: " + e.Message);
+            }
         }
 
         public List<DTRol> GetPermissions(string idContract, string username)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<DTRol> rolCollection = new List<DTRol>();
+                UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup();
+                userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
+
+                string loginName = username;
+                XmlNode node = userGroup.GetAllUserCollectionFromWeb();
+                foreach (XmlNode xmlNodeChild in node.ChildNodes)
+                {
+                    foreach (XmlNode userNode in xmlNodeChild)
+                    {
+                        if ((userNode.Attributes != null) && 
+                            (userNode.Attributes.GetNamedItem("Name") != null) &&
+                            (userNode.Attributes.GetNamedItem("Name").Value.CompareTo(username) == 0))
+                        {
+                            loginName = userNode.Attributes.GetNamedItem("LoginName").Value;
+                            break;
+                        }
+                    }
+                }
+
+                XmlNode xmlNode = userGroup.GetRoleCollectionFromUser(loginName);
+                foreach (XmlNode xmlNodeChild in xmlNode.ChildNodes)
+                {
+                    foreach (XmlNode userNode in xmlNodeChild)
+                    {
+                        if (userNode.Attributes != null)
+                        {
+                            string name = userNode.Attributes.GetNamedItem("Name").Value;
+                            string type = userNode.Attributes.GetNamedItem("Type").Value;
+                            
+                            switch (type)
+                            {
+                                case "0":
+                                    rolCollection.Add(new DTRol(name, string.Empty, DTRol.RolType.None));
+                                    break;
+                                case "1":
+                                    rolCollection.Add(new DTRol(name, string.Empty, DTRol.RolType.Guest));
+                                    break;
+                                case "2":
+                                    rolCollection.Add(new DTRol(name, string.Empty, DTRol.RolType.Reader));
+                                    break;
+                                case "3":
+                                    rolCollection.Add(new DTRol(name, string.Empty, DTRol.RolType.Contributor));
+                                    break;
+                                case "4":
+                                    rolCollection.Add(new DTRol(name, string.Empty, DTRol.RolType.WebDesigner));
+                                    break;
+                                case "5":
+                                    rolCollection.Add(new DTRol(name, string.Empty, DTRol.RolType.Administrator));
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+
+                }
+                return rolCollection;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("GetPermissions: " + e.Message);
+            }
         }
 
         #endregion
@@ -159,8 +243,60 @@ namespace Infocorp.TITA.SharePointUtilities
         #region Auxiliar Method
 
         void SiteMapPropertyValue(string urlSite, string listName, string property, string initialValue, string endValue)
-        { 
-        
+        {
+            try
+            {
+                List<DTField> fieldsList = GetFieldsListItem(urlSite, listName);
+                DTField dTFieldProp = null;
+                foreach (DTField dTField in fieldsList)
+                {
+                    if (dTField.Name.CompareTo(property) == 0)
+                    {
+                        dTFieldProp = dTField;
+                        break;
+                    }
+                }
+                if (dTFieldProp != null)
+                {
+                    string updateXml = "<Batch>";
+                    int idCmd = 1;
+                    string innerXml = "<ViewFields>";
+                    innerXml += "<FieldRef Name='" + dTFieldProp.InternalName + "' />";
+                    innerXml += "<FieldRef Name='ID' />";
+                    innerXml += "</ViewFields>";
+
+                    ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists();
+                    listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                    XmlNode xmlListItems = listsWS.GetListItems(listName, string.Empty, null, StringToXmlNode(innerXml), string.Empty, null);
+                    foreach (XmlNode nodeWP in xmlListItems.ChildNodes)
+                    {
+                        foreach (XmlNode item in nodeWP.ChildNodes)
+                        {
+                            if (item.Attributes != null)
+                            {
+                                if ((item.Attributes.GetNamedItem("ows_" + dTFieldProp.InternalName) != null) &&
+                                    (item.Attributes.GetNamedItem("ows_" + dTFieldProp.InternalName).Value.CompareTo(initialValue) == 0))
+                                { 
+                                    updateXml += "<Method ID='" + (idCmd++).ToString() + "' Cmd='Update'>";
+                                    updateXml += "<Field Name='" + dTFieldProp.InternalName + "'>" + endValue + "</Field>";
+                                    updateXml += "<Field Name='ID'>" + item.Attributes.GetNamedItem("ows_ID").Value + "</Field>";
+                                    updateXml += "</Method>";
+                                }
+
+                            }
+                        }
+                    }
+                    updateXml += "</Batch>";
+                    listsWS.UpdateListItems(listName, StringToXmlNode(updateXml));
+                }
+            }
+            catch (Exception e)
+            {
+                
+                throw new Exception("SiteMapPropertyValue: " + e.Message);
+            }
+
+
         }
 
         private bool UpdateListItem(string urlSite, string listName, DTItem item, bool isUpdate)

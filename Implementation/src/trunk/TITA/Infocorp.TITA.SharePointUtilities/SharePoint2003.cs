@@ -160,12 +160,13 @@ namespace Infocorp.TITA.SharePointUtilities
             }
         }
 
-        public List<String> GetLists(string urlSite)
+        public List<String> GetLists(string idContract)
         {
             List<String> listCollection = new List<string>();
             try
             {
-                using (SPSite site = new SPSite(urlSite))
+                DTContract dtContract = _dbAccess.GetContract(idContract);
+                using (SPSite site = new SPSite(dtContract.Site))
                 {
                     using (SPWeb web = site.OpenWeb())
                     {
