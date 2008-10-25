@@ -218,17 +218,24 @@ public class WSTita : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public List<DTIssueReport> IssuesReport(String idContract, DateTime fch_inicial, DateTime fch_final)
+    public List<DTReportedItem> IssuesReport(String idContract, DateTime fch_inicial, DateTime fch_final)
     {
         IReportGenerator reportInstance = FactoryReport.GetInstance().GetIReportGenerator();
         return reportInstance.IssuesReport(idContract, fch_inicial, fch_final);
     }
 
     [WebMethod]
-    public List<DTIssueReport> AllIssuesReport(DateTime fch_inicial, DateTime fch_final)
+    public List<DTReportedItem> AllIssuesReport(DateTime fch_inicial, DateTime fch_final)
     {
+        IWITServices witServices = WITFactory.Instance().WITServicesInstance();
         IReportGenerator reportInstance = FactoryReport.GetInstance().GetIReportGenerator();
-        return reportInstance.AllIssuesReport(fch_inicial, fch_final);
+        List<DTReportedItem> reports = new List<DTReportedItem>();
+        foreach (DTContract contract in witServices.GetContracts())
+        {
+            reports.AddRange(reportInstance.IssuesReport(contract.ContractId, fch_inicial, fch_final));
+        }
+
+        return reports;
     }
 
     #endregion
