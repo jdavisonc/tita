@@ -129,6 +129,9 @@
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.AddWorkPackageResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -174,6 +177,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\WSTitaReference\Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse.datasource">

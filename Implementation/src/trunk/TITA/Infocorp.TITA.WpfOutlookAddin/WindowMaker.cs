@@ -124,7 +124,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
                     {
                         List<string> oText = new List<string>();
                         oText.Add(" ");
-                        DTFieldChoice oDTFieldChoice = new DTFieldChoice(((DTFieldChoice)lineField).Name, false, false, true, oText);
+                        DTFieldChoice oDTFieldChoice = new DTFieldChoice(((DTFieldChoice)lineField).Name,((DTFieldChoice)lineField).Name, false, false, true, oText);
                         oReturn = InsertCombo(oDTFieldChoice.Choices);
                     }
                     else

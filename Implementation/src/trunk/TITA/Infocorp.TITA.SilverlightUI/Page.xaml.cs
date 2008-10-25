@@ -14,6 +14,7 @@ using Infocorp.TITA.SilverlightUI.WSTitaReference;
 using Liquid;
 using Infocorp.TITA.SilverlightUI.UserControls;
 using Cooper.Silverlight.Controls;
+using System.Reflection;
 
 namespace Infocorp.TITA.SilverlightUI
 {
@@ -41,7 +42,7 @@ namespace Infocorp.TITA.SilverlightUI
         private DTItem my_issue_template = null;
         List<DTContract> my_contract = new List<DTContract>();
         private bool isDelete;
-
+        private List<string> ColumnsToShow = null;// new List<string>() { "id", "title", "status", "priority", "category", "Reported Date", "Work Package", "Reported by", "Order", "Resolution", "IsLocal" };
         public Page()
         {
             InitializeComponent();
@@ -55,6 +56,8 @@ namespace Infocorp.TITA.SilverlightUI
             {
                 ViewPendingChanges();
             }
+
+            grd_INCIDENT.AutoGeneratingColumn += new EventHandler<DataGridAutoGeneratingColumnEventArgs>(grd_INCIDENT_AutoGeneratingColumn);
         }
 
         public void EnableOption(Option o)
@@ -628,12 +631,31 @@ namespace Infocorp.TITA.SilverlightUI
             lstItem = e.Result;
             Dispatcher.BeginInvoke(LoadIncidents(e.Result));
         }
-        
+
         private Delegate LoadIncidents(List<DTItem> list)
         {
-            Issue i;
+            //Issue i;
             List<Issue> lstIssue = new List<Issue>();
-            foreach (DTItem issue in list)
+            ColumnsToShow = new List<string>();
+            if (list.Count > 0)
+            {
+                ColumnsToShow.AddRange(list[0].Fields.Select<DTField, string>(new Func<DTField, string>(
+                    delegate(DTField field)
+                    {
+                        if ((!field.Hidden) || (field.Name.ToLower() == "id" && field.Hidden))
+                        {
+                            return field.Name.ToLower();
+                        }
+                        else
+                        {
+                            return string.Empty;
+                        }
+                    }
+                    )
+                    ));
+
+                #region old
+                /*foreach (DTItem issue in list)
             {
                 i = new Issue();
 
@@ -683,12 +705,34 @@ namespace Infocorp.TITA.SilverlightUI
                 }
                  lstIssue.Add(i);
             }
-            grd_INCIDENT.ItemsSource = lstIssue;
+             */
+                #endregion
+
+                //grd_INCIDENT.ItemsSource = lstIssue;
+                /*var s = from l in list
+                        where l
+                        select new
+                        {
+                            l
+
+                        };
+            
+                
+                grd_INCIDENT.ItemsSource = new List<object>() { s };*/
+            }
             if (grd_INCIDENT.Columns.Count != 0)
             {
                 grd_INCIDENT.Columns[0].Visibility = Visibility.Collapsed;
             }
             return null;
+        }
+
+
+        void grd_INCIDENT_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            bool show = ColumnsToShow != null && ColumnsToShow.Contains(e.Property.Name.ToLower().Trim());
+            
+            e.Cancel = !show;
         }
 
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
