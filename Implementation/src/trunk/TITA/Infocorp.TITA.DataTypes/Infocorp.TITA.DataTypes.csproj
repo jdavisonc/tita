@@ -66,6 +66,7 @@
     <Compile Include="DTFieldCounter.cs" />
     <Compile Include="DTIssueReport.cs" />
     <Compile Include="DTItem.cs" />
+    <Compile Include="DTReportedItem.cs" />
     <Compile Include="DTRol.cs" />
     <Compile Include="DTWorkPackageReport.cs" />
     <Compile Include="Gui\DTGuiIssue.cs" />
