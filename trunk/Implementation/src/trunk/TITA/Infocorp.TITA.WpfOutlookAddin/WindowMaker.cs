@@ -124,7 +124,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
                     {
                         List<string> oText = new List<string>();
                         oText.Add(" ");
-                        DTFieldChoice oDTFieldChoice = new DTFieldChoice(((DTFieldChoice)lineField).Name,((DTFieldChoice)lineField).Name, false, false, true, oText);
+                        DTFieldChoice oDTFieldChoice = new DTFieldChoice(((DTFieldChoice)lineField).Name,((DTFieldChoice)lineField).InternalName, false, false, true, oText);
                         oReturn = InsertCombo(oDTFieldChoice.Choices);
                     }
                     else
@@ -211,7 +211,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
             //DTIssue oDTIssueInfo = new DTIssue(_issueFields, oMailListAttachments);
  
 
-           // oHandlerAddIn.BuildIssue(urlIssue,DTIssue issue);
+            //oHandlerAddIn.BuildIssue(urlIssue,DTIssue issue);
             //url, DTIssue
         //}
 

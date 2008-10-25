@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="IOutlookSharePoint.cs" />
     <Compile Include="OutlookSharePoint2003.cs" />
+    <Compile Include="OutlookSharePoint2003WS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
