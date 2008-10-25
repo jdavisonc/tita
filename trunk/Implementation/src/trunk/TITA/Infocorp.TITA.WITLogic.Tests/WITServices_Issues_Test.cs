@@ -196,7 +196,7 @@ namespace Infocorp.TITA.WITLogic.Tests
         public void MustGetIssueTemplate()
         {
             string siteId = "1";
-            List<DTField> fields = new List<DTField>() { new DTFieldAtomicString("Test", true, false, true) };
+            List<DTField> fields = new List<DTField>() { new DTFieldAtomicString("Test","Test", true, false, true) };
             using (mocks.Record())
             {
                 Expect.On(suMock).Call(suMock.GetFieldsIssue(siteId)).Return(fields);
