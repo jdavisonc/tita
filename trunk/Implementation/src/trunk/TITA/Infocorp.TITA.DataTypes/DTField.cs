@@ -88,6 +88,23 @@ namespace Infocorp.TITA.DataTypes
             get { return _isReadOnly; }
             set { _isReadOnly = value; }
         }
+        
+        private bool _showInGrid;
+        [DataMember]
+        public bool ShowInGrid
+        {
+            get { return _showInGrid; }
+            set { _showInGrid = value; }        
+        }
+
+        private int _gridOrder;
+        [DataMember]
+        public int GridOrder
+        {
+            get { return _gridOrder; }
+            set { _gridOrder = value; }
+        }
+
 
         public override bool Equals(object obj)
         {
