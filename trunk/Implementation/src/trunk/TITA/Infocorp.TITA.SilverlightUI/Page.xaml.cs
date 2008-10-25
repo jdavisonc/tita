@@ -634,7 +634,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         private Delegate LoadIncidents(List<DTItem> list)
         {
-            //Issue i;
+            Issue i;
             List<Issue> lstIssue = new List<Issue>();
             ColumnsToShow = new List<string>();
             if (list.Count > 0)
@@ -655,7 +655,7 @@ namespace Infocorp.TITA.SilverlightUI
                     ));
 
                 #region old
-                /*foreach (DTItem issue in list)
+                foreach (DTItem issue in list)
             {
                 i = new Issue();
 
@@ -705,10 +705,10 @@ namespace Infocorp.TITA.SilverlightUI
                 }
                  lstIssue.Add(i);
             }
-             */
+             
                 #endregion
 
-                //grd_INCIDENT.ItemsSource = lstIssue;
+                grd_INCIDENT.ItemsSource = lstIssue;
                 /*var s = from l in list
                         where l
                         select new
