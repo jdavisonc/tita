@@ -28,6 +28,8 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         private string NameField;
         
+        private string InternalNameField;
+        
         private bool RequiredField;
         
         private bool HiddenField;
@@ -51,7 +53,20 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string InternalName {
+            get {
+                return this.InternalNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InternalNameField, value) != true)) {
+                    this.InternalNameField = value;
+                    this.RaisePropertyChanged("InternalName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=2)]
         public bool Required {
             get {
                 return this.RequiredField;
@@ -64,7 +79,7 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=2)]
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=3)]
         public bool Hidden {
             get {
                 return this.HiddenField;
@@ -77,7 +92,7 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=3)]
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=4)]
         public bool IsReadOnly {
             get {
                 return this.IsReadOnlyField;
@@ -90,7 +105,7 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=4)]
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=5)]
         public bool ShowInGrid {
             get {
                 return this.ShowInGridField;
@@ -103,7 +118,7 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=5)]
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=6)]
         public int GridOrder {
             get {
                 return this.GridOrderField;
@@ -620,65 +635,50 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.Runtime.Serialization.DataContractAttribute(Name="DTIssueReport", Namespace="http://tempuri.org/")]
-    public partial class DTIssueReport : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.Runtime.Serialization.DataContractAttribute(Name="DTReportedItem", Namespace="http://tempuri.org/")]
+    public partial class DTReportedItem : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private string IdIssueField;
+        private string CategoryField;
         
-        private string TitleField;
+        private string StatusField;
         
-        private string SiteField;
-        
-        private string WorkPackageField;
+        private int CountField;
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string IdIssue {
+        public string Category {
             get {
-                return this.IdIssueField;
+                return this.CategoryField;
             }
             set {
-                if ((object.ReferenceEquals(this.IdIssueField, value) != true)) {
-                    this.IdIssueField = value;
-                    this.RaisePropertyChanged("IdIssue");
+                if ((object.ReferenceEquals(this.CategoryField, value) != true)) {
+                    this.CategoryField = value;
+                    this.RaisePropertyChanged("Category");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string Title {
+        public string Status {
             get {
-                return this.TitleField;
+                return this.StatusField;
             }
             set {
-                if ((object.ReferenceEquals(this.TitleField, value) != true)) {
-                    this.TitleField = value;
-                    this.RaisePropertyChanged("Title");
+                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
-        public string Site {
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=2)]
+        public int Count {
             get {
-                return this.SiteField;
+                return this.CountField;
             }
             set {
-                if ((object.ReferenceEquals(this.SiteField, value) != true)) {
-                    this.SiteField = value;
-                    this.RaisePropertyChanged("Site");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
-        public string WorkPackage {
-            get {
-                return this.WorkPackageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.WorkPackageField, value) != true)) {
-                    this.WorkPackageField = value;
-                    this.RaisePropertyChanged("WorkPackage");
+                if ((this.CountField.Equals(value) != true)) {
+                    this.CountField = value;
+                    this.RaisePropertyChanged("Count");
                 }
             }
         }
@@ -2197,12 +2197,12 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     public partial class IssuesReportResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> IssuesReportResult;
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> IssuesReportResult;
         
         public IssuesReportResponseBody() {
         }
         
-        public IssuesReportResponseBody(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> IssuesReportResult) {
+        public IssuesReportResponseBody(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> IssuesReportResult) {
             this.IssuesReportResult = IssuesReportResult;
         }
     }
@@ -2261,12 +2261,12 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     public partial class AllIssuesReportResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> AllIssuesReportResult;
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> AllIssuesReportResult;
         
         public AllIssuesReportResponseBody() {
         }
         
-        public AllIssuesReportResponseBody(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> AllIssuesReportResult) {
+        public AllIssuesReportResponseBody(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> AllIssuesReportResult) {
             this.AllIssuesReportResult = AllIssuesReportResult;
         }
     }
@@ -2563,10 +2563,10 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> Result {
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport>)(this.results[0]));
+                return ((System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem>)(this.results[0]));
             }
         }
     }
@@ -2581,10 +2581,10 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> Result {
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport>)(this.results[0]));
+                return ((System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem>)(this.results[0]));
             }
         }
     }
@@ -4178,7 +4178,7 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             return base.Channel.EndIssuesReport(result);
         }
         
-        private System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> EndIssuesReport(System.IAsyncResult result) {
+        private System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> EndIssuesReport(System.IAsyncResult result) {
             Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndIssuesReport(result);
             return retVal.Body.IssuesReportResult;
         }
@@ -4191,7 +4191,7 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
         
         private object[] OnEndIssuesReport(System.IAsyncResult result) {
-            System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> retVal = this.EndIssuesReport(result);
+            System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> retVal = this.EndIssuesReport(result);
             return new object[] {
                     retVal};
         }
@@ -4239,7 +4239,7 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             return base.Channel.EndAllIssuesReport(result);
         }
         
-        private System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> EndAllIssuesReport(System.IAsyncResult result) {
+        private System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> EndAllIssuesReport(System.IAsyncResult result) {
             Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndAllIssuesReport(result);
             return retVal.Body.AllIssuesReportResult;
         }
@@ -4251,7 +4251,7 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
         
         private object[] OnEndAllIssuesReport(System.IAsyncResult result) {
-            System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTIssueReport> retVal = this.EndAllIssuesReport(result);
+            System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> retVal = this.EndAllIssuesReport(result);
             return new object[] {
                     retVal};
         }
