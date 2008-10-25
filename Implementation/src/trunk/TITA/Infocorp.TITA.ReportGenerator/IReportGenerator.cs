@@ -10,7 +10,6 @@ namespace Infocorp.TITA.ReportGenerator
     public interface IReportGenerator
     {
         List<DTWorkPackageReport> ReportDesvWorkPackage(string contractId, DateTime initialDate, DateTime finalDate);
-        List<DTIssueReport> IssuesReport(string contractId, DateTime initialDate, DateTime finalDate);
-        List<DTIssueReport> AllIssuesReport(DateTime initialDate, DateTime finalDate);
+        List<DTReportedItem> IssuesReport(string contractId, DateTime initialDate, DateTime finalDate);
     }
 }

@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControladorRG.cs" />
+    <Compile Include="DTReportItemFields.cs" />
     <Compile Include="FactoryReport.cs" />
     <Compile Include="IReportGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
