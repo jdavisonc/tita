@@ -732,7 +732,7 @@ namespace Infocorp.TITA.SilverlightUI
         {
             bool show = ColumnsToShow != null && ColumnsToShow.Contains(e.Property.Name.ToLower().Trim());
             
-            e.Cancel = !show;
+            //e.Cancel = !show;
         }
 
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
