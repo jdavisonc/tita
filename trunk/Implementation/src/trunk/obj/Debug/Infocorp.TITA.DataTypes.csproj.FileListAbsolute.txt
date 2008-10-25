@@ -1,5 +1,0 @@
-C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\trunk\TITA\Infocorp.TITA.DataTypes\bin\Debug\Infocorp.TITA.DataTypes.dll
-C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\trunk\TITA\Infocorp.TITA.DataTypes\bin\Debug\Infocorp.TITA.DataTypes.pdb
-C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\trunk\TITA\Infocorp.TITA.DataTypes\obj\Debug\ResolveAssemblyReference.cache
-C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\trunk\TITA\Infocorp.TITA.DataTypes\obj\Debug\Infocorp.TITA.DataTypes.dll
-C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\trunk\TITA\Infocorp.TITA.DataTypes\obj\Debug\Infocorp.TITA.DataTypes.pdb
