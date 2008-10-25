@@ -94,7 +94,54 @@ namespace Infocorp.TITA.SharePointUtilities.Test
                 Assert.Fail("No se agregó el issue. ", exc.Message);
             }
         }
+        [Test]
+        public void TestUpdateItem()
+        {
+            ISharePoint sharepoint = SharePointUtilities.GetInstance().GetISharePoint();
+            List<DTItem> TestIssues = sharepoint.GetIssues(_idContract, String.Empty);
+            int cantCambios=0;
+            foreach (DTItem issue in TestIssues)
+            {
+                foreach (DTField field in issue.Fields)
+                {
+                    switch (field.GetCustomType())
+                    {
+                        case DTField.Types.String:
+                            (field as DTFieldAtomicString).Value = "Prueba Update";
+                            cantCambios++;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+               sharepoint.UpdateIssue(_idContract, issue);
+            }
+            
+            int cantCambiadas = 0;
+            TestIssues = sharepoint.GetIssues(_idContract, String.Empty);
+            foreach (DTItem issue in TestIssues)
+            {
+                foreach (DTField field in issue.Fields)
+                {
+                    switch (field.GetCustomType())
+                    {
+                        case DTField.Types.String:
 
+                            if ((field as DTFieldAtomicString).Value.CompareTo("Prueba Update") == 0)
+                            cantCambiadas++;
+                            break;
+                    }
+                }
+            }
+            try
+            {
+                Assert.AreEqual(cantCambios, cantCambiadas);
+            }
+            catch (Exception exc)
+            {
+                Assert.Fail("No actualizo " + (cantCambios - cantCambiadas).ToString() + " de " + cantCambios.ToString(), exc.Message);
+            }
+        }
         [Test]
         public void TestRemoveItem()
         {
