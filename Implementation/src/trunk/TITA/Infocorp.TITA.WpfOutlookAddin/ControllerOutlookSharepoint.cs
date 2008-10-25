@@ -12,7 +12,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
             OutlookSharePoint2003 oOutlook2003 = new OutlookSharePoint2003();
             return (IOutlookSharePoint)oOutlook2003;
 
-            return null;
+            //return null;
         }
     }
 }
