@@ -49,13 +49,14 @@ namespace Infocorp.TITA.SilverlightUI.Code
             get { return workPackage; }
             set { workPackage = value; }
         }
-        private float ord;
+        private double priorityOrder;
 
-        public float Ord
+        public double PriorityOrder
         {
-            get { return ord; }
-            set { ord = value; }
+            get { return priorityOrder; }
+            set { priorityOrder = value; }
         }
+
         private string priority;
 
         public string Priority
