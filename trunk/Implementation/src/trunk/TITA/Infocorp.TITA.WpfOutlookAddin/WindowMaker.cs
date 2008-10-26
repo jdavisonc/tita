@@ -144,11 +144,16 @@ namespace Infocorp.TITA.WpfOutlookAddIn
         {
 
             Label label = new Label();
-            label.Content = lineField.Name;
+            
             label.FontSize = 12;
             if(lineField.Required)
             {
+                label.Content = String.Concat(lineField.Name, " (*) ");
                 label.Foreground = Brushes.Orange;
+            }
+            else
+            {
+                label.Content = lineField.Name;
             }
             Grid.SetRow(label, 0);
             
