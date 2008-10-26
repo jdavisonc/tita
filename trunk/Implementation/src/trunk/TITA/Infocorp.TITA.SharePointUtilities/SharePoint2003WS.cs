@@ -11,6 +11,8 @@ namespace Infocorp.TITA.SharePointUtilities
     public class SharePoint2003WS : ISharePoint
     {
         private DataBaseAccess.DataBaseAccess _dbAccess = null;
+        private const string _wsListsSuf = "/_vti_bin/Lists.asmx";
+        private const string _wsUserGroupSuf = "/_vti_bin/UserGroup.asmx";
 
         public SharePoint2003WS()
         {
@@ -150,10 +152,13 @@ namespace Infocorp.TITA.SharePointUtilities
             {
                 List<string> listCollection = new List<string>();
                 DTContract dtContract = _dbAccess.GetContract(idContract);
-
-                ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists();
-                listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
-                XmlNode xmlNode = listsWS.GetListCollection();
+                XmlNode xmlNode;
+                using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
+                {
+                    listsWS.Url = dtContract.Site + _wsListsSuf;
+                    listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                    xmlNode = listsWS.GetListCollection();
+                }
                 foreach (XmlNode childNode in xmlNode)
                 {
                     if ((childNode.Attributes != null) && (childNode.Attributes.GetNamedItem("Title") != null))
@@ -174,11 +179,15 @@ namespace Infocorp.TITA.SharePointUtilities
             try
             {
                 List<DTRol> rolCollection = new List<DTRol>();
-                UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup();
-                userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
-
+                DTContract dtContract = _dbAccess.GetContract(idContract);
+                XmlNode node;
+                using (UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup())
+                {
+                    userGroup.Url = dtContract.Site + _wsUserGroupSuf;
+                    userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                    node = userGroup.GetAllUserCollectionFromWeb();
+                }
                 string loginName = username;
-                XmlNode node = userGroup.GetAllUserCollectionFromWeb();
                 foreach (XmlNode xmlNodeChild in node.ChildNodes)
                 {
                     foreach (XmlNode userNode in xmlNodeChild)
@@ -192,8 +201,13 @@ namespace Infocorp.TITA.SharePointUtilities
                         }
                     }
                 }
-
-                XmlNode xmlNode = userGroup.GetRoleCollectionFromUser(loginName);
+                XmlNode xmlNode;
+                using (UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup())
+                {
+                    userGroup.Url = dtContract.Site + _wsUserGroupSuf;
+                    userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                    xmlNode = userGroup.GetRoleCollectionFromUser(loginName);
+                }
                 foreach (XmlNode xmlNodeChild in xmlNode.ChildNodes)
                 {
                     foreach (XmlNode userNode in xmlNodeChild)
@@ -264,10 +278,13 @@ namespace Infocorp.TITA.SharePointUtilities
                     innerXml += "<FieldRef Name='" + dTFieldProp.InternalName + "' />";
                     innerXml += "<FieldRef Name='ID' />";
                     innerXml += "</ViewFields>";
-
-                    ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists();
-                    listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
-                    XmlNode xmlListItems = listsWS.GetListItems(listName, string.Empty, null, StringToXmlNode(innerXml), string.Empty, null);
+                    XmlNode xmlListItems;
+                    using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
+                    {
+                        listsWS.Url = urlSite + _wsListsSuf;
+                        listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                        xmlListItems = listsWS.GetListItems(listName, string.Empty, null, StringToXmlNode(innerXml), string.Empty, null);
+                    }
                     foreach (XmlNode nodeWP in xmlListItems.ChildNodes)
                     {
                         foreach (XmlNode item in nodeWP.ChildNodes)
@@ -287,7 +304,12 @@ namespace Infocorp.TITA.SharePointUtilities
                         }
                     }
                     updateXml += "</Batch>";
-                    listsWS.UpdateListItems(listName, StringToXmlNode(updateXml));
+                    using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
+                    {
+                        listsWS.Url = urlSite + _wsListsSuf;
+                        listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                        listsWS.UpdateListItems(listName, StringToXmlNode(updateXml));
+                    }
                 }
             }
             catch (Exception e)
@@ -295,8 +317,6 @@ namespace Infocorp.TITA.SharePointUtilities
                 
                 throw new Exception("SiteMapPropertyValue: " + e.Message);
             }
-
-
         }
 
         private bool UpdateListItem(string urlSite, string listName, DTItem item, bool isUpdate)
@@ -312,7 +332,7 @@ namespace Infocorp.TITA.SharePointUtilities
             List<DTField> fieldCollection = item.Fields;
             foreach (DTField field in fieldCollection)
             {
-                if ((field.Name.CompareTo("ID") == 0) && (isUpdate))
+                if ((field.InternalName.CompareTo("ID") == 0) && (isUpdate))
                 {
                     innerText += "<Field Name='" + field.InternalName + "'>";
                     innerText += ((DTFieldCounter)field).Value;
@@ -345,7 +365,7 @@ namespace Infocorp.TITA.SharePointUtilities
                             break;
                         case DTField.Types.DateTime:
                             innerText += "<Field Name='" + field.InternalName + "' Type='DateTime'>";
-                            innerText += ((DTFieldAtomicDateTime)field).Value.ToString("yyyy-MM-dd HH:mm:ss");
+                            innerText += ((DTFieldAtomicDateTime)field).Value.ToString("u");
                             innerText += "</Field>";
                             break;
                         case DTField.Types.Note:
@@ -358,14 +378,14 @@ namespace Infocorp.TITA.SharePointUtilities
                             break;
                         case DTField.Types.User:
                             innerText += "<Field Name='" + field.InternalName + "'>";
-                            innerText += GetUserID(((DTFieldChoiceUser)field).Value);
+                            innerText += GetUserID(urlSite, ((DTFieldChoiceUser)field).Value);
                             innerText += "</Field>";
                             break;
                         case DTField.Types.Counter:
                             break;
                         case DTField.Types.Lookup:
                             innerText += "<Field Name='" + field.InternalName + "'>";
-                            innerText += GetLookupFieldID((DTFieldChoiceLookup)field);
+                            innerText += GetLookupFieldID(urlSite, (DTFieldChoiceLookup)field);
                             innerText += "</Field>";
                             break;
                         case DTField.Types.Default:
@@ -381,9 +401,12 @@ namespace Infocorp.TITA.SharePointUtilities
             XmlNode xmlNode = StringToXmlNode(innerText);
             try
             {
-                ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists();
-                listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
-                listsWS.UpdateListItems(listName, xmlNode);
+                using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
+                {
+                    listsWS.Url = urlSite + _wsListsSuf;
+                    listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                    listsWS.UpdateListItems(listName, xmlNode);
+                }
                 return true;
             }
             catch (Exception e)
@@ -402,9 +425,12 @@ namespace Infocorp.TITA.SharePointUtilities
                                     "</Method>";
             try
             {
-                ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists();
-                listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
-                listsWS.UpdateListItems(listName, batchElement);
+                using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
+                {
+                    listsWS.Url = urlSite + _wsListsSuf;
+                    listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                    listsWS.UpdateListItems(listName, batchElement);
+                }
                 return true;
             }
             catch (Exception e)
@@ -420,18 +446,20 @@ namespace Infocorp.TITA.SharePointUtilities
                 List<DTField> fieldsCollection = GetFieldsListItem(urlSite, listName);
 
                 List<DTItem> itemsCollection = new List<DTItem>();
-                ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists();
-                listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
                 XmlDocument xmlDoc = new System.Xml.XmlDocument();
-
                 XmlNode ndViewFields = xmlDoc.CreateNode(XmlNodeType.Element,"ViewFields","");
                 ndViewFields.InnerXml = "";
                 foreach (DTField dtField in fieldsCollection)
                 {
                     ndViewFields.InnerXml += "<FieldRef Name='" + dtField.InternalName + "' />";
                 }
-                
-                XmlNode xmlListItems = listsWS.GetListItems(listName, string.Empty, null, ndViewFields, string.Empty, null);
+                XmlNode xmlListItems;
+                using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
+                {
+                    listsWS.Url = urlSite + _wsListsSuf;
+                    listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                    xmlListItems = listsWS.GetListItems(listName, string.Empty, null, ndViewFields, string.Empty, null);
+                }
                 foreach (XmlNode nodeWP in xmlListItems.ChildNodes)
                 {
                     foreach (XmlNode item in nodeWP.ChildNodes)
@@ -497,7 +525,13 @@ namespace Infocorp.TITA.SharePointUtilities
                                     }
 	                            }
                             }
-                            XmlNode attachmentsCollectionWS = listsWS.GetAttachmentCollection(listName, id.ToString());
+                            XmlNode attachmentsCollectionWS;
+                            using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
+                            {
+                                listsWS.Url = urlSite + _wsListsSuf;
+                                listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                                attachmentsCollectionWS = listsWS.GetAttachmentCollection(listName, id.ToString());    
+                            }
                             List<DTAttachment> newAttachmentsCollection = new List<DTAttachment>();
                             foreach (XmlNode nodeRootAttch in attachmentsCollectionWS)
 	                        {
@@ -523,9 +557,13 @@ namespace Infocorp.TITA.SharePointUtilities
             try
             {
                 List<DTField> fieldsCollection = new List<DTField>();
-                ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists();
-                listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
-                XmlNode list = listsWS.GetList(listName);
+                XmlNode list;
+                using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
+                {
+                    listsWS.Url = urlSite + _wsListsSuf;
+                    listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                    list = listsWS.GetList(listName);
+                }
                 XmlNodeList childNodes = list.ChildNodes;
                 foreach (XmlNode fieldsNode in childNodes)
                 {
@@ -545,6 +583,7 @@ namespace Infocorp.TITA.SharePointUtilities
 
                             foreach (XmlAttribute attr in fieldNode.Attributes)
                             {
+                                #region if
                                 if (attr.Name.CompareTo("DisplayName") == 0)
                                 {
                                     name = attr.Value;
@@ -619,10 +658,12 @@ namespace Infocorp.TITA.SharePointUtilities
                                         type = DTField.Types.User;
                                     }
                                 }
+                                #endregion
                             }
 
                             if (name.CompareTo(string.Empty) != 0)
                             {
+                                #region switch
                                 switch (type)
                                 {
                                     case DTField.Types.Number:
@@ -663,7 +704,7 @@ namespace Infocorp.TITA.SharePointUtilities
                                         fieldsCollection.Add(new DTFieldCounter(name, internalName, required, hidden, isReadOnly));
                                         break;
                                     case DTField.Types.Lookup:
-                                        List<string> choicesFromLookupList = GetChoicesFromList(listsWS, lookupList, lookupField);
+                                        List<string> choicesFromLookupList = GetChoicesFromList(urlSite, lookupList, lookupField);
                                         fieldsCollection.Add(new DTFieldChoiceLookup(name, internalName, required, hidden, isReadOnly, choicesFromLookupList,
                                             lookupField,lookupList));
                                         break;
@@ -672,13 +713,12 @@ namespace Infocorp.TITA.SharePointUtilities
                                     default:
                                         break;
                                 }
+                                #endregion
                             }
                         }
                         break;
                     }
-                    
                 }
-
                 return fieldsCollection;
             }
             catch (Exception e)
@@ -687,10 +727,16 @@ namespace Infocorp.TITA.SharePointUtilities
             }
         }
 
-        private List<string> GetChoicesFromList(ListsWebServiceReference.Lists listsWS,string listId, string fieldName)
+        private List<string> GetChoicesFromList(string urlSite, string listId, string fieldName)
         {
             List<string> lookupChoicesCollection = new List<string>();
-            XmlNode listItems = listsWS.GetListItems(listId, string.Empty, null, null, string.Empty, null);
+            XmlNode listItems;
+            using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
+            {
+                listsWS.Url = urlSite + _wsListsSuf;
+                listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                listItems = listsWS.GetListItems(listId, string.Empty, null, null, string.Empty, null);
+            }
             foreach (XmlNode nodeWP in listItems.ChildNodes)
             {
                 foreach (XmlNode item in nodeWP.ChildNodes)
@@ -716,9 +762,13 @@ namespace Infocorp.TITA.SharePointUtilities
             try
             {
                 List<string> usersCollection = new List<string>();
-                UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup();
-                userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
-                XmlNode xmlNode = userGroup.GetAllUserCollectionFromWeb();
+                XmlNode xmlNode;
+                using (UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup())
+                {
+                    userGroup.Url = urlSite + _wsUserGroupSuf;
+                    userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                    xmlNode = userGroup.GetAllUserCollectionFromWeb();
+                }
                 foreach (XmlNode xmlNodeChild in xmlNode.ChildNodes)
                 {
                     foreach (XmlNode userNode in xmlNodeChild)
@@ -781,14 +831,18 @@ namespace Infocorp.TITA.SharePointUtilities
             return cloneCollection;
         }
 
-        private string GetLookupFieldID(DTFieldChoiceLookup dTFieldChoiceLookup)
+        private string GetLookupFieldID(string urlSite, DTFieldChoiceLookup dTFieldChoiceLookup)
         {
             try
             {
-                ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists();
-                listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                XmlNode listItems;
+                using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
+                {
+                    listsWS.Url = urlSite + _wsListsSuf;
+                    listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                    listItems = listsWS.GetListItems(dTFieldChoiceLookup.LookupList, string.Empty, null, null, string.Empty, null);
+                }
                 string id = string.Empty;
-                XmlNode listItems = listsWS.GetListItems(dTFieldChoiceLookup.LookupList, string.Empty, null, null, string.Empty, null);
                 foreach (XmlNode nodeWP in listItems.ChildNodes)
                 {
                     foreach (XmlNode item in nodeWP.ChildNodes)
@@ -811,14 +865,18 @@ namespace Infocorp.TITA.SharePointUtilities
             }
         }
 
-        private string GetUserID(string username)
+        private string GetUserID(string urlSite, string username)
         {
             try
             {
                 string value = string.Empty;
-                UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup();
-                userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
-                XmlNode xmlNode = userGroup.GetAllUserCollectionFromWeb();
+                XmlNode xmlNode;
+                using (UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup())
+                {
+                    userGroup.Url = urlSite + _wsUserGroupSuf;
+                    userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                    xmlNode = userGroup.GetAllUserCollectionFromWeb();
+                }
                 foreach (XmlNode xmlNodeChild in xmlNode.ChildNodes)
                 {
                     foreach (XmlNode userNode in xmlNodeChild)
