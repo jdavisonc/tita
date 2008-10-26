@@ -405,7 +405,69 @@ namespace Infocorp.TITA.SharePointUtilities
                 {
                     listsWS.Url = urlSite + _wsListsSuf;
                     listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
-                    listsWS.UpdateListItems(listName, xmlNode);
+                    XmlNode result = listsWS.UpdateListItems(listName, xmlNode);
+                    string listItemID = string.Empty;
+                    foreach (XmlNode resultChild in result.ChildNodes)
+                    {
+                        foreach (XmlNode resultaChildChild in resultChild.ChildNodes)
+                        {
+                            if (resultaChildChild.Attributes != null &&
+                                resultaChildChild.Attributes.GetNamedItem("ows_ID") != null)
+                            {
+                                listItemID = resultaChildChild.Attributes.GetNamedItem("ows_ID").Value;
+                                break;
+                            }
+                        }
+                    }
+                    if (!isUpdate)
+                    {
+                        foreach (DTAttachment attch in item.Attachments)
+                        {
+                            listsWS.AddAttachment(listName, listItemID, attch.Name, attch.Data);
+                        }
+                    }
+                    else 
+                    {
+                        XmlNode xmlNodeAttch = listsWS.GetAttachmentCollection(listName, listItemID);
+                        // Proceso nuevos attachments o modificados
+                        foreach (DTAttachment attch in item.Attachments)
+                        {
+                            bool found = false;
+                            foreach (XmlNode nodeAttch in xmlNodeAttch)
+                            {
+                                if (nodeAttch.InnerText.CompareTo(attch.Url) == 0)
+                                {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (!found || (found && attch.Data != null && attch.Data.Length > 0))
+                            {
+                                if (found)
+                                {
+                                    listsWS.DeleteAttachment(listName, listItemID, attch.Url);
+                                }
+                                listsWS.AddAttachment(listName, listItemID, attch.Name, attch.Data);
+                            }
+                        }
+                        // Proceso attachments borrados
+                        foreach (XmlNode nodeAttch in xmlNodeAttch)
+                        {
+                            bool found = false;
+                            foreach (DTAttachment attch in item.Attachments)
+                            {
+                                if (nodeAttch.InnerText.CompareTo(attch.Url) == 0)
+                                {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (!found)
+                            {
+                                listsWS.DeleteAttachment(listName, listItemID, nodeAttch.InnerText);
+                            }
+                        }
+                    }
                 }
                 return true;
             }
