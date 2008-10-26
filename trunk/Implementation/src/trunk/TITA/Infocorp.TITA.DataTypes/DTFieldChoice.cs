@@ -31,6 +31,7 @@ namespace Infocorp.TITA.DataTypes
             : base((DTField)dtFieldChoice)
         {
             _value = dtFieldChoice.Value;
+            _choices = new List<string>(dtFieldChoice.Choices);
         }
 
         public override DTField.Types GetCustomType()
