@@ -34,7 +34,6 @@ namespace Infocorp.TITA.SilverlightUI
         private string url = null;
         private DTItem item = new DTItem();
         List<DTItem> lstItem = new List<DTItem>();
-        List<DTItem> lstTask = new List<DTItem>();
         private DTItem resulItem = new DTItem();
         private Progress progress = new Progress();
         private bool isEdit;
@@ -186,6 +185,8 @@ namespace Infocorp.TITA.SilverlightUI
                         contractsReport.Columns[0].Visibility = Visibility.Collapsed;
                     }
                     contractsReport.Visibility = Visibility.Visible;
+                    contractsReport.IsReadOnly = true;
+                    contractsReport.CanUserResizeColumns = false;
                 }
                 else
                 {
@@ -195,6 +196,8 @@ namespace Infocorp.TITA.SilverlightUI
                         lstContratos.Columns[0].Visibility = Visibility.Collapsed;
                     }
                     lstContratos.Visibility = Visibility.Visible;
+                    lstContratos.IsReadOnly = true;
+                    lstContratos.CanUserResizeColumns = false;
                 }
             }
         }
@@ -256,18 +259,18 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnModificarContrato_Click(object sender, RoutedEventArgs e)
         {
-            //if (LoadPanelEditContrato())
-            //{
-            //    isEdit = true;
-            //    isDelete = false;
-            //    pnlEditContrato.Visibility = Visibility.Visible;
-            //    PnlbtnsContrato.Visibility = Visibility.Collapsed;
-            //    PnlActionContrato.Visibility = Visibility.Visible;
-            //}
-            //else 
-            //{
+            if (LoadPanelEditContrato())
+            {
+                isEdit = true;
+                isDelete = false;
+                pnlEditContrato.Visibility = Visibility.Visible;
+                PnlbtnsContrato.Visibility = Visibility.Collapsed;
+                PnlActionContrato.Visibility = Visibility.Visible;
+            }
+            else
+            {
 
-            //}
+            }
         }
 
         private void BtnEliminarContrato_Click(object sender, RoutedEventArgs e)
@@ -459,6 +462,8 @@ namespace Infocorp.TITA.SilverlightUI
             {
                 grd_WP.Columns[0].Visibility = Visibility.Collapsed;
             }
+            grd_WP.IsReadOnly = true;
+            grd_WP.CanUserResizeColumns = false;
             PnlOption_WP.Visibility = Visibility.Visible;
             return null;
         }
@@ -689,8 +694,8 @@ namespace Infocorp.TITA.SilverlightUI
                             case "Reported by":
                                 i.ReportedBy = ((DTFieldChoice)field).Value;
                                 break;
-                            case "Order":
-                                i.Ord = float.Parse(((DTFieldAtomicNumber)field).Value.ToString());
+                            case "Priority Order":
+                                i.PriorityOrder = double.Parse(((DTFieldAtomicNumber)field).Value.ToString()); 
                                 break;
                             case "Resolution":
                                 i.Resolution = ((DTFieldAtomicNote)field).Value;
@@ -724,6 +729,8 @@ namespace Infocorp.TITA.SilverlightUI
             {
                 grd_INCIDENT.Columns[0].Visibility = Visibility.Collapsed;
             }
+            grd_INCIDENT.IsReadOnly = true;
+            grd_INCIDENT.CanUserResizeColumns = false;
             return null;
         }
 
@@ -822,7 +829,7 @@ namespace Infocorp.TITA.SilverlightUI
             progress.play();
             my_pnl.Children.Add(progress);
             PnlOption_INCIDENT.Visibility = Visibility.Collapsed;
-            if (item == null)
+            if (item.Fields == null)
             {
                 WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
                 ws.GetIssueTemplateCompleted += new EventHandler<GetIssueTemplateCompletedEventArgs>(ws_GetIssueTemplateCompleted2);
@@ -970,6 +977,7 @@ namespace Infocorp.TITA.SilverlightUI
                             else
                             {
                                 chlkp.SelectedIndex = 0;
+                                chlkp.UpdateLayout();
                             }
                             chlkp.SelectedIndexWorkaround();
                             chlkp.SetValue(Grid.ColumnProperty, 1);
@@ -997,6 +1005,7 @@ namespace Infocorp.TITA.SilverlightUI
                             else
                             {
                                 chuser.SelectedIndex = 0;
+                                chuser.UpdateLayout();
                             }
                             chuser.SelectedIndexWorkaround();
                             chuser.SetValue(Grid.ColumnProperty, 1);
@@ -1024,6 +1033,7 @@ namespace Infocorp.TITA.SilverlightUI
                             else
                             {
                                 lstbx.SelectedIndex = 0;
+                                lstbx.UpdateLayout();
                             }
                             lstbx.SelectedIndexWorkaround();
                             lstbx.SetValue(Grid.ColumnProperty, 1);
@@ -1061,6 +1071,7 @@ namespace Infocorp.TITA.SilverlightUI
                             nt.Text = "";
                             nt.Width = 300;
                             nt.Height = 100;
+                            nt.AcceptsReturn = true;
                             nt.Margin = new Thickness(0, 10, 0, 10);
                             nt.TextWrapping = TextWrapping.Wrap;
                             nt.SetValue(Grid.ColumnProperty, 1);
@@ -1380,6 +1391,7 @@ namespace Infocorp.TITA.SilverlightUI
                             chlkp.SetValue(NameProperty, "chlkp_" + field.Name);
                             chlkp.ItemsSource = ((DTFieldChoiceLookup)field).Choices;
                             chlkp.SelectedIndex = chlkp.Items.IndexOf(((DTFieldChoiceLookup)field).Value);
+                            chlkp.UpdateLayout();
                             chlkp.SelectedIndexWorkaround();
                             chlkp.Width = 150;
                             chlkp.Height = 80;
@@ -1400,6 +1412,7 @@ namespace Infocorp.TITA.SilverlightUI
                             chuser.SetValue(NameProperty, "chuser_" + field.Name);
                             chuser.ItemsSource = ((DTFieldChoiceUser)field).Choices;
                             chuser.SelectedIndex = chuser.Items.IndexOf(((DTFieldChoiceUser)field).Value);
+                            chuser.UpdateLayout();
                             chuser.SelectedIndexWorkaround();
                             chuser.Width = 150;
                             chuser.Height = 80;
@@ -1420,6 +1433,7 @@ namespace Infocorp.TITA.SilverlightUI
                             lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
                             lstbx.ItemsSource = ((DTFieldChoice)field).Choices;
                             lstbx.SelectedIndex = lstbx.Items.IndexOf(((DTFieldChoice)field).Value);
+                            lstbx.UpdateLayout();
                             lstbx.SelectedIndexWorkaround();
                             lstbx.Width = 150;
                             lstbx.Height = 80;
@@ -1460,6 +1474,7 @@ namespace Infocorp.TITA.SilverlightUI
                             nt.Text = ((DTFieldAtomicNote)field).Value;
                             nt.Width = 300;
                             nt.Height = 100;
+                            nt.AcceptsReturn = true;
                             nt.Margin = new Thickness(0, 10, 0, 10);
                             nt.TextWrapping = TextWrapping.Wrap;
                             nt.SetValue(Grid.ColumnProperty, 1);
@@ -1630,6 +1645,8 @@ namespace Infocorp.TITA.SilverlightUI
             {
                 grd_TASK.Columns[0].Visibility = Visibility.Collapsed;
             }
+            grd_TASK.IsReadOnly = true;
+            grd_TASK.CanUserResizeColumns = false;
             return null;
         }
 
