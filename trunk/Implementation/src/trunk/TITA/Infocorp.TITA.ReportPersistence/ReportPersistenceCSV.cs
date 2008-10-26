@@ -5,93 +5,156 @@ using System.Text;
 using Infocorp.TITA.DataTypes;
 using System.IO;
 
+using System.Web.UI.HtmlControls;
+using System.Web;
+//using System.Web.Util;
+
+
+
 namespace Infocorp.TITA.ReportPersistence
 {
     class ReportPersistenceCSV:IReportPersistenceCSV
     {
         private string _EXTENSION = ".csv";
         private string _FIELD_SEPARATOR = ",";
-        private string _REGISTRY_END = "\n";
         
-
-        private string _folderPathDest;
-
-        private bool SetFolderDestination()
-        {
-            _folderPathDest = "Directorio de configuracion del sitio web donde se guardaran los reportes";
-            return true;
-        }
-
-        private string _urlFolderPath;
-        private bool SetUrlFolderPath() 
-        {
-            _urlFolderPath = "url raiz para retornar del reporte";
-            return true;
-        }
-
-        /// <summary>
-        /// funcion para generar la url que surge del nombre del reporte y la ruta del directorio con permisos de 
-        /// lectura escritura para generar los reportes.
-        /// </summary>
-        /// <param name="reportName">Nombre del reporte generado </param>
-        /// <returns> la url al reporte generado en el directorio con permisos para generarar los mismos</returns>
-        private string ReportUrlToGet(string reportName) 
-        {
-            return _urlFolderPath + reportName;
-        }
-
+        
         #region IReportPersistenceCSV Members
 
-        public string ReportDesvWorkPackageToCSV(List<DTWorkPackageReport> reportData)
+        public void ReportDesvWorkPackageToCSV(List<DTWorkPackageReport> reportData)
         {
-            this.SetFolderDestination();
             string reportName = "desvWorkPackage" + DateTime.Now.TimeOfDay.ToString()+ this._EXTENSION;
+            StringBuilder strb = new StringBuilder();
             try
             {
-                
-                StreamWriter stream = File.CreateText(this._folderPathDest+reportName);
-                string lineData ;
                 foreach (DTWorkPackageReport item in reportData)
                 {
-                    lineData = item.Site + this._FIELD_SEPARATOR + item.IdWorkPackage + this._FIELD_SEPARATOR + item.Title + this._FIELD_SEPARATOR + item.Desviation + this._REGISTRY_END;
-                    stream.Write(lineData);
+                    this.WriteUserInfo(item, ref strb);
                 }
-                stream.Close();
-                return ReportUrlToGet(reportName);
+                this.CreateReportToCVS(reportName, StrToByteArray(strb.ToString()));
+                HttpContext.Current.Response.Close();
             }
             catch (Exception)
             {
                 
                 throw;
             }
-            
         }
 
-
-        public string IssuesReportToCSV(List<DTIssueReport> reportData)
+        private void WriteUserInfo(DTWorkPackageReport item, ref StringBuilder strb)
         {
-            this.SetFolderDestination();
+
+
+            AddComma(item.Site, strb);
+            AddComma(item.IdWorkPackage, strb);
+            AddComma(item.Title, strb);
+            AddComma(item.Desviation, strb);
+            strb.AppendLine();
+
+            /*
+            HttpContext.Current.Response.Write(strb.ToString());
+            HttpContext.Current.Response.Write(Environment.NewLine);
+            */
+        }
+
+        public void IssuesReportToCSV(List<DTIssueReport> reportData)
+        {
             string reportName = "reporteIncidentes" + DateTime.Now.TimeOfDay.ToString() + this._EXTENSION;
+            StringBuilder strb = new StringBuilder();
             try
             {
-
-                StreamWriter stream = File.CreateText(this._folderPathDest + reportName);
-                string lineData;
                 foreach (DTIssueReport item in reportData)
                 {
-                    lineData = item.IdIssue + this._FIELD_SEPARATOR + item.Title + this._FIELD_SEPARATOR + item.Site + this._FIELD_SEPARATOR + item.WorkPackage + this._REGISTRY_END;
-                    stream.Write(lineData);
+                    this.WriteUserInfo(item, ref strb);
                 }
-                stream.Close();
-                return ReportUrlToGet(reportName);
+                this.CreateReportToCVS(reportName, StrToByteArray(strb.ToString()));
+                HttpContext.Current.Response.Close();
             }
             catch (Exception)
             {
 
                 throw;
             }
+        }
+        private void WriteUserInfo(DTIssueReport item, ref StringBuilder strb)
+        {
+
+
+            AddComma(item.IdIssue, strb);
+            AddComma(item.Site, strb);
+            AddComma(item.Title, strb);
+            AddComma(item.WorkPackage, strb);
+            strb.AppendLine();
+
+            /*
+            HttpContext.Current.Response.Write(strb.ToString());
+            HttpContext.Current.Response.Write(Environment.NewLine);
+            */
         }
 
         #endregion
+
+        // C# to convert a string to a byte array.
+        public static byte[] StrToByteArray(string str)
+        {
+            System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
+            return encoding.GetBytes(str);
+        }
+
+        void CreateReportToCVS(string filename, byte[] bytesData)
+        {
+            HttpContext.Current.Response.ClearHeaders();
+            HttpContext.Current.Response.Clear();
+            HttpContext.Current.Response.AddHeader("Content-Disposition", "inline; filename=" + filename);
+            HttpContext.Current.Response.ContentType = "text/csv";
+            HttpContext.Current.Response.BinaryWrite(bytesData);
+            HttpContext.Current.Response.End();
+        }
+
+        
+        
+        private void AddComma(string item, StringBuilder strb)
+        {
+            strb.Append(item.Replace(_FIELD_SEPARATOR, " "));
+            strb.Append(" "+_FIELD_SEPARATOR);
+        }
+
+        #region WriteColumnName ejemplo
+        private static void WriteColumnName()
+        {
+            string str = "Name, Family, Age, Salary";
+            HttpContext.Current.Response.Write(str);
+            HttpContext.Current.Response.Write(Environment.NewLine);
+        }
+        #endregion
+
+        #region WriteToCSV ejemplo
+        /*
+        public static void WriteToCSV(List<Person> personList)
+        {
+            
+            string attachment = "attachment; filename=PerosnList.csv";
+            HttpContext.Current.Response.Clear();
+            HttpContext.Current.Response.ClearHeaders();
+            HttpContext.Current.Response.ClearContent();
+            HttpContext.Current.Response.AddHeader("content-disposition", attachment);
+            HttpContext.Current.Response.ContentType = "text/csv";
+            HttpContext.Current.Response.AddHeader("Pragma", "public");
+
+            WriteColumnName();
+
+            foreach (Person item in personList)
+            {
+                WriteUserInfo(item);
+            }
+
+            HttpContext.Current.Response.End();
+        }
+        */
+        #endregion
+
+
+
+
     }
 }
