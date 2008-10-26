@@ -155,7 +155,7 @@ namespace Infocorp.TITA.SharePointUtilities
                 XmlNode xmlNode;
                 using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
                 {
-                    listsWS.Url = dtContract.Site + _wsListsSuf;
+                    listsWS.Url = CheckCorrectUrlFromat(dtContract.Site) + _wsListsSuf;
                     listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     xmlNode = listsWS.GetListCollection();
                 }
@@ -183,7 +183,7 @@ namespace Infocorp.TITA.SharePointUtilities
                 XmlNode node;
                 using (UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup())
                 {
-                    userGroup.Url = dtContract.Site + _wsUserGroupSuf;
+                    userGroup.Url = CheckCorrectUrlFromat(dtContract.Site) + _wsUserGroupSuf;
                     userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     node = userGroup.GetAllUserCollectionFromWeb();
                 }
@@ -204,7 +204,7 @@ namespace Infocorp.TITA.SharePointUtilities
                 XmlNode xmlNode;
                 using (UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup())
                 {
-                    userGroup.Url = dtContract.Site + _wsUserGroupSuf;
+                    userGroup.Url = CheckCorrectUrlFromat(dtContract.Site) + _wsUserGroupSuf;
                     userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     xmlNode = userGroup.GetRoleCollectionFromUser(loginName);
                 }
@@ -281,7 +281,7 @@ namespace Infocorp.TITA.SharePointUtilities
                     XmlNode xmlListItems;
                     using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
                     {
-                        listsWS.Url = urlSite + _wsListsSuf;
+                        listsWS.Url = CheckCorrectUrlFromat(urlSite) + _wsListsSuf;
                         listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
                         xmlListItems = listsWS.GetListItems(listName, string.Empty, null, StringToXmlNode(innerXml), string.Empty, null);
                     }
@@ -306,7 +306,7 @@ namespace Infocorp.TITA.SharePointUtilities
                     updateXml += "</Batch>";
                     using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
                     {
-                        listsWS.Url = urlSite + _wsListsSuf;
+                        listsWS.Url = CheckCorrectUrlFromat(urlSite) + _wsListsSuf;
                         listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
                         listsWS.UpdateListItems(listName, StringToXmlNode(updateXml));
                     }
@@ -403,7 +403,7 @@ namespace Infocorp.TITA.SharePointUtilities
             {
                 using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
                 {
-                    listsWS.Url = urlSite + _wsListsSuf;
+                    listsWS.Url = CheckCorrectUrlFromat(urlSite) + _wsListsSuf;
                     listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     XmlNode result = listsWS.UpdateListItems(listName, xmlNode);
                     string listItemID = string.Empty;
@@ -489,7 +489,7 @@ namespace Infocorp.TITA.SharePointUtilities
             {
                 using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
                 {
-                    listsWS.Url = urlSite + _wsListsSuf;
+                    listsWS.Url = CheckCorrectUrlFromat(urlSite) + _wsListsSuf;
                     listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     listsWS.UpdateListItems(listName, batchElement);
                 }
@@ -518,7 +518,7 @@ namespace Infocorp.TITA.SharePointUtilities
                 XmlNode xmlListItems;
                 using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
                 {
-                    listsWS.Url = urlSite + _wsListsSuf;
+                    listsWS.Url = CheckCorrectUrlFromat(urlSite) + _wsListsSuf;
                     listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     xmlListItems = listsWS.GetListItems(listName, string.Empty, null, ndViewFields, string.Empty, null);
                 }
@@ -590,7 +590,7 @@ namespace Infocorp.TITA.SharePointUtilities
                             XmlNode attachmentsCollectionWS;
                             using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
                             {
-                                listsWS.Url = urlSite + _wsListsSuf;
+                                listsWS.Url = CheckCorrectUrlFromat(urlSite) + _wsListsSuf;
                                 listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
                                 attachmentsCollectionWS = listsWS.GetAttachmentCollection(listName, id.ToString());    
                             }
@@ -622,7 +622,7 @@ namespace Infocorp.TITA.SharePointUtilities
                 XmlNode list;
                 using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
                 {
-                    listsWS.Url = urlSite + _wsListsSuf;
+                    listsWS.Url = CheckCorrectUrlFromat(urlSite) + _wsListsSuf;
                     listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     list = listsWS.GetList(listName);
                 }
@@ -795,7 +795,7 @@ namespace Infocorp.TITA.SharePointUtilities
             XmlNode listItems;
             using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
             {
-                listsWS.Url = urlSite + _wsListsSuf;
+                listsWS.Url = CheckCorrectUrlFromat(urlSite) + _wsListsSuf;
                 listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
                 listItems = listsWS.GetListItems(listId, string.Empty, null, null, string.Empty, null);
             }
@@ -827,7 +827,7 @@ namespace Infocorp.TITA.SharePointUtilities
                 XmlNode xmlNode;
                 using (UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup())
                 {
-                    userGroup.Url = urlSite + _wsUserGroupSuf;
+                    userGroup.Url = CheckCorrectUrlFromat(urlSite) + _wsUserGroupSuf;
                     userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     xmlNode = userGroup.GetAllUserCollectionFromWeb();
                 }
@@ -900,7 +900,7 @@ namespace Infocorp.TITA.SharePointUtilities
                 XmlNode listItems;
                 using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
                 {
-                    listsWS.Url = urlSite + _wsListsSuf;
+                    listsWS.Url = CheckCorrectUrlFromat(urlSite) + _wsListsSuf;
                     listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     listItems = listsWS.GetListItems(dTFieldChoiceLookup.LookupList, string.Empty, null, null, string.Empty, null);
                 }
@@ -935,7 +935,7 @@ namespace Infocorp.TITA.SharePointUtilities
                 XmlNode xmlNode;
                 using (UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup())
                 {
-                    userGroup.Url = urlSite + _wsUserGroupSuf;
+                    userGroup.Url = CheckCorrectUrlFromat(urlSite) + _wsUserGroupSuf;
                     userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     xmlNode = userGroup.GetAllUserCollectionFromWeb();
                 }
@@ -968,6 +968,15 @@ namespace Infocorp.TITA.SharePointUtilities
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(xmlReader);
             return (XmlNode)xmlDocument;
+        }
+
+        private string CheckCorrectUrlFromat(string urlSite)
+        {
+            if (urlSite[urlSite.Length - 1].CompareTo('/') == 0)
+            {
+                return urlSite.Substring(0, urlSite.Length - 1);
+            }
+            return urlSite;
         }
 
         #endregion
