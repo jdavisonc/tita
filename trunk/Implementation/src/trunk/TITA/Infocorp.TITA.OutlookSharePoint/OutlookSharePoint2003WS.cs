@@ -87,7 +87,7 @@ namespace Infocorp.TITA.OutlookSharePoint
             {
                 using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
                 {
-                    listsWS.Url = urlSite + _wsListsSuf;
+                    listsWS.Url = CheckCorrectUrlFromat(urlSite) + _wsListsSuf;
                     listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     XmlNode result = listsWS.UpdateListItems(listName, xmlNode);
                     string listItemID = string.Empty;
@@ -124,7 +124,7 @@ namespace Infocorp.TITA.OutlookSharePoint
                 XmlNode list;
                 using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
                 {
-                    listsWS.Url = urlSite + _wsListsSuf;
+                    listsWS.Url = CheckCorrectUrlFromat(urlSite) + _wsListsSuf;
                     listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     list = listsWS.GetList(listName);
                 }
@@ -301,7 +301,7 @@ namespace Infocorp.TITA.OutlookSharePoint
             XmlNode listItems;
             using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
             {
-                listsWS.Url = urlSite + _wsListsSuf;
+                listsWS.Url = CheckCorrectUrlFromat(urlSite) + _wsListsSuf;
                 listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
                 listItems = listsWS.GetListItems(listId, string.Empty, null, null, string.Empty, null);
             }
@@ -333,7 +333,7 @@ namespace Infocorp.TITA.OutlookSharePoint
                 XmlNode xmlNode;
                 using (UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup())
                 {
-                    userGroup.Url = urlSite + _wsUserGroupSuf;
+                    userGroup.Url = CheckCorrectUrlFromat(urlSite) + _wsUserGroupSuf;
                     userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     xmlNode = userGroup.GetAllUserCollectionFromWeb();
                 }
@@ -364,7 +364,7 @@ namespace Infocorp.TITA.OutlookSharePoint
                 XmlNode xmlNode;
                 using (UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup())
                 {
-                    userGroup.Url = urlSite + _wsUserGroupSuf;
+                    userGroup.Url = CheckCorrectUrlFromat(urlSite) + _wsUserGroupSuf;
                     userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     xmlNode = userGroup.GetAllUserCollectionFromWeb();
                 }
@@ -398,7 +398,7 @@ namespace Infocorp.TITA.OutlookSharePoint
                 XmlNode listItems;
                 using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
                 {
-                    listsWS.Url = urlSite + _wsListsSuf;
+                    listsWS.Url = CheckCorrectUrlFromat(urlSite) + _wsListsSuf;
                     listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     listItems = listsWS.GetListItems(dTFieldChoiceLookup.LookupList, string.Empty, null, null, string.Empty, null);
                 }
@@ -431,6 +431,15 @@ namespace Infocorp.TITA.OutlookSharePoint
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(xmlReader);
             return (XmlNode)xmlDocument;
+        }
+
+        private string CheckCorrectUrlFromat(string urlSite)
+        {
+            if (urlSite[urlSite.Length - 1].CompareTo('/') == 0)
+            {
+                return urlSite.Substring(0, urlSite.Length - 1);
+            }
+            return urlSite;
         }
 
         #endregion
