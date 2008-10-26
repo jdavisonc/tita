@@ -9,10 +9,8 @@ namespace Infocorp.TITA.WpfOutlookAddIn
     public class ControllerOutlookSharepoint
     {
         public IOutlookSharePoint GetOutlookSharepoint(){
-            OutlookSharePoint2003 oOutlook2003 = new OutlookSharePoint2003();
-            return (IOutlookSharePoint)oOutlook2003;
-
-            //return null;
+            IOutlookSharePoint oOutlook2003 = new OutlookSharePoint2003WS();
+            return oOutlook2003;
         }
     }
 }
