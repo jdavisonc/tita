@@ -23,6 +23,7 @@ namespace Infocorp.TITA.WpfOutlookAddin
     {
         private IOutlookSharePoint _outlookSP;
         private string _urlContract = string.Empty;
+        private string _listName = string.Empty;
         private Contracts _contract;
         private Window1 _oIssueWindow;
         private MyMail _mailSelected = null;
@@ -65,8 +66,9 @@ namespace Infocorp.TITA.WpfOutlookAddin
                     DTUrl oUrlSelected = GetUrlContracts()[_contract.comboBox1.SelectedIndex];
 
                     _urlContract = oUrlSelected.ContractUrl;
+                    _listName = oUrlSelected.IssueList;
 
-                    List<DTField> oListaAtrib = _outlookSP.GetFieldsIssue(_urlContract, oUrlSelected.IssueList);
+                    List<DTField> oListaAtrib = _outlookSP.GetFieldsIssue(_urlContract, _listName);
                     foreach (DTField item in oListaAtrib)
                     {
                         if (item.Name == oUrlSelected.MailBodyField)
@@ -246,7 +248,7 @@ namespace Infocorp.TITA.WpfOutlookAddin
             
             
             DTItem oIssue = new DTItem(fields, attachments);
-            if (_outlookSP.AddIssue(_urlContract, oIssue)) 
+            if (_outlookSP.AddIssue(_urlContract, _listName, oIssue)) 
             {
                 MessageBox.Show("Se reporto el incidente exitosamente", "Reporte inicidente", MessageBoxButton.OK, MessageBoxImage.Information);
                 

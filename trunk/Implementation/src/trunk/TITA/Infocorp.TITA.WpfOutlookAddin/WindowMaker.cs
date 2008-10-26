@@ -184,11 +184,14 @@ namespace Infocorp.TITA.WpfOutlookAddIn
             Control oTempControl;
             foreach (DTField item in _issueFields)
             {
-                _grid.RowDefinitions.Add(new RowDefinition());
-                oTempControl=AddGridLine(item,i++);
-                if(oTempControl != null)
+                if (!(item.IsReadOnly || item.Hidden))
                 {
-                    _mapElements.Add(item, oTempControl);
+                    _grid.RowDefinitions.Add(new RowDefinition());
+                    oTempControl = AddGridLine(item, i++);
+                    if (oTempControl != null)
+                    {
+                        _mapElements.Add(item, oTempControl);
+                    }
                 }
             }
 
