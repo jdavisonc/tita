@@ -17,7 +17,7 @@ namespace Infocorp.TITA.OutlookSharePoint
 
         #region IOutlookSharePoint Members
 
-        public bool AddIssue(string urlSite, DTItem issue)
+        public bool AddIssue(string urlSite, string listName, DTItem issue)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace Infocorp.TITA.OutlookSharePoint
                     using (SPWeb web = site.OpenWeb())
                     {
                         web.AllowUnsafeUpdates = true;
-                        SPList list = web.Lists[_listIssues];
+                        SPList list = web.Lists[listName];
                         SPListItem listItem = list.Items.Add();
                         List<DTField> fieldCollection = issue.Fields;
 

@@ -12,7 +12,7 @@ namespace Infocorp.TITA.OutlookSharePoint
         /// <param name="urlSite">Url del Sitio a dar de alta</param>
         /// <param name="issue">DTIssue con los datos del Incidente</param>
         /// <returns></returns>
-        bool AddIssue(string urlSite, DTItem issue);
+        bool AddIssue(string urlSite, string listName, DTItem issue);
 
         /// <summary>
         /// Retorna una coleccion de campos que contiene un incidente
@@ -20,7 +20,7 @@ namespace Infocorp.TITA.OutlookSharePoint
         /// <param name="urlSite">Url del Sitio</param>
         /// <param name="nameListIssues">nombre de la lista para los Issues</param>
         /// <returns>Coleccion de campos</returns>
-        List<DTField> GetFieldsIssue(string urlSite, string nameListIssues);
+        List<DTField> GetFieldsIssue(string urlSite, string listName);
 
     }
 }
