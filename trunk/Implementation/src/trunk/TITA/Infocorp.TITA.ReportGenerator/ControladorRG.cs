@@ -173,9 +173,8 @@ namespace Infocorp.TITA.ReportGenerator
                 List<DTReportedItem> listReportedItems = new List<DTReportedItem>();
                 List<DTReportItemFileds> stateCategory = new List<DTReportItemFileds>();
                 foreach (var contract in contracts)
-                
                 {
-
+                    List<DTItem> issueList = sp.GetIssues(contract.ContractId, "");
                     List<DTField> issueDataFileds = sp.GetFieldsIssue(contract.ContractId);
                     List<string> categories = null;
                     List<string> status = null;
@@ -193,7 +192,7 @@ namespace Infocorp.TITA.ReportGenerator
                             }
                     }
                     //Armo la combinacion categoria-estado            
-                    
+
                     foreach (var category in categories)
                     {
                         foreach (var state in status)
@@ -203,62 +202,71 @@ namespace Infocorp.TITA.ReportGenerator
                                 stateCategory.Add(dataStateCategory);
                         }
                     }
-                }
+                    //}//primer contract
 
+                    
                     foreach (var dataPair in stateCategory)
                     {
-                        foreach (var contractAux in contracts)
+                        /*foreach (var contractAux in contracts)
+                        {*/
+                        
+
+
+
+
+                        List<DTIssueReport> issuesListReport = new List<DTIssueReport>();
+
+                        foreach (var issues in issueList)
                         {
-                            List<DTItem> issueList = sp.GetIssues(contractAux.ContractId, "");
-                           
-                            
-
-
-                            List<DTIssueReport> issuesListReport = new List<DTIssueReport>();
-
-                            foreach (var issues in issueList)
+                            List<DTField> fields = issues.Fields;
+                            bool isValid = true;
+                            int id = 0;
+                            string categoryIssue = null;
+                            string stateIssue = null;
+                            foreach (var fieldsIncident in fields)
                             {
-                                List<DTField> fields = issues.Fields;
-                                bool isValid = true;
-                                int id = 0;
-                                string categoryIssue = null;
-                                string stateIssue = null;
-                                foreach (var fieldsIncident in fields)
+                                if (fieldsIncident.Name.Equals("Category"))
                                 {
-                                    if (fieldsIncident.Name.Equals("Due Date"))
-                                        if ((((DTFieldAtomicDateTime)fieldsIncident).Value > finalDate) || ((DTFieldAtomicDateTime)fieldsIncident).Value < initialDate)
-                                        {
-                                            isValid = false;
-                                            break;
-                                        }
+                                    categoryIssue = ((DTFieldChoice)fieldsIncident).Value;
                                 }
-                                if (isValid)
-                                {
-                                    foreach (var fieldsOfIncident in fields)
+                                else
+                                    if (fieldsIncident.Name.Equals("Status"))
                                     {
-                                        if (fieldsOfIncident.Name.Equals("Category"))
-                                        {
-                                            categoryIssue = ((DTFieldChoice)fieldsOfIncident).Value;
-                                        }
-                                        else
-                                            if (fieldsOfIncident.Name.Equals("Status"))
+                                        stateIssue = ((DTFieldChoice)fieldsIncident).Value;
+                                    }
+                                    else
+                                        if (fieldsIncident.Name.Equals("Due Date"))
+                                            if ((((DTFieldAtomicDateTime)fieldsIncident).Value > finalDate) || ((DTFieldAtomicDateTime)fieldsIncident).Value < initialDate)
                                             {
-                                                stateIssue = ((DTFieldChoice)fieldsOfIncident).Value;
+                                                isValid = false;
+                                                break;
                                             }
-
-                                    }
-                                    if (categoryIssue.Equals(dataPair.GetCategory()) && stateIssue.Equals(dataPair.GetStatus()))
-                                    {
-                                        dataPair.AddReportFounded();
-                                    }
-
-                                }
-                               
                             }
+                            if (isValid)
+                            {
+                                /*foreach (var fieldsOfIncident in fields)
+                                {*/
+                                    
+
+                                //}
+                                if (categoryIssue.Equals(dataPair.GetCategory()) && stateIssue.Equals(dataPair.GetStatus()))
+                                {
+                                    dataPair.AddReportFounded();
+                                }
+
+                            }
+
                         }
-                        DTReportedItem reportedItem = new DTReportedItem(dataPair.GetCategory(), dataPair.GetStatus(), dataPair.GetCount());
-                        listReportedItems.Add(reportedItem);
+
+                        
                     }
+                }
+                foreach (var pair in stateCategory)
+                {
+                    DTReportedItem reportedItem = new DTReportedItem(pair.GetCategory(), pair.GetStatus(), pair.GetCount());
+                    listReportedItems.Add(reportedItem);
+                }
+
                 return listReportedItems;
             }
 
