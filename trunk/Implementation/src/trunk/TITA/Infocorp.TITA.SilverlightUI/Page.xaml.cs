@@ -11,17 +11,16 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Infocorp.TITA.SilverlightUI.Code;
 using Infocorp.TITA.SilverlightUI.WSTitaReference;
-using Liquid;
 using Infocorp.TITA.SilverlightUI.UserControls;
-using Cooper.Silverlight.Controls;
 using System.Reflection;
+using Cooper.Silverlight.Controls;
 
 namespace Infocorp.TITA.SilverlightUI
 {
     
     public partial class Page : UserControl
     {
-
+       
         public enum Option
         {
             WP,
@@ -51,13 +50,73 @@ namespace Infocorp.TITA.SilverlightUI
             ScrollViewerMouseWheelSupport.AddMouseWheelSupport(scroll_INCIDENT);
             ScrollViewerMouseWheelSupport.AddMouseWheelSupport(scroll_TASK);
             ScrollViewerMouseWheelSupport.AddMouseWheelSupport(scroll_REPORT);
+            this.Loaded += new RoutedEventHandler(Page_Loaded);
             if (url != null)
             {
                 ViewPendingChanges();
             }
 
-            grd_INCIDENT.AutoGeneratingColumn += new EventHandler<DataGridAutoGeneratingColumnEventArgs>(grd_INCIDENT_AutoGeneratingColumn);
+            //grd_INCIDENT.AutoGeneratingColumn += new EventHandler<DataGridAutoGeneratingColumnEventArgs>(grd_INCIDENT_AutoGeneratingColumn);
         }
+
+        #region Menu
+        void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            //GrdContainer.Children.Add(new Home());
+
+            acc.AddItem("Contratos", "", "Sharepoint Utilities", "Contratos", this.Resources["ItemStyle1"] as Style);
+            acc.AddItem("Incidentes", "", "Sharepoint Utilities", "Incidentes", this.Resources["ItemStyle1"] as Style);
+            acc.AddItem("Workpakage", "", "Sharepoint Utilities", "Workpakage", this.Resources["ItemStyle1"] as Style);
+            acc.AddItem("Tasks", "", "Sharepoint Utilities", "Tasks", this.Resources["ItemStyle1"] as Style);
+
+            acc.AddItem("Desviacion WP", "", "Reportes", "Reportes", this.Resources["ItemStyle1"] as Style);
+            acc.AddItem("Issue", "", "Reportes", "Reportes", this.Resources["ItemStyle1"] as Style);
+            acc.AddItem("Todos Issue", "", "Reportes", "Reportes", this.Resources["ItemStyle1"] as Style);
+
+            //acc.AddItem("Productos", "", "Productos", "Productos", this.Resources["ItemStyle1"] as Style);
+
+            Style aux = this.Resources["GroupStyle1"] as Style;
+            acc.setGroupStyle("Sharepoint Utilities", this.Resources["GroupStyle1"] as Style);
+            acc.setGroupStyle("Reportes", this.Resources["GroupStyle1"] as Style);
+
+            //acc.AddItem("Prueba1", "", "GrupoPrueba", "1", this.Resources["ItemStyle1"] as Style);
+            //acc.AddItem("Prueba2", "", "GrupoPrueba", "2", this.Resources["ItemStyle1"] as Style);
+            //acc.setGroupStyle("GrupoPrueba", this.Resources["GroupStyle1"] as Style);
+            acc.ItemSelect += new Infocorp.TITA.Controls.Silverlight.V2.Accordion.ItemSelectEvent(acc_ItemSelect);
+        }
+
+        void acc_ItemSelect(object sender, Infocorp.TITA.Controls.Silverlight.V2.ItemEventArgs e)
+        {
+            switch (e.id)
+            {
+                case "Contratos":
+                    ViewContrat();
+                    break;
+                case "Incidentes":
+                    ViewIncident();
+                    break;
+                case "Workpakage":
+                    ViewWorkpakage();
+                    break;
+                case "Tasks":
+                    ViewTasks();
+                    break;
+                case "Desviacion WP":
+                    ViewReportDESWP();
+                    break;
+                case "Issue":
+                    ViewReportISSUESREPORT();
+                    break;
+                case "Todos Issue":
+                    ViewReportALLISSUESREPORT();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+     
+        #endregion
 
         public void EnableOption(Option o)
         {
@@ -244,6 +303,8 @@ namespace Infocorp.TITA.SilverlightUI
             DTContract contract = (DTContract)lstContratos.SelectedItem;
             url = contract.ContractId;
             lblConectContract.Text = "Se ha conectado a " + contract.Site;
+            lbl_Contrat.Text = "Contrato actual: " + contract.Site;
+            lbl_Contrat.Visibility = Visibility;
             lblConectContract.Visibility = Visibility.Visible;
         }
 
@@ -374,18 +435,25 @@ namespace Infocorp.TITA.SilverlightUI
             PnlActionContrato.Visibility = Visibility.Collapsed;
         }
 
-        private void ButtonContract_Click(object sender, RoutedEventArgs e)
+        private void ViewContrat()
         {
             EnableOption(Option.CONTRACT);
             forReport = false;
             GetContract();
         }
 
+        //private void ButtonContract_Click(object sender, RoutedEventArgs e)
+        //{
+        //    EnableOption(Option.CONTRACT);
+        //    forReport = false;
+        //    GetContract();
+        //}
+
         #endregion
 
         #region WorkPackage
 
-        private void ButtonWP_Click(object sender, RoutedEventArgs e)
+        private void ViewWorkpakage()
         {
             ClearReport();
             if (url != null)
@@ -393,11 +461,24 @@ namespace Infocorp.TITA.SilverlightUI
                 EnableOption(Option.WP);
                 GetWPS();
             }
-            else 
+            else
             {
-                ShowError("Debe conectarse previamente a un contrato.",true);        
+                ShowError("Debe conectarse previamente a un contrato.", true);
             }
         }
+        //private void ButtonWP_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ClearReport();
+        //    if (url != null)
+        //    {
+        //        EnableOption(Option.WP);
+        //        GetWPS();
+        //    }
+        //    else 
+        //    {
+        //        ShowError("Debe conectarse previamente a un contrato.",true);        
+        //    }
+        //}
 
         public void GetWPS()
         {
@@ -609,7 +690,7 @@ namespace Infocorp.TITA.SilverlightUI
         
         #region Incident
 
-        private void ButtonIncident_Click(object sender, RoutedEventArgs e)
+        private void ViewIncident()
         {
             ClearReport();
             if (url != null)
@@ -617,9 +698,9 @@ namespace Infocorp.TITA.SilverlightUI
                 EnableOption(Option.INCIDENT);
                 GetIncidents();
             }
-            else 
+            else
             {
-                ShowError("Debe conectarse previamente a un contrato.",true);        
+                ShowError("Debe conectarse previamente a un contrato.", true);
             }
         }
 
@@ -737,7 +818,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         void grd_INCIDENT_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            bool show = ColumnsToShow != null && ColumnsToShow.Contains(e.Property.Name.ToLower().Trim());
+            //bool show = ColumnsToShow != null && ColumnsToShow.Contains(e.Property.Name.ToLower().Trim());
             
             //e.Cancel = !show;
         }
@@ -764,6 +845,7 @@ namespace Infocorp.TITA.SilverlightUI
             progress.play();
             PnlForm_INCIDENT.Children.Add(progress);
             LoadFormsIncedent();
+            progress.stop();
         }
 
         private void LoadFormsIncedent()
@@ -964,11 +1046,12 @@ namespace Infocorp.TITA.SilverlightUI
                             txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
-                            ListBox chlkp = new ListBox();
+                            //ListBox chlkp = new ListBox();
+                            ComboBox chlkp = new ComboBox();
                             chlkp.SetValue(NameProperty, "chlkp_" + field.Name);
                             chlkp.ItemsSource = ((DTFieldChoiceLookup)field).Choices;
                             chlkp.Width = 150;
-                            chlkp.Height = 80;
+                            chlkp.Height = 20;
                             chlkp.Margin = new Thickness(0, 10, 0, 10);
                             if (field.Required)
                             {
@@ -979,7 +1062,7 @@ namespace Infocorp.TITA.SilverlightUI
                                 chlkp.SelectedIndex = 0;
                                 chlkp.UpdateLayout();
                             }
-                            chlkp.SelectedIndexWorkaround();
+                            //chlkp.SelectedIndexWorkaround();
                             chlkp.SetValue(Grid.ColumnProperty, 1);
 
                             newGrd.Children.Add(txt);
@@ -992,11 +1075,12 @@ namespace Infocorp.TITA.SilverlightUI
                             txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
-                            ListBox chuser = new ListBox();
+                            //ListBox chuser = new ListBox();
+                            ComboBox chuser = new ComboBox();
                             chuser.SetValue(NameProperty, "chuser_" + field.Name);
                             chuser.ItemsSource = ((DTFieldChoiceUser)field).Choices;
                             chuser.Width = 150;
-                            chuser.Height = 80;
+                            chuser.Height = 20;
                             chuser.Margin = new Thickness(0, 10, 0, 10);
                             if (field.Required)
                             {
@@ -1007,7 +1091,7 @@ namespace Infocorp.TITA.SilverlightUI
                                 chuser.SelectedIndex = 0;
                                 chuser.UpdateLayout();
                             }
-                            chuser.SelectedIndexWorkaround();
+                            //chuser.SelectedIndexWorkaround();
                             chuser.SetValue(Grid.ColumnProperty, 1);
 
                             newGrd.Children.Add(txt);
@@ -1020,10 +1104,11 @@ namespace Infocorp.TITA.SilverlightUI
                             txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
-                            ListBox lstbx = new ListBox();
+                            //ListBox lstbx = new ListBox();
+                            ComboBox lstbx = new ComboBox();
                             lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
                             lstbx.Width = 150;
-                            lstbx.Height = 80;
+                            lstbx.Height = 20;
                             lstbx.Margin = new Thickness(0, 10, 0, 10);
                             lstbx.ItemsSource = ((DTFieldChoice)field).Choices;
                             if (field.Required)
@@ -1035,7 +1120,7 @@ namespace Infocorp.TITA.SilverlightUI
                                 lstbx.SelectedIndex = 0;
                                 lstbx.UpdateLayout();
                             }
-                            lstbx.SelectedIndexWorkaround();
+                            //lstbx.SelectedIndexWorkaround();
                             lstbx.SetValue(Grid.ColumnProperty, 1);
 
                             newGrd.Children.Add(txt);
@@ -1089,7 +1174,7 @@ namespace Infocorp.TITA.SilverlightUI
                             TextBox num = new TextBox();
                             num.SetValue(NameProperty, "num_" + field.Name);
                             num.Text = "";
-                            num.Width = 80;
+                            num.Width = 150;
                             num.Margin = new Thickness(0, 10, 0, 10);
                             num.TextWrapping = TextWrapping.Wrap;
                             num.SetValue(Grid.ColumnProperty, 1);
@@ -1159,7 +1244,8 @@ namespace Infocorp.TITA.SilverlightUI
                         }
                         else if (field is DTFieldChoiceLookup)
                         {
-                            ListBox chlkp = (ListBox)my_pnl.FindName("chlkp_" + field.Name);
+                            //ListBox chlkp = (ListBox)my_pnl.FindName("chlkp_" + field.Name);
+                            ComboBox chlkp = (ComboBox)my_pnl.FindName("chlkp_" + field.Name);
                             if ((field.Required) && (chlkp.SelectedItem == null))
                             {
                                 TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
@@ -1180,7 +1266,8 @@ namespace Infocorp.TITA.SilverlightUI
                         }
                         else if (field is DTFieldChoiceUser)
                         {
-                            ListBox chuser = (ListBox)my_pnl.FindName("chuser_" + field.Name);
+                            //ListBox chuser = (ListBox)my_pnl.FindName("chuser_" + field.Name);
+                            ComboBox chuser = (ComboBox)my_pnl.FindName("chuser_" + field.Name);
                             if ((field.Required) && (chuser.SelectedItem == null))
                             {
                                 TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
@@ -1199,7 +1286,8 @@ namespace Infocorp.TITA.SilverlightUI
                         }
                         else if (field is DTFieldChoice)
                         {
-                            ListBox lst = (ListBox)my_pnl.FindName("lstbx_" + field.Name);
+                            //ListBox lst = (ListBox)my_pnl.FindName("lstbx_" + field.Name);
+                            ComboBox lst = (ComboBox)my_pnl.FindName("lstbx_" + field.Name);
                             if ((field.Required) && (lst.SelectedItem == null))
                             {
                                 TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
@@ -1387,14 +1475,15 @@ namespace Infocorp.TITA.SilverlightUI
                             txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
-                            ListBox chlkp = new ListBox();
+                            //ListBox chlkp = new ListBox();
+                            ComboBox chlkp = new ComboBox();
                             chlkp.SetValue(NameProperty, "chlkp_" + field.Name);
                             chlkp.ItemsSource = ((DTFieldChoiceLookup)field).Choices;
                             chlkp.SelectedIndex = chlkp.Items.IndexOf(((DTFieldChoiceLookup)field).Value);
                             chlkp.UpdateLayout();
-                            chlkp.SelectedIndexWorkaround();
+                            //chlkp.SelectedIndexWorkaround();
                             chlkp.Width = 150;
-                            chlkp.Height = 80;
+                            chlkp.Height = 20;
                             chlkp.Margin = new Thickness(0, 10, 0, 10);
                             chlkp.SetValue(Grid.ColumnProperty, 1);
 
@@ -1408,14 +1497,15 @@ namespace Infocorp.TITA.SilverlightUI
                             txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
-                            ListBox chuser = new ListBox();
+                            //ListBox chuser = new ListBox();
+                            ComboBox chuser = new ComboBox();
                             chuser.SetValue(NameProperty, "chuser_" + field.Name);
                             chuser.ItemsSource = ((DTFieldChoiceUser)field).Choices;
                             chuser.SelectedIndex = chuser.Items.IndexOf(((DTFieldChoiceUser)field).Value);
                             chuser.UpdateLayout();
-                            chuser.SelectedIndexWorkaround();
+                            //chuser.SelectedIndexWorkaround();
                             chuser.Width = 150;
-                            chuser.Height = 80;
+                            chuser.Height = 20;
                             chuser.Margin = new Thickness(0, 10, 0, 10);
                             chuser.SetValue(Grid.ColumnProperty, 1);
 
@@ -1429,14 +1519,15 @@ namespace Infocorp.TITA.SilverlightUI
                             txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
-                            ListBox lstbx = new ListBox();
+                            //ListBox lstbx = new ListBox();
+                            ComboBox lstbx = new ComboBox();
                             lstbx.SetValue(NameProperty, "lstbx_" + field.Name);
                             lstbx.ItemsSource = ((DTFieldChoice)field).Choices;
                             lstbx.SelectedIndex = lstbx.Items.IndexOf(((DTFieldChoice)field).Value);
                             lstbx.UpdateLayout();
-                            lstbx.SelectedIndexWorkaround();
+                            //lstbx.SelectedIndexWorkaround();
                             lstbx.Width = 150;
-                            lstbx.Height = 80;
+                            lstbx.Height = 20;
                             lstbx.Margin = new Thickness(0, 10, 0, 10);
                             lstbx.SetValue(Grid.ColumnProperty, 1);
 
@@ -1492,7 +1583,7 @@ namespace Infocorp.TITA.SilverlightUI
                             TextBox num = new TextBox();
                             num.SetValue(NameProperty, "num_" + field.Name);
                             num.Text = ((DTFieldAtomicNumber)field).Value.ToString();
-                            num.Width = 80;
+                            num.Width = 150;
                             num.Margin = new Thickness(0, 10, 0, 10);
                             num.TextWrapping = TextWrapping.Wrap;
                             num.SetValue(Grid.ColumnProperty, 1);
@@ -1561,7 +1652,21 @@ namespace Infocorp.TITA.SilverlightUI
 
         #region Task
 
-        private void ButtonTask_Click(object sender, RoutedEventArgs e)
+        //private void ButtonTask_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ClearReport();
+        //    if (url != null)
+        //    {
+        //        EnableOption(Option.TASK);
+        //        GetTask();
+        //    }
+        //    else 
+        //    {
+        //        ShowError("Debe conectarse previamente a un contrato.",true);        
+        //    }
+        //}
+
+        public void ViewTasks()
         {
             ClearReport();
             if (url != null)
@@ -1569,12 +1674,12 @@ namespace Infocorp.TITA.SilverlightUI
                 EnableOption(Option.TASK);
                 GetTask();
             }
-            else 
+            else
             {
-                ShowError("Debe conectarse previamente a un contrato.",true);        
+                ShowError("Debe conectarse previamente a un contrato.", true);
             }
         }
-
+    
         private void GetTask()
         {
             grd_TASK.Columns.Clear();
@@ -1787,8 +1892,8 @@ namespace Infocorp.TITA.SilverlightUI
         #region Reports
 
         #region Desviacion de work package
-        
-        private void ButtonRport_Click_DESWP(object sender, RoutedEventArgs e)
+
+        private void ViewReportDESWP()
         {
             cal_inicial.SelectedDate = null;
             cal_final.SelectedDate = null;
@@ -1799,6 +1904,17 @@ namespace Infocorp.TITA.SilverlightUI
             GetContract();
             BtnGenerateReport_DESWP.Visibility = Visibility.Visible;
         }
+        //private void ButtonRport_Click_DESWP(object sender, RoutedEventArgs e)
+        //{
+        //    cal_inicial.SelectedDate = null;
+        //    cal_final.SelectedDate = null;
+        //    BtnGenerateReport_ALLISSUES.Visibility = Visibility.Collapsed;
+        //    BtnGenerateReport_ISSUES.Visibility = Visibility.Collapsed;
+        //    EnableOption(Option.REPORT);
+        //    forReport = true;
+        //    GetContract();
+        //    BtnGenerateReport_DESWP.Visibility = Visibility.Visible;
+        //}
 
         private void BtnGenerateReportClick_DESWP(object sender, RoutedEventArgs e)
         {
@@ -1839,7 +1955,8 @@ namespace Infocorp.TITA.SilverlightUI
 
         #region Incidentes para un contrato
         
-        private void ButtonRport_Click_ISSUESREPORT(object sender, RoutedEventArgs e)
+        
+        private void ViewReportISSUESREPORT()
         {
             cal_inicial.SelectedDate = null;
             cal_final.SelectedDate = null;
@@ -1850,6 +1967,17 @@ namespace Infocorp.TITA.SilverlightUI
             GetContract();
             BtnGenerateReport_ISSUES.Visibility = Visibility.Visible;
         }
+        //private void ButtonRport_Click_ISSUESREPORT(object sender, RoutedEventArgs e)
+        //{
+        //    cal_inicial.SelectedDate = null;
+        //    cal_final.SelectedDate = null;
+        //    BtnGenerateReport_ALLISSUES.Visibility = Visibility.Collapsed;
+        //    BtnGenerateReport_DESWP.Visibility = Visibility.Collapsed;
+        //    EnableOption(Option.REPORT);
+        //    forReport = true;
+        //    GetContract();
+        //    BtnGenerateReport_ISSUES.Visibility = Visibility.Visible;
+        //}
         
         private void BtnGenerateReportClick_ISSUES(object sender, RoutedEventArgs e)
         {
@@ -1889,8 +2017,8 @@ namespace Infocorp.TITA.SilverlightUI
         #endregion
 
         #region Incidentes de todos los contratos
-        
-        private void ButtonRport_Click_ALLISSUESREPORT(object sender, RoutedEventArgs e)
+
+        private void ViewReportALLISSUESREPORT()
         {
             cal_inicial.SelectedDate = null;
             cal_final.SelectedDate = null;
@@ -1899,6 +2027,16 @@ namespace Infocorp.TITA.SilverlightUI
             EnableOption(Option.REPORT);
             BtnGenerateReport_ALLISSUES.Visibility = Visibility.Visible;
         }
+
+        //private void ButtonRport_Click_ALLISSUESREPORT(object sender, RoutedEventArgs e)
+        //{
+        //    cal_inicial.SelectedDate = null;
+        //    cal_final.SelectedDate = null;
+        //    BtnGenerateReport_ISSUES.Visibility = Visibility.Collapsed;
+        //    BtnGenerateReport_DESWP.Visibility = Visibility.Collapsed;
+        //    EnableOption(Option.REPORT);
+        //    BtnGenerateReport_ALLISSUES.Visibility = Visibility.Visible;
+        //}
 
         private void BtnGenerateReportClick_ALLISSUES(object sender, RoutedEventArgs e)
         {
@@ -1941,40 +2079,5 @@ namespace Infocorp.TITA.SilverlightUI
 
         #endregion
 
-    }
-
-    public static class ListBoxExtensions
-    {
-        public static void SelectedIndexWorkaround(this ListBox listBox)
-        {
-            int selectedIndex = listBox.SelectedIndex;
-            bool set = false;
-            listBox.LayoutUpdated += delegate
-            {
-                if (!set)
-                {
-                    // Toggle value to force the change
-                    listBox.SelectedIndex = -1;
-                    listBox.SelectedIndex = selectedIndex;
-                    set = true;
-                }
-            };
-        }
-
-        public static void IsSelectedWorkaround(this ListBoxItem listBoxItem)
-        {
-            bool isSelected = listBoxItem.IsSelected;
-            bool set = false;
-            listBoxItem.LayoutUpdated += delegate
-            {
-                if (!set)
-                {
-                    // Toggle value to force the change
-                    listBoxItem.IsSelected = !isSelected;
-                    listBoxItem.IsSelected = isSelected;
-                    set = true;
-                }
-            };
-        }
     }
 }
