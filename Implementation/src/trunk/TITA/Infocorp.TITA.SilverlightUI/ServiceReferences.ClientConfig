@@ -2,14 +2,14 @@
     <system.serviceModel>
         <bindings>
             <basicHttpBinding>
-                <binding name="WSTitaSoap" maxBufferSize="65536" maxReceivedMessageSize="65536">
+                <binding name="WSTitaSoap" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
                     <security mode="None" />
                 </binding>
             </basicHttpBinding>
         </bindings>
         <client>
             <endpoint address="http://localhost:8082/WSTita.asmx" binding="basicHttpBinding"
-                bindingConfiguration="WSTitaSoap" contract="Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap"
+                bindingConfiguration="WSTitaSoap" contract="WSTitaReference.WSTitaSoap"
                 name="WSTitaSoap" />
         </client>
     </system.serviceModel>
