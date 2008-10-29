@@ -59,15 +59,7 @@ namespace Infocorp.TITA.SilverlightUI.Code
             get { return assignedTo; }
             set { assignedTo = value; }
         }
-
-        private string description;
-
-        public string Description
-        {
-            get { return description; }
-            set { description = value; }
-        }
-
+        
         private DateTime startDate;
 
         public DateTime StartDate
