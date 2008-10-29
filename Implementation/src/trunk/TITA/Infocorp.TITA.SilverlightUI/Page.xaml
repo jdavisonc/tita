@@ -404,17 +404,21 @@
                     <Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnEliminarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEliminarContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Conectar" Canvas.Left="326" Click="BtnConectarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnConectarContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                 </StackPanel>
-                <StackPanel  x:Name="pnlEditContrato" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Vertical">
-                    <TextBlock Text="Nombre:" Width="160" Height="30"/>
-                    <TextBox x:Name="txtNombre" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130"/>
-                    <TextBlock Text="Site:" Width="160" Height="30" Canvas.Top="50"/>
-                    <TextBox x:Name="txtSite" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130" Canvas.Top="50"/>
-                    <TextBlock Text="Lista de Incidentes:" Width="160" Height="30" Canvas.Top="100"/>
-                    <TextBox x:Name="txtIssuesList" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130" Canvas.Top="100"/>
-                    <TextBlock Text="Lista de WorkPackage:" Width="160" Height="30" Canvas.Top="150"/>
-                    <TextBox x:Name="txtWorkPackageList" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130" Canvas.Top="150"/>
-                    <TextBlock Text="Lista de Tareas:" Width="160" Height="30" Canvas.Top="200"/>
-                    <TextBox x:Name="txtTaskList" Width="160" Height="30" Background="SkyBlue" Canvas.Left="130" Canvas.Top="200"/>
+                <StackPanel  x:Name="pnlEditContrato" Visibility="Collapsed" Orientation="Horizontal">
+                    <StackPanel VerticalAlignment="Top" Margin="200,15,0,0">
+                        <TextBlock x:Name="contName" Text="Nombre" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="140"/>
+                        <TextBlock x:Name="contSite" Text="Site" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="140"/>
+                        <TextBlock x:Name="contLstIssue" Text="Lista de Incidentes" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="140"/>
+                        <TextBlock x:Name="contLstWP" Text="Lista de WorkPackage" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="140"/>
+                        <TextBlock x:Name="contLstTsk" Text="Lista de Tareas" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="140"/>
+                    </StackPanel>
+                    <StackPanel VerticalAlignment="Top" Margin="0,15,0,0">
+                        <TextBox x:Name="txtNombre" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
+                        <TextBox x:Name="txtSite" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
+                        <TextBox x:Name="txtIssuesList" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
+                        <TextBox x:Name="txtWorkPackageList" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
+                        <TextBox x:Name="txtTaskList" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
+                    </StackPanel>
                 </StackPanel>
                 <StackPanel  x:Name="PnlActionContrato" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
                     <Button  Content="Aceptar" VerticalAlignment="Center" Click="BtnAceptarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnAceptarContrato" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>

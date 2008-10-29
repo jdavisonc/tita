@@ -290,13 +290,63 @@ namespace Infocorp.TITA.SilverlightUI
             return ok;
         }
 
-        private void CleanPanel()
+        private void CleanPanelContract()
         {
+            contName.Text = "Nombre";
+            contSite.Text = "Site";
+            contLstTsk.Text = "Lista de Tareas";
+            contLstIssue.Text = "Lista de Incidentes";
+            contLstWP.Text = "Lista de WorkPackage";
             txtNombre.Text = "";
             txtSite.Text = "";
-            txtIssuesList.Text = "";
-            txtWorkPackageList.Text = "";
             txtTaskList.Text = "";
+            txtWorkPackageList.Text = "";
+            txtIssuesList.Text = "";
+        }
+
+        private void ShowErrorContract()
+        {
+            if (txtNombre.Text == "")
+            {
+                contName.Text = "Nombre *";
+            }
+            else 
+            {
+                contName.Text = "Nombre";
+            }
+            if (txtSite.Text == "")
+            {
+                contSite.Text = "Site *";
+            }
+            else
+            {
+                contSite.Text = "Site";
+            }
+            if (txtTaskList.Text == "")
+            {
+                contLstTsk.Text = "Lista de Tareas *";
+            }
+            else 
+            {
+                contLstTsk.Text = "Lista de Tareas";
+            }
+            if (txtIssuesList.Text == "")
+            {
+                contLstIssue.Text = "Lista de Incidentes *";
+            }
+            else 
+            {
+                contLstIssue.Text = "Lista de Incidentes";
+            }
+            if (txtWorkPackageList.Text == "")
+            {
+                contLstWP.Text = "Lista de WorkPackage *";
+            }
+            else
+            {
+                contLstWP.Text = "Lista de WorkPackage";
+            }
+
         }
 
         private void BtnConectarContrato_Click(object sender, RoutedEventArgs e)
@@ -313,7 +363,7 @@ namespace Infocorp.TITA.SilverlightUI
         {
             ShowError("", false);
             isEdit = false;
-            CleanPanel();
+            CleanPanelContract();
             pnlEditContrato.Visibility = Visibility.Visible;
             PnlbtnsContrato.Visibility = Visibility.Collapsed;
             PnlActionContrato.Visibility = Visibility.Visible;
@@ -321,6 +371,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnModificarContrato_Click(object sender, RoutedEventArgs e)
         {
+            CleanPanelContract();
             if (LoadPanelEditContrato())
             {
                 isEdit = true;
@@ -328,10 +379,6 @@ namespace Infocorp.TITA.SilverlightUI
                 pnlEditContrato.Visibility = Visibility.Visible;
                 PnlbtnsContrato.Visibility = Visibility.Collapsed;
                 PnlActionContrato.Visibility = Visibility.Visible;
-            }
-            else
-            {
-
             }
         }
 
@@ -380,16 +427,7 @@ namespace Infocorp.TITA.SilverlightUI
                 }
                 else 
                 {
-                    if (txtNombre.Text == "")
-                        txtNombre.Text = "Campo requerido";
-                    if (txtSite.Text == "")
-                        txtSite.Text = "Campo requerido";
-                    if (txtTaskList.Text == "")
-                        txtTaskList.Text = "Campo requerido";
-                    if (txtIssuesList.Text == "")
-                        txtIssuesList.Text = "Campo requerido";
-                    if (txtWorkPackageList.Text == "")
-                        txtWorkPackageList.Text = "Campo requerido";
+                    ShowErrorContract();
                     pnlEditContrato.Visibility = Visibility.Visible;
                     PnlbtnsContrato.Visibility = Visibility.Collapsed;
                     PnlActionContrato.Visibility = Visibility.Visible;
@@ -407,14 +445,20 @@ namespace Infocorp.TITA.SilverlightUI
                 c.workPackageList = txtWorkPackageList.Text;
                 c.issuesList = txtIssuesList.Text;
 
-                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-                ws.ModifyContractCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ModifyContractCompleted);
-                ws.ModifyContractAsync(c);
-
-                PnlbtnsContrato.Visibility = Visibility.Visible;
-                pnlEditContrato.Visibility = Visibility.Collapsed;
-                PnlActionContrato.Visibility = Visibility.Collapsed;
-                isEdit = false;
+                if (ValidarCampos(c))
+                {
+                    isEdit = false;
+                    WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                    ws.ModifyContractCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ModifyContractCompleted);
+                    ws.ModifyContractAsync(c);
+                }
+                else 
+                {
+                    ShowErrorContract();
+                    pnlEditContrato.Visibility = Visibility.Visible;
+                    PnlbtnsContrato.Visibility = Visibility.Collapsed;
+                    PnlActionContrato.Visibility = Visibility.Visible;
+                }
             }
             GetContract();
             scroll_CONTRACT.ScrollToVerticalOffset(0);
@@ -422,7 +466,6 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_ModifyContractCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         void ws_AddNewContractCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -540,10 +583,10 @@ namespace Infocorp.TITA.SilverlightUI
                 lstWP.Add(wp);
             }
             grd_WP.ItemsSource = lstWP;
-            if (grd_WP.Columns.Count != 0)
-            {
-                grd_WP.Columns[0].Visibility = Visibility.Collapsed;
-            }
+            //if (grd_WP.Columns.Count != 0)
+            //{
+            //    grd_WP.Columns[0].Visibility = Visibility.Collapsed;
+            //}
             grd_WP.IsReadOnly = true;
             grd_WP.CanUserResizeColumns = false;
             PnlOption_WP.Visibility = Visibility.Visible;
@@ -815,7 +858,6 @@ namespace Infocorp.TITA.SilverlightUI
             grd_INCIDENT.CanUserResizeColumns = false;
             return null;
         }
-
 
         void grd_INCIDENT_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
