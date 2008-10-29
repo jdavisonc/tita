@@ -374,7 +374,7 @@
         <TextBlock Margin="18,84,0,0"  VerticalAlignment="Top" x:Name="lblPending" Visibility="Collapsed" Width="112" HorizontalAlignment="Left" Height="26" d:LayoutOverrides="VerticalAlignment" Grid.Row="1"/>
         
        <!--WP--> 
-        <ScrollViewer Margin="-1,85,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_WP" Opacity="1" BorderThickness="0,0,0,0" Grid.RowSpan="2" HorizontalAlignment="Stretch">
+        <ScrollViewer Margin="-5,126,4,55" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_WP" Opacity="1" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="2">
             <StackPanel x:Name="CanvasWP" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
                 <my:DataGrid x:Name="grd_WP" AutoGenerateColumns="True" Width="auto"/>
                 <StackPanel  x:Name="PnlOption_WP" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal">
@@ -394,7 +394,7 @@
         </ScrollViewer>
 
         <!--CONTRATO -->
-        <ScrollViewer Margin="0,85,0,0" Visibility="Collapsed" x:Name="scroll_CONTRACT" BorderThickness="0,0,0,0" Grid.RowSpan="2" HorizontalAlignment="Stretch">
+        <ScrollViewer Margin="-4.286,106,4.286,-21" Visibility="Collapsed" x:Name="scroll_CONTRACT" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="2">
             <StackPanel x:Name="pnl_Contrato" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
                <my:DataGrid x:Name="lstContratos" AutoGenerateColumns="True" Visibility="Collapsed" Width="auto"/>
                <TextBlock Margin="18,60,0,0" x:Name="lblConectContract" Visibility="Collapsed"/>            
@@ -424,7 +424,7 @@
         </ScrollViewer>
 
         <!--INCIDENTE -->
-        <ScrollViewer Margin="-1,85,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_INCIDENT" BorderThickness="0,0,0,0" Grid.RowSpan="2">
+        <ScrollViewer Margin="-1,102,0,-21" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_INCIDENT" BorderThickness="0,0,0,0" Grid.RowSpan="2">
             <StackPanel x:Name="CanvasIncident" Visibility="Collapsed" Background="White" Width="auto" Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
                 <my:DataGrid x:Name="grd_INCIDENT" AutoGenerateColumns="True" Width="auto"/>
                 <StackPanel  x:Name="PnlbtnEdits" Background="White" Width="auto" Visibility="Collapsed">
@@ -448,7 +448,7 @@
         </ScrollViewer>
         
         <!--TASKS -->
-        <ScrollViewer Margin="-1,85,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_TASK" BorderThickness="0,0,0,0" Grid.RowSpan="2">
+        <ScrollViewer Margin="-1,126,0,-45" d:LayoutOverrides="HorizontalAlignment" Visibility="Visible" x:Name="scroll_TASK" BorderThickness="0,0,0,0" Grid.RowSpan="2">
             <StackPanel x:Name="CanvasTASK" Background="White" Width="auto" Height="auto" Visibility="Collapsed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
                 <my:DataGrid x:Name="grd_TASK" AutoGenerateColumns="True" Width="auto"/>
                 <StackPanel  x:Name="PnlOption_TASK" Width="auto" Height="auto" Visibility="Visible" Orientation="Horizontal">
@@ -468,7 +468,7 @@
         </ScrollViewer>
      
         <!--Reports--> 
-        <ScrollViewer Margin="-1,85,0,-4" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_REPORT" BorderThickness="0,0,1,0" Grid.RowSpan="2">
+        <ScrollViewer Margin="-1,-83.5,0,-21" d:LayoutOverrides="HorizontalAlignment, Margin" Visibility="Collapsed" x:Name="scroll_REPORT" BorderThickness="0,0,1,0" Grid.Row="1">
             <StackPanel x:Name="CanvasREPORT" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
                 <my:DataGrid x:Name="contractsReport" Margin="100,0,0,70" Visibility="Collapsed" AutoGenerateColumns="True" Width="auto"/> 
                 <StackPanel x:Name="PnlOptionREPORT" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal" Margin="100,0,0,0">
@@ -488,11 +488,12 @@
         </ScrollViewer>
         
         <!--Error -->
-        <Canvas x:Name="CanvasError" Margin="194,0,396,28" Visibility="Visible" VerticalAlignment="Bottom" Width="400" d:LayoutOverrides="Width"> 
-            <TextBlock x:Name="lblError"/>
+        <Canvas x:Name="CanvasError" Margin="200,65.5,390,0" Visibility="Visible" VerticalAlignment="Top" Width="400" d:LayoutOverrides="Width, Margin" Grid.Row="1"> 
+            <TextBlock x:Name="lblError" Visibility="Collapsed"/>
         </Canvas>
         <TextBlock Height="30" Visibility="Collapsed" HorizontalAlignment="Right" Margin="0,20.733,8,0" VerticalAlignment="Top" Width="284" Text="TextBlock" TextWrapping="Wrap" x:Name="lbl_Contrat"/>
-       
+        
+        <TextBlock HorizontalAlignment="Right" Width="165" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75" Text="" TextWrapping="Wrap" x:Name="lbl_seccion" Height="35" d:LayoutOverrides="VerticalAlignment" Canvas.Left="611" Margin="0,50.733,26,215.267" Visibility="Visible"/>
 
     </Grid>
  

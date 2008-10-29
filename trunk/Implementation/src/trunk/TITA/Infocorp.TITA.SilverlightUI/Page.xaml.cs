@@ -62,8 +62,6 @@ namespace Infocorp.TITA.SilverlightUI
         #region Menu
         void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //GrdContainer.Children.Add(new Home());
-
             acc.AddItem("Contratos", "", "Sharepoint Utilities", "Contratos", this.Resources["ItemStyle1"] as Style);
             acc.AddItem("Incidentes", "", "Sharepoint Utilities", "Incidentes", this.Resources["ItemStyle1"] as Style);
             acc.AddItem("Workpakage", "", "Sharepoint Utilities", "Workpakage", this.Resources["ItemStyle1"] as Style);
@@ -73,41 +71,44 @@ namespace Infocorp.TITA.SilverlightUI
             acc.AddItem("Issue", "", "Reportes", "Reportes", this.Resources["ItemStyle1"] as Style);
             acc.AddItem("Todos Issue", "", "Reportes", "Reportes", this.Resources["ItemStyle1"] as Style);
 
-            //acc.AddItem("Productos", "", "Productos", "Productos", this.Resources["ItemStyle1"] as Style);
-
             Style aux = this.Resources["GroupStyle1"] as Style;
             acc.setGroupStyle("Sharepoint Utilities", this.Resources["GroupStyle1"] as Style);
             acc.setGroupStyle("Reportes", this.Resources["GroupStyle1"] as Style);
-
-            //acc.AddItem("Prueba1", "", "GrupoPrueba", "1", this.Resources["ItemStyle1"] as Style);
-            //acc.AddItem("Prueba2", "", "GrupoPrueba", "2", this.Resources["ItemStyle1"] as Style);
-            //acc.setGroupStyle("GrupoPrueba", this.Resources["GroupStyle1"] as Style);
+           
             acc.ItemSelect += new Infocorp.TITA.Controls.Silverlight.V2.Accordion.ItemSelectEvent(acc_ItemSelect);
         }
 
         void acc_ItemSelect(object sender, Infocorp.TITA.Controls.Silverlight.V2.ItemEventArgs e)
         {
+            lbl_seccion.Visibility = Visibility;
             switch (e.id)
             {
                 case "Contratos":
+                    lbl_seccion.Text = "Contratos";
                     ViewContrat();
                     break;
                 case "Incidentes":
+                    lbl_seccion.Text = "Incidentes";
                     ViewIncident();
                     break;
                 case "Workpakage":
+                    lbl_seccion.Text = "Workpakage";
                     ViewWorkpakage();
                     break;
                 case "Tasks":
+                    lbl_seccion.Text = "Tasks";
                     ViewTasks();
                     break;
                 case "Desviacion WP":
+                    lbl_seccion.Text = "Desviacion WP";
                     ViewReportDESWP();
                     break;
                 case "Issue":
+                    lbl_seccion.Text = "Issue";
                     ViewReportISSUESREPORT();
                     break;
                 case "Todos Issue":
+                    lbl_seccion.Text = "Todos Issue";
                     ViewReportALLISSUESREPORT();
                     break;
                 default:
@@ -1652,20 +1653,6 @@ namespace Infocorp.TITA.SilverlightUI
 
         #region Task
 
-        //private void ButtonTask_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ClearReport();
-        //    if (url != null)
-        //    {
-        //        EnableOption(Option.TASK);
-        //        GetTask();
-        //    }
-        //    else 
-        //    {
-        //        ShowError("Debe conectarse previamente a un contrato.",true);        
-        //    }
-        //}
-
         public void ViewTasks()
         {
             ClearReport();
@@ -1725,9 +1712,6 @@ namespace Infocorp.TITA.SilverlightUI
                                 break;
                             case "Assigned To":
                                 t.AssignedTo = ((DTFieldChoice)field).Value;
-                                break;
-                            case "Description":
-                                t.Description = ((DTFieldAtomicNote)field).Value;
                                 break;
                             case "Start Date":
                                 t.StartDate = ((DTFieldAtomicDateTime)field).Value;
