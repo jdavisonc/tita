@@ -451,6 +451,10 @@ namespace Infocorp.TITA.SilverlightUI
                     WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
                     ws.ModifyContractCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ModifyContractCompleted);
                     ws.ModifyContractAsync(c);
+
+                    PnlbtnsContrato.Visibility = Visibility.Visible;
+                    pnlEditContrato.Visibility = Visibility.Collapsed;
+                    PnlActionContrato.Visibility = Visibility.Collapsed;
                 }
                 else 
                 {
