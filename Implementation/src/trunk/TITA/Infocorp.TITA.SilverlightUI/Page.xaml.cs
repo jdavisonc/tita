@@ -39,6 +39,7 @@ namespace Infocorp.TITA.SilverlightUI
         private bool forReport = false;
         private DTItem my_issue_template = null;
         List<DTContract> my_contract = new List<DTContract>();
+        DTContract my_con = null;
         private bool isDelete;
         private List<string> ColumnsToShow = null;// new List<string>() { "id", "title", "status", "priority", "category", "Reported Date", "Work Package", "Reported by", "Order", "Resolution", "IsLocal" };
         public Page()
@@ -125,6 +126,7 @@ namespace Infocorp.TITA.SilverlightUI
             isEdit = false;
             ShowError("", false);
             lblConectContract.Text = "";
+            lblacceder_error.Visibility = Visibility.Collapsed;
             lblConectContract.Visibility = Visibility.Collapsed;
             CanvasIncident.Visibility = Visibility.Collapsed;
             scroll_INCIDENT.Visibility = Visibility.Collapsed;
@@ -266,12 +268,12 @@ namespace Infocorp.TITA.SilverlightUI
                     lstContratos.IsReadOnly = true;
                     lstContratos.CanUserResizeColumns = false;
                 }
-                if (my_contract.Count > 0)
+                if ((my_contract.Count > 0) && (my_con == null))
                 {
-                    cbx_contrat_up.ItemsSource = my_contract;
-                    cbx_contrat_up.DisplayMemberPath = "Site";
-                    cbx_contrat_up.SelectedIndex = -1;
-                    cnv_current_contract.Visibility = Visibility.Visible;
+                  cbx_contrat_up.ItemsSource = my_contract;
+                  cbx_contrat_up.DisplayMemberPath = "Site";
+                  cnv_current_contract.Visibility = Visibility.Visible;
+                  cbx_contrat_up.SelectedIndex = -1;
                 }
             }
         }
@@ -367,15 +369,9 @@ namespace Infocorp.TITA.SilverlightUI
         {
             DTContract contract;
             contract = (DTContract)lstContratos.SelectedItem;
-            if (contract == null)
-            {
-                if (cbx_contrat_up.SelectedIndex != -1)
-                {
-                    contract = (DTContract)cbx_contrat_up.SelectedItem;
-                }
-            }
             url = contract.ContractId;
             lblConectContract.Text = "Se ha conectado a " + contract.Site;
+            cbx_contrat_up.SelectedItem = contract;
             lblConectContract.Visibility = Visibility.Visible;
         }
 
@@ -2124,7 +2120,15 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void lnk_acceder_click(object sender, RoutedEventArgs e)
         {
-
+            DTContract contract = (DTContract)cbx_contrat_up.SelectedItem;
+            if (cbx_contrat_up.SelectedIndex != -1)
+            {
+                url = contract.ContractId;
+            }
+            cbx_contrat_up.SelectedItem = contract;
+            my_con = contract;
+            lblacceder_error.Text = "Se ha conectado a " + contract.Site;
+            lblacceder_error.Visibility = Visibility.Visible;
         }
 
     }
