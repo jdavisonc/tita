@@ -500,6 +500,7 @@
             <TextBlock Height="20" HorizontalAlignment="Right" Canvas.Left="122" VerticalAlignment="Top" Width="100" Text="TextBlock" TextWrapping="Wrap" x:Name="lbl_Contrat" Canvas.Top="22"/>
             <ComboBox x:Name="cbx_contrat_up" Width="190" Canvas.Top="22" Canvas.Left="228"></ComboBox>
             <HyperlinkButton Content="acceder" x:Name="lnk_acceder" Click="lnk_acceder_click" Canvas.Top="22" Canvas.Left="422"></HyperlinkButton>
+            <TextBlock Height="20" Visibility="Visible" HorizontalAlignment="Center" Canvas.Left="122" VerticalAlignment="Top" Width="350" Text="" TextWrapping="Wrap" x:Name="lblacceder_error" Canvas.Top="70"/>
         </Canvas>
         
         <TextBlock HorizontalAlignment="Right" Width="130" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75" Text="" TextWrapping="Wrap" x:Name="lbl_seccion" Height="35" d:LayoutOverrides="VerticalAlignment" Canvas.Left="611" Margin="0,50.733,26,215.267" Visibility="Visible"/>
