@@ -50,6 +50,7 @@ namespace Infocorp.TITA.SilverlightUI
             ScrollViewerMouseWheelSupport.AddMouseWheelSupport(scroll_INCIDENT);
             ScrollViewerMouseWheelSupport.AddMouseWheelSupport(scroll_TASK);
             ScrollViewerMouseWheelSupport.AddMouseWheelSupport(scroll_REPORT);
+            ShowCurrentContract();
             this.Loaded += new RoutedEventHandler(Page_Loaded);
             if (url != null)
             {
@@ -84,19 +85,19 @@ namespace Infocorp.TITA.SilverlightUI
             switch (e.id)
             {
                 case "Contratos":
-                    lbl_seccion.Text = "Contratos";
+                    lbl_seccion.Text = "      Contratos";
                     ViewContrat();
                     break;
                 case "Incidentes":
-                    lbl_seccion.Text = "Incidentes";
+                    lbl_seccion.Text = "      Incidentes";
                     ViewIncident();
                     break;
                 case "Workpakage":
-                    lbl_seccion.Text = "Workpakage";
+                    lbl_seccion.Text = "Workpackage";
                     ViewWorkpakage();
                     break;
                 case "Tasks":
-                    lbl_seccion.Text = "Tasks";
+                    lbl_seccion.Text = "          Tasks";
                     ViewTasks();
                     break;
                 case "Desviacion WP":
@@ -216,6 +217,12 @@ namespace Infocorp.TITA.SilverlightUI
             }
         }
 
+        void ShowCurrentContract()
+        {
+            GetContract();
+            lbl_Contrat.Text = "Contrato actual: ";
+        }
+
         #region Contrato
 
         private void GetContract()
@@ -258,6 +265,13 @@ namespace Infocorp.TITA.SilverlightUI
                     lstContratos.Visibility = Visibility.Visible;
                     lstContratos.IsReadOnly = true;
                     lstContratos.CanUserResizeColumns = false;
+                }
+                if (my_contract.Count > 0)
+                {
+                    cbx_contrat_up.ItemsSource = my_contract;
+                    cbx_contrat_up.DisplayMemberPath = "Site";
+                    cbx_contrat_up.SelectedIndex = -1;
+                    cnv_current_contract.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -351,11 +365,17 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnConectarContrato_Click(object sender, RoutedEventArgs e)
         {
-            DTContract contract = (DTContract)lstContratos.SelectedItem;
+            DTContract contract;
+            contract = (DTContract)lstContratos.SelectedItem;
+            if (contract == null)
+            {
+                if (cbx_contrat_up.SelectedIndex != -1)
+                {
+                    contract = (DTContract)cbx_contrat_up.SelectedItem;
+                }
+            }
             url = contract.ContractId;
             lblConectContract.Text = "Se ha conectado a " + contract.Site;
-            lbl_Contrat.Text = "Contrato actual: " + contract.Site;
-            lbl_Contrat.Visibility = Visibility;
             lblConectContract.Visibility = Visibility.Visible;
         }
 
@@ -387,9 +407,19 @@ namespace Infocorp.TITA.SilverlightUI
             isDelete = true;
             isEdit = false;
             DTContract cont = (DTContract)lstContratos.SelectedItem;
-            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-            ws.DeleteContractCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_DeleteContractCompleted);
-            ws.DeleteContractAsync(cont.ContractId);
+            MessageBoxResult msg = MessageBox.Show("Esta seguro que desea eliminar este contrato?", "Contrato", MessageBoxButton.OKCancel);
+            if (msg == MessageBoxResult.OK)
+            {
+                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                ws.DeleteContractCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_DeleteContractCompleted);
+                ws.DeleteContractAsync(cont.ContractId);
+            }
+            else 
+            {
+                pnlEditContrato.Visibility = Visibility.Collapsed;
+                PnlbtnsContrato.Visibility = Visibility.Visible;
+                PnlActionContrato.Visibility = Visibility.Collapsed;
+            }
         }
 
         void ws_DeleteContractCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -490,13 +520,6 @@ namespace Infocorp.TITA.SilverlightUI
             GetContract();
         }
 
-        //private void ButtonContract_Click(object sender, RoutedEventArgs e)
-        //{
-        //    EnableOption(Option.CONTRACT);
-        //    forReport = false;
-        //    GetContract();
-        //}
-
         #endregion
 
         #region WorkPackage
@@ -514,20 +537,6 @@ namespace Infocorp.TITA.SilverlightUI
                 ShowError("Debe conectarse previamente a un contrato.", true);
             }
         }
-        //private void ButtonWP_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ClearReport();
-        //    if (url != null)
-        //    {
-        //        EnableOption(Option.WP);
-        //        GetWPS();
-        //    }
-        //    else 
-        //    {
-        //        ShowError("Debe conectarse previamente a un contrato.",true);        
-        //    }
-        //}
-
         public void GetWPS()
         {
             grd_WP.Columns.Clear();
@@ -625,9 +634,21 @@ namespace Infocorp.TITA.SilverlightUI
         {
             WorkPackage wp = (WorkPackage)grd_WP.SelectedItem;
             int id = wp.Id;
-            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-            ws.DeleteWorkPackageCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_DeleteWorkPackageCompleted);
-            ws.DeleteWorkPackageAsync(id, url);
+            MessageBoxResult msg = MessageBox.Show("Esta seguro que desea eliminar este Workpackage?", "Workpackage", MessageBoxButton.OKCancel);
+            if (msg == MessageBoxResult.OK)
+            {
+                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                ws.DeleteWorkPackageCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_DeleteWorkPackageCompleted);
+                ws.DeleteWorkPackageAsync(id, url);
+            }
+            else
+            {
+                PnlForm_WP.Children.Clear();
+                PnlForm_WP.Visibility = Visibility.Collapsed;
+                PnlAction_WP.Visibility = Visibility.Collapsed;
+                PnlForm_WP.Visibility = Visibility.Visible;
+                PnlOption_WP.Visibility = Visibility.Visible;
+            }
         }
 
         void ws_DeleteWorkPackageCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -1028,9 +1049,13 @@ namespace Infocorp.TITA.SilverlightUI
         {
             Issue issue = (Issue)grd_INCIDENT.SelectedItem;
             int id = issue.Id;
-            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-            ws.DeleteIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_DeleteIssueCompleted);
-            ws.DeleteIssueAsync(id,url);
+            MessageBoxResult msg = MessageBox.Show("Esta seguro que desea eliminar este Incidente?", "Incidente", MessageBoxButton.OKCancel);
+            if (msg == MessageBoxResult.OK)
+            {
+                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                ws.DeleteIssueCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_DeleteIssueCompleted);
+                ws.DeleteIssueAsync(id, url);
+            }
         }
 
         void ws_DeleteIssueCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -1297,6 +1322,7 @@ namespace Infocorp.TITA.SilverlightUI
                             {
                                 TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                 txt.Text = field.Name + "*";
+                                txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                                 ok = false;
                             }
                             else
@@ -1319,6 +1345,7 @@ namespace Infocorp.TITA.SilverlightUI
                             {
                                 TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                 txt.Text = field.Name + " *";
+                                txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                                 ok = false;
                             }
                             else
@@ -1339,6 +1366,7 @@ namespace Infocorp.TITA.SilverlightUI
                             {
                                 TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                 txt.Text = field.Name + " *";
+                                txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                                 ok = false;
                             }
                             else
@@ -1358,6 +1386,7 @@ namespace Infocorp.TITA.SilverlightUI
                             {
                                 TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                 txt.Text = field.Name + " *";
+                                txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                                 ok = false;
                             }
                             else
@@ -1376,6 +1405,7 @@ namespace Infocorp.TITA.SilverlightUI
                             {
                                 TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                 txt.Text = field.Name + " *";
+                                txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                                 ok = false;
                             }
                             else
@@ -1406,7 +1436,10 @@ namespace Infocorp.TITA.SilverlightUI
                                 {
                                     TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                     if (num.Text == "")
+                                    {
                                         txt.Text = field.Name + " *";
+                                        txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
+                                    }
                                     else
                                         txt.Text = field.Name + " (Formato invalido)";
                                     ok = false;
@@ -1438,7 +1471,10 @@ namespace Infocorp.TITA.SilverlightUI
                                 {
                                     TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                     if (cnt.Text == "")
+                                    {
                                         txt.Text = field.Name + " *";
+                                        txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
+                                    }
                                     else
                                         txt.Text = field.Name + " (Formato invalido)";
                                     ok = false;
@@ -1458,6 +1494,7 @@ namespace Infocorp.TITA.SilverlightUI
                             {
                                 TextBlock t = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                 t.Text = field.Name + " *";
+                                t.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush (Colors.Red));
                                 ok = false;
                             }
                             else
@@ -1841,9 +1878,13 @@ namespace Infocorp.TITA.SilverlightUI
         {
             Task task = (Task)grd_TASK.SelectedItem;
             int id = task.Id;
-            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-            ws.DeleteTaskCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_DeleteTaskCompleted);
-            ws.DeleteTaskAsync(id, url);
+            MessageBoxResult msg = MessageBox.Show("Esta seguro que desea eliminar este Incidente?", "Incidente", MessageBoxButton.OKCancel);
+            if (msg == MessageBoxResult.OK)
+            {
+                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                ws.DeleteTaskCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_DeleteTaskCompleted);
+                ws.DeleteTaskAsync(id, url);
+            }
         }
 
         void ws_DeleteTaskCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -1934,17 +1975,7 @@ namespace Infocorp.TITA.SilverlightUI
             GetContract();
             BtnGenerateReport_DESWP.Visibility = Visibility.Visible;
         }
-        //private void ButtonRport_Click_DESWP(object sender, RoutedEventArgs e)
-        //{
-        //    cal_inicial.SelectedDate = null;
-        //    cal_final.SelectedDate = null;
-        //    BtnGenerateReport_ALLISSUES.Visibility = Visibility.Collapsed;
-        //    BtnGenerateReport_ISSUES.Visibility = Visibility.Collapsed;
-        //    EnableOption(Option.REPORT);
-        //    forReport = true;
-        //    GetContract();
-        //    BtnGenerateReport_DESWP.Visibility = Visibility.Visible;
-        //}
+        
 
         private void BtnGenerateReportClick_DESWP(object sender, RoutedEventArgs e)
         {
@@ -1997,17 +2028,7 @@ namespace Infocorp.TITA.SilverlightUI
             GetContract();
             BtnGenerateReport_ISSUES.Visibility = Visibility.Visible;
         }
-        //private void ButtonRport_Click_ISSUESREPORT(object sender, RoutedEventArgs e)
-        //{
-        //    cal_inicial.SelectedDate = null;
-        //    cal_final.SelectedDate = null;
-        //    BtnGenerateReport_ALLISSUES.Visibility = Visibility.Collapsed;
-        //    BtnGenerateReport_DESWP.Visibility = Visibility.Collapsed;
-        //    EnableOption(Option.REPORT);
-        //    forReport = true;
-        //    GetContract();
-        //    BtnGenerateReport_ISSUES.Visibility = Visibility.Visible;
-        //}
+        
         
         private void BtnGenerateReportClick_ISSUES(object sender, RoutedEventArgs e)
         {
@@ -2058,15 +2079,7 @@ namespace Infocorp.TITA.SilverlightUI
             BtnGenerateReport_ALLISSUES.Visibility = Visibility.Visible;
         }
 
-        //private void ButtonRport_Click_ALLISSUESREPORT(object sender, RoutedEventArgs e)
-        //{
-        //    cal_inicial.SelectedDate = null;
-        //    cal_final.SelectedDate = null;
-        //    BtnGenerateReport_ISSUES.Visibility = Visibility.Collapsed;
-        //    BtnGenerateReport_DESWP.Visibility = Visibility.Collapsed;
-        //    EnableOption(Option.REPORT);
-        //    BtnGenerateReport_ALLISSUES.Visibility = Visibility.Visible;
-        //}
+       
 
         private void BtnGenerateReportClick_ALLISSUES(object sender, RoutedEventArgs e)
         {
@@ -2108,6 +2121,11 @@ namespace Infocorp.TITA.SilverlightUI
         }
 
         #endregion
+
+        private void lnk_acceder_click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
     }
 }
