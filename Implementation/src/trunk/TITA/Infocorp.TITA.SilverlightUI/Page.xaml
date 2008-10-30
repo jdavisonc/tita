@@ -495,9 +495,14 @@
         <Canvas x:Name="CanvasError" Margin="200,65.5,390,0" Visibility="Visible" VerticalAlignment="Top" Width="400" d:LayoutOverrides="Width, Margin" Grid.Row="1"> 
             <TextBlock x:Name="lblError" Visibility="Collapsed"/>
         </Canvas>
-        <TextBlock Height="30" Visibility="Collapsed" HorizontalAlignment="Right" Margin="0,20.733,8,0" VerticalAlignment="Top" Width="284" Text="TextBlock" TextWrapping="Wrap" x:Name="lbl_Contrat"/>
         
-        <TextBlock HorizontalAlignment="Right" Width="165" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75" Text="" TextWrapping="Wrap" x:Name="lbl_seccion" Height="35" d:LayoutOverrides="VerticalAlignment" Canvas.Left="611" Margin="0,50.733,26,215.267" Visibility="Visible"/>
+        <Canvas x:Name="cnv_current_contract" Width="500" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,1.233,0,0">
+            <TextBlock Height="20" HorizontalAlignment="Right" Canvas.Left="122" VerticalAlignment="Top" Width="100" Text="TextBlock" TextWrapping="Wrap" x:Name="lbl_Contrat" Canvas.Top="22"/>
+            <ComboBox x:Name="cbx_contrat_up" Width="190" Canvas.Top="22" Canvas.Left="228"></ComboBox>
+            <HyperlinkButton Content="acceder" x:Name="lnk_acceder" Click="lnk_acceder_click" Canvas.Top="22" Canvas.Left="422"></HyperlinkButton>
+        </Canvas>
+        
+        <TextBlock HorizontalAlignment="Right" Width="130" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75" Text="" TextWrapping="Wrap" x:Name="lbl_seccion" Height="35" d:LayoutOverrides="VerticalAlignment" Canvas.Left="611" Margin="0,50.733,26,215.267" Visibility="Visible"/>
 
     </Grid>
  
