@@ -5,6 +5,7 @@ using System.Text;
 using Infocorp.TITA.DataTypes;
 using System.Xml;
 using System.IO;
+using System.Globalization;
 
 namespace Infocorp.TITA.SharePointUtilities
 {
@@ -539,7 +540,7 @@ namespace Infocorp.TITA.SharePointUtilities
                                          switch (field.GetCustomType())
                                          {
                                              case DTField.Types.Number:
-                                                 ((DTFieldAtomicNumber)field).Value = double.Parse(attr.Value);
+                                                 ((DTFieldAtomicNumber)field).Value = double.Parse(attr.Value,CultureInfo.InvariantCulture.NumberFormat);
                                                  break;
                                              case DTField.Types.String:
                                                  ((DTFieldAtomicString)field).Value = attr.Value;
