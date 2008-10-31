@@ -69,9 +69,9 @@ namespace Infocorp.TITA.SilverlightUI
             acc.AddItem("Workpakage", "", "Sharepoint Utilities", "Workpakage", this.Resources["ItemStyle1"] as Style);
             acc.AddItem("Tasks", "", "Sharepoint Utilities", "Tasks", this.Resources["ItemStyle1"] as Style);
 
-            acc.AddItem("Desviacion WP", "", "Reportes", "Reportes", this.Resources["ItemStyle1"] as Style);
-            acc.AddItem("Issue", "", "Reportes", "Reportes", this.Resources["ItemStyle1"] as Style);
-            acc.AddItem("Todos Issue", "", "Reportes", "Reportes", this.Resources["ItemStyle1"] as Style);
+            acc.AddItem("Desviacion WP", "", "Reportes", "Desviacion WP", this.Resources["ItemStyle1"] as Style);
+            acc.AddItem("Issue", "", "Reportes", "Issue", this.Resources["ItemStyle1"] as Style);
+            acc.AddItem("Todos Issue", "", "Reportes", "Todos Issue", this.Resources["ItemStyle1"] as Style);
 
             Style aux = this.Resources["GroupStyle1"] as Style;
             acc.setGroupStyle("Sharepoint Utilities", this.Resources["GroupStyle1"] as Style);
@@ -2009,10 +2009,17 @@ namespace Infocorp.TITA.SilverlightUI
             }
             else
             {
+                DTContract contract = (DTContract)contractsReport.SelectedItem;
                 DateTime fch_inicial = cal_inicial.SelectedDate.Value;
                 DateTime fch_final = cal_final.SelectedDate.Value;
-                DTContract contract = (DTContract)contractsReport.SelectedItem;
-                LoadReportResult_DESWP(contract.ContractId, fch_inicial, fch_final);
+                if (fch_final < fch_inicial)
+                {
+                    MessageBoxResult msg = MessageBox.Show("Fecha fin debe ser mayor a fecha inicio.", "ERROR", MessageBoxButton.OK);
+                }
+                else
+                {
+                    LoadReportResult_DESWP(contract.ContractId, fch_inicial, fch_final);
+                }
             }
         }
 
@@ -2065,7 +2072,14 @@ namespace Infocorp.TITA.SilverlightUI
                 DateTime fch_inicial = cal_inicial.SelectedDate.Value;
                 DateTime fch_final = cal_final.SelectedDate.Value;
                 DTContract contract = (DTContract)contractsReport.SelectedItem;
-                LoadReportResult_ISSUES(contract.ContractId, fch_inicial, fch_final);
+                if (fch_final < fch_inicial)
+                {
+                    MessageBoxResult msg = MessageBox.Show("Fecha fin debe ser mayor a fecha inicio.", "ERROR", MessageBoxButton.OK);
+                }
+                else
+                {
+                    LoadReportResult_ISSUES(contract.ContractId, fch_inicial, fch_final);
+                }
             }
         }
 
