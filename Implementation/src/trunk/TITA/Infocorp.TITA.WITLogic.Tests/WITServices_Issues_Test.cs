@@ -18,34 +18,151 @@ namespace Infocorp.TITA.WITLogic.Tests
         DataBaseAccess.DataBaseAccess dbMock;
         ISharePoint suMock;
 
-        //[TestFixtureSetUp]
-        //public void TestFixtureSetUp()
-        //{
+        [TestFixtureSetUp]
+        public void TestFixtureSetUp()
+        {
 
-        //}
+        }
 
-        //[TestFixtureTearDown]
-        //public void TestFixtureTearDown()
-        //{
-        //}
+        [TestFixtureTearDown]
+        public void TestFixtureTearDown()
+        {
+        }
 
-        //[SetUp]
-        //public void SetUp()
-        //{
-        //    mocks = new MockRepository();
-        //    dbMock = mocks.CreateMock<DataBaseAccess.DataBaseAccess>();
-        //    suMock = mocks.CreateMock<ISharePoint>();
-        //    witServices = WITFactory.Instance().WITServicesInstance(dbMock, suMock);
-        //}
+        [SetUp]
+        public void SetUp()
+        {
+            mocks = new MockRepository();
+            dbMock = mocks.CreateMock<DataBaseAccess.DataBaseAccess>();
+            suMock = mocks.CreateMock<ISharePoint>();
+            witServices = WITFactory.Instance().WITServicesInstance(dbMock, suMock);
+        }
 
-        //[TearDown]
-        //public void TearDown()
-        //{
-        //    mocks.VerifyAll();
-        //}
+        [TearDown]
+        public void TearDown()
+        {
+            mocks.VerifyAll();
+        }
+
+        #region UnitTests
+
+        [Test]
+        public void MustGetIssueTemplate()
+        {
+            string siteId = "1";
+            List<DTField> fields = new List<DTField>() { new DTFieldAtomicString("Test", "Test", true, false, true) };
+            using (mocks.Record())
+            {
+                Expect.On(suMock).Call(suMock.GetFieldsIssue(siteId)).Return(fields);
+            }
+
+            try
+            {
+                DTItem issueTemplate = witServices.GetIssueTemplate(siteId);
+
+                Assert.AreEqual(fields.Count, issueTemplate.Fields.Count);
+                foreach (DTField field in issueTemplate.Fields)
+                {
+                    Assert.Contains(field, fields);
+                }
+            }
+            catch (Exception exc)
+            {
+                Assert.Fail(exc.Message);
+            }
+        }
+
+        [Test]
+        public void MustGetIssues()
+        {
+            string siteId = "1";
+            List<DTItem> issues = new List<DTItem>() { new DTItem(new List<DTField>(), new List<DTAttachment>()) };
+            using (mocks.Record())
+            {
+                Expect.On(suMock).Call(suMock.GetIssues(siteId, string.Empty)).Return(issues);
+            }
+
+            try
+            {
+                List<DTItem> result = witServices.GetIssues(siteId);
+
+                Assert.AreEqual(issues.Count, result.Count);
+            }
+            catch (Exception exc)
+            {
+                Assert.Fail(exc.Message);
+            }
+        }
+
+        [Test]
+        public void MustAddNewIssue()
+        {
+            DTItem issue = new DTItem(new List<DTField>(), new List<DTAttachment>());
+            string contractId = "1";
+            using (mocks.Record())
+            {
+                Expect.On(suMock).Call(suMock.AddIssue(contractId, issue)).Return(true);
+            }
+
+            try
+            {
+                witServices.AddIssue(issue, contractId);
+                witServices.ApplyChanges(contractId, ItemType.ISSUE);
+            }
+            catch (Exception exc)
+            {
+                Assert.Fail(exc.Message);
+            }
+        }
+
+        [Test]
+        public void MustModifyIssue()
+        {
+            DTItem issue = new DTItem(new List<DTField>(), new List<DTAttachment>());
+            issue.Fields.Add(new DTFieldCounter("ID", "ID", true, true, true, 1));
+            string contractId = "1";
+            using (mocks.Record())
+            {
+                Expect.On(suMock).Call(suMock.UpdateIssue(contractId, issue)).Return(true);
+            }
+
+            try
+            {
+                witServices.ModifyIssue(issue, contractId);
+                witServices.ApplyChanges(contractId, ItemType.ISSUE);
+            }
+            catch (Exception exc)
+            {
+                Assert.Fail(exc.Message);
+            }
+        }
+
+        [Test]
+        public void MustDeleteIssue()
+        {
+            string contractId = "1";
+            int issueId = 1;
+
+            using (mocks.Record())
+            {
+                Expect.On(suMock).Call(suMock.DeleteIssue(contractId, issueId)).Return(true);
+            }
+
+            try
+            {
+                witServices.DeleteIssue(issueId, contractId);
+                witServices.ApplyChanges(contractId, ItemType.ISSUE);
+            }
+            catch (Exception exc)
+            {
+                Assert.Fail(exc.Message);
+            }
+        }
+
+        #endregion
 
         #region FunctionalTests
-
+        /*
         [Test]
         public void AddIssue()
         {
@@ -187,84 +304,8 @@ namespace Infocorp.TITA.WITLogic.Tests
             }
 
         }
-
+        */
         #endregion
-
-        #region UnitTests
-
-        [Test]
-        public void MustGetIssueTemplate()
-        {
-            string siteId = "1";
-            List<DTField> fields = new List<DTField>() { new DTFieldAtomicString("Test","Test", true, false, true) };
-            using (mocks.Record())
-            {
-                Expect.On(suMock).Call(suMock.GetFieldsIssue(siteId)).Return(fields);
-            }
-
-            DTItem issueTemplate = witServices.GetIssueTemplate(siteId);
-
-            Assert.AreEqual(fields.Count, issueTemplate.Fields.Count);
-            foreach (DTField field in issueTemplate.Fields)
-            {
-                Assert.Contains(field, fields);
-            }
-
-        }
-
-        [Test]
-        public void MustGetIssues()
-        {
-            string siteId = "1";
-            List<DTItem> issues = new List<DTItem>() { new DTItem(new List<DTField>(), new List<DTAttachment>()) };
-            using (mocks.Record())
-            {
-                Expect.On(suMock).Call(suMock.GetIssues(siteId, string.Empty)).Return(issues);
-            }
-
-            List<DTItem> result = witServices.GetIssues(siteId);
-
-            Assert.AreEqual(issues.Count, result.Count);
-        }
-
-        [Test]
-        public void MustAddNewIssue()
-        {
-            List<DTItem> issues = new List<DTItem>() { new DTItem(new List<DTField>(), new List<DTAttachment>()) };
-            DTItem issue = new DTItem(new List<DTField>(), new List<DTAttachment>());
-            string contractId = "1";
-            using (mocks.Record())
-            {
-                Expect.On(suMock).Call(suMock.AddIssue(contractId, issue)).Return(true);
-                Expect.On(suMock).Call(suMock.GetIssues(contractId, string.Empty)).Return(issues).Repeat.Twice();
-            }
-
-            int originalCount = witServices.GetIssues(contractId).Count;
-            witServices.AddIssue(issue, contractId);
-            witServices.ApplyChanges(contractId, ItemType.ISSUE);
-            int newCount = witServices.GetIssues(contractId).Count;
-
-            Assert.AreEqual(newCount, originalCount + 1);
-        }
-
-        [Test, Ignore("Not ready")]
-        public void MustModifyIssue()
-        {
-            using (mocks.Record())
-            {
-            }
-
-        }
-
-        [Test]
-        public void MustDeleteIssue()
-        {
-            using (mocks.Record())
-            {
-            }
-
-        }
+       
     }
-
-        #endregion
 }
