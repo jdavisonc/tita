@@ -117,6 +117,7 @@ namespace Infocorp.TITA.DataBaseAccess
         #endregion
 
         # region CONCURRENCE OPERATIONS
+
         public void AddCurrentUser(DTCurrentUser user)
         {
             LinqDataContext dc = new LinqDataContext();
@@ -146,7 +147,64 @@ namespace Infocorp.TITA.DataBaseAccess
 
             return result;
         }
+
+        /// <summary>
+        /// Devuelve true sii el contracto está adquirido por algún usuario
+        /// teniendo en cuenta un posible timeout
+        /// </summary>
+        /// <param name="contractId">Id de contrato</param>
+        /// <returns>true sii está adqurido</returns>
+        public bool IsContractAquired(string contractId)
+        {
+            //TODO !!
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Obtiene un contrato para escritura
+        /// </summary>
+        /// <param name="contractId">Id de contrato</param>
+        /// <param name="userName">UserName</param>
+        /// <returns>Si se pudo obtener el permiso</returns>
+        public bool AquireContract(string contractId, string userName)
+        {
+            //TODO !!
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Libera un contrato obtenido
+        /// </summary>
+        /// <param name="contractId">Id del contrato</param>
+        public void ReleaseContract(string contractId)
+        {
+            //TODO !!
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Devuelve true sii el contrato está adquirido por el usuario
+        /// </summary>
+        /// <param name="contractId">Id del contrato</param>
+        /// <param name="userName">UserName</param>
+        /// <returns>true sii está adquirido por el usuario</returns>
+        public bool IsContractAquiredByUser(string contractId, string userName)
+        {
+            //TODO !!
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Actualiza el último acceso al contrato con DateTime.Now
+        /// </summary>
+        /// <param name="contractId">Id del contrato</param>
+        /// <param name="userName">UserName</param>
+        public void UpdateLastAccess(string contractId, string userName)
+        {
+            //TODO !!
+            throw new NotImplementedException();
+        }
+
         #endregion
-    
     }
 }
