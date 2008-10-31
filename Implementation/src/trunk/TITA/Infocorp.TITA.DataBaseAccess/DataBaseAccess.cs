@@ -150,7 +150,7 @@ namespace Infocorp.TITA.DataBaseAccess
 
         /// <summary>
         /// Devuelve true sii el contracto está adquirido por algún usuario
-        /// teniendo en cuenta un posible timeout
+        /// teniendo en cuenta un posible timeout (si expiró por timeout, lo libera)
         /// </summary>
         /// <param name="contractId">Id de contrato</param>
         /// <returns>true sii está adqurido</returns>
