@@ -8,7 +8,7 @@ namespace Infocorp.TITA.WITLogic
 {
     public interface IWITServices
     {
-
+     
         bool ApplyChanges(string contractId, ItemType itemType);
 
         bool HasPendingChanges(string contractId);
@@ -25,6 +25,8 @@ namespace Infocorp.TITA.WITLogic
 
         void UpdateWorkPackage(DTItem workPackage, string contractId);
 
+        void SiteMapPropertyValueWorkPackages(string idContract, string property, string initialValue, string endValue);
+
         #endregion
 
         #region Issues
@@ -39,6 +41,8 @@ namespace Infocorp.TITA.WITLogic
 
         void DeleteIssue(int issueId, string contractId);
 
+        void SiteMapPropertyValueIssues(string idContract, string property, string initialValue, string endValue);
+
         #endregion
 
         #region Tasks
@@ -52,6 +56,8 @@ namespace Infocorp.TITA.WITLogic
         void DeleteTask(int taskId, string contractId);
 
         void UpdateTask(DTItem task, string contractId);
+
+        void SiteMapPropertyValueTasks(string idContract, string property, string initialValue, string endValue);
 
         #endregion
 
@@ -71,5 +77,19 @@ namespace Infocorp.TITA.WITLogic
 
         #endregion
 
+        #region Concurrence
+
+        bool IsContractLocked(string contractId);
+
+        bool AquireContractWritePermission(string contractId);
+
+        void ReleaseContractWritePermission(string contractId);
+
+        #endregion
+
+
+        
+        
+        
     }
 }

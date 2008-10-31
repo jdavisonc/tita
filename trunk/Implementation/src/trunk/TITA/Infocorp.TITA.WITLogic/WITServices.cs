@@ -363,5 +363,56 @@ namespace Infocorp.TITA.WITLogic
         }
 
         #endregion
+
+        #region IWITServices Members
+
+        public bool IsContractLocked(string contractId)
+        {
+            return _db.IsContractAquired(contractId);
+        }
+
+        public bool AquireContractWritePermission(string contractId)
+        {
+            string userName = string.Empty;
+            return _db.AquireContract(contractId, userName);
+        }
+
+        public void ReleaseContractWritePermission(string contractId)
+        {
+            _db.ReleaseContract(contractId);
+        }
+
+        private bool IsContractAquiredByMe(string contractId)
+        {
+            string userName  = string.Empty;
+            return _db.IsContractAquiredByUser(contractId, userName);
+        }
+
+        private void UpdateLastAccess(string contractId, string userName)
+        {
+            _db.UpdateLastAccess(contractId, userName);
+        }
+
+        #endregion
+
+        #region IWITServices Members
+
+
+        public void SiteMapPropertyValueWorkPackages(string idContract, string property, string initialValue, string endValue)
+        {
+            _sharepoint.SiteMapPropertyValueWorkPackages(idContract, property, initialValue, endValue);
+        }
+
+        public void SiteMapPropertyValueIssues(string idContract, string property, string initialValue, string endValue)
+        {
+            _sharepoint.SiteMapPropertyValueIssues(idContract, property, initialValue, endValue);
+        }
+
+        public void SiteMapPropertyValueTasks(string idContract, string property, string initialValue, string endValue)
+        {
+            _sharepoint.SiteMapPropertyValueTasks(idContract, property, initialValue, endValue);
+        }
+
+        #endregion
     }
 }
