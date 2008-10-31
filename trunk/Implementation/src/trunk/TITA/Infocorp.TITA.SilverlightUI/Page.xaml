@@ -396,8 +396,8 @@
         <!--CONTRATO -->
         <ScrollViewer Margin="-4.286,106,4.286,-21" Visibility="Collapsed" x:Name="scroll_CONTRACT" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="2">
             <StackPanel x:Name="pnl_Contrato" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
-               <my:DataGrid x:Name="lstContratos" AutoGenerateColumns="True" Visibility="Collapsed" Width="auto"/>
-               <TextBlock Margin="18,60,0,0" x:Name="lblConectContract" Visibility="Collapsed"/>            
+                <my:DataGrid x:Name="lstContratos" AutoGenerateColumns="True" Visibility="Collapsed" Width="auto"/>
+                <TextBlock Margin="18,60,0,0" x:Name="lblConectContract" Visibility="Collapsed"/>            
                 <StackPanel  x:Name="PnlbtnsContrato" Background="White" Width="auto" Visibility="Visible" Orientation="Horizontal">
                     <Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Nuevo" Click="BtnNuevoContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnModificarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnModificarContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
@@ -473,16 +473,16 @@
      
         <!--Reports--> 
         <ScrollViewer Margin="-1,-83.5,0,-21" d:LayoutOverrides="HorizontalAlignment, Margin" Visibility="Collapsed" x:Name="scroll_REPORT" BorderThickness="0,0,1,0" Grid.Row="1">
-            <StackPanel x:Name="CanvasREPORT" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
-                <my:DataGrid x:Name="contractsReport" Margin="100,0,0,70" Visibility="Collapsed" AutoGenerateColumns="True" Width="auto"/> 
+            <StackPanel x:Name="CanvasREPORT" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,100,0">
+                <my:DataGrid x:Name="contractsReport" Margin="100,0,0,100" Visibility="Collapsed" AutoGenerateColumns="True" Width="auto"/> 
                 <StackPanel x:Name="PnlOptionREPORT" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal" Margin="100,0,0,0">
                     <TextBlock Text="Fecha inicial: " x:Name="txt_fechaInicial"></TextBlock>
                     <my1:Calendar x:Name="cal_inicial"></my1:Calendar>
                     <TextBlock Margin="65,0,0,0" Text="Fecha final: " x:Name="txt_fechaFinal"></TextBlock>
                     <my1:Calendar x:Name="cal_final"></my1:Calendar>
-                    <Button  Content="Generar" Margin="50,127,0,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_DESWP" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_DESWP" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                    <Button  Content="Generar" Margin="50,127,0,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_ISSUES" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_ISSUES" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                    <Button  Content="Generar" Margin="50,127,0,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_ALLISSUES" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_ALLISSUES" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                    <Button  Content="Generar" Margin="0,190,70,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_DESWP" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_DESWP" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                    <Button  Content="Generar" Margin="0,190,70,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_ISSUES" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_ISSUES" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                    <Button  Content="Generar" Margin="0,190,70,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_ALLISSUES" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_ALLISSUES" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                 </StackPanel>
                 <my:DataGrid x:Name="grd_REPORT" Margin="100,50,0,0" AutoGenerateColumns="True" Visibility="Collapsed" Width="auto"/>
                 <StackPanel  x:Name="PnlExportar_REPORT" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
