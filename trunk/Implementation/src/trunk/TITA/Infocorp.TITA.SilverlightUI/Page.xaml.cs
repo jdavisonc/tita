@@ -309,15 +309,20 @@ namespace Infocorp.TITA.SilverlightUI
         private void CleanPanelContract()
         {
             contName.Text = "Nombre";
-            contSite.Text = "Site";
-            contLstTsk.Text = "Lista de Tareas";
-            contLstIssue.Text = "Lista de Incidentes";
-            contLstWP.Text = "Lista de WorkPackage";
+            contName.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
             txtNombre.Text = "";
+            contSite.Text = "Site";
             txtSite.Text = "";
+            contSite.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
+            contLstTsk.Text = "Lista de Tareas";
+            contLstTsk.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
             txtTaskList.Text = "";
-            txtWorkPackageList.Text = "";
+            contLstIssue.Text = "Lista de Incidentes";
+            contLstIssue.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
             txtIssuesList.Text = "";
+            contLstWP.Text = "Lista de WorkPackage";
+            contLstWP.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
+            txtWorkPackageList.Text = "";
         }
 
         private void ShowErrorContract()
@@ -325,42 +330,52 @@ namespace Infocorp.TITA.SilverlightUI
             if (txtNombre.Text == "")
             {
                 contName.Text = "Nombre *";
+                contName.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
             }
             else 
             {
                 contName.Text = "Nombre";
+                contName.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
             }
             if (txtSite.Text == "")
             {
                 contSite.Text = "Site *";
+                contSite.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
             }
             else
             {
                 contSite.Text = "Site";
+                contSite.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
             }
             if (txtTaskList.Text == "")
             {
                 contLstTsk.Text = "Lista de Tareas *";
+                contLstTsk.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
             }
             else 
             {
                 contLstTsk.Text = "Lista de Tareas";
+                contLstTsk.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
             }
             if (txtIssuesList.Text == "")
             {
                 contLstIssue.Text = "Lista de Incidentes *";
+                contLstIssue.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
             }
             else 
             {
                 contLstIssue.Text = "Lista de Incidentes";
+                contLstIssue.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
             }
             if (txtWorkPackageList.Text == "")
             {
                 contLstWP.Text = "Lista de WorkPackage *";
+                contLstWP.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
             }
             else
             {
                 contLstWP.Text = "Lista de WorkPackage";
+                contLstWP.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
             }
 
         }
@@ -464,7 +479,7 @@ namespace Infocorp.TITA.SilverlightUI
                 DTContract cont = (DTContract)lstContratos.SelectedItem;
 
                 DTContract c = new DTContract();
-                c.ContractId = cont.ContractId;
+                c.ContractId = cont.ContractId.Trim();
                 c.Site = txtSite.Text;
                 c.UserName = txtNombre.Text;
                 c.taskList = txtTaskList.Text;
@@ -1311,11 +1326,10 @@ namespace Infocorp.TITA.SilverlightUI
                         }
                         else if (field is DTFieldChoiceLookup)
                         {
-                            //ListBox chlkp = (ListBox)my_pnl.FindName("chlkp_" + field.Name);
                             ComboBox chlkp = (ComboBox)my_pnl.FindName("chlkp_" + field.Name);
+                            TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                             if ((field.Required) && (chlkp.SelectedItem == null))
                             {
-                                TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                 txt.Text = field.Name + "*";
                                 txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                                 ok = false;
@@ -1330,15 +1344,16 @@ namespace Infocorp.TITA.SilverlightUI
                                 resultField.Name = field.Name;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
+                                txt.Text = field.Name;
+                                txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
                             }
                         }
                         else if (field is DTFieldChoiceUser)
                         {
-                            //ListBox chuser = (ListBox)my_pnl.FindName("chuser_" + field.Name);
                             ComboBox chuser = (ComboBox)my_pnl.FindName("chuser_" + field.Name);
+                            TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                             if ((field.Required) && (chuser.SelectedItem == null))
                             {
-                                TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                 txt.Text = field.Name + " *";
                                 txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                                 ok = false;
@@ -1351,15 +1366,16 @@ namespace Infocorp.TITA.SilverlightUI
                                 resultField.Name = field.Name;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
+                                txt.Text = field.Name;
+                                txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
                             }
                         }
                         else if (field is DTFieldChoice)
                         {
-                            //ListBox lst = (ListBox)my_pnl.FindName("lstbx_" + field.Name);
+                            TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                             ComboBox lst = (ComboBox)my_pnl.FindName("lstbx_" + field.Name);
                             if ((field.Required) && (lst.SelectedItem == null))
                             {
-                                TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                 txt.Text = field.Name + " *";
                                 txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                                 ok = false;
@@ -1372,14 +1388,16 @@ namespace Infocorp.TITA.SilverlightUI
                                 resultField.Name = field.Name;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
+                                txt.Text = field.Name;
+                                txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
                             }
                         }
                         else if (field is DTFieldAtomicDateTime)
                         {
                             Calendar cal = (Calendar)my_pnl.FindName("cal_" + field.Name);
+                            TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                             if ((field.Required) && (cal.SelectedDate.Value.ToShortDateString().ToString() == ""))
                             {
-                                TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                 txt.Text = field.Name + " *";
                                 txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                                 ok = false;
@@ -1391,14 +1409,16 @@ namespace Infocorp.TITA.SilverlightUI
                                 resultField.Name = field.Name;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
+                                txt.Text = field.Name;
+                                txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
                             }
                         }
                         else if (field is DTFieldAtomicNote)
                         {
                             TextBox nt = (TextBox)my_pnl.FindName("nt_" + field.Name);
+                            TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                             if ((field.Required) && (nt.Text == ""))
                             {
-                                TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                 txt.Text = field.Name + " *";
                                 txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                                 ok = false;
@@ -1410,11 +1430,14 @@ namespace Infocorp.TITA.SilverlightUI
                                 resultField.Name = field.Name;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
+                                txt.Text = field.Name;
+                                txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
                             }
                         }
                         else if (field is DTFieldAtomicNumber)
                         {
                             TextBox num = (TextBox)my_pnl.FindName("num_" + field.Name);
+                            TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                             try
                             {
                                 double value = double.Parse(num.Text.Trim());
@@ -1424,25 +1447,25 @@ namespace Infocorp.TITA.SilverlightUI
                                 resultField.Name = field.Name;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
+                                txt.Text = field.Name;
+                                txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
                             }
                             catch (Exception)
                             {
                                 if (field.Required) // mal formato o vacio
                                 {
-                                    TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                     if (num.Text == "")
-                                    {
                                         txt.Text = field.Name + " *";
-                                        txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
-                                    }
                                     else
                                         txt.Text = field.Name + " (Formato invalido)";
+                                    
                                     ok = false;
+                                    txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                                 }
                                 else if ((num.Text != ""))
                                 {
-                                    TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                     txt.Text = field.Name + " (Formato invalido)";
+                                    txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                                     ok = false;
                                 }
                             }
@@ -1450,6 +1473,7 @@ namespace Infocorp.TITA.SilverlightUI
                         else if (field is DTFieldCounter)
                         {
                             TextBox cnt = (TextBox)my_pnl.FindName("cnt_" + field.Name);
+                            TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                             try
                             {
                                 int value = int.Parse(cnt.Text);
@@ -1459,35 +1483,35 @@ namespace Infocorp.TITA.SilverlightUI
                                 resultField.Name = field.Name;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
+                                txt.Text = field.Name;
+                                txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
                             }
                             catch (Exception)
                             {
                                 if (field.Required)//mal formato o vacio
                                 {
-                                    TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                     if (cnt.Text == "")
-                                    {
                                         txt.Text = field.Name + " *";
-                                        txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
-                                    }
                                     else
                                         txt.Text = field.Name + " (Formato invalido)";
+                                    
                                     ok = false;
+                                    txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                                 }
                                 else if ((cnt.Text != ""))
                                 {
-                                    TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
-                                    txt.Text = field.Name + " (Formato invalido)";
                                     ok = false;
+                                    txt.Text = field.Name + " (Formato invalido)";
+                                    txt.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                                 }
                             }
                         }
                         else
                         {
                             TextBox txt = (TextBox)my_pnl.FindName("bx_" + field.Name);
+                            TextBlock t = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                             if ((field.Required) && (txt.Text.ToString() == ""))
                             {
-                                TextBlock t = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                                 t.Text = field.Name + " *";
                                 t.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush (Colors.Red));
                                 ok = false;
@@ -1499,6 +1523,8 @@ namespace Infocorp.TITA.SilverlightUI
                                 resultField.Name = field.Name;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
+                                t.Text = field.Name;
+                                t.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
                             }
                         }
                     }
