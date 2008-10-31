@@ -54,8 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WITServices_Contracts_Tests.cs" />
     <Compile Include="WITServices_Issues_Test.cs" />
     <Compile Include="WITServices_WP_Test.cs" />
+    <Compile Include="WITServices_Tasks_Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infocorp.TITA.DataBaseAccess\Infocorp.TITA.DataBaseAccess.csproj">

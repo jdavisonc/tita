@@ -807,56 +807,55 @@ namespace Infocorp.TITA.SilverlightUI
 
                 #region old
                 foreach (DTItem issue in list)
-            {
-                i = new Issue();
-
-                foreach (DTField field in issue.Fields)
                 {
-                    if ((!field.Hidden) || (field.Name == "ID" && field.Hidden))  
+                    i = new Issue();
+
+                    foreach (DTField field in issue.Fields)
                     {
-                        switch (field.Name)
+                        if ((!field.Hidden) || (field.Name == "ID" && field.Hidden))
                         {
-                            case "ID":
-                                i.Id = int.Parse(((DTFieldCounter)field).Value.ToString());
-                                break;
-                            case "Title":
-                                i.Title = ((DTFieldAtomicString)field).Value;
-                                break;
-                            case "Status":
-                                i.Status = ((DTFieldChoice)field).Value;
-                                break;
-                            case "Priority":
-                                i.Priority = ((DTFieldChoice)field).Value;
-                                break;
-                            case "Category":
-                                i.Category = ((DTFieldChoice)field).Value;
-                                break;
-                            case "Reported Date":
-                                i.ReportedDate = ((DTFieldAtomicDateTime)field).Value;
-                                break;
-                            case "Work Package":
-                                i.WorkPackage = ((DTFieldChoiceLookup)field).Value;
-                                break;
-                            case "Reported by":
-                                i.ReportedBy = ((DTFieldChoice)field).Value;
-                                break;
-                            case "Priority Order":
-                                i.PriorityOrder = double.Parse(((DTFieldAtomicNumber)field).Value.ToString()); 
-                                break;
-                            case "Resolution":
-                                i.Resolution = ((DTFieldAtomicNote)field).Value;
-                                break;
-                            case "IsLocal":
-                                i.IsLocal = ((DTFieldAtomicBoolean)field).Value;
-                                break;
-                            default:
-                                break;
+                            switch (field.Name)
+                            {
+                                case "ID":
+                                    i.Id = int.Parse(((DTFieldCounter)field).Value.ToString());
+                                    break;
+                                case "Title":
+                                    i.Title = ((DTFieldAtomicString)field).Value;
+                                    break;
+                                case "Status":
+                                    i.Status = ((DTFieldChoice)field).Value;
+                                    break;
+                                case "Priority":
+                                    i.Priority = ((DTFieldChoice)field).Value;
+                                    break;
+                                case "Category":
+                                    i.Category = ((DTFieldChoice)field).Value;
+                                    break;
+                                case "Reported Date":
+                                    i.ReportedDate = ((DTFieldAtomicDateTime)field).Value;
+                                    break;
+                                case "Work Package":
+                                    i.WorkPackage = ((DTFieldChoiceLookup)field).Value;
+                                    break;
+                                case "Reported by":
+                                    i.ReportedBy = ((DTFieldChoice)field).Value;
+                                    break;
+                                case "Priority Order":
+                                    i.PriorityOrder = double.Parse(((DTFieldAtomicNumber)field).Value.ToString());
+                                    break;
+                                case "Resolution":
+                                    i.Resolution = ((DTFieldAtomicNote)field).Value;
+                                    break;
+                                case "IsLocal":
+                                    i.IsLocal = ((DTFieldAtomicBoolean)field).Value;
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
+                        lstIssue.Add(i);
                     }
                 }
-                 lstIssue.Add(i);
-            }
-             
                 #endregion
 
                 grd_INCIDENT.ItemsSource = lstIssue;
