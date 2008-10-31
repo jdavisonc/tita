@@ -374,7 +374,7 @@
         <TextBlock Margin="18,84,0,0"  VerticalAlignment="Top" x:Name="lblPending" Visibility="Collapsed" Width="112" HorizontalAlignment="Left" Height="26" d:LayoutOverrides="VerticalAlignment" Grid.Row="1"/>
         
        <!--WP--> 
-        <ScrollViewer Margin="-5,126,4,55" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_WP" Opacity="1" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="2">
+        <ScrollViewer x:Name="scroll_WP" Margin="-5,126,4,55" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" Opacity="1" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="2">
             <StackPanel x:Name="CanvasWP" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
                 <my:DataGrid x:Name="grd_WP" AutoGenerateColumns="True" Width="auto"/>
                 <StackPanel  x:Name="PnlOption_WP" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal">
@@ -472,17 +472,17 @@
         </ScrollViewer>
      
         <!--Reports--> 
-        <ScrollViewer Margin="-1,-83.5,0,-21" d:LayoutOverrides="HorizontalAlignment, Margin" Visibility="Collapsed" x:Name="scroll_REPORT" BorderThickness="0,0,1,0" Grid.Row="1">
-            <StackPanel x:Name="CanvasREPORT" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,100,0">
+        <ScrollViewer x:Name="scroll_REPORT" Margin="-5,126,4,55" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" Opacity="1" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="2">
+            <StackPanel x:Name="CanvasREPORT" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
                 <my:DataGrid x:Name="contractsReport" Margin="100,0,0,100" Visibility="Collapsed" AutoGenerateColumns="True" Width="auto"/> 
                 <StackPanel x:Name="PnlOptionREPORT" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal" Margin="100,0,0,0">
                     <TextBlock Text="Fecha inicial: " x:Name="txt_fechaInicial"></TextBlock>
                     <my1:Calendar x:Name="cal_inicial"></my1:Calendar>
                     <TextBlock Margin="65,0,0,0" Text="Fecha final: " x:Name="txt_fechaFinal"></TextBlock>
                     <my1:Calendar x:Name="cal_final"></my1:Calendar>
-                    <Button  Content="Generar" Margin="0,190,70,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_DESWP" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_DESWP" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                    <Button  Content="Generar" Margin="0,190,70,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_ISSUES" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_ISSUES" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                    <Button  Content="Generar" Margin="0,190,70,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_ALLISSUES" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_ALLISSUES" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                    <Button  Content="Generar" Margin="0,190,100,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_DESWP" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_DESWP" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                    <Button  Content="Generar" Margin="0,190,100,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_ISSUES" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_ISSUES" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                    <Button  Content="Generar" Margin="0,190,100,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_ALLISSUES" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_ALLISSUES" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                 </StackPanel>
                 <my:DataGrid x:Name="grd_REPORT" Margin="100,50,0,0" AutoGenerateColumns="True" Visibility="Collapsed" Width="auto"/>
                 <StackPanel  x:Name="PnlExportar_REPORT" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
