@@ -30,7 +30,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
 
             _grid.ColumnDefinitions.Add(new ColumnDefinition());
             _grid.ColumnDefinitions.Add(new ColumnDefinition());
-            _grid.ColumnDefinitions[0].Width = new GridLength(100, GridUnitType.Pixel);
+            _grid.ColumnDefinitions[0].Width = new GridLength(140, GridUnitType.Pixel);
         }
 
         private ComboBox InsertCombo(List<DTUrl> listChoice)
