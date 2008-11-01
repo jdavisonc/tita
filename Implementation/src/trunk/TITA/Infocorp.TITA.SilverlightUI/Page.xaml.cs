@@ -82,9 +82,14 @@ namespace Infocorp.TITA.SilverlightUI
             acc.AddItem("Issue", "", "Reportes", "Issue", this.Resources["ItemStyle1"] as Style);
             acc.AddItem("Todos Issue", "", "Reportes", "Todos Issue", this.Resources["ItemStyle1"] as Style);
 
+            acc.AddItem("Incidentes", "", "Por impactar", "Incidentes_aplicar", this.Resources["ItemStyle1"] as Style);
+            acc.AddItem("Workpackages", "", "Por impactar", "Workpakage_aplicar", this.Resources["ItemStyle1"] as Style);
+            acc.AddItem("Tasks", "", "Por impactar", "Tasks_aplicar", this.Resources["ItemStyle1"] as Style);
+
             Style aux = this.Resources["GroupStyle1"] as Style;
             acc.setGroupStyle("Sharepoint Utilities", this.Resources["GroupStyle1"] as Style);
             acc.setGroupStyle("Reportes", this.Resources["GroupStyle1"] as Style);
+            acc.setGroupStyle("Por impactar", this.Resources["GroupStyle1"] as Style);
            
             acc.ItemSelect += new Infocorp.TITA.Controls.Silverlight.V2.Accordion.ItemSelectEvent(acc_ItemSelect);
 
@@ -96,37 +101,39 @@ namespace Infocorp.TITA.SilverlightUI
 
         void acc_ItemSelect(object sender, Infocorp.TITA.Controls.Silverlight.V2.ItemEventArgs e)
         {
-            lbl_seccion.Visibility = Visibility;
             switch (e.id)
             {
                 case "Contratos":
-                    lbl_seccion.Text = "      Contratos";
                     ViewContrat();
                     break;
                 case "Incidentes":
-                    lbl_seccion.Text = "      Incidentes";
                     ViewIncident();
                     break;
                 case "Workpakage":
-                    lbl_seccion.Text = "Workpackage";
                     ViewWorkpakage();
                     break;
                 case "Tasks":
-                    lbl_seccion.Text = "          Tasks";
                     ViewTasks();
                     break;
                 case "Desviacion WP":
-                    lbl_seccion.Text = "Desviacion WP";
                     ViewReportDESWP();
                     break;
                 case "Issue":
-                    lbl_seccion.Text = "Issue";
                     ViewReportISSUESREPORT();
                     break;
                 case "Todos Issue":
-                    lbl_seccion.Text = "Todos Issue";
                     ViewReportALLISSUESREPORT();
                     break;
+                case "Incidentes_aplicar":
+                    ViewIncidentesPorAplicar();
+                    break;
+                case "Workpakage_aplicar":
+                    ViewWorkpakagePorAplicar();
+                    break;
+                case "Tasks_aplicar":
+                    ViewTasksPorAplicar();
+                    break;
+                    
                 default:
                     break;
             }
@@ -2187,5 +2194,21 @@ namespace Infocorp.TITA.SilverlightUI
             lblacceder_error.Visibility = Visibility.Visible;
         }
 
+        #region Por Impactar
+        
+        public void ViewIncidentesPorAplicar()
+        { 
+
+        }
+
+        public void ViewWorkpakagePorAplicar()
+        {
+        }
+
+        public void ViewTasksPorAplicar()
+        {
+        }
+
+        #endregion
     }
 }
