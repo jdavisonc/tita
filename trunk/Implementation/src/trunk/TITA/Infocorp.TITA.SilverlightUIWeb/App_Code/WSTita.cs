@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Infocorp.TITA.DataTypes;
 using Infocorp.TITA.WITLogic;
 using Infocorp.TITA.ReportGenerator;
+using Infocorp.TITA.ReportPersistence;
 
 /// <summary>
 /// Summary description for WSTita
@@ -86,6 +87,13 @@ public class WSTita : System.Web.Services.WebService
     #endregion
 
     #region Contract
+    [WebMethod]
+    public bool IsContractAvailable(string contractId)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        return witInstance.IsContractAvailable(contractId);
+    }
+
     [WebMethod]
     public void AddNewContract(DTContract contract)
     {
@@ -225,17 +233,19 @@ public class WSTita : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public List<DTReportedItem> AllIssuesReport(DateTime fch_inicial, DateTime fch_final)
+    public void ExportDesWP(List<DTWorkPackageReport> lst)
     {
-        IWITServices witServices = WITFactory.Instance().WITServicesInstance();
-        IReportGenerator reportInstance = FactoryReport.GetInstance().GetIReportGenerator();
-        List<DTReportedItem> reports = new List<DTReportedItem>();
-        foreach (DTContract contract in witServices.GetContracts())
-        {
-            reports.AddRange(reportInstance.IssuesReport(contract.ContractId, fch_inicial, fch_final));
-        }
+        IFabricControllerReportPersistence frp = new FabricControllerReportPersistence();
+        IReportPersistenceCSV irp= frp.GetReportPersistenceCSV();
+        irp.ReportDesvWorkPackageToCSV(lst);
+    }
 
-        return reports;
+    [WebMethod]
+    public void ExportISSUES(List<DTReportedItem> lst)
+    {
+        IFabricControllerReportPersistence frp = new FabricControllerReportPersistence();
+        IReportPersistenceCSV irp = frp.GetReportPersistenceCSV();
+        //irp.IssuesReportToCSV(lst);
     }
 
     #endregion
@@ -257,6 +267,5 @@ public class WSTita : System.Web.Services.WebService
     }
 
     #endregion
-
 
 }
