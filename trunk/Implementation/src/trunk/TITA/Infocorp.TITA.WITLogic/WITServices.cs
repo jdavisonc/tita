@@ -41,6 +41,20 @@ namespace Infocorp.TITA.WITLogic
             return GetItems(contractId, ItemType.ISSUE);
         }
 
+        public List<DTItem> GetIssues(string contractId, string workpackageId)
+        {
+            List<DTItem> result = this.GetIssues(contractId);
+
+            result.FindAll(delegate(DTItem item)
+            {
+                DTFieldChoiceLookup wpField = (DTFieldChoiceLookup)item.Fields.Find(delegate(DTField field) { return field.Name == "Work Package"; });
+                return wpField.Value == workpackageId;
+
+            });
+
+            return result;
+        }
+
         public void AddIssue(DTItem issue, string contractId)
         {
             AddCommand(issue, ItemType.ISSUE, contractId);
@@ -62,21 +76,12 @@ namespace Infocorp.TITA.WITLogic
 
         public void AddNewContract(DTContract contract)
         {
-            try
-            {
-                DataBaseAccess.DataBaseAccess db = new DataBaseAccess.DataBaseAccess();
-                db.AddContract(contract);
-            }
-            catch (Exception exc)
-            {
-                string s = exc.Message;
-            }
+            _db.AddContract(contract);
         }
 
         public void DeleteContract(string contractId)
-        {
-            DataBaseAccess.DataBaseAccess db = new DataBaseAccess.DataBaseAccess();
-            db.DeleteContract(contractId);
+        {        
+            _db.DeleteContract(contractId);
         }
 
         public void ChangeCurrentContract(int contractId)
@@ -112,6 +117,22 @@ namespace Infocorp.TITA.WITLogic
         public List<DTItem> GetTasks(string contractId)
         {
             return GetItems(contractId, ItemType.TASK);
+        }
+
+        public List<DTItem> GetTasks(string contractId, string issueId)
+        {
+            //List<DTItem> tasks = this.GetTasks(contractId);
+
+            //List<DTItem> result = tasks.FindAll(delegate(DTItem item)
+            //{
+            //    DTFieldChoiceLookup wpField = (DTFieldChoiceLookup)item.Fields.Find(delegate(DTField field) { return field.Name.ToLower() == "issue"; });
+            //    return wpField.Value == issueId;
+
+            //});
+
+            //return result;
+
+            return null;
         }
 
         public void AddTask( DTItem task, string contractId)
@@ -414,5 +435,9 @@ namespace Infocorp.TITA.WITLogic
         }
 
         #endregion
+
+        
+
+
     }
 }

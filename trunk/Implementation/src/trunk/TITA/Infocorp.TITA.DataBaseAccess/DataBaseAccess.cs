@@ -6,8 +6,6 @@ using Infocorp.TITA.DataTypes;
 
 namespace Infocorp.TITA.DataBaseAccess
 {
-
-
     public class DataBaseAccess
     {
         #region ABM CONTRACTS

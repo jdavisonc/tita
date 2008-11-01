@@ -35,6 +35,8 @@ namespace Infocorp.TITA.WITLogic
 
         List<DTItem> GetIssues(string contractId);
 
+        List<DTItem> GetIssues(string contractId, string workpackageId);
+
         void AddIssue(DTItem issue, string contractId);
 
         void ModifyIssue(DTItem issue, string contractId);
@@ -48,6 +50,8 @@ namespace Infocorp.TITA.WITLogic
         #region Tasks
 
         List<DTItem> GetTasks(string contractId);
+
+        List<DTItem> GetTasks(string contractId, string issueId);
 
         DTItem GetTaskTemplate(string contractId);
 
