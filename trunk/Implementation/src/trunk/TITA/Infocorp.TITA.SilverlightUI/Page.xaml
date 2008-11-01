@@ -483,6 +483,7 @@
             <StackPanel x:Name="CanvasREPORT" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
                 <TextBlock x:Name="titulo_Reporte" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Reportes" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"></TextBlock>
                 <my:DataGrid x:Name="contractsReport" BorderThickness="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,5" Visibility="Collapsed" AutoGenerateColumns="True" Width="auto"/> 
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_contractsReport" Margin="400,10,0,0" PageSize="5"/>
                 <StackPanel x:Name="PnlOptionREPORT" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal" Margin="20,0,0,15">
                     <TextBlock Text="Fecha inicial: " x:Name="txt_fechaInicial"/>
                     <my1:Calendar x:Name="cal_inicial"/>
@@ -490,11 +491,13 @@
                     <my1:Calendar x:Name="cal_final"/>
                     <Button  Content="Generar" Margin="0,190,100,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_DESWP" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_DESWP" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button  Content="Generar" Margin="0,190,100,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_ISSUES" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_ISSUES" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                    <Button  Content="Generar" Margin="0,190,100,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_ALLISSUES" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_ALLISSUES" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                 </StackPanel>
                 <my:DataGrid x:Name="grd_REPORT" Margin="20,0,0,5" BorderThickness="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" AutoGenerateColumns="True" Visibility="Collapsed" Width="auto" Height="170"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_grd_REPORT_DESWP" Margin="200,10,0,0" PageSize="5"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_grd_REPORT_ISSUES" Margin="100,10,0,0" PageSize="5"/>
                 <StackPanel  x:Name="PnlExportar_REPORT" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
-                    <Button  Content="Exportar" VerticalAlignment="Center" Click="BtnExportar_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnExportar" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                    <Button Visibility="Collapsed" Content="Exportar" VerticalAlignment="Center" Click="BtnExportar_Click_DESWP" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnExportar_DESWP" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                    <Button Visibility="Collapsed" Content="Exportar" VerticalAlignment="Center" Click="BtnExportar_Click_ISSUES" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnExportar_ISSUES" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
