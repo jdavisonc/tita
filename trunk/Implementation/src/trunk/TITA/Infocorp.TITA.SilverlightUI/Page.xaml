@@ -1,4 +1,4 @@
-﻿<UserControl 
+<UserControl 
     xmlns:my1="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"  
     xmlns:my="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"  
     x:Class="Infocorp.TITA.SilverlightUI.Page"
@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     xmlns:Infocorp_TITA_Controls_Silverlight_V2="clr-namespace:Infocorp.TITA.Controls.Silverlight.V2;assembly=Infocorp.TITA.Controls.Silverlight.V2"
     Width="Auto" Height="Auto" 
-    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows" Background="#FF171515">
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows" Background="#FF171515" xmlns:Infocorp_TITA_Controls_Silverlight_V21="clr-namespace:Infocorp.TITA.Controls.Silverlight.V2;assembly=Infocorp.TITA.Controls.Silverlight.V2.Pager">
 
     <!--MENUNuevo-->
     <UserControl.Resources>
@@ -120,7 +120,7 @@
         										</RadialGradientBrush>
         									</Ellipse.OpacityMask>
         								</Ellipse>
-        								<Path Height="13" x:Name="path" Width="13" RenderTransformOrigin="0.500000008023702,0.499999993122541" Fill="#FFFFFFFF" Stretch="UniformToFill" Stroke="#FF3B3B3B" StrokeDashCap="Round" StrokeDashOffset="-3" StrokeEndLineCap="Round" StrokeLineJoin="Round" StrokeMiterLimit="11" StrokeStartLineCap="Round" StrokeThickness="1" Canvas.Left="1.9" Canvas.Top="0.07" Data="M0.5,0.5 L12.5,0.5 L12.5,12.5 L12.298141,12.5 L0.5,0.70185858 z">
+        								<Path Height="13" x:Name="path" Width="13" RenderTransformOrigin="0.500000008023702,0.499999993122541" Fill="#FFFFFFFF" Stretch="UniformToFill" Stroke="#FF3B3B3B" StrokeDashCap="Round" StrokeDashOffset="-3" StrokeEndLineCap="Round" StrokeLineJoin="Round? StrokeMiterLimit="11" StrokeStartLineCap="Round" StrokeThickness="1" Canvas.Left="1.9" Canvas.Top="0.07" Data="M0.5,0.5 L12.5,0.5 L12.5,12.5 L12.298141,12.5 L0.5,0.70185858 z">
         									<Path.RenderTransform>
         										<TransformGroup>
         											<ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
@@ -184,7 +184,7 @@
         									<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
         										<SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="0.8"/>
         										<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.4"/>
-        									</DoubleAnimationUsingKeyFrames>
+        									</DoubleAnimationUsingKeyFra?es>
         									<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Icon" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
         										<SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="1.2"/>
         										<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1"/>
@@ -250,7 +250,7 @@
         								<Storyboard>
         									<DoubleAnimationUsingKeyFrames Storyboard.TargetName="BackgroundAnimation" Storyboard.TargetProperty="Opacity">
         										<SplineDoubleKeyFrame KeyTime="0" Value="1"/>
-        									</DoubleAnimationUsingKeyFrames>
+ ?      									</DoubleAnimationUsingKeyFrames>
         									<ColorAnimationUsingKeyFrames Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
         										<SplineColorKeyFrame KeyTime="0" Value="#FF5376A5"/>
         									</ColorAnimationUsingKeyFrames>
@@ -297,7 +297,7 @@
         									</DoubleAnimationUsingKeyFrames>
         								</Storyboard>
         							</vsm:VisualState>
-        						</vsm:VisualStateGroup>
+        		?			</vsm:VisualStateGroup>
         						<vsm:VisualStateGroup x:Name="FocusStates">
         							<vsm:VisualState x:Name="Focused">
         								<Storyboard>
@@ -354,14 +354,13 @@
     	</Grid.RowDefinitions>
 
         <!--CABEZAL-->
-        <Rectangle Height="80" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Fill="#FFFBFAFA" Stroke="#FF000000" x:Name="cabezal" StrokeThickness="0">
-        </Rectangle>
+        <Rectangle Height="80" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Fill="#FFFBFAFA" Stroke="#FF000000" x:Name="cabezal" StrokeThickness="0"/>
         <Image Source="imgs/logo.jpg" x:Name="img_cabezal" Margin="-1.286,21,0,0" Width="275.428" VerticalAlignment="Top" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment" Height="64.267"  />
        
 
 
         <Grid Width="222" HorizontalAlignment="Left" VerticalAlignment="Stretch"  RenderTransformOrigin="0.5,0.5" Margin="-5,85,0,-65" Grid.RowSpan="2">
-            <Infocorp_TITA_Controls_Silverlight_V2:Accordion x:Name="acc" Height="500" Style="{StaticResource AccordionStyle1}" Margin="0,18,72,82"/>
+            <Infocorp_TITA_Controls_Silverlight_V2:Accordion x:Name="acc" Height="500" Style="{StaticResource AccordionStyle1}" Margin="0,18,7?,82"/>
             <Button x:Name="BtnListOpportunities" Width="150" Content="List Opportunities" Margin="25,284,25,294" Opacity="0"/>
             <Button x:Name="BtnListContacts" Width="150" Content="List Contacts" Height="22" Margin="25,250,25,0" VerticalAlignment="Top" Opacity="0"/>
             <Button x:Name="BtnListAccounts" Width="150" Content="List Accounts" Height="22" Margin="25,214,25,0" VerticalAlignment="Top" Opacity="0"/>
@@ -375,28 +374,33 @@
         
        <!--WP--> 
         <ScrollViewer x:Name="scroll_WP" Margin="-5,126,4,55" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" Opacity="1" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="2">
-            <StackPanel x:Name="CanvasWP" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
-                <my:DataGrid x:Name="grd_WP" AutoGenerateColumns="True" Width="auto"/>
-                <StackPanel  x:Name="PnlOption_WP" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal">
-                    <Button Margin="18,166,0,0"  VerticalAlignment="Top"  Content="Nuevo" Click="BtnNuevoWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                    <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnChangeWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnChangeWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                    <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnDeleteWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDeleteWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                    <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Aplicar" Canvas.Left="336" Click="BtnApplyWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnApplyWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                </StackPanel>
-                <StackPanel  x:Name="PnlForm_WP" Width="auto" Height="auto"  Visibility="Visible" HorizontalAlignment="Center">
-                    <Grid x:Name="grdForm_WP" Background="Transparent" VerticalAlignment="Top" Height="auto" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,0,50"/>
-                </StackPanel>   
-                <StackPanel  x:Name="PnlAction_WP" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
-                    <Button  Content="Aceptar" VerticalAlignment="Center" Click="BtnAcceptWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEditActionWP" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                    <Button  Content="Cancelar" VerticalAlignment="Center" Canvas.Left="112" Click="BtnCancelWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDeleteActionWP" Background="#FF0B97F9" Margin="20,0,0,0" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                </StackPanel>
-            </StackPanel>
+        	<StackPanel x:Name="CanvasWP" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,0,0">
+        		<my:DataGrid x:Name="grd_WP" AutoGenerateColumns="True" Width="870" Height="150"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_wp" Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" PageSize="5"/>
+               
+        		<StackPanel  x:Name="PnlOption_WP" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal">
+        			<Button Margin="18,166,0,0"  VerticalAlignment="Top"  Content="Nuevo" Click="BtnNuevoWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+        			<Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnChangeWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnChangeWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+        			<Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnDeleteWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDeleteWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+        			<Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Aplicar" Canvas.Left="336" Click="BtnApplyWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnApplyWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+        		</StackPanel>
+        		<StackPanel  x:Name="PnlForm_WP" Width="auto" Height="auto"  Visibility="Visible" HorizontalAlignment="Center">
+        			<Grid x:Name="grdForm_WP" Background="Transparent" VerticalAlignment="Top" Height="auto" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,0,50"/>
+        		</StackPanel>   
+        		<StackPanel  x:Name="PnlAction_WP" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
+        			<Button  Content="Aceptar" VerticalAlignment="Center" Click="BtnAcceptWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEditActionWP" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+        			<Button  Content="Cancelar" VerticalAlignment="Center" Canvas.Left="112" Click="BtnCancelWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDeleteActionWP" Background="#FF0B97F9" Margin="20,0,0,0" Style="{StaticResource ButtonStyle1}" F?reground="#FFFFFFFF"/>
+        		</StackPanel>
+        	</StackPanel>
         </ScrollViewer>
 
         <!--CONTRATO -->
         <ScrollViewer Margin="-4.286,106,4.286,-21" Visibility="Collapsed" x:Name="scroll_CONTRACT" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="2">
             <StackPanel x:Name="pnl_Contrato" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
-                <my:DataGrid x:Name="lstContratos" AutoGenerateColumns="True" Visibility="Collapsed" Width="auto"/>
+
+               <my:DataGrid x:Name="lstContratos" AutoGenerateColumns="True" Visibility="Collapsed" Width="575" Height="150"/>
+               <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_contratos" Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" PageSize="5"/>
+                
                 <TextBlock Margin="18,60,0,0" x:Name="lblConectContract" Visibility="Collapsed"/>            
                 <StackPanel  x:Name="PnlbtnsContrato" Background="White" Width="auto" Visibility="Visible" Orientation="Horizontal">
                     <Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Nuevo" Click="BtnNuevoContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
@@ -416,7 +420,7 @@
                         <TextBox x:Name="txtNombre" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
                         <TextBox x:Name="txtSite" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
                         <TextBox x:Name="txtIssuesList" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
-                        <TextBox x:Name="txtWorkPackageList" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
+                        <TextBox x:Name="txtWorkPackageList" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" ?idth="200"/>
                         <TextBox x:Name="txtTaskList" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
                     </StackPanel>
                 </StackPanel>
@@ -428,9 +432,10 @@
         </ScrollViewer>
 
         <!--INCIDENTE -->
-        <ScrollViewer Margin="-1,102,0,-21" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_INCIDENT" BorderThickness="0,0,0,0" Grid.RowSpan="2">
-            <StackPanel x:Name="CanvasIncident" Visibility="Collapsed" Background="White" Width="auto" Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
-                <my:DataGrid x:Name="grd_INCIDENT" AutoGenerateColumns="True" Width="auto"/>
+        <ScrollViewer Margin="-1,102,0,-21" d:LayoutOverrides="HorizontalAlignment" Visibility="Visible" x:Name="scroll_INCIDENT" BorderThickness="0,0,0,0" Grid.RowSpan="2">
+            <StackPanel x:Name="CanvasIncident" Visibility="Collapsed" Background="White" Width="auto" Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,0,0">
+                <my:DataGrid x:Name="grd_INCIDENT" AutoGenerateColumns="True" Width="870" Height="150"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager" Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" PageSize="5"/>
                 <StackPanel  x:Name="PnlbtnEdits" Background="White" Width="auto" Visibility="Collapsed">
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Click="BtnEdit_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEdit" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Click="BtnDelete_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDelete" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
@@ -443,7 +448,7 @@
                 </StackPanel>
                 <StackPanel  x:Name="PnlForm_INCIDENT" Width="auto" Height="auto"  Visibility="Visible" HorizontalAlignment="Center">
                     <Grid x:Name="grdForm_INCIDENT" Background="Transparent" VerticalAlignment="Top" Height="auto" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
-                </StackPanel>   
+         ?      </StackPanel>   
                 <StackPanel  x:Name="PnlAction_INCIDENT" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
                     <Button  Content="Aceptar" VerticalAlignment="Center" Click="BtnAccept_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEditAction" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button  Content="Cancelar" VerticalAlignment="Center" Canvas.Left="112" Click="BtnDelete_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDeleteAction" Background="#FF0B97F9" Margin="20,0,0,0" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
@@ -454,7 +459,8 @@
         <!--TASKS -->
         <ScrollViewer Margin="-1,126,0,-45" d:LayoutOverrides="HorizontalAlignment" Visibility="Visible" x:Name="scroll_TASK" BorderThickness="0,0,0,0" Grid.RowSpan="2">
             <StackPanel x:Name="CanvasTASK" Background="White" Width="auto" Height="auto" Visibility="Collapsed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
-                <my:DataGrid x:Name="grd_TASK" AutoGenerateColumns="True" Width="auto"/>
+                <my:DataGrid x:Name="grd_TASK" AutoGenerateColumns="True" Width="800" Height="160"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_tasks" Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" PageSize="5"/>
                 <StackPanel  x:Name="PnlOption_TASK" Width="auto" Height="auto" Visibility="Visible" Orientation="Horizontal">
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top"  Content="Nuevo" Click="BtnNuevoTASK_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoTASK"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnChangeTASK_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnChangeTASK"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
@@ -467,7 +473,7 @@
                 <StackPanel  x:Name="PnlAction_TASK" Width="auto" Visibility="Collapsed" VerticalAlignment="Stretch" Orientation="Horizontal" Height="91" HorizontalAlignment="Center" Margin="83,0,83,0" d:LayoutOverrides="Width">
                     <Button  Content="Aceptar" VerticalAlignment="Center" Click="BtnAcceptTASK_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEditTASKAction" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button  Content="Cancelar" VerticalAlignment="Center" Canvas.Left="112" Click="BtnDeleteTASK_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDeleteTASKAction" Background="#FF0B97F9" Margin="20,0,0,0" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                </StackPanel>
+         ?      </StackPanel>
             </StackPanel>
         </ScrollViewer>
      
@@ -476,10 +482,10 @@
             <StackPanel x:Name="CanvasREPORT" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="200,0,200,0">
                 <my:DataGrid x:Name="contractsReport" Margin="100,0,0,100" Visibility="Collapsed" AutoGenerateColumns="True" Width="auto"/> 
                 <StackPanel x:Name="PnlOptionREPORT" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal" Margin="100,0,0,0">
-                    <TextBlock Text="Fecha inicial: " x:Name="txt_fechaInicial"></TextBlock>
-                    <my1:Calendar x:Name="cal_inicial"></my1:Calendar>
-                    <TextBlock Margin="65,0,0,0" Text="Fecha final: " x:Name="txt_fechaFinal"></TextBlock>
-                    <my1:Calendar x:Name="cal_final"></my1:Calendar>
+                    <TextBlock Text="Fecha inicial: " x:Name="txt_fechaInicial"/>
+                    <my1:Calendar x:Name="cal_inicial"/>
+                    <TextBlock Margin="65,0,0,0" Text="Fecha final: " x:Name="txt_fechaFinal"/>
+                    <my1:Calendar x:Name="cal_final"/>
                     <Button  Content="Generar" Margin="0,190,100,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_DESWP" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_DESWP" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button  Content="Generar" Margin="0,190,100,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_ISSUES" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_ISSUES" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button  Content="Generar" Margin="0,190,100,0" HorizontalAlignment="Left" Click="BtnGenerateReportClick_ALLISSUES" Visibility="Collapsed" Width="112" Height="26" x:Name="BtnGenerateReport_ALLISSUES" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
@@ -498,12 +504,14 @@
         
         <Canvas x:Name="cnv_current_contract" Width="500" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,1.233,0,0">
             <TextBlock Height="20" HorizontalAlignment="Right" Canvas.Left="122" VerticalAlignment="Top" Width="100" Text="TextBlock" TextWrapping="Wrap" x:Name="lbl_Contrat" Canvas.Top="22"/>
-            <ComboBox x:Name="cbx_contrat_up" Width="190" Canvas.Top="22" Canvas.Left="228"></ComboBox>
-            <HyperlinkButton Content="acceder" x:Name="lnk_acceder" Click="lnk_acceder_click" Canvas.Top="22" Canvas.Left="422"></HyperlinkButton>
+            <ComboBox x:Name="cbx_contrat_up" Width="190" Canvas.Top="22" Canvas.Left="228"/>
+            <HyperlinkButton Content="acceder" x:Name="lnk_acceder" Click="lnk_acceder_click" Canvas.Top="22" Canvas.Left="422"/>
             <TextBlock Height="20" Visibility="Visible" HorizontalAlignment="Center" Canvas.Left="122" VerticalAlignment="Top" Width="350" Text="" TextWrapping="Wrap" x:Name="lblacceder_error" Canvas.Top="70"/>
         </Canvas>
         
-        <TextBlock HorizontalAlignment="Right" Width="130" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75" Text="" TextWrapping="Wrap" x:Name="lbl_seccion" Height="35" d:LayoutOverrides="VerticalAlignment" Canvas.Left="611" Margin="0,50.733,26,215.267" Visibility="Visible"/>
+        <TextBlock HorizontalAlignment="Right" Width="130" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75" Text="" TextWrapping="Wrap" x:Name="lbl_seccion" Height="35" d:LayoutOverrides="VerticalAlignment" Canvas.Left="611" Margin="0,50.733,26,215.26?" Visibility="Visible"/>
+
+    	
 
     </Grid>
  

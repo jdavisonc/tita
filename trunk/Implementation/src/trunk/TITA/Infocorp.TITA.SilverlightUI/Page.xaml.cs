@@ -36,12 +36,15 @@ namespace Infocorp.TITA.SilverlightUI
         private DTItem resulItem = new DTItem();
         private Progress progress = new Progress();
         private bool isEdit;
+        private List<WorkPackage> my_lstWP = new List<WorkPackage>();
+        private List<Task> my_lstTask = new List<Task>();
         private bool forReport = false;
         private DTItem my_issue_template = null;
         List<DTContract> my_contract = new List<DTContract>();
         DTContract my_con = null;
         private bool isDelete;
         private List<string> ColumnsToShow = null;// new List<string>() { "id", "title", "status", "priority", "category", "Reported Date", "Work Package", "Reported by", "Order", "Resolution", "IsLocal" };
+        
         public Page()
         {
             InitializeComponent();
@@ -53,12 +56,18 @@ namespace Infocorp.TITA.SilverlightUI
             ScrollViewerMouseWheelSupport.AddMouseWheelSupport(scroll_REPORT);
             ShowCurrentContract();
             this.Loaded += new RoutedEventHandler(Page_Loaded);
+           
             if (url != null)
             {
                 ViewPendingChanges();
             }
 
             //grd_INCIDENT.AutoGeneratingColumn += new EventHandler<DataGridAutoGeneratingColumnEventArgs>(grd_INCIDENT_AutoGeneratingColumn);
+        }
+
+        void GetGrilla(object sender, RoutedEventArgs e)
+        {
+            GetIncidents();
         }
 
         #region Menu
@@ -78,6 +87,11 @@ namespace Infocorp.TITA.SilverlightUI
             acc.setGroupStyle("Reportes", this.Resources["GroupStyle1"] as Style);
            
             acc.ItemSelect += new Infocorp.TITA.Controls.Silverlight.V2.Accordion.ItemSelectEvent(acc_ItemSelect);
+
+            pager.ItemsSource = lstItem;
+            pager_wp.ItemsSource = my_lstWP;
+            pager_contratos.ItemsSource = my_contract;
+            pager_tasks.ItemsSource = my_lstTask;
         }
 
         void acc_ItemSelect(object sender, Infocorp.TITA.Controls.Silverlight.V2.ItemEventArgs e)
@@ -246,6 +260,8 @@ namespace Infocorp.TITA.SilverlightUI
             if (e.Result != null)
             {
                 my_contract = e.Result;
+                pager_contratos.ItemsControl = lstContratos;
+                pager_contratos.ItemsSource = my_contract;
                 if (forReport)
                 {
                     contractsReport.ItemsSource = my_contract;
@@ -275,6 +291,7 @@ namespace Infocorp.TITA.SilverlightUI
                   cnv_current_contract.Visibility = Visibility.Visible;
                   cbx_contrat_up.SelectedIndex = -1;
                 }
+
             }
         }
 
@@ -606,7 +623,7 @@ namespace Infocorp.TITA.SilverlightUI
                 }
                 lstWP.Add(wp);
             }
-            grd_WP.ItemsSource = lstWP;
+            //grd_WP.ItemsSource = lstWP;
             //if (grd_WP.Columns.Count != 0)
             //{
             //    grd_WP.Columns[0].Visibility = Visibility.Collapsed;
@@ -614,6 +631,9 @@ namespace Infocorp.TITA.SilverlightUI
             grd_WP.IsReadOnly = true;
             grd_WP.CanUserResizeColumns = false;
             PnlOption_WP.Visibility = Visibility.Visible;
+            pager_wp.ItemsControl = grd_WP;
+            pager_wp.ItemsSource = lstWP;
+            my_lstWP = lstWP;
             return null;
         }
 
@@ -873,17 +893,8 @@ namespace Infocorp.TITA.SilverlightUI
                 }
                 #endregion
 
-                grd_INCIDENT.ItemsSource = lstIssue;
-                /*var s = from l in list
-                        where l
-                        select new
-                        {
-                            l
-
-                        };
-            
+                //grd_INCIDENT.ItemsSource = lstIssue;
                 
-                grd_INCIDENT.ItemsSource = new List<object>() { s };*/
             }
             if (grd_INCIDENT.Columns.Count != 0)
             {
@@ -891,6 +902,9 @@ namespace Infocorp.TITA.SilverlightUI
             }
             grd_INCIDENT.IsReadOnly = true;
             grd_INCIDENT.CanUserResizeColumns = false;
+
+            pager.ItemsControl = grd_INCIDENT;
+            pager.ItemsSource = lstIssue;
             return null;
         }
 
@@ -1833,7 +1847,10 @@ namespace Infocorp.TITA.SilverlightUI
                 }
                 lstTask.Add(t);
             }
-            grd_TASK.ItemsSource = lstTask;
+            //grd_TASK.ItemsSource = lstTask;
+            pager_tasks.ItemsControl = grd_TASK;
+            pager_tasks.ItemsSource = lstTask;
+            my_lstTask = lstTask;
             if (grd_TASK.Columns.Count != 0)
             {
                 grd_TASK.Columns[0].Visibility = Visibility.Collapsed;
