@@ -287,7 +287,7 @@ namespace Infocorp.TITA.OutlookSharePoint
             }
             catch (Exception e)
             {
-                throw new Exception("Error en GetFieldsIssue: " + e.Message);
+                throw e;
             }
         }
 
