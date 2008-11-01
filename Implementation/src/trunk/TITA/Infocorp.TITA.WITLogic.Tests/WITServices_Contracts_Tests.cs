@@ -67,18 +67,17 @@ namespace Infocorp.TITA.WITLogic.Tests
 
             using (mocks.Record())
             {
-
                 Expect.On(dbMock).Call(dbMock.ContractList()).Return(contracts);
             }
+            mocks.ReplayAll();
+            List<DTContract> result = witServices.GetContracts();
 
-                List<DTContract> result = witServices.GetContracts();
+            Assert.AreEqual(contracts.Count, result.Count);
+            foreach (DTContract c in contracts)
+            {
+                Assert.Contains(c, result);
+            }
 
-                //Assert.AreEqual(contracts.Count, result.Count);
-                //foreach (DTContract c in contracts)
-                //{
-                //    Assert.Contains(c, result);
-                //}
-            
         }
 
         [Test]
