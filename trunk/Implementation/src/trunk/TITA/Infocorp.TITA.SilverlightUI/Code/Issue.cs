@@ -28,6 +28,15 @@ namespace Infocorp.TITA.SilverlightUI.Code
             get { return title; }
             set { title = value; }
         }
+
+        private string assignedTo;
+
+        public string AssignedTo
+        {
+            get { return assignedTo; }
+            set { assignedTo = value; }
+        }
+
         private string reportedBy;
 
         public string ReportedBy
