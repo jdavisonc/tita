@@ -33,16 +33,17 @@ namespace Infocorp.TITA.SilverlightUI
         private string url = null;
         private DTItem item = new DTItem();
         List<DTItem> lstItem = new List<DTItem>();
+        List<DTReportedItem> my_lstReport_issues = new List<DTReportedItem>();
+        List<DTWorkPackageReport> my_lstReport_deswp = new List<DTWorkPackageReport>();
         private DTItem resulItem = new DTItem();
         private Progress progress = new Progress();
         private bool isEdit;
         private List<WorkPackage> my_lstWP = new List<WorkPackage>();
         private List<Task> my_lstTask = new List<Task>();
-        private bool forReport = false;
-        private DTItem my_issue_template = null;
         List<DTContract> my_contract = new List<DTContract>();
         DTContract my_con = null;
-        private bool isDelete;
+        private bool oneContract;
+        private bool forReport = false;
         private List<string> ColumnsToShow = null;// new List<string>() { "id", "title", "status", "priority", "category", "Reported Date", "Work Package", "Reported by", "Order", "Resolution", "IsLocal" };
         
         public Page()
@@ -96,7 +97,10 @@ namespace Infocorp.TITA.SilverlightUI
             pager.ItemsSource = lstItem;
             pager_wp.ItemsSource = my_lstWP;
             pager_contratos.ItemsSource = my_contract;
+            pager_contractsReport.ItemsSource = my_contract;
             pager_tasks.ItemsSource = my_lstTask;
+            pager_grd_REPORT_DESWP.ItemsSource = my_lstReport_deswp;
+            pager_grd_REPORT_ISSUES.ItemsSource = my_lstReport_issues;
         }
 
         void acc_ItemSelect(object sender, Infocorp.TITA.Controls.Silverlight.V2.ItemEventArgs e)
@@ -119,10 +123,12 @@ namespace Infocorp.TITA.SilverlightUI
                     ViewReportDESWP();
                     break;
                 case "Issue":
-                    ViewReportISSUESREPORT();
+                    oneContract = true;
+                    ViewReportISSUESREPORT(true);
                     break;
                 case "Todos Issue":
-                    ViewReportALLISSUESREPORT();
+                    oneContract = false;
+                    ViewReportISSUESREPORT(false);
                     break;
                 case "Incidentes_aplicar":
                     ViewIncidentesPorAplicar();
@@ -139,7 +145,6 @@ namespace Infocorp.TITA.SilverlightUI
             }
         }
 
-     
         #endregion
 
         public void EnableOption(Option o)
@@ -203,6 +208,10 @@ namespace Infocorp.TITA.SilverlightUI
             contractsReport.Visibility = Visibility.Collapsed;
             PnlOptionREPORT.Visibility = Visibility.Collapsed;
             grd_REPORT.Visibility = Visibility.Collapsed;
+            PnlExportar_REPORT.Visibility = Visibility.Collapsed;
+            BtnExportar_DESWP.Visibility = Visibility.Collapsed;
+            pager_grd_REPORT_DESWP.Visibility = Visibility.Collapsed;
+            pager_grd_REPORT_ISSUES.Visibility = Visibility.Collapsed;
         }
 
         public void ShowError(string msg, bool show)
@@ -271,7 +280,8 @@ namespace Infocorp.TITA.SilverlightUI
                 pager_contratos.ItemsSource = my_contract;
                 if (forReport)
                 {
-                    contractsReport.ItemsSource = my_contract;
+                    pager_contractsReport.ItemsControl = contractsReport;
+                    pager_contractsReport.ItemsSource = my_contract;
                     if (contractsReport.Columns.Count != 0)
                     {
                         contractsReport.Columns[0].Visibility = Visibility.Collapsed;
@@ -406,12 +416,28 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnConectarContrato_Click(object sender, RoutedEventArgs e)
         {
-            DTContract contract;
-            contract = (DTContract)lstContratos.SelectedItem;
-            url = contract.ContractId;
-            lblConectContract.Text = "Se ha conectado a " + contract.Site;
-            cbx_contrat_up.SelectedItem = contract;
-            lblConectContract.Visibility = Visibility.Visible;
+            DTContract contract = (DTContract)lstContratos.SelectedItem;
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.IsContractAvailableCompleted += new EventHandler<IsContractAvailableCompletedEventArgs>(ws_IsContractAvailableCompleted);
+            ws.IsContractAvailableAsync(contract.ContractId);        
+        }
+
+        void ws_IsContractAvailableCompleted(object sender, IsContractAvailableCompletedEventArgs e)
+        {
+            DTContract contract = (DTContract)lstContratos.SelectedItem;
+            if (e.Result)
+            {
+                url = contract.ContractId;
+                lblConectContract.Text = "Se ha conectado a " + contract.Site;
+                cbx_contrat_up.SelectedItem = contract;
+                lblConectContract.Visibility = Visibility.Visible;
+                my_con = contract;
+            }
+            else 
+            {
+                lblConectContract.Text = "Error en la coneccion con " + contract.Site;
+                lblConectContract.Visibility = Visibility.Visible;
+            }
         }
 
         private void BtnNuevoContrato_Click(object sender, RoutedEventArgs e)
@@ -430,7 +456,6 @@ namespace Infocorp.TITA.SilverlightUI
             if (LoadPanelEditContrato())
             {
                 isEdit = true;
-                isDelete = false;
                 pnlEditContrato.Visibility = Visibility.Visible;
                 PnlbtnsContrato.Visibility = Visibility.Collapsed;
                 PnlActionContrato.Visibility = Visibility.Visible;
@@ -439,7 +464,6 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnEliminarContrato_Click(object sender, RoutedEventArgs e)
         {
-            isDelete = true;
             isEdit = false;
             DTContract cont = (DTContract)lstContratos.SelectedItem;
             MessageBoxResult msg = MessageBox.Show("Esta seguro que desea eliminar este contrato?", "Contrato", MessageBoxButton.OKCancel);
@@ -881,6 +905,9 @@ namespace Infocorp.TITA.SilverlightUI
                                     break;
                                 case "Reported by":
                                     i.ReportedBy = ((DTFieldChoice)field).Value;
+                                    break;
+                                case "Assigned To":
+                                    i.AssignedTo = ((DTFieldChoice)field).Value;
                                     break;
                                 case "Priority Order":
                                     i.PriorityOrder = double.Parse(((DTFieldAtomicNumber)field).Value.ToString());
@@ -2013,15 +2040,15 @@ namespace Infocorp.TITA.SilverlightUI
         {
             cal_inicial.SelectedDate = null;
             cal_final.SelectedDate = null;
-            BtnGenerateReport_ALLISSUES.Visibility = Visibility.Collapsed;
             BtnGenerateReport_ISSUES.Visibility = Visibility.Collapsed;
+            BtnExportar_ISSUES.Visibility = Visibility.Collapsed;
+            pager_grd_REPORT_ISSUES.Visibility = Visibility.Collapsed;
             EnableOption(Option.REPORT);
             forReport = true;
             GetContract();
-            BtnGenerateReport_DESWP.Visibility = Visibility.Visible;
+            BtnGenerateReport_DESWP.Visibility = Visibility.Visible;        
         }
         
-
         private void BtnGenerateReportClick_DESWP(object sender, RoutedEventArgs e)
         {
             ShowError("", false);
@@ -2060,34 +2087,52 @@ namespace Infocorp.TITA.SilverlightUI
             {
                 grd_REPORT.Columns.Clear();
                 grd_REPORT.Visibility = Visibility.Visible;
-                grd_REPORT.ItemsSource = e.Result;
+                pager_grd_REPORT_DESWP.ItemsControl = grd_REPORT;
+                pager_grd_REPORT_DESWP.ItemsSource = e.Result;
+                pager_grd_REPORT_DESWP.Visibility = Visibility.Visible;
+                my_lstReport_deswp = e.Result;
+                PnlExportar_REPORT.Visibility = Visibility.Visible;
+                BtnExportar_DESWP.Visibility = Visibility.Visible;
             }
         }
 
+        private void BtnExportar_Click_DESWP(object sender, RoutedEventArgs e)
+        {
+            List<DTWorkPackageReport> lst = (List<DTWorkPackageReport>)grd_REPORT.ItemsSource;
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.ExportDesWPCompleted +=new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ExportDesWPCompleted);
+            ws.ExportDesWPAsync(lst);
+        }
+
+        void ws_ExportDesWPCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {}
+
         #endregion
 
-        #region Incidentes para un contrato
-        
-        
-        private void ViewReportISSUESREPORT()
+        #region Incidentes
+
+        private void ViewReportISSUESREPORT(bool isOneContract)
         {
             cal_inicial.SelectedDate = null;
             cal_final.SelectedDate = null;
-            BtnGenerateReport_ALLISSUES.Visibility = Visibility.Collapsed;
             BtnGenerateReport_DESWP.Visibility = Visibility.Collapsed;
+            BtnExportar_DESWP.Visibility = Visibility.Collapsed;
+            pager_grd_REPORT_DESWP.Visibility = Visibility.Collapsed;
             EnableOption(Option.REPORT);
             forReport = true;
-            GetContract();
+            if (isOneContract)
+            {
+                GetContract();
+            }
             BtnGenerateReport_ISSUES.Visibility = Visibility.Visible;
         }
-        
-        
+                
         private void BtnGenerateReportClick_ISSUES(object sender, RoutedEventArgs e)
         {
             ShowError("", false);
             if ((cal_inicial.SelectedDate == null ||
                 cal_final.SelectedDate == null) ||
-                (contractsReport.SelectedItem == null))
+                (oneContract &&(contractsReport.SelectedItem == null)))
             {
                 ShowError("Debe ingresar todos los datos.", true);
             }
@@ -2095,14 +2140,16 @@ namespace Infocorp.TITA.SilverlightUI
             {
                 DateTime fch_inicial = cal_inicial.SelectedDate.Value;
                 DateTime fch_final = cal_final.SelectedDate.Value;
-                DTContract contract = (DTContract)contractsReport.SelectedItem;
                 if (fch_final < fch_inicial)
                 {
                     MessageBoxResult msg = MessageBox.Show("Fecha fin debe ser mayor a fecha inicio.", "ERROR", MessageBoxButton.OK);
                 }
                 else
                 {
-                    LoadReportResult_ISSUES(contract.ContractId, fch_inicial, fch_final);
+                    String contractId = null;
+                    if (oneContract)
+                        contractId = ((DTContract)contractsReport.SelectedItem).ContractId;
+                    LoadReportResult_ISSUES(contractId, fch_inicial, fch_final);
                 }
             }
         }
@@ -2120,78 +2167,53 @@ namespace Infocorp.TITA.SilverlightUI
             {
                 grd_REPORT.Columns.Clear();
                 grd_REPORT.Visibility = Visibility.Visible;
-                grd_REPORT.ItemsSource = e.Result;
+                pager_grd_REPORT_ISSUES.ItemsControl = grd_REPORT;
+                pager_grd_REPORT_ISSUES.ItemsSource = e.Result;
+                pager_grd_REPORT_ISSUES.Visibility = Visibility.Visible;
+                my_lstReport_issues = e.Result;
+                PnlExportar_REPORT.Visibility = Visibility.Visible;
+                BtnExportar_ISSUES.Visibility = Visibility.Visible;
             }
         }
+
+        private void BtnExportar_Click_ISSUES(object sender, RoutedEventArgs e)
+        {
+            List<DTReportedItem> lst = (List<DTReportedItem>)grd_REPORT.ItemsSource;
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.ExportISSUESCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ExportISSUESCompleted);
+            ws.ExportISSUESAsync(lst);
+        }
+
+        void ws_ExportISSUESCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {}
         
         #endregion
-
-        #region Incidentes de todos los contratos
-
-        private void ViewReportALLISSUESREPORT()
-        {
-            cal_inicial.SelectedDate = null;
-            cal_final.SelectedDate = null;
-            BtnGenerateReport_ISSUES.Visibility = Visibility.Collapsed;
-            BtnGenerateReport_DESWP.Visibility = Visibility.Collapsed;
-            EnableOption(Option.REPORT);
-            BtnGenerateReport_ALLISSUES.Visibility = Visibility.Visible;
-        }
-
-       
-
-        private void BtnGenerateReportClick_ALLISSUES(object sender, RoutedEventArgs e)
-        {
-            ShowError("", false);
-            if ((cal_inicial.SelectedDate == null) || (cal_final.SelectedDate == null))
-            {
-                ShowError("Debe ingresar todos los datos.", true);
-            }
-            else
-            {
-                DateTime fch_inicial = cal_inicial.SelectedDate.Value;
-                DateTime fch_final = cal_final.SelectedDate.Value;
-                LoadReportResult_ALLISSUES(fch_inicial, fch_final);
-            }
-        }
-
-        private void LoadReportResult_ALLISSUES(DateTime fch_inicial, DateTime fch_final)
-        {
-            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-            ws.AllIssuesReportCompleted += new EventHandler<AllIssuesReportCompletedEventArgs>(ws_AllIssuesReportCompleted);
-            ws.AllIssuesReportAsync(fch_inicial, fch_final);
-        }
-
-        void ws_AllIssuesReportCompleted(object sender, AllIssuesReportCompletedEventArgs e)
-        {
-            if (e.Result != null)
-            {
-                grd_REPORT.Columns.Clear();
-                grd_REPORT.Visibility = Visibility.Visible;
-                grd_REPORT.ItemsSource = e.Result;
-            }
-        }
-
-        #endregion
-
-        private void BtnExportar_Click(object sender, RoutedEventArgs e)
-        {
-            // obtener archivo en formato ccs
-        }
 
         #endregion
 
         private void lnk_acceder_click(object sender, RoutedEventArgs e)
         {
             DTContract contract = (DTContract)cbx_contrat_up.SelectedItem;
-            if (cbx_contrat_up.SelectedIndex != -1)
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.IsContractAvailableCompleted += new EventHandler<IsContractAvailableCompletedEventArgs>(ws_IsContractAvailableCompleted2);
+            ws.IsContractAvailableAsync(contract.ContractId);
+        }
+
+        void ws_IsContractAvailableCompleted2(object sender, IsContractAvailableCompletedEventArgs e)
+        {
+            DTContract contract = (DTContract)cbx_contrat_up.SelectedItem;
+            if (e.Result)
             {
-                url = contract.ContractId;
+                cbx_contrat_up.SelectedItem = contract;
+                my_con = contract;
+                lblacceder_error.Text = "Se ha conectado a " + contract.Site;
+                lblacceder_error.Visibility = Visibility.Visible;
             }
-            cbx_contrat_up.SelectedItem = contract;
-            my_con = contract;
-            lblacceder_error.Text = "Se ha conectado a " + contract.Site;
-            lblacceder_error.Visibility = Visibility.Visible;
+            else 
+            {
+                lblacceder_error.Text = "Error en la coneccion con " + contract.Site;
+                lblacceder_error.Visibility = Visibility.Visible;
+            }
         }
 
         #region Por Impactar
