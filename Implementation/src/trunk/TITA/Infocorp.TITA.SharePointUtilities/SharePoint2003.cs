@@ -672,5 +672,15 @@ namespace Infocorp.TITA.SharePointUtilities
         }
 
         #endregion
+
+        #region ISharePoint Members
+
+
+        public string GetCurrentUserEmail()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

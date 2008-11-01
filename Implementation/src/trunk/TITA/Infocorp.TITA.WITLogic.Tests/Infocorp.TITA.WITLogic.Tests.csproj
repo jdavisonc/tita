@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{83766577-E33F-4C12-B0A5-E15A11EBE29F}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EMailSenderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WITServices_Contracts_Tests.cs" />
     <Compile Include="WITServices_Issues_Test.cs" />
@@ -76,6 +77,9 @@
       <Project>{DC0F0C14-089E-4145-96EE-0E6D47B95C1B}</Project>
       <Name>Infocorp.TITA.WITLogic</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

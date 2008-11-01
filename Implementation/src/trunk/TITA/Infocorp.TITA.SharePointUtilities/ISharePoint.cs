@@ -185,5 +185,11 @@ namespace Infocorp.TITA.SharePointUtilities
         /// <returns>Lista de roles</returns>
         List<DTRol> GetPermissions(string idContract, string username);
 
+
+        /// <summary>
+        /// Obtiene la dirección del usuario
+        /// </summary>
+        /// <returns>Email</returns>
+        string GetCurrentUserEmail();
     }
 }
