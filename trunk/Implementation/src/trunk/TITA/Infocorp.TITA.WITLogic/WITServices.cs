@@ -38,19 +38,27 @@ namespace Infocorp.TITA.WITLogic
 
         public List<DTItem> GetIssues(string contractId)
         {
-            return GetItems(contractId, ItemType.ISSUE);
+            return GetIssuesWithQuery(contractId, string.Empty);
+        }
+
+        private List<DTItem> GetIssuesWithQuery(string contractId, string query)
+        {
+            return GetItems(contractId, ItemType.ISSUE, query);
         }
 
         public List<DTItem> GetIssues(string contractId, string workpackageId)
         {
-            List<DTItem> result = this.GetIssues(contractId);
+            string camlQuery = @"<Query><Where><Eq><FieldRef Name=""_x0057_P2"" /><Value Type=""Lookup"">fff</Value></Eq></Where></Query>";
 
-            result.FindAll(delegate(DTItem item)
-            {
-                DTFieldChoiceLookup wpField = (DTFieldChoiceLookup)item.Fields.Find(delegate(DTField field) { return field.Name == "Work Package"; });
-                return wpField.Value == workpackageId;
+            List<DTItem> result = this.GetIssuesWithQuery(contractId, camlQuery);
 
-            });
+            //result.FindAll(delegate(DTItem item)
+            //{
+            //    DTFieldChoiceLookup wpField = (DTFieldChoiceLookup)item.Fields.Find(delegate(DTField field) { return field.Name == "Work Package"; });
+            //    return wpField.Value == workpackageId;
+
+            //});
+
 
             return result;
         }
@@ -116,7 +124,7 @@ namespace Infocorp.TITA.WITLogic
         
         public List<DTItem> GetTasks(string contractId)
         {
-            return GetItems(contractId, ItemType.TASK);
+            return GetItems(contractId, ItemType.TASK, string.Empty);
         }
 
         public List<DTItem> GetTasks(string contractId, string issueId)
@@ -161,7 +169,7 @@ namespace Infocorp.TITA.WITLogic
 
         public List<DTItem> GetWorkPackages(string contractId)
         {
-            return GetItems(contractId, ItemType.WORKPACKAGE);
+            return GetItems(contractId, ItemType.WORKPACKAGE, string.Empty);
         }
 
         public void AddWorkPackage(DTItem workPackage, string contractId)
@@ -206,11 +214,10 @@ namespace Infocorp.TITA.WITLogic
             return issue;
         }
 
-        private List<DTItem> GetItems(string contractId, ItemType itemType)
+        private List<DTItem> GetItems(string contractId, ItemType itemType, string camlQuery)
         {
             List<DTItem> result = new List<DTItem>();
-            List<DTCommandInfo> commands = WITCommandState.Instance().GetCommands(itemType, contractId);
-            string camlQuery = string.Empty;
+            List<DTCommandInfo> commands = WITCommandState.Instance().GetCommands(itemType, contractId);            
             switch (itemType)
             {
                 case ItemType.ISSUE:
@@ -434,10 +441,22 @@ namespace Infocorp.TITA.WITLogic
             _sharepoint.SiteMapPropertyValueTasks(idContract, property, initialValue, endValue);
         }
 
+        public bool IsContractAvailable(string contractId)
+        {
+            bool result = true;
+
+            try
+            {
+                GetIssues(contractId);
+            }
+            catch (Exception exc)
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
         #endregion
-
-        
-
-
     }
 }

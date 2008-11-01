@@ -83,6 +83,8 @@ namespace Infocorp.TITA.WITLogic
 
         #region Concurrence
 
+        bool IsContractAvailable(string contractId);
+
         bool IsContractLocked(string contractId);
 
         bool AquireContractWritePermission(string contractId);
@@ -91,7 +93,7 @@ namespace Infocorp.TITA.WITLogic
 
         #endregion
 
-
+        
         
         
         
