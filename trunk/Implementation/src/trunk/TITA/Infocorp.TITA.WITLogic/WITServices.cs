@@ -37,7 +37,8 @@ namespace Infocorp.TITA.WITLogic
         }
 
         public List<DTItem> GetIssues(string contractId)
-        {
+        {            
+            object  credential  = System.Net.CredentialCache.DefaultCredentials;
             return GetIssuesWithQuery(contractId, string.Empty);
         }
 
@@ -258,13 +259,15 @@ namespace Infocorp.TITA.WITLogic
             return result;
         }
 
-        public bool ApplyChanges(string contractId, ItemType itemType)
+        public List<DTCommandInfo> ApplyChanges(string contractId, ItemType itemType)
         {            
             List<DTCommandInfo> commands = WITCommandState.Instance().GetCommands(contractId);
             ISharePoint spu = _sharepoint;
             commands = commands.FindAll(delegate(DTCommandInfo dt) { return dt.CommandItemType == itemType; });
             commands.Sort();
             bool result = true;
+            List<DTCommandInfo> commandsNotExecuted = new List<DTCommandInfo>();
+
             foreach (DTCommandInfo command in commands)
             {
                 command.Item.Fields.RemoveAll(delegate(DTField f) { return f.Name == "IsLocal"; });
@@ -325,11 +328,15 @@ namespace Infocorp.TITA.WITLogic
                     default:
                         break;
                 }
+                if (!result)
+                {
+                    commandsNotExecuted.Add(command);
+                }
             }
 
             WITCommandState.Instance().ClearCommands(contractId);
             
-            return result;
+            return commandsNotExecuted;
         }
 
         public bool HasPendingChanges(string contractId)

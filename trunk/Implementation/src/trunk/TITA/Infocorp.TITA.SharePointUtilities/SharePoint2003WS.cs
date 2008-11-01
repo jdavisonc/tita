@@ -981,5 +981,16 @@ namespace Infocorp.TITA.SharePointUtilities
         }
 
         #endregion
+
+        #region ISharePoint Members
+
+
+        public string GetCurrentUserEmail()
+        {
+            //TODOOOOOOOOOOOOOOOOOOOOOOOO !!
+            return "grupopis08@gmail.com";
+        }
+
+        #endregion
     }
 }
