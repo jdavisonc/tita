@@ -50,7 +50,6 @@ public class WSTita : System.Web.Services.WebService
     [WebMethod]
     public List<DTItem> GetIssues(string idContract)
     {
-
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
         return witInstance.GetIssues(idContract);
     }
@@ -139,6 +138,13 @@ public class WSTita : System.Web.Services.WebService
 
     #region WP
 
+    [WebMethod]
+    public List<DTItem> GetIssuesWP(string contractId, string workpackageId)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        return witInstance.GetIssues(contractId, workpackageId);
+    }
+   
     [WebMethod]
     public List<DTItem> GetWorkPackages(string url)
     {
