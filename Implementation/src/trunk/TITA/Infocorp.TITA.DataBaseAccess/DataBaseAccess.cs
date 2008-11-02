@@ -6,20 +6,40 @@ using Infocorp.TITA.DataTypes;
 
 namespace Infocorp.TITA.DataBaseAccess
 {
+    
     public class DataBaseAccess
     {
+        private static int maxTime = 10;
         #region ABM CONTRACTS
         public void AddContract(DTContract c)
         {
             LinqDataContext dc = new LinqDataContext();
             Contract contract = new Contract();
-            contract.site = c.Site;
-            contract.user = c.UserName;
-            contract.issues_list = c.issuesList;
-            contract.workpackage_list = c.workPackageList;
-            contract.task_list = c.taskList;
-            dc.Contracts.InsertOnSubmit(contract);
-            dc.SubmitChanges();
+            var consultant = from u in dc.Contracts
+                             where u.site.Trim() == c.Site.Trim()
+                             select u;
+            if (consultant.Count() > 0)
+            {
+                foreach (var aux in consultant)
+                {
+                    aux.issues_list = c.issuesList;
+                    aux.task_list = c.taskList;
+                    aux.task_list = c.taskList;
+                    aux.user = c.UserName;
+                }
+                dc.SubmitChanges();
+            }
+            else
+            {
+                contract.site = c.Site;
+                contract.user = c.UserName;
+                contract.issues_list = c.issuesList;
+                contract.workpackage_list = c.workPackageList;
+                contract.task_list = c.taskList;
+                dc.Contracts.InsertOnSubmit(contract);
+                dc.SubmitChanges();
+            }
+
 
         }
 
@@ -109,23 +129,57 @@ namespace Infocorp.TITA.DataBaseAccess
                 contractData.workPackageList = contract.First().workpackage_list;
                 contractData.taskList = contract.First().task_list;
                 dc.SubmitChanges();
+                return contractData;
             }
-            return contractData;
+            else
+                return null;
+            
          }
         #endregion
 
-        # region CONCURRENCE OPERATIONS
 
         public void AddCurrentUser(DTCurrentUser user)
         {
             LinqDataContext dc = new LinqDataContext();
-            Current cUser = new Current(); 
-            cUser.site = user.Site;
-            cUser.current_user = user.CurrentUser;
-            cUser.logged_date = user.LoggedDate;
-            cUser.last_modification = user.LastModification;
-            dc.Currents.InsertOnSubmit(cUser);
-            dc.SubmitChanges();
+            Current cUser = new Current();
+            var current = from u in dc.Currents
+                          where u.site == user.Site.Trim()
+                          select u;
+            if (current.Count() > 0)
+            {
+                foreach (var aux in current)
+                {
+                    aux.current_user = user.CurrentUser;
+                    aux.last_modification = user.LastModification;
+                    aux.logged_date = user.LoggedDate;
+                }
+            }
+            else
+            {
+                cUser.site = user.Site;
+                cUser.current_user = user.CurrentUser;
+                cUser.logged_date = user.LoggedDate;
+                cUser.last_modification = user.LastModification;
+                dc.Currents.InsertOnSubmit(cUser);
+                dc.SubmitChanges();
+            }
+
+        }
+
+
+        public void DeleteCurrent(string site)
+        {
+            LinqDataContext dc = new LinqDataContext();
+            var current = from u in dc.Currents
+                           where u.site.Trim() == site.Trim()
+                           select u;
+
+            if (contract.Count() > 0)
+            {
+
+                dc.Currents.DeleteOnSubmit(contract.First());
+                dc.SubmitChanges();
+            }
         }
         public List<DTCurrentUser> getCurrentsUsersList()
         {
@@ -154,10 +208,41 @@ namespace Infocorp.TITA.DataBaseAccess
         /// <returns>true sii está adqurido</returns>
         public bool IsContractAquired(string contractId)
         {
-            //TODO !!
-            throw new NotImplementedException();
+            LinqDataContext dc = new LinqDataContext();
+            DTContract contract = GetContract(contractId);
+            if (contract != null)
+            {
+                if (contract.UserName == null)
+                    return false;
+
+                else
+                {
+
+                    //me fijo si ese usuario expiro
+                    var current = from u in dc.Currents
+                                  where (u.current_user == contract.UserName) && (u.site == contract.Site)
+                                  select u;
+                    if ((int.Parse(current.First().last_modification) - int.Parse(current.First().logged_date))>maxTime)
+                    {
+                        //remover usuario
+                        dc.Currents.DeleteOnSubmit(current.First());
+                        dc.SubmitChanges();
+                        return false;
+                    }
+                    else
+                        return true;
+
+                }
+
+            }
+            else
+            {
+                throw new ArgumentException("No existe el contrato que desea");
+                return false;
+            }    
         }
 
+        
         /// <summary>
         /// Obtiene un contrato para escritura
         /// </summary>
@@ -166,8 +251,61 @@ namespace Infocorp.TITA.DataBaseAccess
         /// <returns>Si se pudo obtener el permiso</returns>
         public bool AquireContract(string contractId, string userName)
         {
-            //TODO !!
-            throw new NotImplementedException();
+            LinqDataContext dc = new LinqDataContext();
+            DTContract contract = GetContract(contractId);
+            if (contract != null)
+            {
+                if (contract.UserName == null)
+                {
+                    contract.UserName = userName;
+                    AddContract(contract);
+                    Current newCurrent = new Current();
+                    newCurrent.current_user = userName;
+                    newCurrent.site = contract.Site.Trim();
+                    newCurrent.logged_date = DateTime.Now();
+                    newCurrent.last_modification = DateTime.Now();
+                    dc.Currents.InsertOnSubmit(newCurrent);
+                    dc.SubmitChanges();
+
+                    return true;
+                }
+                else
+                {
+
+                    //me fijo si ese usuario no expiro
+                    var current = from u in dc.Currents
+                                  where (u.current_user == contract.UserName) && (u.site == contract.Site)
+                                  select u;
+
+                    if (current.Count() > 0)
+                    {
+                        if ((int.Parse(current.First().last_modification) - int.Parse(current.First().logged_date)) > maxTime) 
+                        {
+                            //remover usuario
+                            dc.Currents.DeleteOnSubmit(current.First());
+                            dc.SubmitChanges();
+                            Current newCurrent = new Current();
+                            newCurrent.current_user = userName;
+                            newCurrent.site = contract.Site.Trim();
+                            newCurrent.logged_date = DateTime.Now();
+                            newCurrent.last_modification = DateTime.Now();
+                            AddContract(newCurrent);
+                            return true;
+                        }
+                        else 
+                            return false;
+                    }
+                     
+                
+               }
+            }
+            else
+            {
+                throw new ArgumentException("No existe el contrato que desea");
+                return false;
+            }
+            
+            
         }
 
         /// <summary>
@@ -176,8 +314,20 @@ namespace Infocorp.TITA.DataBaseAccess
         /// <param name="contractId">Id del contrato</param>
         public void ReleaseContract(string contractId)
         {
-            //TODO !!
-            throw new NotImplementedException();
+            LinqDataContext dc = new LinqDataContext();
+            DTContract contract = GetContract(contractId);
+            if (contract != null)
+            {
+                contract.UserName = null;
+                AddContract(contract);
+                DeleteCurrent(contract.Site);
+            }
+            else
+            {
+                throw new ArgumentException("No existe el contrato que desea");
+                return false;
+            }
+            
         }
 
         /// <summary>
@@ -188,8 +338,39 @@ namespace Infocorp.TITA.DataBaseAccess
         /// <returns>true sii está adquirido por el usuario</returns>
         public bool IsContractAquiredByUser(string contractId, string userName)
         {
-            //TODO !!
-            throw new NotImplementedException();
+            LinqDataContext dc = new LinqDataContext();
+            DTContract contract = GetContract(contractId);
+            if (contract != null)
+            {
+                if (contract.UserName != userName)
+                    return false;
+
+                else
+                {
+
+                    //me fijo si ese usuario expiro
+                    var current = from u in dc.Currents
+                                  where (u.current_user == contract.UserName) && (u.site == contract.Site)
+                                  select u;
+                    if (current.Count() > 0)
+                        if ((int.Parse(current.First().last_modification) - int.Parse(current.First().logged_date))>maxTime)
+                        {
+                            //remover usuario
+                            dc.Currents.DeleteOnSubmit(current.First());
+                            dc.SubmitChanges();
+                            return false;
+                        }
+                        else
+                            return true;
+
+                }   
+
+            }
+            else
+            {
+                throw new ArgumentException("No existe el contrato que desea");
+                return false;
+            }    
         }
 
         /// <summary>
@@ -199,10 +380,14 @@ namespace Infocorp.TITA.DataBaseAccess
         /// <param name="userName">UserName</param>
         public void UpdateLastAccess(string contractId, string userName)
         {
-            //TODO !!
-            throw new NotImplementedException();
+            LinqDataContext dc = new LinqDataContext();
+            DTContract contract = GetContract(contractId);
+            var current = from u in dc.Currents
+                          where (u.current_user == contract.UserName) && (u.site == contract.Site)
+                          select u;
+            current.First().last_modification = DateTime.Now();
+            dc.SubmitChanges();
         }
 
-        #endregion
     }
 }
