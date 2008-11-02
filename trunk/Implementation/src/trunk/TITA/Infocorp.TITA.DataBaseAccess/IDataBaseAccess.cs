@@ -2,38 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Infocorp.TITA.DataTypes;
 namespace Infocorp.TITA.DataBaseAccess
 {
     public interface IDataBaseAccess
     {
-        public void AddContract(DTContract c);
+        void AddContract(DTContract c);
         
-        public void DeleteContract(string idContract);
+        void DeleteContract(string idContract);
         
-        public List<DTContract> ContractList();
+        List<DTContract> ContractList();
         
-        public string ContractSite(string idContract);
+        string ContractSite(string idContract);
         
-        public void ModifyContract(DTContract c);
+        void ModifyContract(DTContract c);
         
-        public DTContract GetContract(string idContract);
+        DTContract GetContract(string idContract);
         
-        public void AddCurrentUser(DTCurrentUser user);
+        void AddCurrentUser(DTCurrentUser user);
        
-        public void DeleteCurrent(string site);
+        void DeleteCurrent(string site);
         
-        public List<DTCurrentUser> getCurrentsUsersList();
+        List<DTCurrentUser> getCurrentsUsersList();
         
-        public bool IsContractAquired(string contractId);
+        bool IsContractAquired(string contractId);
         
-        public bool AquireContract(string contractId, string userName);
+        bool AquireContract(string contractId, string userName);
        
-        public void ReleaseContract(string contractId);
+        void ReleaseContract(string contractId);
 
-        public bool IsContractAquiredByUser(string contractId, string userName);
+        bool IsContractAquiredByUser(string contractId, string userName);
 
-        public void UpdateLastAccess(string contractId, string userName);
+        void UpdateLastAccess(string contractId, string userName);
 
     }
 }

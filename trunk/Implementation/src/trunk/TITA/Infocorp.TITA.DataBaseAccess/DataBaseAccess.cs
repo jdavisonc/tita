@@ -7,7 +7,7 @@ using Infocorp.TITA.DataTypes;
 namespace Infocorp.TITA.DataBaseAccess
 {
     
-    public class DataBaseAccess
+    public class DataBaseAccess : IDataBaseAccess
     {
         private static int maxTime = 10;
         #region ABM CONTRACTS
@@ -137,7 +137,7 @@ namespace Infocorp.TITA.DataBaseAccess
          }
         #endregion
 
-
+        #region 
         public void AddCurrentUser(DTCurrentUser user)
         {
             LinqDataContext dc = new LinqDataContext();
@@ -174,10 +174,10 @@ namespace Infocorp.TITA.DataBaseAccess
                            where u.site.Trim() == site.Trim()
                            select u;
 
-            if (contract.Count() > 0)
+            if (current.Count() > 0)
             {
 
-                dc.Currents.DeleteOnSubmit(contract.First());
+                dc.Currents.DeleteOnSubmit(current.First());
                 dc.SubmitChanges();
             }
         }
@@ -262,8 +262,8 @@ namespace Infocorp.TITA.DataBaseAccess
                     Current newCurrent = new Current();
                     newCurrent.current_user = userName;
                     newCurrent.site = contract.Site.Trim();
-                    newCurrent.logged_date = DateTime.Now();
-                    newCurrent.last_modification = DateTime.Now();
+                    newCurrent.logged_date = DateTime.Now.ToString();
+                    newCurrent.last_modification = DateTime.Now.ToString();
                     dc.Currents.InsertOnSubmit(newCurrent);
                     dc.SubmitChanges();
 
@@ -277,25 +277,22 @@ namespace Infocorp.TITA.DataBaseAccess
                                   where (u.current_user == contract.UserName) && (u.site == contract.Site)
                                   select u;
 
-                    if (current.Count() > 0)
+                    
+                    if ((int.Parse(current.First().last_modification) - int.Parse(current.First().logged_date)) > maxTime) 
                     {
-                        if ((int.Parse(current.First().last_modification) - int.Parse(current.First().logged_date)) > maxTime) 
-                        {
-                            //remover usuario
-                            dc.Currents.DeleteOnSubmit(current.First());
-                            dc.SubmitChanges();
-                            Current newCurrent = new Current();
-                            newCurrent.current_user = userName;
-                            newCurrent.site = contract.Site.Trim();
-                            newCurrent.logged_date = DateTime.Now();
-                            newCurrent.last_modification = DateTime.Now();
-                            AddContract(newCurrent);
-                            return true;
-                        }
-                        else 
-                            return false;
+                        //remover usuario
+                        dc.Currents.DeleteOnSubmit(current.First());
+                        dc.SubmitChanges();
+                        DTCurrentUser newCurrent = new DTCurrentUser();
+                        newCurrent.CurrentUser  = userName;
+                        newCurrent.Site = contract.Site.Trim();
+                        newCurrent.LoggedDate = DateTime.Now.ToString();
+                        newCurrent.LastModification = DateTime.Now.ToString();
+                        AddCurrentUser(newCurrent);
+                        return true;
                     }
-                     
+                    else 
+                        return false;
                 
                }
             }
@@ -325,7 +322,7 @@ namespace Infocorp.TITA.DataBaseAccess
             else
             {
                 throw new ArgumentException("No existe el contrato que desea");
-                return false;
+             
             }
             
         }
@@ -353,7 +350,7 @@ namespace Infocorp.TITA.DataBaseAccess
                                   where (u.current_user == contract.UserName) && (u.site == contract.Site)
                                   select u;
                     if (current.Count() > 0)
-                        if ((int.Parse(current.First().last_modification) - int.Parse(current.First().logged_date))>maxTime)
+                        if ((int.Parse(current.First().last_modification) - int.Parse(current.First().logged_date)) > maxTime)
                         {
                             //remover usuario
                             dc.Currents.DeleteOnSubmit(current.First());
@@ -362,7 +359,8 @@ namespace Infocorp.TITA.DataBaseAccess
                         }
                         else
                             return true;
-
+                    else
+                        return false;
                 }   
 
             }
@@ -385,9 +383,11 @@ namespace Infocorp.TITA.DataBaseAccess
             var current = from u in dc.Currents
                           where (u.current_user == contract.UserName) && (u.site == contract.Site)
                           select u;
-            current.First().last_modification = DateTime.Now();
+            current.First().last_modification = DateTime.Now.ToString();
             dc.SubmitChanges();
         }
+        #endregion
 
+       
     }
 }
