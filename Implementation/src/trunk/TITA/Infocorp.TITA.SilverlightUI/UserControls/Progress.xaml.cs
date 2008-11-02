@@ -19,6 +19,7 @@ namespace Infocorp.TITA.SilverlightUI.UserControls
             InitializeComponent();
             //animacion.Begin();
             canvas.Opacity = 0.0;
+            gridBK.Visibility = Visibility.Collapsed;
             mostrarOcultar.Completed += new EventHandler(mostrarOcultar_Completed);
         }
         bool pararAnim = false;
@@ -32,6 +33,7 @@ namespace Infocorp.TITA.SilverlightUI.UserControls
         {
             mostrarOcultar_value.Value = 1.0;
             mostrarOcultar.Begin();
+            gridBK.Visibility = Visibility.Visible;
             pararAnim = false;
             animacion.Begin();
         }
@@ -39,6 +41,7 @@ namespace Infocorp.TITA.SilverlightUI.UserControls
         {
             mostrarOcultar_value.Value = 0.0;
             mostrarOcultar.Begin();
+            gridBK.Visibility = Visibility.Collapsed;
             pararAnim = true;
         }
     }

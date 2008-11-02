@@ -32,16 +32,20 @@ namespace Infocorp.TITA.SilverlightUI
 
         private string url = null;
         private DTItem item = new DTItem();
+        List<DTItem> lstItem = new List<DTItem>();
+        //List<DTItem> lstIssue = new List<DTItem>();
+
+        List<Issue> lstIssue = new List<Issue>();
+        List<DTReportedItem> my_lstReport_issues = new List<DTReportedItem>();
+        List<DTWorkPackageReport> my_lstReport_deswp = new List<DTWorkPackageReport>();
+
         private DTItem resulItem = new DTItem();
-        private Progress progress = new Progress();
+        //private Progress progress = new Progress();
         private bool isEdit;
+        private string map = "";
         private bool isIssueWP;
         private bool oneContract;
         private bool forReport = false;
-        private List<DTItem> lstItem = new List<DTItem>();
-        private List<Issue> lstIssue = new List<Issue>();
-        private List<DTReportedItem> my_lstReport_issues = new List<DTReportedItem>();
-        private List<DTWorkPackageReport> my_lstReport_deswp = new List<DTWorkPackageReport>();
         private List<WorkPackage> my_lstWP = new List<WorkPackage>();
         private List<Task> my_lstTask = new List<Task>();
         private List<DTContract> my_contract = new List<DTContract>();
@@ -89,11 +93,16 @@ namespace Infocorp.TITA.SilverlightUI
             acc.AddItem("Workpackages", "", "Por impactar", "Workpakage_aplicar", this.Resources["ItemStyle1"] as Style);
             acc.AddItem("Tasks", "", "Por impactar", "Tasks_aplicar", this.Resources["ItemStyle1"] as Style);
 
+            acc.AddItem("Incidentes", "", "Mapeo de Valores", "Incidentes_map", this.Resources["ItemStyle1"] as Style);
+            acc.AddItem("Workpackages", "", "Mapeo de Valores", "Workpakage_map", this.Resources["ItemStyle1"] as Style);
+            acc.AddItem("Tasks", "", "Mapeo de Valores", "Tasks_map", this.Resources["ItemStyle1"] as Style);
+
             Style aux = this.Resources["GroupStyle1"] as Style;
             acc.setGroupStyle("Sharepoint Utilities", this.Resources["GroupStyle1"] as Style);
             acc.setGroupStyle("Reportes", this.Resources["GroupStyle1"] as Style);
             acc.setGroupStyle("Por impactar", this.Resources["GroupStyle1"] as Style);
-           
+            acc.setGroupStyle("Mapeo de Valores", this.Resources["GroupStyle1"] as Style);
+
             acc.ItemSelect += new Infocorp.TITA.Controls.Silverlight.V2.Accordion.ItemSelectEvent(acc_ItemSelect);
 
             //pager.ItemsSource = lstItem;
@@ -143,7 +152,15 @@ namespace Infocorp.TITA.SilverlightUI
                 case "Tasks_aplicar":
                     ViewTasksPorAplicar();
                     break;
-                    
+                case "Incidentes_map":
+                    ViewIssueMap();
+                    break;
+                case "Workpakage_map":
+                    ViewWorkpackageMap();
+                    break;
+                case "Tasks_map":
+                    ViewTaskMap();
+                    break;
                 default:
                     break;
             }
@@ -171,6 +188,7 @@ namespace Infocorp.TITA.SilverlightUI
             scroll_REPORT.Visibility = Visibility.Collapsed;
             contractsReport.Visibility = Visibility.Collapsed;
             lstContratos.Visibility = Visibility.Collapsed;
+            CanvasMap.Visibility = Visibility.Collapsed;
             ClearReport();
             if (PnlForm_WP.Children != null)
                 PnlForm_WP.Children.Clear();
@@ -265,6 +283,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void GetContract()
         {
+
             try
             {
                 WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
@@ -273,7 +292,7 @@ namespace Infocorp.TITA.SilverlightUI
             }
             catch (Exception exp)
             {
-                ShowError("No se pudo obtener los contratos:" + exp, true);
+                ShowError("No se pudo?obtener los contratos:" + exp, true);
             }
         }
 
@@ -422,10 +441,20 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnConectarContrato_Click(object sender, RoutedEventArgs e)
         {
-            DTContract contract = (DTContract)lstContratos.SelectedItem;
+            DTContract contract;
+            contract = (DTContract)lstContratos.SelectedItem;
+            url = contract.ContractId;
+            //lblConectContract.Text = "Se ha conectado a " + contract.Site;
+            cbx_contrat_up.SelectedItem = contract;
+            //lblConectContract.Visibility = Visibility.Visible;
+            lblacceder_error.Text = "Se ha conectado a " + contract.Site;
+            lblacceder_error.Visibility = Visibility.Visible;
+
+            //DTContract contract = (DTContract)lstContratos.SelectedItem;
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
             ws.IsContractAvailableCompleted += new EventHandler<IsContractAvailableCompletedEventArgs>(ws_IsContractAvailableCompleted);
             ws.IsContractAvailableAsync(contract.ContractId);        
+
         }
 
         void ws_IsContractAvailableCompleted(object sender, IsContractAvailableCompletedEventArgs e)
@@ -433,9 +462,9 @@ namespace Infocorp.TITA.SilverlightUI
             DTContract contract = (DTContract)lstContratos.SelectedItem;
             if (e.Result)
             {
-                lblConectContract.Text = "Se ha conectado a " + contract.Site;
+                //lblConectContract.Text = "Se ha conectado a " + contract.Site;
                 cbx_contrat_up.SelectedItem = contract;
-                lblConectContract.Visibility = Visibility.Visible;
+                //lblConectContract.Visibility = Visibility.Visible;
                 url = contract.ContractId;
                 my_con = contract;
             }
@@ -682,7 +711,7 @@ namespace Infocorp.TITA.SilverlightUI
             PnlOption_WP.Visibility = Visibility.Collapsed;
             PnlForm_WP.Visibility = Visibility.Visible;
             progress.play();
-            PnlForm_WP.Children.Add(progress);
+            //PnlForm_WP.Children.Add(progress);
             LoadFormsWP();
         }
 
@@ -887,7 +916,7 @@ namespace Infocorp.TITA.SilverlightUI
             Issue i;
             //List<Issue> lstIssue = new List<Issue>();
             lstIssue = new List<Issue>();
-            
+
             foreach (DTItem issue in list)
             {
                 i = new Issue();
@@ -941,7 +970,7 @@ namespace Infocorp.TITA.SilverlightUI
                 }
                 lstIssue.Add(i);
             }
-         
+
             if (isIssueWP) // para ver los incidentes de un wp
             {
                 if (grd_INCIDENT_WP.Columns.Count != 0)
@@ -996,7 +1025,7 @@ namespace Infocorp.TITA.SilverlightUI
             PnlOption_INCIDENT.Visibility = Visibility.Collapsed;
             PnlForm_INCIDENT.Visibility = Visibility.Visible;
             progress.play();
-            PnlForm_INCIDENT.Children.Add(progress);
+            //PnlForm_INCIDENT.Children.Add(progress);
             LoadFormsIncedent();
             progress.stop();
         }
@@ -1062,7 +1091,7 @@ namespace Infocorp.TITA.SilverlightUI
             string strMy_pnl = "PnlForm_" + Option.INCIDENT;
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
             progress.play();
-            my_pnl.Children.Add(progress);
+            //my_pnl.Children.Add(progress);
             PnlOption_INCIDENT.Visibility = Visibility.Collapsed;
             if (item.Fields == null)
             {
@@ -1379,7 +1408,7 @@ namespace Infocorp.TITA.SilverlightUI
                         my_pnl.Children.Add(newGrd);
                     }
                 }
-                my_pnl.Children.Remove(progress);
+                //my_pnl.Children.Remove(progress);
                 progress.stop();
             }
             else if (isCheck)
@@ -1810,7 +1839,7 @@ namespace Infocorp.TITA.SilverlightUI
                         my_pnl.Children.Add(newGrd);
                     }
                 }
-                my_pnl.Children.Remove(progress);
+                //my_pnl.Children.Remove(progress);
                 progress.stop();
             }
             return ok;
@@ -1928,7 +1957,7 @@ namespace Infocorp.TITA.SilverlightUI
             PnlOption_TASK.Visibility = Visibility.Collapsed;
             PnlForm_TASK.Visibility = Visibility.Visible;
             progress.play();
-            PnlForm_TASK.Children.Add(progress);
+            //PnlForm_TASK.Children.Add(progress);
             LoadFormsTask();
         }
 
@@ -1952,7 +1981,7 @@ namespace Infocorp.TITA.SilverlightUI
             string strMy_pnl = "PnlForm_" + Option.TASK;
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
             progress.play();
-            my_pnl.Children.Add(progress);
+            //my_pnl.Children.Add(progress);
             PnlOption_TASK.Visibility = Visibility.Collapsed;
             if (item == null)
             {
@@ -2231,6 +2260,7 @@ namespace Infocorp.TITA.SilverlightUI
         void ws_IsContractAvailableCompleted2(object sender, IsContractAvailableCompletedEventArgs e)
         {
             DTContract contract = (DTContract)cbx_contrat_up.SelectedItem;
+            url = contract.ContractId;
             if (e.Result)
             {
                 cbx_contrat_up.SelectedItem = contract;
@@ -2262,6 +2292,215 @@ namespace Infocorp.TITA.SilverlightUI
         }
 
         #endregion
+
+        #region Mapeo de Valores
+
+        public void ViewMap()
+        {
+            BtnMap.Visibility = Visibility.Visible;
+            CanvasMap.Visibility = Visibility.Visible;
+            PnlActionMap.Visibility = Visibility.Visible;
+            DTContract c = (DTContract)cbx_contrat_up.SelectedItem;
+            txt_endValue_map.Text = "endValue";
+            txt_endValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
+
+            txt_property_map.Text = "Property";
+            txt_property_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
+
+            txt_initialValue_map.Text = "Initial Value";
+            txt_initialValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
+
+            BusacrTempletes(c);
+        }
+
+        public void ViewIssueMap()
+        {
+            titulo_Map.Text = "Mapeo de Valores para Incidentes";
+            map = "Issue";
+            ViewMap();
+        }
+
+        public void ViewTaskMap()
+        {
+            titulo_Map.Text = "Mapeo de Valores para Tasks";
+            map = "Task";
+            ViewMap();
+        }
+
+        public void ViewWorkpackageMap()
+        {
+            titulo_Map.Text = "Mapeo de Valores para Workpackage";
+            map = "WP";
+            ViewMap();
+        }
+
+        void BusacrTempletes(DTContract c)
+        {
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            if (c != null)
+            {
+
+                if (map == "Issue")
+                {
+                    ws.GetIssueTemplateCompleted += new EventHandler<GetIssueTemplateCompletedEventArgs>(ws_GetIssueTemplateCompletedMap);
+                    ws.GetIssueTemplateAsync(c.ContractId);
+                }
+                else if (map == "Task")
+                {
+                    ws.GetTaskTemplateCompleted += new EventHandler<GetTaskTemplateCompletedEventArgs>(ws_GetTaskTemplateCompletedMap);
+                    ws.GetTaskTemplateAsync(c.ContractId);
+                }
+                else if (map == "WP")
+                {
+                    ws.GetWorkPackageTemplateCompleted += new EventHandler<GetWorkPackageTemplateCompletedEventArgs>(ws_GetWorkPackageTemplateCompletedMap);
+                    ws.GetWorkPackageTemplateAsync(c.ContractId);
+                }
+            }
+            else
+            {
+                cmbx_property_map.ItemsSource = null;
+                cmbx_initialValue_map.ItemsSource = null;
+            }
+        }
+
+        void ws_GetTaskTemplateCompletedMap(object sender, GetTaskTemplateCompletedEventArgs e)
+        {
+            List<DTField> lstField = new List<DTField>();
+            foreach (DTField f in e.Result.Fields)
+            {
+                if ((f is DTFieldChoice) || (f is DTFieldChoiceLookup) || (f is DTFieldChoiceUser))
+                {
+                    lstField.Add(f);
+                }
+            }
+            cmbx_property_map.ItemsSource = lstField;
+            cmbx_property_map.DisplayMemberPath = "Name";
+            cmbx_property_map.SelectedIndex = -1;
+            cmbx_property_map.Visibility = Visibility.Visible;
+            cmbx_property_map.SelectionChanged += new SelectionChangedEventHandler(cmbx_property_map_SelectionChanged);
+        }
+
+        void ws_GetWorkPackageTemplateCompletedMap(object sender, GetWorkPackageTemplateCompletedEventArgs e)
+        {
+            List<DTField> lstField = new List<DTField>();
+            foreach (DTField f in e.Result.Fields)
+            {
+                if ((f is DTFieldChoice) || (f is DTFieldChoiceLookup) || (f is DTFieldChoiceUser))
+                {
+                    lstField.Add(f);
+                }
+            }
+            cmbx_property_map.ItemsSource = lstField;
+            cmbx_property_map.DisplayMemberPath = "Name";
+            cmbx_property_map.SelectedIndex = -1;
+            cmbx_property_map.Visibility = Visibility.Visible;
+            cmbx_property_map.SelectionChanged += new SelectionChangedEventHandler(cmbx_property_map_SelectionChanged);
+        }
+
+        void ws_GetIssueTemplateCompletedMap(object sender, GetIssueTemplateCompletedEventArgs e)
+        {
+            List<DTField> lstField = new List<DTField>();
+            foreach (DTField f in e.Result.Fields)
+            {
+                if ((f is DTFieldChoice) || (f is DTFieldChoiceLookup) || (f is DTFieldChoiceUser))
+                {
+                    lstField.Add(f);
+                }
+            }
+            cmbx_property_map.ItemsSource = lstField;
+            cmbx_property_map.DisplayMemberPath = "Name";
+            cmbx_property_map.SelectedIndex = -1;
+            cmbx_property_map.Visibility = Visibility.Visible;
+            cmbx_property_map.SelectionChanged += new SelectionChangedEventHandler(cmbx_property_map_SelectionChanged);
+        }
+
+        void cmbx_property_map_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DTField f = (DTField)cmbx_property_map.SelectedItem;
+            if (f is DTFieldChoice) 
+            {
+                cmbx_initialValue_map.ItemsSource = ((DTFieldChoice)f).Choices;
+            }
+            else if(f is DTFieldChoiceLookup)
+            {
+                cmbx_initialValue_map.ItemsSource = ((DTFieldChoiceLookup)f).Choices;
+            }
+            else if (f is DTFieldChoiceUser)
+            {
+                cmbx_initialValue_map.ItemsSource = ((DTFieldChoiceUser)f).Choices;
+            }
+            cmbx_initialValue_map.SelectedIndex = -1;
+            cmbx_initialValue_map.Visibility = Visibility.Visible;
+        }
+        
+        private void BtnMap_Click(object sender, RoutedEventArgs e)
+        {
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            DTContract c = (DTContract)cbx_contrat_up.SelectedItem;
+            DTField f = (DTField)cmbx_property_map.SelectedItem;
+            string v = (string)cmbx_initialValue_map.SelectedItem;
+            txt_endValue_map.Text = "End Value";
+            txt_endValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
+
+            txt_property_map.Text = "Property";
+            txt_property_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
+
+            txt_initialValue_map.Text = "Initial Value";
+            txt_initialValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
+
+
+            if (c != null && f != null && v != null && bx_endValue_map.Text != "")
+            {
+                if (map == "Issue")
+                {
+                    ws.SiteMapPropertyValueIssuesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_SiteMapPropertyValueIssuesCompleted);
+                    ws.SiteMapPropertyValueIssuesAsync(c.ContractId, f.Name, v, bx_endValue_map.Text);
+                }
+                else if (map == "Task")
+                {
+                    ws.SiteMapPropertyValueTasksCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_SiteMapPropertyValueTasksCompleted);
+                    ws.SiteMapPropertyValueTasksAsync(c.ContractId, f.Name, v, bx_endValue_map.Text);
+                }
+                else if (map == "WP")
+                {
+                    ws.SiteMapPropertyValueWorkPackagesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_SiteMapPropertyValueWorkPackagesCompleted);
+                    ws.SiteMapPropertyValueWorkPackagesAsync(c.ContractId, f.Name, v, bx_endValue_map.Text);
+                }
+            }
+            else if (bx_endValue_map.Text == "")
+            {
+                txt_endValue_map.Text = txt_endValue_map.Text + "*";
+                txt_endValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
+            }
+            else if (f == null)
+            {
+                txt_property_map.Text = txt_property_map.Text + "*";
+                txt_property_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
+            }
+            else if (v == null)
+            {
+                txt_initialValue_map.Text = txt_initialValue_map.Text + "*";
+                txt_initialValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
+            }
+        }
+
+        void ws_SiteMapPropertyValueWorkPackagesCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            bx_endValue_map.Text = "";
+        }
+
+        void ws_SiteMapPropertyValueTasksCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            bx_endValue_map.Text = "";
+        }
+
+        void ws_SiteMapPropertyValueIssuesCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            bx_endValue_map.Text = "";
+        }
+
+        #endregion
+
 
     }
  

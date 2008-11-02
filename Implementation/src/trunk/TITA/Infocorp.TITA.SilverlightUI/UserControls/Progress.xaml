@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="Infocorp.TITA.SilverlightUI.UserControls.Progress"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    Width="400" Height="300">
+    Width="Auto" Height="Auto" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
     <UserControl.Resources>
         <Storyboard x:Name="animacion" RepeatBehavior="Forever">
             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="ellipse" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
@@ -14,36 +14,55 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
-    <Grid x:Name="LayoutRoot" Background="White">
-        <Canvas HorizontalAlignment="Stretch" Width="51" RenderTransformOrigin="0.5,0.5" Height="80" Margin="9,11.5,9,11.5" x:Name="canvas">
-            <Canvas.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="1.3" ScaleY="1.3"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Canvas.RenderTransform>
-            <Image Height="78" Width="51" Source="imgTita.png" Stretch="Fill"/>
-            <Path Height="42.667" x:Name="ellipse" Width="45.5" RenderTransformOrigin="0.5,0.5" Canvas.Left="2" Canvas.Top="3.708" Stretch="Fill" Stroke="#00000000" Data="M45,21.333496 C45,32.83952 35.038334,42.166992 22.75,42.166992 C10.461664,42.166992 0.5,32.83952 0.5,21.333496 C0.5,19.429316 1.0789301,16.816875 1.5899907,15.064433 C1.6183332,14.967246 7.1265235,16.180777 13.776883,17.243919 C14.268582,17.322523 12.717261,21.975 13.405868,24.067303 C14.301049,26.787279 17.960379,30.165627 18.616682,30.270813 C22.599728,30.909174 26.225763,32.633057 29.35701,30.773596 C32.770374,28.746605 32.342865,20.285606 32.363091,20.224688 C32.410988,20.080433 32.337177,13.470645 24.005569,11.859305 C23.497547,11.761053 20.822367,10.571063 18.905333,11.907199 C16.653608,13.476607 13.714481,17.64485 13.13448,17.532381 C6.6255698,16.270222 1.4891965,15.242331 1.5327047,15.128535 C4.6107354,7.0779457 13.09361,0.5 22.75,0.5 C35.038334,0.5 45,9.8274736 45,21.333496 z">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform AngleX="-6.07"/>
-                        <RotateTransform Angle="0"/>
-                        <TranslateTransform X="2.269000598469086" Y="-6.1510787929819344E-07"/>
-                    </TransformGroup>
-                </Path.RenderTransform>
-                <Path.Fill>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#00000000"/>
-                        <GradientStop Color="#00FFFFFF" Offset="1"/>
-                        <GradientStop Color="#00FFFDFD" Offset="0.39500001072883606"/>
-                        <GradientStop Color="#66FFFFFF" Offset="0.507"/>
-                        <GradientStop Color="#00FFFFFF" Offset="0.598"/>
-                    </LinearGradientBrush>
-                </Path.Fill>
-            </Path>
-        </Canvas>
+    <Grid x:Name="LayoutRoot" Background="{x:Null}">
+    	<Grid x:Name="gridBK" Background="#7FFFFFFF">
+    		<Grid Height="120" HorizontalAlignment="Left" Margin="350,100,0,0" VerticalAlignment="Top" Width="130">
+    			<Grid.Background>
+    				<RadialGradientBrush GradientOrigin="0.399,0.624">
+    					<RadialGradientBrush.RelativeTransform>
+    						<TransformGroup>
+    							<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="0.986" ScaleY="1.207"/>
+    							<SkewTransform CenterX="0.5" CenterY="0.5"/>
+    							<RotateTransform CenterX="0.5" CenterY="0.5"/>
+    							<TranslateTransform X="0.004" Y="0.05"/>
+    						</TransformGroup>
+    					</RadialGradientBrush.RelativeTransform>
+    					<GradientStop Color="#FFFFFFFF"/>
+    					<GradientStop Color="#00FFFFFF" Offset="1"/>
+    					<GradientStop Color="#FAFFFFFF" Offset="0.862"/>
+    				</RadialGradientBrush>
+    			</Grid.Background>
+    			<Canvas RenderTransformOrigin="0.5,0.5" x:Name="canvas" HorizontalAlignment="Left" Margin="31,17,0,0" VerticalAlignment="Top" Background="{x:Null}">
+    				<Canvas.RenderTransform>
+    					<TransformGroup>
+    						<ScaleTransform ScaleX="1.3" ScaleY="1.3"/>
+    						<SkewTransform/>
+    						<RotateTransform/>
+    						<TranslateTransform/>
+    					</TransformGroup>
+    				</Canvas.RenderTransform>
+    				<Image Height="78" Width="51" Source="imgTita.png" Stretch="Fill"/>
+    				<Path Height="42.667" x:Name="ellipse" Width="45.5" RenderTransformOrigin="0.5,0.5" Canvas.Left="2" Canvas.Top="3.708" Stretch="Fill" Stroke="#00000000" Data="M45,21.333496 C45,32.83952 35.038334,42.166992 22.75,42.166992 C10.461664,42.166992 0.5,32.83952 0.5,21.333496 C0.5,19.429316 1.0789301,16.816875 1.5899907,15.064433 C1.6183332,14.967246 7.1265235,16.180777 13.776883,17.243919 C14.268582,17.322523 12.717261,21.975 13.405868,24.067303 C14.301049,26.787279 17.960379,30.165627 18.616682,30.270813 C22.599728,30.909174 26.225763,32.633057 29.35701,30.773596 C32.770374,28.746605 32.342865,20.285606 32.363091,20.224688 C32.410988,20.080433 32.337177,13.470645 24.005569,11.859305 C23.497547,11.761053 20.822367,10.571063 18.905333,11.907199 C16.653608,13.476607 13.714481,17.64485 13.13448,17.532381 C6.6255698,16.270222 1.4891965,15.242331 1.5327047,15.128535 C4.6107354,7.0779457 13.09361,0.5 22.75,0.5 C35.038334,0.5 45,9.8274736 45,21.333496 z">
+    					<Path.RenderTransform>
+    						<TransformGroup>
+    							<ScaleTransform/>
+    							<SkewTransform AngleX="-6.07"/>
+    							<RotateTransform Angle="0"/>
+    							<TranslateTransform X="2.269000598469086" Y="-6.1510787929819344E-07"/>
+    						</TransformGroup>
+    					</Path.RenderTransform>
+    					<Path.Fill>
+    						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    							<GradientStop Color="#00000000"/>
+    							<GradientStop Color="#00FFFFFF" Offset="1"/>
+    							<GradientStop Color="#00FFFDFD" Offset="0.39500001072883606"/>
+    							<GradientStop Color="#66FFFFFF" Offset="0.507"/>
+    							<GradientStop Color="#00FFFFFF" Offset="0.598"/>
+    						</LinearGradientBrush>
+    					</Path.Fill>
+    				</Path>
+    			</Canvas>
+    		</Grid>
+    	</Grid>
     </Grid>
 </UserControl>
