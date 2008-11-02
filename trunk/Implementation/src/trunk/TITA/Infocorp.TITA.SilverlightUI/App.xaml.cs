@@ -27,6 +27,7 @@ namespace Infocorp.TITA.SilverlightUI
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             this.RootVisual = new Page();
+            UIThread.Dispatcher = RootVisual.Dispatcher;
         }
 
         private void Application_Exit(object sender, EventArgs e)
@@ -60,4 +61,13 @@ namespace Infocorp.TITA.SilverlightUI
             }
         }
     }
+
+    public static class UIThread
+    {
+        public static System.Windows.Threading.Dispatcher Dispatcher { get; set; }
+        public static void Run(Action a)
+        {
+            Dispatcher.BeginInvoke(a);
+        }
+    }    
 }
