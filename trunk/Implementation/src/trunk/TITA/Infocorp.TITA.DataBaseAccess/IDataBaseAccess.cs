@@ -8,7 +8,9 @@ namespace Infocorp.TITA.DataBaseAccess
     public interface IDataBaseAccess
     {
         void AddContract(DTContract c);
-        
+
+        string GetContractId(string site);
+
         void DeleteContract(string idContract);
         
         List<DTContract> ContractList();

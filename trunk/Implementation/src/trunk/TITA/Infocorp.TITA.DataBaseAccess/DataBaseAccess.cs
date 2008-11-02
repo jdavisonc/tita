@@ -44,6 +44,17 @@ namespace Infocorp.TITA.DataBaseAccess
 
         }
 
+        public string GetContractId(string site)
+        {
+            LinqDataContext dc = new LinqDataContext();
+            var contract = from u in dc.Contracts
+                           where u.site == site
+                           select u;
+            if (contract.Count() > 0)
+                return contract.First().id_contract.ToString().Trim();
+            else
+                throw new ArgumentException("El sitio no esta asignado a ningun contrato");
+        }
         public void DeleteContract(string idContract)
         {
 
