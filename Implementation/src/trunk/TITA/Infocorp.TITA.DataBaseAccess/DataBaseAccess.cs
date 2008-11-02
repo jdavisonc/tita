@@ -24,7 +24,7 @@ namespace Infocorp.TITA.DataBaseAccess
                 {
                     aux.issues_list = c.issuesList;
                     aux.task_list = c.taskList;
-                    aux.task_list = c.taskList;
+                    aux.workpackage_list = c.workPackageList;
                     aux.user = c.UserName;
                 }
                 
@@ -411,13 +411,9 @@ namespace Infocorp.TITA.DataBaseAccess
             var current = (from u in dc.Currents
                           where (u.current_user == contract.UserName) && (u.site == contract.Site)
                           select u);
-            DTCurrentUser newCurrent = new DTCurrentUser();
-            newCurrent.CurrentUser = current.First().current_user;
-            newCurrent.LoggedDate = current.First().logged_date;
-            newCurrent.LastModification = DateTime.Now.ToString();
-            newCurrent.Site = current.First().site;
-            DeleteCurrent(current.First().site);
-            AddCurrentUser(newCurrent);
+           
+            current.First().last_modification = DateTime.Now.ToString();
+            dc.SubmitChanges();
            
         }
         #endregion

@@ -320,7 +320,7 @@ namespace Infocorp.TITA.DataBaseAccess
 			}
 		}
 		
-		[Column(Name="[current_user]", Storage="_current_user", DbType="NChar(40) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[Column(Name="[current_user]", Storage="_current_user", DbType="NChar(40) NOT NULL", CanBeNull=false)]
 		public string current_user
 		{
 			get
@@ -340,7 +340,7 @@ namespace Infocorp.TITA.DataBaseAccess
 			}
 		}
 		
-		[Column(Storage="_logged_date", DbType="NChar(40) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[Column(Storage="_logged_date", DbType="NChar(40) NOT NULL", CanBeNull=false)]
 		public string logged_date
 		{
 			get
@@ -360,7 +360,7 @@ namespace Infocorp.TITA.DataBaseAccess
 			}
 		}
 		
-		[Column(Storage="_last_modification", DbType="NChar(40) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[Column(Storage="_last_modification", DbType="NChar(40) NOT NULL", CanBeNull=false)]
 		public string last_modification
 		{
 			get
