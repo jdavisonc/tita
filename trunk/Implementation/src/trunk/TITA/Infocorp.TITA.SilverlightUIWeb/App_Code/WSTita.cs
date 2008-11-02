@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Linq;
 using System.Web;
@@ -273,5 +273,31 @@ public class WSTita : System.Web.Services.WebService
     }
 
     #endregion
+
+    #region Map Values
+
+    [WebMethod]
+    public void SiteMapPropertyValueWorkPackages(string idContract, string property, string initialValue, string endValue)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.SiteMapPropertyValueWorkPackages(idContract,property,initialValue,endValue);
+    }
+
+    [WebMethod]
+    public void SiteMapPropertyValueIssues(string idContract, string property, string initialValue, string endValue)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.SiteMapPropertyValueIssues(idContract,property,initialValue,endValue);
+    }
+
+    [WebMethod]
+    public void SiteMapPropertyValueTasks(string idContract, string property, string initialValue, string endValue)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.SiteMapPropertyValueTasks(idContract,property,initialValue,endValue);
+    }
+
+    #endregion
+
 
 }
