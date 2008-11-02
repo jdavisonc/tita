@@ -761,6 +761,11 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         Infocorp.TITA.SilverlightUI.WSTitaReference.DeleteIssueResponse EndDeleteIssue(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IsContractAvailable", ReplyAction="*")]
+        System.IAsyncResult BeginIsContractAvailable(Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableResponse EndIsContractAvailable(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/AddNewContract", ReplyAction="*")]
         System.IAsyncResult BeginAddNewContract(Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractRequest request, System.AsyncCallback callback, object asyncState);
         
@@ -790,6 +795,11 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         System.IAsyncResult BeginModifyContract(Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractRequest request, System.AsyncCallback callback, object asyncState);
         
         Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse EndModifyContract(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/GetIssuesWP", ReplyAction="*")]
+        System.IAsyncResult BeginGetIssuesWP(Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPResponse EndGetIssuesWP(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/GetWorkPackages", ReplyAction="*")]
         System.IAsyncResult BeginGetWorkPackages(Infocorp.TITA.SilverlightUI.WSTitaReference.GetWorkPackagesRequest request, System.AsyncCallback callback, object asyncState);
@@ -851,10 +861,15 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         Infocorp.TITA.SilverlightUI.WSTitaReference.IssuesReportResponse EndIssuesReport(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/AllIssuesReport", ReplyAction="*")]
-        System.IAsyncResult BeginAllIssuesReport(Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequest request, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExportDesWP", ReplyAction="*")]
+        System.IAsyncResult BeginExportDesWP(Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPRequest request, System.AsyncCallback callback, object asyncState);
         
-        Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponse EndAllIssuesReport(System.IAsyncResult result);
+        Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPResponse EndExportDesWP(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExportISSUES", ReplyAction="*")]
+        System.IAsyncResult BeginExportISSUES(Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESResponse EndExportISSUES(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ApplyChanges", ReplyAction="*")]
         System.IAsyncResult BeginApplyChanges(Infocorp.TITA.SilverlightUI.WSTitaReference.ApplyChangesRequest request, System.AsyncCallback callback, object asyncState);
@@ -865,6 +880,21 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         System.IAsyncResult BeginHasPendingChanges(Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesRequest request, System.AsyncCallback callback, object asyncState);
         
         Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesResponse EndHasPendingChanges(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SiteMapPropertyValueWorkPackages", ReplyAction="*")]
+        System.IAsyncResult BeginSiteMapPropertyValueWorkPackages(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesResponse EndSiteMapPropertyValueWorkPackages(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SiteMapPropertyValueIssues", ReplyAction="*")]
+        System.IAsyncResult BeginSiteMapPropertyValueIssues(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesResponse EndSiteMapPropertyValueIssues(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SiteMapPropertyValueTasks", ReplyAction="*")]
+        System.IAsyncResult BeginSiteMapPropertyValueTasks(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksResponse EndSiteMapPropertyValueTasks(System.IAsyncResult result);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1266,6 +1296,70 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class IsContractAvailableRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="IsContractAvailable", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableRequestBody Body;
+        
+        public IsContractAvailableRequest() {
+        }
+        
+        public IsContractAvailableRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class IsContractAvailableRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string contractId;
+        
+        public IsContractAvailableRequestBody() {
+        }
+        
+        public IsContractAvailableRequestBody(string contractId) {
+            this.contractId = contractId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class IsContractAvailableResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="IsContractAvailableResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableResponseBody Body;
+        
+        public IsContractAvailableResponse() {
+        }
+        
+        public IsContractAvailableResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class IsContractAvailableResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool IsContractAvailableResult;
+        
+        public IsContractAvailableResponseBody() {
+        }
+        
+        public IsContractAvailableResponseBody(bool IsContractAvailableResult) {
+            this.IsContractAvailableResult = IsContractAvailableResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class AddNewContractRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="AddNewContract", Namespace="http://tempuri.org/", Order=0)]
@@ -1552,6 +1646,74 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     public partial class ModifyContractResponseBody {
         
         public ModifyContractResponseBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetIssuesWPRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetIssuesWP", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPRequestBody Body;
+        
+        public GetIssuesWPRequest() {
+        }
+        
+        public GetIssuesWPRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class GetIssuesWPRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string contractId;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string workpackageId;
+        
+        public GetIssuesWPRequestBody() {
+        }
+        
+        public GetIssuesWPRequestBody(string contractId, string workpackageId) {
+            this.contractId = contractId;
+            this.workpackageId = workpackageId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetIssuesWPResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetIssuesWPResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPResponseBody Body;
+        
+        public GetIssuesWPResponse() {
+        }
+        
+        public GetIssuesWPResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class GetIssuesWPResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem> GetIssuesWPResult;
+        
+        public GetIssuesWPResponseBody() {
+        }
+        
+        public GetIssuesWPResponseBody(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem> GetIssuesWPResult) {
+            this.GetIssuesWPResult = GetIssuesWPResult;
         }
     }
     
@@ -2324,15 +2486,15 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class AllIssuesReportRequest {
+    public partial class ExportDesWPRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="AllIssuesReport", Namespace="http://tempuri.org/", Order=0)]
-        public Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequestBody Body;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ExportDesWP", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPRequestBody Body;
         
-        public AllIssuesReportRequest() {
+        public ExportDesWPRequest() {
         }
         
-        public AllIssuesReportRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequestBody Body) {
+        public ExportDesWPRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPRequestBody Body) {
             this.Body = Body;
         }
     }
@@ -2340,35 +2502,56 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
-    public partial class AllIssuesReportRequestBody {
+    public partial class ExportDesWPRequestBody {
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
-        public System.DateTime fch_inicial;
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTWorkPackageReport> lst;
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-        public System.DateTime fch_final;
-        
-        public AllIssuesReportRequestBody() {
+        public ExportDesWPRequestBody() {
         }
         
-        public AllIssuesReportRequestBody(System.DateTime fch_inicial, System.DateTime fch_final) {
-            this.fch_inicial = fch_inicial;
-            this.fch_final = fch_final;
+        public ExportDesWPRequestBody(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTWorkPackageReport> lst) {
+            this.lst = lst;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class AllIssuesReportResponse {
+    public partial class ExportDesWPResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="AllIssuesReportResponse", Namespace="http://tempuri.org/", Order=0)]
-        public Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponseBody Body;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ExportDesWPResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPResponseBody Body;
         
-        public AllIssuesReportResponse() {
+        public ExportDesWPResponse() {
         }
         
-        public AllIssuesReportResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponseBody Body) {
+        public ExportDesWPResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class ExportDesWPResponseBody {
+        
+        public ExportDesWPResponseBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ExportISSUESRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ExportISSUES", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESRequestBody Body;
+        
+        public ExportISSUESRequest() {
+        }
+        
+        public ExportISSUESRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESRequestBody Body) {
             this.Body = Body;
         }
     }
@@ -2376,16 +2559,41 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
-    public partial class AllIssuesReportResponseBody {
+    public partial class ExportISSUESRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> AllIssuesReportResult;
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> lst;
         
-        public AllIssuesReportResponseBody() {
+        public ExportISSUESRequestBody() {
         }
         
-        public AllIssuesReportResponseBody(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> AllIssuesReportResult) {
-            this.AllIssuesReportResult = AllIssuesReportResult;
+        public ExportISSUESRequestBody(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> lst) {
+            this.lst = lst;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ExportISSUESResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ExportISSUESResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESResponseBody Body;
+        
+        public ExportISSUESResponse() {
+        }
+        
+        public ExportISSUESResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class ExportISSUESResponseBody {
+        
+        public ExportISSUESResponseBody() {
         }
     }
     
@@ -2514,6 +2722,213 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class SiteMapPropertyValueWorkPackagesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SiteMapPropertyValueWorkPackages", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesRequestBody Body;
+        
+        public SiteMapPropertyValueWorkPackagesRequest() {
+        }
+        
+        public SiteMapPropertyValueWorkPackagesRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class SiteMapPropertyValueWorkPackagesRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string idContract;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string property;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string initialValue;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        public string endValue;
+        
+        public SiteMapPropertyValueWorkPackagesRequestBody() {
+        }
+        
+        public SiteMapPropertyValueWorkPackagesRequestBody(string idContract, string property, string initialValue, string endValue) {
+            this.idContract = idContract;
+            this.property = property;
+            this.initialValue = initialValue;
+            this.endValue = endValue;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class SiteMapPropertyValueWorkPackagesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SiteMapPropertyValueWorkPackagesResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesResponseBody Body;
+        
+        public SiteMapPropertyValueWorkPackagesResponse() {
+        }
+        
+        public SiteMapPropertyValueWorkPackagesResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class SiteMapPropertyValueWorkPackagesResponseBody {
+        
+        public SiteMapPropertyValueWorkPackagesResponseBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class SiteMapPropertyValueIssuesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SiteMapPropertyValueIssues", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesRequestBody Body;
+        
+        public SiteMapPropertyValueIssuesRequest() {
+        }
+        
+        public SiteMapPropertyValueIssuesRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class SiteMapPropertyValueIssuesRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string idContract;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string property;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string initialValue;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        public string endValue;
+        
+        public SiteMapPropertyValueIssuesRequestBody() {
+        }
+        
+        public SiteMapPropertyValueIssuesRequestBody(string idContract, string property, string initialValue, string endValue) {
+            this.idContract = idContract;
+            this.property = property;
+            this.initialValue = initialValue;
+            this.endValue = endValue;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class SiteMapPropertyValueIssuesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SiteMapPropertyValueIssuesResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesResponseBody Body;
+        
+        public SiteMapPropertyValueIssuesResponse() {
+        }
+        
+        public SiteMapPropertyValueIssuesResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class SiteMapPropertyValueIssuesResponseBody {
+        
+        public SiteMapPropertyValueIssuesResponseBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class SiteMapPropertyValueTasksRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SiteMapPropertyValueTasks", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksRequestBody Body;
+        
+        public SiteMapPropertyValueTasksRequest() {
+        }
+        
+        public SiteMapPropertyValueTasksRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class SiteMapPropertyValueTasksRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string idContract;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string property;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string initialValue;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        public string endValue;
+        
+        public SiteMapPropertyValueTasksRequestBody() {
+        }
+        
+        public SiteMapPropertyValueTasksRequestBody(string idContract, string property, string initialValue, string endValue) {
+            this.idContract = idContract;
+            this.property = property;
+            this.initialValue = initialValue;
+            this.endValue = endValue;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class SiteMapPropertyValueTasksResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SiteMapPropertyValueTasksResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksResponseBody Body;
+        
+        public SiteMapPropertyValueTasksResponse() {
+        }
+        
+        public SiteMapPropertyValueTasksResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class SiteMapPropertyValueTasksResponseBody {
+        
+        public SiteMapPropertyValueTasksResponseBody() {
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
     public interface WSTitaSoapChannel : Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap, System.ServiceModel.IClientChannel {
     }
@@ -2558,6 +2973,25 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    public partial class IsContractAvailableCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public IsContractAvailableCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
     public partial class GetContractsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -2590,6 +3024,25 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    public partial class GetIssuesWPCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetIssuesWPCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem>)(this.results[0]));
             }
         }
     }
@@ -2710,25 +3163,6 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    public partial class AllIssuesReportCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public AllIssuesReportCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem>)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
     public partial class HasPendingChangesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -2786,6 +3220,12 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         private System.Threading.SendOrPostCallback onDeleteIssueCompletedDelegate;
         
+        private BeginOperationDelegate onBeginIsContractAvailableDelegate;
+        
+        private EndOperationDelegate onEndIsContractAvailableDelegate;
+        
+        private System.Threading.SendOrPostCallback onIsContractAvailableCompletedDelegate;
+        
         private BeginOperationDelegate onBeginAddNewContractDelegate;
         
         private EndOperationDelegate onEndAddNewContractDelegate;
@@ -2821,6 +3261,12 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         private EndOperationDelegate onEndModifyContractDelegate;
         
         private System.Threading.SendOrPostCallback onModifyContractCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetIssuesWPDelegate;
+        
+        private EndOperationDelegate onEndGetIssuesWPDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetIssuesWPCompletedDelegate;
         
         private BeginOperationDelegate onBeginGetWorkPackagesDelegate;
         
@@ -2894,11 +3340,17 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         private System.Threading.SendOrPostCallback onIssuesReportCompletedDelegate;
         
-        private BeginOperationDelegate onBeginAllIssuesReportDelegate;
+        private BeginOperationDelegate onBeginExportDesWPDelegate;
         
-        private EndOperationDelegate onEndAllIssuesReportDelegate;
+        private EndOperationDelegate onEndExportDesWPDelegate;
         
-        private System.Threading.SendOrPostCallback onAllIssuesReportCompletedDelegate;
+        private System.Threading.SendOrPostCallback onExportDesWPCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginExportISSUESDelegate;
+        
+        private EndOperationDelegate onEndExportISSUESDelegate;
+        
+        private System.Threading.SendOrPostCallback onExportISSUESCompletedDelegate;
         
         private BeginOperationDelegate onBeginApplyChangesDelegate;
         
@@ -2911,6 +3363,24 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         private EndOperationDelegate onEndHasPendingChangesDelegate;
         
         private System.Threading.SendOrPostCallback onHasPendingChangesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSiteMapPropertyValueWorkPackagesDelegate;
+        
+        private EndOperationDelegate onEndSiteMapPropertyValueWorkPackagesDelegate;
+        
+        private System.Threading.SendOrPostCallback onSiteMapPropertyValueWorkPackagesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSiteMapPropertyValueIssuesDelegate;
+        
+        private EndOperationDelegate onEndSiteMapPropertyValueIssuesDelegate;
+        
+        private System.Threading.SendOrPostCallback onSiteMapPropertyValueIssuesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSiteMapPropertyValueTasksDelegate;
+        
+        private EndOperationDelegate onEndSiteMapPropertyValueTasksDelegate;
+        
+        private System.Threading.SendOrPostCallback onSiteMapPropertyValueTasksCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -2955,6 +3425,8 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DeleteIssueCompleted;
         
+        public event System.EventHandler<IsContractAvailableCompletedEventArgs> IsContractAvailableCompleted;
+        
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddNewContractCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DeleteContractCompleted;
@@ -2966,6 +3438,8 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         public event System.EventHandler<GetContractSiteCompletedEventArgs> GetContractSiteCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ModifyContractCompleted;
+        
+        public event System.EventHandler<GetIssuesWPCompletedEventArgs> GetIssuesWPCompleted;
         
         public event System.EventHandler<GetWorkPackagesCompletedEventArgs> GetWorkPackagesCompleted;
         
@@ -2991,11 +3465,19 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         public event System.EventHandler<IssuesReportCompletedEventArgs> IssuesReportCompleted;
         
-        public event System.EventHandler<AllIssuesReportCompletedEventArgs> AllIssuesReportCompleted;
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ExportDesWPCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ExportISSUESCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ApplyChangesCompleted;
         
         public event System.EventHandler<HasPendingChangesCompletedEventArgs> HasPendingChangesCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> SiteMapPropertyValueWorkPackagesCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> SiteMapPropertyValueIssuesCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> SiteMapPropertyValueTasksCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -3384,6 +3866,66 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginIsContractAvailable(Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginIsContractAvailable(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private System.IAsyncResult BeginIsContractAvailable(string contractId, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableRequestBody();
+            inValue.Body.contractId = contractId;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginIsContractAvailable(inValue, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndIsContractAvailable(System.IAsyncResult result) {
+            return base.Channel.EndIsContractAvailable(result);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private bool EndIsContractAvailable(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndIsContractAvailable(result);
+            return retVal.Body.IsContractAvailableResult;
+        }
+        
+        private System.IAsyncResult OnBeginIsContractAvailable(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string contractId = ((string)(inValues[0]));
+            return this.BeginIsContractAvailable(contractId, callback, asyncState);
+        }
+        
+        private object[] OnEndIsContractAvailable(System.IAsyncResult result) {
+            bool retVal = this.EndIsContractAvailable(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnIsContractAvailableCompleted(object state) {
+            if ((this.IsContractAvailableCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.IsContractAvailableCompleted(this, new IsContractAvailableCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void IsContractAvailableAsync(string contractId) {
+            this.IsContractAvailableAsync(contractId, null);
+        }
+        
+        public void IsContractAvailableAsync(string contractId, object userState) {
+            if ((this.onBeginIsContractAvailableDelegate == null)) {
+                this.onBeginIsContractAvailableDelegate = new BeginOperationDelegate(this.OnBeginIsContractAvailable);
+            }
+            if ((this.onEndIsContractAvailableDelegate == null)) {
+                this.onEndIsContractAvailableDelegate = new EndOperationDelegate(this.OnEndIsContractAvailable);
+            }
+            if ((this.onIsContractAvailableCompletedDelegate == null)) {
+                this.onIsContractAvailableCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnIsContractAvailableCompleted);
+            }
+            base.InvokeAsync(this.onBeginIsContractAvailableDelegate, new object[] {
+                        contractId}, this.onEndIsContractAvailableDelegate, this.onIsContractAvailableCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginAddNewContract(Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractRequest request, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginAddNewContract(request, callback, asyncState);
         }
@@ -3717,6 +4259,69 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             }
             base.InvokeAsync(this.onBeginModifyContractDelegate, new object[] {
                         contract}, this.onEndModifyContractDelegate, this.onModifyContractCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginGetIssuesWP(Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetIssuesWP(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private System.IAsyncResult BeginGetIssuesWP(string contractId, string workpackageId, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPRequestBody();
+            inValue.Body.contractId = contractId;
+            inValue.Body.workpackageId = workpackageId;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginGetIssuesWP(inValue, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndGetIssuesWP(System.IAsyncResult result) {
+            return base.Channel.EndGetIssuesWP(result);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem> EndGetIssuesWP(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndGetIssuesWP(result);
+            return retVal.Body.GetIssuesWPResult;
+        }
+        
+        private System.IAsyncResult OnBeginGetIssuesWP(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string contractId = ((string)(inValues[0]));
+            string workpackageId = ((string)(inValues[1]));
+            return this.BeginGetIssuesWP(contractId, workpackageId, callback, asyncState);
+        }
+        
+        private object[] OnEndGetIssuesWP(System.IAsyncResult result) {
+            System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTItem> retVal = this.EndGetIssuesWP(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetIssuesWPCompleted(object state) {
+            if ((this.GetIssuesWPCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetIssuesWPCompleted(this, new GetIssuesWPCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetIssuesWPAsync(string contractId, string workpackageId) {
+            this.GetIssuesWPAsync(contractId, workpackageId, null);
+        }
+        
+        public void GetIssuesWPAsync(string contractId, string workpackageId, object userState) {
+            if ((this.onBeginGetIssuesWPDelegate == null)) {
+                this.onBeginGetIssuesWPDelegate = new BeginOperationDelegate(this.OnBeginGetIssuesWP);
+            }
+            if ((this.onEndGetIssuesWPDelegate == null)) {
+                this.onEndGetIssuesWPDelegate = new EndOperationDelegate(this.OnEndGetIssuesWP);
+            }
+            if ((this.onGetIssuesWPCompletedDelegate == null)) {
+                this.onGetIssuesWPCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetIssuesWPCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetIssuesWPDelegate, new object[] {
+                        contractId,
+                        workpackageId}, this.onEndGetIssuesWPDelegate, this.onGetIssuesWPCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4458,66 +5063,119 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginAllIssuesReport(Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequest request, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginAllIssuesReport(request, callback, asyncState);
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginExportDesWP(Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginExportDesWP(request, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        private System.IAsyncResult BeginAllIssuesReport(System.DateTime fch_inicial, System.DateTime fch_final, System.AsyncCallback callback, object asyncState) {
-            Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequest();
-            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequestBody();
-            inValue.Body.fch_inicial = fch_inicial;
-            inValue.Body.fch_final = fch_final;
-            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginAllIssuesReport(inValue, callback, asyncState);
+        private System.IAsyncResult BeginExportDesWP(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTWorkPackageReport> lst, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPRequestBody();
+            inValue.Body.lst = lst;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginExportDesWP(inValue, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndAllIssuesReport(System.IAsyncResult result) {
-            return base.Channel.EndAllIssuesReport(result);
+        Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndExportDesWP(System.IAsyncResult result) {
+            return base.Channel.EndExportDesWP(result);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        private System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> EndAllIssuesReport(System.IAsyncResult result) {
-            Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndAllIssuesReport(result);
-            return retVal.Body.AllIssuesReportResult;
+        private void EndExportDesWP(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndExportDesWP(result);
         }
         
-        private System.IAsyncResult OnBeginAllIssuesReport(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            System.DateTime fch_inicial = ((System.DateTime)(inValues[0]));
-            System.DateTime fch_final = ((System.DateTime)(inValues[1]));
-            return this.BeginAllIssuesReport(fch_inicial, fch_final, callback, asyncState);
+        private System.IAsyncResult OnBeginExportDesWP(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTWorkPackageReport> lst = ((System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTWorkPackageReport>)(inValues[0]));
+            return this.BeginExportDesWP(lst, callback, asyncState);
         }
         
-        private object[] OnEndAllIssuesReport(System.IAsyncResult result) {
-            System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> retVal = this.EndAllIssuesReport(result);
-            return new object[] {
-                    retVal};
+        private object[] OnEndExportDesWP(System.IAsyncResult result) {
+            this.EndExportDesWP(result);
+            return null;
         }
         
-        private void OnAllIssuesReportCompleted(object state) {
-            if ((this.AllIssuesReportCompleted != null)) {
+        private void OnExportDesWPCompleted(object state) {
+            if ((this.ExportDesWPCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.AllIssuesReportCompleted(this, new AllIssuesReportCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.ExportDesWPCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void AllIssuesReportAsync(System.DateTime fch_inicial, System.DateTime fch_final) {
-            this.AllIssuesReportAsync(fch_inicial, fch_final, null);
+        public void ExportDesWPAsync(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTWorkPackageReport> lst) {
+            this.ExportDesWPAsync(lst, null);
         }
         
-        public void AllIssuesReportAsync(System.DateTime fch_inicial, System.DateTime fch_final, object userState) {
-            if ((this.onBeginAllIssuesReportDelegate == null)) {
-                this.onBeginAllIssuesReportDelegate = new BeginOperationDelegate(this.OnBeginAllIssuesReport);
+        public void ExportDesWPAsync(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTWorkPackageReport> lst, object userState) {
+            if ((this.onBeginExportDesWPDelegate == null)) {
+                this.onBeginExportDesWPDelegate = new BeginOperationDelegate(this.OnBeginExportDesWP);
             }
-            if ((this.onEndAllIssuesReportDelegate == null)) {
-                this.onEndAllIssuesReportDelegate = new EndOperationDelegate(this.OnEndAllIssuesReport);
+            if ((this.onEndExportDesWPDelegate == null)) {
+                this.onEndExportDesWPDelegate = new EndOperationDelegate(this.OnEndExportDesWP);
             }
-            if ((this.onAllIssuesReportCompletedDelegate == null)) {
-                this.onAllIssuesReportCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAllIssuesReportCompleted);
+            if ((this.onExportDesWPCompletedDelegate == null)) {
+                this.onExportDesWPCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnExportDesWPCompleted);
             }
-            base.InvokeAsync(this.onBeginAllIssuesReportDelegate, new object[] {
-                        fch_inicial,
-                        fch_final}, this.onEndAllIssuesReportDelegate, this.onAllIssuesReportCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginExportDesWPDelegate, new object[] {
+                        lst}, this.onEndExportDesWPDelegate, this.onExportDesWPCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginExportISSUES(Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginExportISSUES(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private System.IAsyncResult BeginExportISSUES(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> lst, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESRequestBody();
+            inValue.Body.lst = lst;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginExportISSUES(inValue, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndExportISSUES(System.IAsyncResult result) {
+            return base.Channel.EndExportISSUES(result);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private void EndExportISSUES(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndExportISSUES(result);
+        }
+        
+        private System.IAsyncResult OnBeginExportISSUES(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> lst = ((System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem>)(inValues[0]));
+            return this.BeginExportISSUES(lst, callback, asyncState);
+        }
+        
+        private object[] OnEndExportISSUES(System.IAsyncResult result) {
+            this.EndExportISSUES(result);
+            return null;
+        }
+        
+        private void OnExportISSUESCompleted(object state) {
+            if ((this.ExportISSUESCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.ExportISSUESCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void ExportISSUESAsync(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> lst) {
+            this.ExportISSUESAsync(lst, null);
+        }
+        
+        public void ExportISSUESAsync(System.Collections.Generic.List<Infocorp.TITA.SilverlightUI.WSTitaReference.DTReportedItem> lst, object userState) {
+            if ((this.onBeginExportISSUESDelegate == null)) {
+                this.onBeginExportISSUESDelegate = new BeginOperationDelegate(this.OnBeginExportISSUES);
+            }
+            if ((this.onEndExportISSUESDelegate == null)) {
+                this.onEndExportISSUESDelegate = new EndOperationDelegate(this.OnEndExportISSUES);
+            }
+            if ((this.onExportISSUESCompletedDelegate == null)) {
+                this.onExportISSUESCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnExportISSUESCompleted);
+            }
+            base.InvokeAsync(this.onBeginExportISSUESDelegate, new object[] {
+                        lst}, this.onEndExportISSUESDelegate, this.onExportISSUESCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4639,6 +5297,207 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             }
             base.InvokeAsync(this.onBeginHasPendingChangesDelegate, new object[] {
                         url}, this.onEndHasPendingChangesDelegate, this.onHasPendingChangesCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginSiteMapPropertyValueWorkPackages(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSiteMapPropertyValueWorkPackages(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private System.IAsyncResult BeginSiteMapPropertyValueWorkPackages(string idContract, string property, string initialValue, string endValue, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesRequestBody();
+            inValue.Body.idContract = idContract;
+            inValue.Body.property = property;
+            inValue.Body.initialValue = initialValue;
+            inValue.Body.endValue = endValue;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginSiteMapPropertyValueWorkPackages(inValue, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndSiteMapPropertyValueWorkPackages(System.IAsyncResult result) {
+            return base.Channel.EndSiteMapPropertyValueWorkPackages(result);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private void EndSiteMapPropertyValueWorkPackages(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndSiteMapPropertyValueWorkPackages(result);
+        }
+        
+        private System.IAsyncResult OnBeginSiteMapPropertyValueWorkPackages(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string idContract = ((string)(inValues[0]));
+            string property = ((string)(inValues[1]));
+            string initialValue = ((string)(inValues[2]));
+            string endValue = ((string)(inValues[3]));
+            return this.BeginSiteMapPropertyValueWorkPackages(idContract, property, initialValue, endValue, callback, asyncState);
+        }
+        
+        private object[] OnEndSiteMapPropertyValueWorkPackages(System.IAsyncResult result) {
+            this.EndSiteMapPropertyValueWorkPackages(result);
+            return null;
+        }
+        
+        private void OnSiteMapPropertyValueWorkPackagesCompleted(object state) {
+            if ((this.SiteMapPropertyValueWorkPackagesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SiteMapPropertyValueWorkPackagesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SiteMapPropertyValueWorkPackagesAsync(string idContract, string property, string initialValue, string endValue) {
+            this.SiteMapPropertyValueWorkPackagesAsync(idContract, property, initialValue, endValue, null);
+        }
+        
+        public void SiteMapPropertyValueWorkPackagesAsync(string idContract, string property, string initialValue, string endValue, object userState) {
+            if ((this.onBeginSiteMapPropertyValueWorkPackagesDelegate == null)) {
+                this.onBeginSiteMapPropertyValueWorkPackagesDelegate = new BeginOperationDelegate(this.OnBeginSiteMapPropertyValueWorkPackages);
+            }
+            if ((this.onEndSiteMapPropertyValueWorkPackagesDelegate == null)) {
+                this.onEndSiteMapPropertyValueWorkPackagesDelegate = new EndOperationDelegate(this.OnEndSiteMapPropertyValueWorkPackages);
+            }
+            if ((this.onSiteMapPropertyValueWorkPackagesCompletedDelegate == null)) {
+                this.onSiteMapPropertyValueWorkPackagesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSiteMapPropertyValueWorkPackagesCompleted);
+            }
+            base.InvokeAsync(this.onBeginSiteMapPropertyValueWorkPackagesDelegate, new object[] {
+                        idContract,
+                        property,
+                        initialValue,
+                        endValue}, this.onEndSiteMapPropertyValueWorkPackagesDelegate, this.onSiteMapPropertyValueWorkPackagesCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginSiteMapPropertyValueIssues(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSiteMapPropertyValueIssues(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private System.IAsyncResult BeginSiteMapPropertyValueIssues(string idContract, string property, string initialValue, string endValue, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesRequestBody();
+            inValue.Body.idContract = idContract;
+            inValue.Body.property = property;
+            inValue.Body.initialValue = initialValue;
+            inValue.Body.endValue = endValue;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginSiteMapPropertyValueIssues(inValue, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndSiteMapPropertyValueIssues(System.IAsyncResult result) {
+            return base.Channel.EndSiteMapPropertyValueIssues(result);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private void EndSiteMapPropertyValueIssues(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndSiteMapPropertyValueIssues(result);
+        }
+        
+        private System.IAsyncResult OnBeginSiteMapPropertyValueIssues(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string idContract = ((string)(inValues[0]));
+            string property = ((string)(inValues[1]));
+            string initialValue = ((string)(inValues[2]));
+            string endValue = ((string)(inValues[3]));
+            return this.BeginSiteMapPropertyValueIssues(idContract, property, initialValue, endValue, callback, asyncState);
+        }
+        
+        private object[] OnEndSiteMapPropertyValueIssues(System.IAsyncResult result) {
+            this.EndSiteMapPropertyValueIssues(result);
+            return null;
+        }
+        
+        private void OnSiteMapPropertyValueIssuesCompleted(object state) {
+            if ((this.SiteMapPropertyValueIssuesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SiteMapPropertyValueIssuesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SiteMapPropertyValueIssuesAsync(string idContract, string property, string initialValue, string endValue) {
+            this.SiteMapPropertyValueIssuesAsync(idContract, property, initialValue, endValue, null);
+        }
+        
+        public void SiteMapPropertyValueIssuesAsync(string idContract, string property, string initialValue, string endValue, object userState) {
+            if ((this.onBeginSiteMapPropertyValueIssuesDelegate == null)) {
+                this.onBeginSiteMapPropertyValueIssuesDelegate = new BeginOperationDelegate(this.OnBeginSiteMapPropertyValueIssues);
+            }
+            if ((this.onEndSiteMapPropertyValueIssuesDelegate == null)) {
+                this.onEndSiteMapPropertyValueIssuesDelegate = new EndOperationDelegate(this.OnEndSiteMapPropertyValueIssues);
+            }
+            if ((this.onSiteMapPropertyValueIssuesCompletedDelegate == null)) {
+                this.onSiteMapPropertyValueIssuesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSiteMapPropertyValueIssuesCompleted);
+            }
+            base.InvokeAsync(this.onBeginSiteMapPropertyValueIssuesDelegate, new object[] {
+                        idContract,
+                        property,
+                        initialValue,
+                        endValue}, this.onEndSiteMapPropertyValueIssuesDelegate, this.onSiteMapPropertyValueIssuesCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginSiteMapPropertyValueTasks(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSiteMapPropertyValueTasks(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private System.IAsyncResult BeginSiteMapPropertyValueTasks(string idContract, string property, string initialValue, string endValue, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksRequestBody();
+            inValue.Body.idContract = idContract;
+            inValue.Body.property = property;
+            inValue.Body.initialValue = initialValue;
+            inValue.Body.endValue = endValue;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginSiteMapPropertyValueTasks(inValue, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndSiteMapPropertyValueTasks(System.IAsyncResult result) {
+            return base.Channel.EndSiteMapPropertyValueTasks(result);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private void EndSiteMapPropertyValueTasks(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndSiteMapPropertyValueTasks(result);
+        }
+        
+        private System.IAsyncResult OnBeginSiteMapPropertyValueTasks(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string idContract = ((string)(inValues[0]));
+            string property = ((string)(inValues[1]));
+            string initialValue = ((string)(inValues[2]));
+            string endValue = ((string)(inValues[3]));
+            return this.BeginSiteMapPropertyValueTasks(idContract, property, initialValue, endValue, callback, asyncState);
+        }
+        
+        private object[] OnEndSiteMapPropertyValueTasks(System.IAsyncResult result) {
+            this.EndSiteMapPropertyValueTasks(result);
+            return null;
+        }
+        
+        private void OnSiteMapPropertyValueTasksCompleted(object state) {
+            if ((this.SiteMapPropertyValueTasksCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SiteMapPropertyValueTasksCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SiteMapPropertyValueTasksAsync(string idContract, string property, string initialValue, string endValue) {
+            this.SiteMapPropertyValueTasksAsync(idContract, property, initialValue, endValue, null);
+        }
+        
+        public void SiteMapPropertyValueTasksAsync(string idContract, string property, string initialValue, string endValue, object userState) {
+            if ((this.onBeginSiteMapPropertyValueTasksDelegate == null)) {
+                this.onBeginSiteMapPropertyValueTasksDelegate = new BeginOperationDelegate(this.OnBeginSiteMapPropertyValueTasks);
+            }
+            if ((this.onEndSiteMapPropertyValueTasksDelegate == null)) {
+                this.onEndSiteMapPropertyValueTasksDelegate = new EndOperationDelegate(this.OnEndSiteMapPropertyValueTasks);
+            }
+            if ((this.onSiteMapPropertyValueTasksCompletedDelegate == null)) {
+                this.onSiteMapPropertyValueTasksCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSiteMapPropertyValueTasksCompleted);
+            }
+            base.InvokeAsync(this.onBeginSiteMapPropertyValueTasksDelegate, new object[] {
+                        idContract,
+                        property,
+                        initialValue,
+                        endValue}, this.onEndSiteMapPropertyValueTasksDelegate, this.onSiteMapPropertyValueTasksCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -4795,6 +5654,19 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
                 return _result;
             }
             
+            public System.IAsyncResult BeginIsContractAvailable(Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("IsContractAvailable", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableResponse EndIsContractAvailable(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.IsContractAvailableResponse)(base.EndInvoke("IsContractAvailable", _args, result)));
+                return _result;
+            }
+            
             public System.IAsyncResult BeginAddNewContract(Infocorp.TITA.SilverlightUI.WSTitaReference.AddNewContractRequest request, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
                 _args[0] = request;
@@ -4869,6 +5741,19 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             public Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse EndModifyContract(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.ModifyContractResponse)(base.EndInvoke("ModifyContract", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetIssuesWP(Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("GetIssuesWP", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPResponse EndGetIssuesWP(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPResponse)(base.EndInvoke("GetIssuesWP", _args, result)));
                 return _result;
             }
             
@@ -5028,16 +5913,29 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
                 return _result;
             }
             
-            public System.IAsyncResult BeginAllIssuesReport(Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportRequest request, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginExportDesWP(Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPRequest request, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
                 _args[0] = request;
-                System.IAsyncResult _result = base.BeginInvoke("AllIssuesReport", _args, callback, asyncState);
+                System.IAsyncResult _result = base.BeginInvoke("ExportDesWP", _args, callback, asyncState);
                 return _result;
             }
             
-            public Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponse EndAllIssuesReport(System.IAsyncResult result) {
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPResponse EndExportDesWP(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.AllIssuesReportResponse)(base.EndInvoke("AllIssuesReport", _args, result)));
+                Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPResponse)(base.EndInvoke("ExportDesWP", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginExportISSUES(Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("ExportISSUES", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESResponse EndExportISSUES(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESResponse)(base.EndInvoke("ExportISSUES", _args, result)));
                 return _result;
             }
             
@@ -5064,6 +5962,45 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             public Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesResponse EndHasPendingChanges(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.HasPendingChangesResponse)(base.EndInvoke("HasPendingChanges", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginSiteMapPropertyValueWorkPackages(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("SiteMapPropertyValueWorkPackages", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesResponse EndSiteMapPropertyValueWorkPackages(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueWorkPackagesResponse)(base.EndInvoke("SiteMapPropertyValueWorkPackages", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginSiteMapPropertyValueIssues(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("SiteMapPropertyValueIssues", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesResponse EndSiteMapPropertyValueIssues(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueIssuesResponse)(base.EndInvoke("SiteMapPropertyValueIssues", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginSiteMapPropertyValueTasks(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("SiteMapPropertyValueTasks", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksResponse EndSiteMapPropertyValueTasks(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksResponse)(base.EndInvoke("SiteMapPropertyValueTasks", _args, result)));
                 return _result;
             }
         }

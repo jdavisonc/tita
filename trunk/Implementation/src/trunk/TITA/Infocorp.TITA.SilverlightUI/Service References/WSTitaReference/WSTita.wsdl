@@ -208,6 +208,20 @@
       <s:element name="DeleteIssueResponse">
         <s:complexType />
       </s:element>
+      <s:element name="IsContractAvailable">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="contractId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsContractAvailableResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="IsContractAvailableResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="AddNewContract">
         <s:complexType>
           <s:sequence>
@@ -286,6 +300,21 @@
       </s:element>
       <s:element name="ModifyContractResponse">
         <s:complexType />
+      </s:element>
+      <s:element name="GetIssuesWP">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="contractId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="workpackageId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetIssuesWPResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetIssuesWPResult" type="tns:ArrayOfDTItem" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
       <s:element name="GetWorkPackages">
         <s:complexType>
@@ -466,20 +495,25 @@
           <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int" />
         </s:sequence>
       </s:complexType>
-      <s:element name="AllIssuesReport">
+      <s:element name="ExportDesWP">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="fch_inicial" type="s:dateTime" />
-            <s:element minOccurs="1" maxOccurs="1" name="fch_final" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="lst" type="tns:ArrayOfDTWorkPackageReport" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="AllIssuesReportResponse">
+      <s:element name="ExportDesWPResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ExportISSUES">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="AllIssuesReportResult" type="tns:ArrayOfDTReportedItem" />
+            <s:element minOccurs="0" maxOccurs="1" name="lst" type="tns:ArrayOfDTReportedItem" />
           </s:sequence>
         </s:complexType>
+      </s:element>
+      <s:element name="ExportISSUESResponse">
+        <s:complexType />
       </s:element>
       <s:element name="ApplyChanges">
         <s:complexType>
@@ -512,6 +546,45 @@
             <s:element minOccurs="1" maxOccurs="1" name="HasPendingChangesResult" type="s:boolean" />
           </s:sequence>
         </s:complexType>
+      </s:element>
+      <s:element name="SiteMapPropertyValueWorkPackages">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idContract" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="property" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="initialValue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="endValue" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SiteMapPropertyValueWorkPackagesResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SiteMapPropertyValueIssues">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idContract" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="property" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="initialValue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="endValue" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SiteMapPropertyValueIssuesResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SiteMapPropertyValueTasks">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idContract" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="property" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="initialValue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="endValue" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SiteMapPropertyValueTasksResponse">
+        <s:complexType />
       </s:element>
     </s:schema>
   </wsdl:types>
@@ -551,6 +624,12 @@
   <wsdl:message name="DeleteIssueSoapOut">
     <wsdl:part name="parameters" element="tns:DeleteIssueResponse" />
   </wsdl:message>
+  <wsdl:message name="IsContractAvailableSoapIn">
+    <wsdl:part name="parameters" element="tns:IsContractAvailable" />
+  </wsdl:message>
+  <wsdl:message name="IsContractAvailableSoapOut">
+    <wsdl:part name="parameters" element="tns:IsContractAvailableResponse" />
+  </wsdl:message>
   <wsdl:message name="AddNewContractSoapIn">
     <wsdl:part name="parameters" element="tns:AddNewContract" />
   </wsdl:message>
@@ -586,6 +665,12 @@
   </wsdl:message>
   <wsdl:message name="ModifyContractSoapOut">
     <wsdl:part name="parameters" element="tns:ModifyContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetIssuesWPSoapIn">
+    <wsdl:part name="parameters" element="tns:GetIssuesWP" />
+  </wsdl:message>
+  <wsdl:message name="GetIssuesWPSoapOut">
+    <wsdl:part name="parameters" element="tns:GetIssuesWPResponse" />
   </wsdl:message>
   <wsdl:message name="GetWorkPackagesSoapIn">
     <wsdl:part name="parameters" element="tns:GetWorkPackages" />
@@ -659,11 +744,17 @@
   <wsdl:message name="IssuesReportSoapOut">
     <wsdl:part name="parameters" element="tns:IssuesReportResponse" />
   </wsdl:message>
-  <wsdl:message name="AllIssuesReportSoapIn">
-    <wsdl:part name="parameters" element="tns:AllIssuesReport" />
+  <wsdl:message name="ExportDesWPSoapIn">
+    <wsdl:part name="parameters" element="tns:ExportDesWP" />
   </wsdl:message>
-  <wsdl:message name="AllIssuesReportSoapOut">
-    <wsdl:part name="parameters" element="tns:AllIssuesReportResponse" />
+  <wsdl:message name="ExportDesWPSoapOut">
+    <wsdl:part name="parameters" element="tns:ExportDesWPResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExportISSUESSoapIn">
+    <wsdl:part name="parameters" element="tns:ExportISSUES" />
+  </wsdl:message>
+  <wsdl:message name="ExportISSUESSoapOut">
+    <wsdl:part name="parameters" element="tns:ExportISSUESResponse" />
   </wsdl:message>
   <wsdl:message name="ApplyChangesSoapIn">
     <wsdl:part name="parameters" element="tns:ApplyChanges" />
@@ -676,6 +767,24 @@
   </wsdl:message>
   <wsdl:message name="HasPendingChangesSoapOut">
     <wsdl:part name="parameters" element="tns:HasPendingChangesResponse" />
+  </wsdl:message>
+  <wsdl:message name="SiteMapPropertyValueWorkPackagesSoapIn">
+    <wsdl:part name="parameters" element="tns:SiteMapPropertyValueWorkPackages" />
+  </wsdl:message>
+  <wsdl:message name="SiteMapPropertyValueWorkPackagesSoapOut">
+    <wsdl:part name="parameters" element="tns:SiteMapPropertyValueWorkPackagesResponse" />
+  </wsdl:message>
+  <wsdl:message name="SiteMapPropertyValueIssuesSoapIn">
+    <wsdl:part name="parameters" element="tns:SiteMapPropertyValueIssues" />
+  </wsdl:message>
+  <wsdl:message name="SiteMapPropertyValueIssuesSoapOut">
+    <wsdl:part name="parameters" element="tns:SiteMapPropertyValueIssuesResponse" />
+  </wsdl:message>
+  <wsdl:message name="SiteMapPropertyValueTasksSoapIn">
+    <wsdl:part name="parameters" element="tns:SiteMapPropertyValueTasks" />
+  </wsdl:message>
+  <wsdl:message name="SiteMapPropertyValueTasksSoapOut">
+    <wsdl:part name="parameters" element="tns:SiteMapPropertyValueTasksResponse" />
   </wsdl:message>
   <wsdl:portType name="WSTitaSoap">
     <wsdl:operation name="ExtendedDTS">
@@ -702,6 +811,10 @@
       <wsdl:input message="tns:DeleteIssueSoapIn" />
       <wsdl:output message="tns:DeleteIssueSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="IsContractAvailable">
+      <wsdl:input message="tns:IsContractAvailableSoapIn" />
+      <wsdl:output message="tns:IsContractAvailableSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="AddNewContract">
       <wsdl:input message="tns:AddNewContractSoapIn" />
       <wsdl:output message="tns:AddNewContractSoapOut" />
@@ -725,6 +838,10 @@
     <wsdl:operation name="ModifyContract">
       <wsdl:input message="tns:ModifyContractSoapIn" />
       <wsdl:output message="tns:ModifyContractSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIssuesWP">
+      <wsdl:input message="tns:GetIssuesWPSoapIn" />
+      <wsdl:output message="tns:GetIssuesWPSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="GetWorkPackages">
       <wsdl:input message="tns:GetWorkPackagesSoapIn" />
@@ -774,9 +891,13 @@
       <wsdl:input message="tns:IssuesReportSoapIn" />
       <wsdl:output message="tns:IssuesReportSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="AllIssuesReport">
-      <wsdl:input message="tns:AllIssuesReportSoapIn" />
-      <wsdl:output message="tns:AllIssuesReportSoapOut" />
+    <wsdl:operation name="ExportDesWP">
+      <wsdl:input message="tns:ExportDesWPSoapIn" />
+      <wsdl:output message="tns:ExportDesWPSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExportISSUES">
+      <wsdl:input message="tns:ExportISSUESSoapIn" />
+      <wsdl:output message="tns:ExportISSUESSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="ApplyChanges">
       <wsdl:input message="tns:ApplyChangesSoapIn" />
@@ -785,6 +906,18 @@
     <wsdl:operation name="HasPendingChanges">
       <wsdl:input message="tns:HasPendingChangesSoapIn" />
       <wsdl:output message="tns:HasPendingChangesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SiteMapPropertyValueWorkPackages">
+      <wsdl:input message="tns:SiteMapPropertyValueWorkPackagesSoapIn" />
+      <wsdl:output message="tns:SiteMapPropertyValueWorkPackagesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SiteMapPropertyValueIssues">
+      <wsdl:input message="tns:SiteMapPropertyValueIssuesSoapIn" />
+      <wsdl:output message="tns:SiteMapPropertyValueIssuesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SiteMapPropertyValueTasks">
+      <wsdl:input message="tns:SiteMapPropertyValueTasksSoapIn" />
+      <wsdl:output message="tns:SiteMapPropertyValueTasksSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSTitaSoap" type="tns:WSTitaSoap">
@@ -843,6 +976,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="IsContractAvailable">
+      <soap:operation soapAction="http://tempuri.org/IsContractAvailable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="AddNewContract">
       <soap:operation soapAction="http://tempuri.org/AddNewContract" style="document" />
       <wsdl:input>
@@ -890,6 +1032,15 @@
     </wsdl:operation>
     <wsdl:operation name="ModifyContract">
       <soap:operation soapAction="http://tempuri.org/ModifyContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIssuesWP">
+      <soap:operation soapAction="http://tempuri.org/GetIssuesWP" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1005,8 +1156,17 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AllIssuesReport">
-      <soap:operation soapAction="http://tempuri.org/AllIssuesReport" style="document" />
+    <wsdl:operation name="ExportDesWP">
+      <soap:operation soapAction="http://tempuri.org/ExportDesWP" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExportISSUES">
+      <soap:operation soapAction="http://tempuri.org/ExportISSUES" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1025,6 +1185,33 @@
     </wsdl:operation>
     <wsdl:operation name="HasPendingChanges">
       <soap:operation soapAction="http://tempuri.org/HasPendingChanges" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SiteMapPropertyValueWorkPackages">
+      <soap:operation soapAction="http://tempuri.org/SiteMapPropertyValueWorkPackages" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SiteMapPropertyValueIssues">
+      <soap:operation soapAction="http://tempuri.org/SiteMapPropertyValueIssues" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SiteMapPropertyValueTasks">
+      <soap:operation soapAction="http://tempuri.org/SiteMapPropertyValueTasks" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1089,6 +1276,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="IsContractAvailable">
+      <soap12:operation soapAction="http://tempuri.org/IsContractAvailable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="AddNewContract">
       <soap12:operation soapAction="http://tempuri.org/AddNewContract" style="document" />
       <wsdl:input>
@@ -1136,6 +1332,15 @@
     </wsdl:operation>
     <wsdl:operation name="ModifyContract">
       <soap12:operation soapAction="http://tempuri.org/ModifyContract" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIssuesWP">
+      <soap12:operation soapAction="http://tempuri.org/GetIssuesWP" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1251,8 +1456,17 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AllIssuesReport">
-      <soap12:operation soapAction="http://tempuri.org/AllIssuesReport" style="document" />
+    <wsdl:operation name="ExportDesWP">
+      <soap12:operation soapAction="http://tempuri.org/ExportDesWP" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExportISSUES">
+      <soap12:operation soapAction="http://tempuri.org/ExportISSUES" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1271,6 +1485,33 @@
     </wsdl:operation>
     <wsdl:operation name="HasPendingChanges">
       <soap12:operation soapAction="http://tempuri.org/HasPendingChanges" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SiteMapPropertyValueWorkPackages">
+      <soap12:operation soapAction="http://tempuri.org/SiteMapPropertyValueWorkPackages" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SiteMapPropertyValueIssues">
+      <soap12:operation soapAction="http://tempuri.org/SiteMapPropertyValueIssues" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SiteMapPropertyValueTasks">
+      <soap12:operation soapAction="http://tempuri.org/SiteMapPropertyValueTasks" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

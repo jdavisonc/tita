@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     xmlns:Infocorp_TITA_Controls_Silverlight_V2="clr-namespace:Infocorp.TITA.Controls.Silverlight.V2;assembly=Infocorp.TITA.Controls.Silverlight.V2"
     Width="Auto" Height="Auto" 
-    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows" Background="#FF171515" xmlns:Infocorp_TITA_Controls_Silverlight_V21="clr-namespace:Infocorp.TITA.Controls.Silverlight.V2;assembly=Infocorp.TITA.Controls.Silverlight.V2.Pager">
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows" Background="#FF171515" xmlns:Infocorp_TITA_Controls_Silverlight_V21="clr-namespace:Infocorp.TITA.Controls.Silverlight.V2;assembly=Infocorp.TITA.Controls.Silverlight.V2.Pager" xmlns:Infocorp_TITA_SilverlightUI_UserControls="clr-namespace:Infocorp.TITA.SilverlightUI.UserControls">
 
     <!--MENUNuevo-->
     <UserControl.Resources>
@@ -349,31 +349,30 @@
     
     <Grid x:Name="GridPrincipal" Margin="50,0,0,0" Background="#FFFFFFFF" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Visible">
     	<Grid.RowDefinitions>
-    		<RowDefinition Height="0.443*"/>
-    		<RowDefinition Height="0.557*"/>
+    		<RowDefinition Height="*"/>
     	</Grid.RowDefinitions>
 
         <!--CABEZAL-->
         <Rectangle Height="80" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Fill="#FFFBFAFA" Stroke="#FF000000" x:Name="cabezal" StrokeThickness="0"/>
         <Image Source="imgs/logo.jpg" x:Name="img_cabezal" Margin="-1.286,21,0,0" Width="275.428" VerticalAlignment="Top" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment" Height="64.267"  />
  
-        <Grid Width="222" HorizontalAlignment="Left" VerticalAlignment="Stretch"  RenderTransformOrigin="0.5,0.5" Margin="-5,85,0,-65" Grid.RowSpan="2">
+        <Grid Width="222" HorizontalAlignment="Left" VerticalAlignment="Stretch"  RenderTransformOrigin="0.5,0.5" Margin="-5,85,0,-65">
             <Infocorp_TITA_Controls_Silverlight_V2:Accordion x:Name="acc" Height="500" Style="{StaticResource AccordionStyle1}" Margin="0,18,7,82"/>
             <Button x:Name="BtnListOpportunities" Width="150" Content="List Opportunities" Margin="25,284,25,294" Opacity="0"/>
             <Button x:Name="BtnListContacts" Width="150" Content="List Contacts" Height="22" Margin="25,250,25,0" VerticalAlignment="Top" Opacity="0"/>
             <Button x:Name="BtnListAccounts" Width="150" Content="List Accounts" Height="22" Margin="25,214,25,0" VerticalAlignment="Top" Opacity="0"/>
         </Grid>
         
-        <StackPanel x:Name="logo" Margin="385,0,269,234" VerticalAlignment="Bottom" Width="335.828" HorizontalAlignment="Stretch" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment, Width" Height="100" Grid.Row="1">
+        <StackPanel x:Name="logo" Margin="385,0,269,233" VerticalAlignment="Bottom" Width="335.828" HorizontalAlignment="Stretch" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment, Width" Height="100">
             <Image Source="imgs/logo.jpg" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" />
         </StackPanel>
         
-        <TextBlock Margin="18,84,0,0"  VerticalAlignment="Top" x:Name="lblPending" Visibility="Collapsed" Width="112" HorizontalAlignment="Left" Height="26" d:LayoutOverrides="VerticalAlignment" Grid.Row="1"/>
+        <TextBlock Margin="18,279,0,0"  VerticalAlignment="Top" x:Name="lblPending" Visibility="Collapsed" Width="112" HorizontalAlignment="Left" Height="26" d:LayoutOverrides="VerticalAlignment"/>
         
        <!--WP--> 
-        <ScrollViewer x:Name="scroll_WP" Margin="-4.286,106,4.286,-21" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" Opacity="1" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="2">
+        <ScrollViewer x:Name="scroll_WP" Margin="-4.286,106,4.286,-21" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" Opacity="1" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch">
         	<StackPanel x:Name="CanvasWP" Background="White"  Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
-        		<TextBlock x:Name="titulo_wp" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Workpackage" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"></TextBlock>
+        		<TextBlock x:Name="titulo_wp" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Workpackage" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <my:DataGrid x:Name="grd_WP" BorderThickness="0,0,0,0" AutoGenerateColumns="True" Width="870" Height="150"/>
                 <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_wp" Margin="400,10,0,0" PageSize="5"/>
                 <my:DataGrid x:Name="grd_INCIDENT_WP" Visibility="Collapsed" BorderThickness="0,0,0,0" Margin="0,20,0,0" AutoGenerateColumns="True" Width="870" Height="150"/>
@@ -396,9 +395,9 @@
         </ScrollViewer>
 
         <!--CONTRATO -->
-        <ScrollViewer Margin="-4.286,106,4.286,-21" Visibility="Collapsed" x:Name="scroll_CONTRACT" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="2">
+        <ScrollViewer Margin="-4.286,106,4.286,-21" Visibility="Collapsed" x:Name="scroll_CONTRACT" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch">
             <StackPanel x:Name="pnl_Contrato" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
-               <TextBlock x:Name="titulo_Contratos" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Contratos" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"></TextBlock>
+               <TextBlock x:Name="titulo_Contratos" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Contratos" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                <my:DataGrid x:Name="lstContratos" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,5" BorderThickness="0,0,0,0" AutoGenerateColumns="True" Visibility="Collapsed" Width="575" Height="150"/>
                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_contratos" Margin="300,10,0,0" VerticalAlignment="Bottom" PageSize="5"/>
                 <TextBlock Margin="18,60,0,0" x:Name="lblConectContract" Visibility="Collapsed"/>            
@@ -432,9 +431,9 @@
         </ScrollViewer>
 
         <!--INCIDENTE -->
-        <ScrollViewer Margin="-4.286,106,4.286,-21"  d:LayoutOverrides="HorizontalAlignment" Visibility="Visible" x:Name="scroll_INCIDENT" BorderThickness="0,0,0,0" Grid.RowSpan="2">
+        <ScrollViewer Margin="-4.286,106,4.286,-21"  d:LayoutOverrides="HorizontalAlignment" Visibility="Visible" x:Name="scroll_INCIDENT" BorderThickness="0,0,0,0">
             <StackPanel x:Name="CanvasIncident" Visibility="Collapsed" Background="White" Width="auto" Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
-                <TextBlock x:Name="titulo_Incidentes" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Incidentes" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"></TextBlock>
+                <TextBlock x:Name="titulo_Incidentes" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Incidentes" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <my:DataGrid x:Name="grd_INCIDENT" Margin="20,0,0,5"  VerticalAlignment="Top"  HorizontalAlignment="Left" BorderThickness="0,0,0,0" AutoGenerateColumns="True" Width="870" Height="150"/>
                 <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager" Margin="400,10,0,0" VerticalAlignment="Bottom" PageSize="5"/>
                 <StackPanel  x:Name="PnlbtnEdits" Background="White" Width="auto" Visibility="Collapsed">
@@ -458,9 +457,9 @@
         </ScrollViewer>
         
         <!--TASKS -->
-        <ScrollViewer Margin="-4.286,106,4.286,-21" d:LayoutOverrides="HorizontalAlignment" Visibility="Visible" x:Name="scroll_TASK" BorderThickness="0,0,0,0" Grid.RowSpan="2">
+        <ScrollViewer Margin="-4.286,106,4.286,-21" d:LayoutOverrides="HorizontalAlignment" Visibility="Visible" x:Name="scroll_TASK" BorderThickness="0,0,0,0">
             <StackPanel x:Name="CanvasTASK" Background="White" Width="auto" Height="auto" Visibility="Collapsed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
-                <TextBlock x:Name="titulo_Task" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Tasks" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"></TextBlock>
+                <TextBlock x:Name="titulo_Task" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Tasks" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <my:DataGrid x:Name="grd_TASK" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="20,0,0,5" BorderThickness="0,0,0,0" AutoGenerateColumns="True" Width="800" Height="160"/>
                 <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_tasks" Margin="400,10,0,0" PageSize="5"/>
                 <StackPanel  x:Name="PnlOption_TASK" Width="auto" Height="auto" Visibility="Visible" Orientation="Horizontal">
@@ -480,9 +479,9 @@
         </ScrollViewer>
      
         <!--Reports--> 
-        <ScrollViewer x:Name="scroll_REPORT" Margin="-4.286,106,4.286,-21" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" Opacity="1" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="2">
+        <ScrollViewer x:Name="scroll_REPORT" Margin="-4.286,106,4.286,-21" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" Opacity="1" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch">
             <StackPanel x:Name="CanvasREPORT" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
-                <TextBlock x:Name="titulo_Reporte" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Reportes" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"></TextBlock>
+                <TextBlock x:Name="titulo_Reporte" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Reportes" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <my:DataGrid x:Name="contractsReport" BorderThickness="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,5" Visibility="Collapsed" AutoGenerateColumns="True" Width="auto"/> 
                 <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_contractsReport" Margin="400,10,0,0" PageSize="5"/>
                 <StackPanel x:Name="PnlOptionREPORT" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal" Margin="20,0,0,15">
@@ -502,9 +501,31 @@
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
-        
+
+        <!--Mapeo de Valores-->
+        <ScrollViewer Margin="-4.286,106,4.286,-21" d:LayoutOverrides="HorizontalAlignment" Visibility="Visible" x:Name="scroll_Map" BorderThickness="0,0,0,0">
+            <StackPanel x:Name="CanvasMap" Background="White" Width="auto" Height="auto" Visibility="Collapsed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
+                <TextBlock x:Name="titulo_Map" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
+                <StackPanel  x:Name="PnlForm_Map" Margin="20,0,0,10" Width="auto" Height="auto" Orientation="Horizontal" Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel VerticalAlignment="Top" Margin="0,15,0,0">
+                        <TextBlock x:Name="txt_property_map" Text="Property" Margin="0,20,0,8" HorizontalAlignment="Left" Height="22" Width="140"/>
+                        <TextBlock x:Name="txt_initialValue_map" Text="Initial Value" Margin="0,20,0,8" HorizontalAlignment="Left" Height="22" Width="140"/>
+                        <TextBlock x:Name="txt_endValue_map" Text="End Value" Margin="0,20,0,8" HorizontalAlignment="Left" Height="22" Width="140"/>
+                    </StackPanel>
+                    <StackPanel VerticalAlignment="Top" Margin="0,15,0,0">
+                        <ComboBox x:Name="cmbx_property_map" Margin="0,20,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
+                        <ComboBox x:Name="cmbx_initialValue_map" Margin="0,20,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
+                        <TextBox x:Name="bx_endValue_map" Margin="0,20,0,8"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,5" x:Name="PnlActionMap" Width="auto" Visibility="Collapsed" Orientation="Horizontal" Height="91" d:LayoutOverrides="Width">
+                    <Button  Content="Mapear" VerticalAlignment="Center"  Visibility="Collapsed" Click="BtnMap_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnMap" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
         <!--Error -->
-        <Canvas x:Name="CanvasError" Margin="200,65.5,390,0" Visibility="Visible" VerticalAlignment="Top" Width="400" d:LayoutOverrides="Width, Margin" Grid.Row="1"> 
+        <Canvas x:Name="CanvasError" Margin="200,260.5,390,0" Visibility="Visible" VerticalAlignment="Top" Width="400" d:LayoutOverrides="Width"> 
             <TextBlock x:Name="lblError" Visibility="Visible"/>
         </Canvas>
         
@@ -515,6 +536,10 @@
             <TextBlock Height="20" Visibility="Visible" HorizontalAlignment="Center" Canvas.Left="122" VerticalAlignment="Top" Width="350" Text="" TextWrapping="Wrap" x:Name="lblacceder_error" Canvas.Top="70"/>
         </Canvas>
 
+    	<Infocorp_TITA_SilverlightUI_UserControls:Progress HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="273.857,110,28.143,0" d:LayoutOverrides="VerticalAlignment, GridBox" x:Name="progress"/>
+
+        
+        
     </Grid>
  
 </UserControl>
