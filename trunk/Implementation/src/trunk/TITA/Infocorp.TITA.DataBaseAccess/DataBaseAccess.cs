@@ -27,6 +27,7 @@ namespace Infocorp.TITA.DataBaseAccess
                     aux.task_list = c.taskList;
                     aux.user = c.UserName;
                 }
+                
                 dc.SubmitChanges();
             }
             else
