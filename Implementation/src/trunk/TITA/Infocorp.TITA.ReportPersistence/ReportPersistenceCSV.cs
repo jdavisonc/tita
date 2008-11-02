@@ -23,22 +23,15 @@ namespace Infocorp.TITA.ReportPersistence
 
         public void ReportDesvWorkPackageToCSV(List<DTWorkPackageReport> reportData)
         {
-            string reportName = "desvWorkPackage" + DateTime.Now.TimeOfDay.ToString()+ this._EXTENSION;
+
+            string reportName = "desvWorkPackage" + DateTime.Now.ToString("yyyyMMddHHmmss") + this._EXTENSION;
             StringBuilder strb = new StringBuilder();
-            try
+            foreach (DTWorkPackageReport item in reportData)
             {
-                foreach (DTWorkPackageReport item in reportData)
-                {
-                    this.WriteUserInfo(item, ref strb);
-                }
-                this.CreateReportToCVS(reportName, StrToByteArray(strb.ToString()));
-                HttpContext.Current.Response.Close();
+                this.WriteUserInfo(item, ref strb);
             }
-            catch (Exception)
-            {
+            this.CreateReportToCVS(reportName, StrToByteArray(strb.ToString()));
                 
-                throw;
-            }
         }
 
         private void WriteUserInfo(DTWorkPackageReport item, ref StringBuilder strb)
@@ -48,34 +41,23 @@ namespace Infocorp.TITA.ReportPersistence
             AddComma(item.Site, strb);
             AddComma(item.IdWorkPackage, strb);
             AddComma(item.Title, strb);
-            AddComma(item.Desviation, strb);
-            strb.AppendLine();
-
-            /*
-            HttpContext.Current.Response.Write(strb.ToString());
-            HttpContext.Current.Response.Write(Environment.NewLine);
-            */
+            AddLastFieldElement(item.Desviation, strb);
         }
 
         public void IssuesReportToCSV(List<DTIssueReport> reportData)
         {
-            string reportName = "reporteIncidentes" + DateTime.Now.TimeOfDay.ToString() + this._EXTENSION;
+            string reportName = "reporteIncidentes" + DateTime.Now.ToString("yyyyMMddHHmmss") + this._EXTENSION;
+            //DateTime
             StringBuilder strb = new StringBuilder();
-            try
-            {
                 foreach (DTIssueReport item in reportData)
                 {
+                    
                     this.WriteUserInfo(item, ref strb);
                 }
                 this.CreateReportToCVS(reportName, StrToByteArray(strb.ToString()));
-                HttpContext.Current.Response.Close();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+                
         }
+
         private void WriteUserInfo(DTIssueReport item, ref StringBuilder strb)
         {
 
@@ -83,13 +65,7 @@ namespace Infocorp.TITA.ReportPersistence
             AddComma(item.IdIssue, strb);
             AddComma(item.Site, strb);
             AddComma(item.Title, strb);
-            AddComma(item.WorkPackage, strb);
-            strb.AppendLine();
-
-            /*
-            HttpContext.Current.Response.Write(strb.ToString());
-            HttpContext.Current.Response.Write(Environment.NewLine);
-            */
+            AddLastFieldElement(item.WorkPackage, strb);
         }
 
         #endregion
@@ -116,8 +92,15 @@ namespace Infocorp.TITA.ReportPersistence
         private void AddComma(string item, StringBuilder strb)
         {
             strb.Append(item.Replace(_FIELD_SEPARATOR, " "));
-            strb.Append(" "+_FIELD_SEPARATOR);
+            strb.Append(_FIELD_SEPARATOR);
         }
+
+        private void AddLastFieldElement(string item, StringBuilder strb)
+        {
+            strb.Append(item.Replace(_FIELD_SEPARATOR, " "));
+            strb.AppendLine();
+        }
+
 
         #region WriteColumnName ejemplo
         private static void WriteColumnName()

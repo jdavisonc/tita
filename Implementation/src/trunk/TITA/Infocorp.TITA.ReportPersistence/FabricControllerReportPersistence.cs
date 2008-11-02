@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Infocorp.TITA.ReportPersistence
 {
-    class FabricControllerReportPersistence:IFabricControllerReportPersistence
+    public class FabricControllerReportPersistence:IFabricControllerReportPersistence
     {
         #region IFabricControllerReportPersistence Members
 

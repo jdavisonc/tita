@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Infocorp.TITA.ReportPersistence
 {
-    interface IFabricControllerReportPersistence
+    public interface IFabricControllerReportPersistence
     {
         IReportPersistenceCSV GetReportPersistenceCSV();
     }
