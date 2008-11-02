@@ -20,13 +20,13 @@ namespace Infocorp.TITA.DataBaseAccess
                              select u;
             if (consultant.Count() > 0)
             {
-                foreach (var aux in consultant)
+               /* foreach (var aux in consultant)
                 {
                     aux.issues_list = c.issuesList;
                     aux.task_list = c.taskList;
                     aux.task_list = c.taskList;
                     aux.user = c.UserName;
-                }
+                }*/
                 
                 dc.SubmitChanges();
             }
@@ -381,11 +381,16 @@ namespace Infocorp.TITA.DataBaseAccess
         {
             LinqDataContext dc = new LinqDataContext();
             DTContract contract = GetContract(contractId);
-            var current = from u in dc.Currents
+            var current = (from u in dc.Currents
                           where (u.current_user == contract.UserName) && (u.site == contract.Site)
-                          select u;
-            current.First().last_modification = DateTime.Now.ToString();
-            dc.SubmitChanges();
+                          select u);
+            DTCurrentUser newCurrent = new DTCurrentUser();
+            newCurrent.CurrentUser = current.First().current_user;
+            newCurrent.LoggedDate = current.First().logged_date;
+            newCurrent.LastModification = DateTime.Now.ToString();
+            newCurrent.Site = current.First().site;
+            AddCurrentUser(newCurrent);
+           
         }
         #endregion
 
