@@ -20,13 +20,13 @@ namespace Infocorp.TITA.DataBaseAccess
                              select u;
             if (consultant.Count() > 0)
             {
-               /* foreach (var aux in consultant)
+                foreach (var aux in consultant)
                 {
                     aux.issues_list = c.issuesList;
                     aux.task_list = c.taskList;
                     aux.task_list = c.taskList;
                     aux.user = c.UserName;
-                }*/
+                }
                 
                 dc.SubmitChanges();
             }
@@ -154,6 +154,7 @@ namespace Infocorp.TITA.DataBaseAccess
                     aux.last_modification = user.LastModification;
                     aux.logged_date = user.LoggedDate;
                 }
+                dc.SubmitChanges();
             }
             else
             {
@@ -223,11 +224,16 @@ namespace Infocorp.TITA.DataBaseAccess
                     var current = from u in dc.Currents
                                   where (u.current_user == contract.UserName) && (u.site == contract.Site)
                                   select u;
-                    if ((int.Parse(current.First().last_modification) - int.Parse(current.First().logged_date))>maxTime)
+                    DateTime d1 = Convert.ToDateTime(current.First().last_modification);
+                    DateTime d2 = Convert.ToDateTime(current.First().logged_date);
+                    var time = (d1 - d2);
+                    
+                    if (time.Seconds > maxTime)
                     {
                         //remover usuario
-                        dc.Currents.DeleteOnSubmit(current.First());
-                        dc.SubmitChanges();
+                        contract.UserName = null;
+                        AddContract(contract);
+                        DeleteCurrent(contract.Site);
                         return false;
                     }
                     else
@@ -277,11 +283,15 @@ namespace Infocorp.TITA.DataBaseAccess
                     var current = from u in dc.Currents
                                   where (u.current_user == contract.UserName) && (u.site == contract.Site)
                                   select u;
+                    DateTime d1 = Convert.ToDateTime(current.First().last_modification);
+                    DateTime d2 = Convert.ToDateTime(current.First().logged_date);
+                    var time = (d1 - d2);
 
-                    
-                    if ((int.Parse(current.First().last_modification) - int.Parse(current.First().logged_date)) > maxTime) 
+                    if (time.Seconds > maxTime) 
                     {
                         //remover usuario
+                        contract.UserName = null;
+                        AddContract(contract);
                         dc.Currents.DeleteOnSubmit(current.First());
                         dc.SubmitChanges();
                         DTCurrentUser newCurrent = new DTCurrentUser();
@@ -351,7 +361,12 @@ namespace Infocorp.TITA.DataBaseAccess
                                   where (u.current_user == contract.UserName) && (u.site == contract.Site)
                                   select u;
                     if (current.Count() > 0)
-                        if ((int.Parse(current.First().last_modification) - int.Parse(current.First().logged_date)) > maxTime)
+                    {
+                        DateTime d1 = Convert.ToDateTime(current.First().last_modification);
+                        DateTime d2 = Convert.ToDateTime(current.First().logged_date);
+                        var time = (d1 - d2);
+
+                        if (time.Seconds > maxTime)
                         {
                             //remover usuario
                             dc.Currents.DeleteOnSubmit(current.First());
@@ -360,6 +375,7 @@ namespace Infocorp.TITA.DataBaseAccess
                         }
                         else
                             return true;
+                    }
                     else
                         return false;
                 }   
@@ -389,6 +405,7 @@ namespace Infocorp.TITA.DataBaseAccess
             newCurrent.LoggedDate = current.First().logged_date;
             newCurrent.LastModification = DateTime.Now.ToString();
             newCurrent.Site = current.First().site;
+            DeleteCurrent(current.First().site);
             AddCurrentUser(newCurrent);
            
         }
