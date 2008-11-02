@@ -15,7 +15,7 @@ namespace Infocorp.TITA.DataBaseAccess
                  _instance = new FactoryDataBaseAcces();
              return _instance;   
         }
-        public static IDataBaseAccess GetIDataBaseAccess()
+        public IDataBaseAccess GetIDataBaseAccess()
         {
             if (_instanceIDataBaseAcces == null)
                 _instanceIDataBaseAcces = new DataBaseAccess();
