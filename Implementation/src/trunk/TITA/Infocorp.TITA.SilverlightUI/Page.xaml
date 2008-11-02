@@ -356,9 +356,7 @@
         <!--CABEZAL-->
         <Rectangle Height="80" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Fill="#FFFBFAFA" Stroke="#FF000000" x:Name="cabezal" StrokeThickness="0"/>
         <Image Source="imgs/logo.jpg" x:Name="img_cabezal" Margin="-1.286,21,0,0" Width="275.428" VerticalAlignment="Top" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment" Height="64.267"  />
-       
-
-
+ 
         <Grid Width="222" HorizontalAlignment="Left" VerticalAlignment="Stretch"  RenderTransformOrigin="0.5,0.5" Margin="-5,85,0,-65" Grid.RowSpan="2">
             <Infocorp_TITA_Controls_Silverlight_V2:Accordion x:Name="acc" Height="500" Style="{StaticResource AccordionStyle1}" Margin="0,18,7,82"/>
             <Button x:Name="BtnListOpportunities" Width="150" Content="List Opportunities" Margin="25,284,25,294" Opacity="0"/>
@@ -378,11 +376,14 @@
         		<TextBlock x:Name="titulo_wp" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Workpackage" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"></TextBlock>
                 <my:DataGrid x:Name="grd_WP" BorderThickness="0,0,0,0" AutoGenerateColumns="True" Width="870" Height="150"/>
                 <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_wp" Margin="400,10,0,0" PageSize="5"/>
-        		<StackPanel  x:Name="PnlOption_WP" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal">
-        			<Button Margin="18,166,0,0"  VerticalAlignment="Top"  Content="Nuevo" Click="BtnNuevoWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-        			<Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnChangeWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnChangeWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-        			<Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnDeleteWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDeleteWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-        			<Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Aplicar" Canvas.Left="336" Click="BtnApplyWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnApplyWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                <my:DataGrid x:Name="grd_INCIDENT_WP" Visibility="Collapsed" BorderThickness="0,0,0,0" Margin="0,20,0,0" AutoGenerateColumns="True" Width="870" Height="150"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_incident_wp" Margin="400,10,0,0" PageSize="5"/>
+                <StackPanel  x:Name="PnlOption_WP" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal">
+        			<Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Nuevo" Click="BtnNuevoWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+        			<Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnChangeWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnChangeWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+        			<Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnDeleteWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDeleteWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+        			<Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Aplicar" Canvas.Left="336" Click="BtnApplyWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnApplyWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                    <Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Ver Incidentes" Canvas.Left="336" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnViewIncidentsWP" Click="BtnViewIncidentsWP_Click" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
         		</StackPanel>
         		<StackPanel  x:Name="PnlForm_WP" Margin="20,0,0,10" Width="auto" Height="auto"  Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Top">
         			<Grid x:Name="grdForm_WP" Background="Transparent" VerticalAlignment="Top" Height="auto" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,0,10"/>
@@ -504,7 +505,7 @@
         
         <!--Error -->
         <Canvas x:Name="CanvasError" Margin="200,65.5,390,0" Visibility="Visible" VerticalAlignment="Top" Width="400" d:LayoutOverrides="Width, Margin" Grid.Row="1"> 
-            <TextBlock x:Name="lblError" Visibility="Collapsed"/>
+            <TextBlock x:Name="lblError" Visibility="Visible"/>
         </Canvas>
         
         <Canvas x:Name="cnv_current_contract" Width="500" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,1.233,0,0">
