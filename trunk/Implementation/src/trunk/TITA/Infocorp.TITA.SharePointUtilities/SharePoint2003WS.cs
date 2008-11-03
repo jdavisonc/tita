@@ -253,6 +253,34 @@ namespace Infocorp.TITA.SharePointUtilities
             }
         }
 
+        public string GetCurrentUserEmail(string idContract)
+        {
+            DTContract dtContract = _dbAccess.GetContract(idContract);
+            XmlNode node;
+            using (UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup())
+            {
+                userGroup.Url = CheckCorrectUrlFromat(dtContract.Site) + _wsUserGroupSuf;
+                userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                node = userGroup.GetAllUserCollectionFromWeb();
+            }
+            string username = System.Net.CredentialCache.DefaultNetworkCredentials.UserName;
+            string email = string.Empty;
+            foreach (XmlNode xmlNodeChild in node.ChildNodes)
+            {
+                foreach (XmlNode userNode in xmlNodeChild)
+                {
+                    if ((userNode.Attributes != null) &&
+                        (userNode.Attributes.GetNamedItem("Name") != null) &&
+                        (userNode.Attributes.GetNamedItem("Name").Value.CompareTo(username) == 0))
+                    {
+                        email = userNode.Attributes.GetNamedItem("EMail").Value;
+                        break;
+                    }
+                }
+            }
+            return email;
+        }
+
         #endregion
 
         #region Auxiliar Method
@@ -978,17 +1006,6 @@ namespace Infocorp.TITA.SharePointUtilities
                 return urlSite.Substring(0, urlSite.Length - 1);
             }
             return urlSite;
-        }
-
-        #endregion
-
-        #region ISharePoint Members
-
-
-        public string GetCurrentUserEmail()
-        {
-            //TODOOOOOOOOOOOOOOOOOOOOOOOO !!
-            return "grupopis08@gmail.com";
         }
 
         #endregion

@@ -240,6 +240,11 @@ namespace Infocorp.TITA.SharePointUtilities
             }
         }
 
+        public string GetCurrentUserEmail(string idContract)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region Auxiliar Methods
@@ -673,14 +678,5 @@ namespace Infocorp.TITA.SharePointUtilities
 
         #endregion
 
-        #region ISharePoint Members
-
-
-        public string GetCurrentUserEmail()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
     }
 }
