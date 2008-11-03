@@ -190,6 +190,6 @@ namespace Infocorp.TITA.SharePointUtilities
         /// Obtiene la dirección del usuario
         /// </summary>
         /// <returns>Email</returns>
-        string GetCurrentUserEmail();
+        string GetCurrentUserEmail(string idContract);
     }
 }
