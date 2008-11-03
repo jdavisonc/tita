@@ -370,7 +370,7 @@
         <TextBlock Margin="18,279,0,0"  VerticalAlignment="Top" x:Name="lblPending" Visibility="Collapsed" Width="112" HorizontalAlignment="Left" Height="26" d:LayoutOverrides="VerticalAlignment"/>
         
        <!--WP--> 
-        <ScrollViewer x:Name="scroll_WP" Margin="-4.286,106,4.286,-21" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" Opacity="1" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch">
+        <ScrollViewer x:Name="scroll_WP" Margin="-4.286,106,4.286,1" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" Opacity="1" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch">
         	<StackPanel x:Name="CanvasWP" Background="White"  Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
         		<TextBlock x:Name="titulo_wp" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Workpackage" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <my:DataGrid x:Name="grd_WP" BorderThickness="0,0,0,0" AutoGenerateColumns="True" Width="870" Height="150"/>
@@ -431,7 +431,7 @@
         </ScrollViewer>
 
         <!--INCIDENTE -->
-        <ScrollViewer Margin="-4.286,106,4.286,-21"  d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_INCIDENT" BorderThickness="0,0,0,0">
+        <ScrollViewer Margin="-4.286,106,4.286,1"  d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_INCIDENT" BorderThickness="0,0,0,0">
             <StackPanel x:Name="CanvasIncident" Visibility="Collapsed" Background="White" Width="auto" Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
                 <TextBlock x:Name="titulo_Incidentes" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Incidentes" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <my:DataGrid x:Name="grd_INCIDENT" Margin="20,0,0,5"  VerticalAlignment="Top"  HorizontalAlignment="Left" BorderThickness="0,0,0,0" AutoGenerateColumns="True" Width="870" Height="150"/>
@@ -457,7 +457,7 @@
         </ScrollViewer>
         
         <!--TASKS -->
-        <ScrollViewer Margin="-4.286,106,4.286,-21" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_TASK" BorderThickness="0,0,0,0">
+        <ScrollViewer Margin="-4.286,106,4.286,1" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_TASK" BorderThickness="0,0,0,0">
             <StackPanel x:Name="CanvasTASK" Background="White" Width="auto" Height="auto" Visibility="Collapsed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
                 <TextBlock x:Name="titulo_Task" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Tasks" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <my:DataGrid x:Name="grd_TASK" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="20,0,0,5" BorderThickness="0,0,0,0" AutoGenerateColumns="True" Width="800" Height="160"/>
@@ -479,7 +479,7 @@
         </ScrollViewer>
      
         <!--Reports--> 
-        <ScrollViewer x:Name="scroll_REPORT" Margin="-4.286,106,4.286,-21" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" Opacity="1" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch">
+        <ScrollViewer x:Name="scroll_REPORT" Margin="-4.286,106,4.286,1" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" Opacity="1" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch">
             <StackPanel x:Name="CanvasREPORT" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
                 <TextBlock x:Name="titulo_Reporte" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Reportes" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <my:DataGrid x:Name="contractsReport" BorderThickness="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,5" Visibility="Collapsed" AutoGenerateColumns="True" Width="auto"/> 
@@ -503,7 +503,7 @@
         </ScrollViewer>
 
         <!--Mapeo de Valores-->
-        <ScrollViewer Margin="-4.286,106,4.286,-21" d:LayoutOverrides="HorizontalAlignment" Visibility="Visible" x:Name="scroll_Map" BorderThickness="0,0,0,0">
+        <ScrollViewer Margin="-4.286,106,4.286,1" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_Map" BorderThickness="0,0,0,0">
             <StackPanel x:Name="CanvasMap" Background="White" Width="auto" Height="auto" Visibility="Collapsed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
                 <TextBlock x:Name="titulo_Map" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <StackPanel  x:Name="PnlForm_Map" Margin="20,0,0,10" Width="auto" Height="auto" Orientation="Horizontal" Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Top">
