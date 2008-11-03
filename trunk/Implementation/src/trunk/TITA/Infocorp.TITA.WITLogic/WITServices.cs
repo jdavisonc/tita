@@ -54,7 +54,7 @@ namespace Infocorp.TITA.WITLogic
             string camlQuery = string.Empty;
             List<DTItem> result = this.GetIssuesWithQuery(contractId, camlQuery);
 
-            result.FindAll(delegate(DTItem item)
+            result = result.FindAll(delegate(DTItem item)
             {
                 DTFieldChoiceLookup wpField = (DTFieldChoiceLookup)item.Fields.Find(delegate(DTField field) { return field.Name == "Work Package"; });
                 return wpField.Value == workpackageId;
