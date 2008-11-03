@@ -139,10 +139,10 @@ public class WSTita : System.Web.Services.WebService
     #region WP
 
     [WebMethod]
-    public List<DTItem> GetIssuesWP(string contractId, string workpackageId)
+    public List<DTItem> GetIssuesWP(string contractId, string workpackageName)
     {
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
-        return witInstance.GetIssues(contractId, workpackageId);
+        return witInstance.GetIssues(contractId, workpackageName);
     }
    
     [WebMethod]

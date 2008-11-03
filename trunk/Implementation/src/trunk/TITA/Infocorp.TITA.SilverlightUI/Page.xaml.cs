@@ -474,6 +474,7 @@ namespace Infocorp.TITA.SilverlightUI
                 //lblConectContract.Visibility = Visibility.Visible;
                 lblacceder_error.Text = "Error en la conexion con " + contract.Site;
                 lblacceder_error.Visibility = Visibility.Visible;
+
             }
         }
 
@@ -867,7 +868,7 @@ namespace Infocorp.TITA.SilverlightUI
                 WorkPackage wp = (WorkPackage)grd_WP.SelectedItem;
                 WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
                 ws.GetIssuesWPCompleted += new EventHandler<GetIssuesWPCompletedEventArgs>(ws_GetIssuesWPCompleted);
-                ws.GetIssuesWPAsync(url, (wp.Id).ToString());
+                ws.GetIssuesWPAsync(url, wp.Title);
                 //ws.GetIssuesWPAsync(url, wp.Title);
             }
 

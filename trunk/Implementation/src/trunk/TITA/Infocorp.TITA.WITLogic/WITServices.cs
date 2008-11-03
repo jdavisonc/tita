@@ -47,9 +47,9 @@ namespace Infocorp.TITA.WITLogic
             return GetItems(contractId, ItemType.ISSUE, query);
         }
 
-        public List<DTItem> GetIssues(string contractId, string workpackageId)
+        public List<DTItem> GetIssues(string contractId, string workpackageName)
         {
-            //string camlQuery = @"<Query><Where><Eq><FieldRef Name=""_x0057_P2"" /><Value Type=""Lookup"">" + workpackageId + "</Value></Eq></Where></Query>";
+            //string camlQuery = @"<Query><Where><Eq><FieldRef Name=""_x0057_P2"" /><Value Type=""Lookup"">" + workpackageId + "</Value></Eq></Where></Query>";            
 
             string camlQuery = string.Empty;
             List<DTItem> result = this.GetIssuesWithQuery(contractId, camlQuery);
@@ -57,7 +57,7 @@ namespace Infocorp.TITA.WITLogic
             result = result.FindAll(delegate(DTItem item)
             {
                 DTFieldChoiceLookup wpField = (DTFieldChoiceLookup)item.Fields.Find(delegate(DTField field) { return field.Name == "Work Package"; });
-                return wpField.Value == workpackageId;
+                return wpField.Value.Trim() == workpackageName.Trim();
 
             });
 

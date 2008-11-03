@@ -35,7 +35,7 @@ namespace Infocorp.TITA.WITLogic
 
         List<DTItem> GetIssues(string contractId);
 
-        List<DTItem> GetIssues(string contractId, string workpackageId);
+        List<DTItem> GetIssues(string contractId, string workpackageName);
 
         void AddIssue(DTItem issue, string contractId);
 
