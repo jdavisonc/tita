@@ -24,7 +24,7 @@ namespace Infocorp.TITA.ReportPersistence
         public void ReportDesvWorkPackageToCSV(List<DTWorkPackageReport> reportData)
         {
 
-            string reportName = "desvWorkPackage" + DateTime.Now.ToString("yyyyMMddHHmmss") + this._EXTENSION;
+            string reportName = "desvWorkPackage" + DateTime.Now.ToString("yyyyMMddHHmm") + this._EXTENSION;
             StringBuilder strb = new StringBuilder();
             foreach (DTWorkPackageReport item in reportData)
             {
@@ -36,20 +36,17 @@ namespace Infocorp.TITA.ReportPersistence
 
         private void WriteUserInfo(DTWorkPackageReport item, ref StringBuilder strb)
         {
-
-
             AddComma(item.Site, strb);
             AddComma(item.IdWorkPackage, strb);
             AddComma(item.Title, strb);
             AddLastFieldElement(item.Desviation, strb);
         }
 
-        public void IssuesReportToCSV(List<DTIssueReport> reportData)
+        public void IssuesReportToCSV(List<DTReportedItem> reportData)
         {
-            string reportName = "reporteIncidentes" + DateTime.Now.ToString("yyyyMMddHHmmss") + this._EXTENSION;
-            //DateTime
+            string reportName = "reporteIncidentes" + DateTime.Now.ToString("yyyyMMddHHmm") + this._EXTENSION;
             StringBuilder strb = new StringBuilder();
-                foreach (DTIssueReport item in reportData)
+            foreach (DTReportedItem item in reportData)
                 {
                     
                     this.WriteUserInfo(item, ref strb);
@@ -58,14 +55,13 @@ namespace Infocorp.TITA.ReportPersistence
                 
         }
 
-        private void WriteUserInfo(DTIssueReport item, ref StringBuilder strb)
+        private void WriteUserInfo(DTReportedItem item, ref StringBuilder strb)
         {
 
 
-            AddComma(item.IdIssue, strb);
-            AddComma(item.Site, strb);
-            AddComma(item.Title, strb);
-            AddLastFieldElement(item.WorkPackage, strb);
+            AddComma(item.Category, strb);
+            AddComma(item.Status, strb);
+            AddLastFieldElement(item.Count.ToString(), strb);
         }
 
         #endregion
@@ -79,12 +75,19 @@ namespace Infocorp.TITA.ReportPersistence
 
         void CreateReportToCVS(string filename, byte[] bytesData)
         {
-            HttpContext.Current.Response.ClearHeaders();
-            HttpContext.Current.Response.Clear();
-            HttpContext.Current.Response.AddHeader("Content-Disposition", "inline; filename=" + filename);
-            HttpContext.Current.Response.ContentType = "text/csv";
-            HttpContext.Current.Response.BinaryWrite(bytesData);
-            HttpContext.Current.Response.End();
+            try
+            {
+                HttpContext.Current.Response.ClearHeaders();
+                HttpContext.Current.Response.Clear();
+                HttpContext.Current.Response.AddHeader("Content-Disposition", "inline; filename=" + filename);
+                HttpContext.Current.Response.ContentType = "text/csv";
+                HttpContext.Current.Response.BinaryWrite(bytesData);
+                HttpContext.Current.Response.End();
+            }
+            catch (Exception)
+            {
+            }
+            
         }
 
         
@@ -110,34 +113,6 @@ namespace Infocorp.TITA.ReportPersistence
             HttpContext.Current.Response.Write(Environment.NewLine);
         }
         #endregion
-
-        #region WriteToCSV ejemplo
-        /*
-        public static void WriteToCSV(List<Person> personList)
-        {
-            
-            string attachment = "attachment; filename=PerosnList.csv";
-            HttpContext.Current.Response.Clear();
-            HttpContext.Current.Response.ClearHeaders();
-            HttpContext.Current.Response.ClearContent();
-            HttpContext.Current.Response.AddHeader("content-disposition", attachment);
-            HttpContext.Current.Response.ContentType = "text/csv";
-            HttpContext.Current.Response.AddHeader("Pragma", "public");
-
-            WriteColumnName();
-
-            foreach (Person item in personList)
-            {
-                WriteUserInfo(item);
-            }
-
-            HttpContext.Current.Response.End();
-        }
-        */
-        #endregion
-
-
-
 
     }
 }

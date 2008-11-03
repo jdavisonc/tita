@@ -8,6 +8,6 @@ namespace Infocorp.TITA.ReportPersistence
 {
     public interface IFabricControllerReportPersistence
     {
-        IReportPersistenceCSV GetReportPersistenceCSV();
+         IReportPersistenceCSV GetIReportPersistenceCSV();
     }
 }

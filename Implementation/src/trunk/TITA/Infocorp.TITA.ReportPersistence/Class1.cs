@@ -10,7 +10,7 @@ namespace Infocorp.TITA.ReportPersistence
         void toto() 
         {
             IFabricControllerReportPersistence oIfce = new FabricControllerReportPersistence();
-            IReportPersistenceCSV oIRP= oIfce.GetReportPersistenceCSV();
+            IReportPersistenceCSV oIRP= oIfce.GetIReportPersistenceCSV();
             //oIRP.ReportDesvWorkPackageToCSV(
         }
     }

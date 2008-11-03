@@ -9,7 +9,7 @@ namespace Infocorp.TITA.ReportPersistence
     {
         #region IFabricControllerReportPersistence Members
 
-        public IReportPersistenceCSV GetReportPersistenceCSV()
+        public IReportPersistenceCSV GetIReportPersistenceCSV()
         {
             ControllerReportPersistenceCSV oController = new ControllerReportPersistenceCSV();
             return oController.GetReportPersistenceInstanceCSV();
