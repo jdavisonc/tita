@@ -765,7 +765,7 @@ namespace Infocorp.TITA.SilverlightUI
             string strMy_pnl = "PnlForm_" + Option.WP;
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
             PnlOption_WP.Visibility = Visibility.Collapsed;
-            if (item == null)
+            if (item.Fields == null)
             {
                 WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
                 ws.GetWorkPackageTemplateCompleted +=new EventHandler<GetWorkPackageTemplateCompletedEventArgs>(ws_GetWorkPackageTemplateCompleted2);
@@ -1090,7 +1090,7 @@ namespace Infocorp.TITA.SilverlightUI
             isEdit = true;
             string strMy_pnl = "PnlForm_" + Option.INCIDENT;
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
-            progress.play();
+            //progress.play();
             //my_pnl.Children.Add(progress);
             PnlOption_INCIDENT.Visibility = Visibility.Collapsed;
             if (item.Fields == null)
