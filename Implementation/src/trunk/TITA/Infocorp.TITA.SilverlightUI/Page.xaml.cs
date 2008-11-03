@@ -470,8 +470,10 @@ namespace Infocorp.TITA.SilverlightUI
             }
             else 
             {
-                lblConectContract.Text = "Error en la coneccion con " + contract.Site;
-                lblConectContract.Visibility = Visibility.Visible;
+                //lblConectContract.Text = "Error en la coneccion con " + contract.Site;
+                //lblConectContract.Visibility = Visibility.Visible;
+                lblacceder_error.Text = "Error en la conexion con " + contract.Site;
+                lblacceder_error.Visibility = Visibility.Visible;
             }
         }
 
@@ -2271,7 +2273,7 @@ namespace Infocorp.TITA.SilverlightUI
             }
             else 
             {
-                lblacceder_error.Text = "Error en la coneccion con " + contract.Site;
+                lblacceder_error.Text = "Error en la conexion con " + contract.Site;
                 lblacceder_error.Visibility = Visibility.Visible;
             }
         }
@@ -2298,10 +2300,11 @@ namespace Infocorp.TITA.SilverlightUI
         public void ViewMap()
         {
             BtnMap.Visibility = Visibility.Visible;
+            scroll_Map.Visibility = Visibility.Visible;
             CanvasMap.Visibility = Visibility.Visible;
             PnlActionMap.Visibility = Visibility.Visible;
             DTContract c = (DTContract)cbx_contrat_up.SelectedItem;
-            txt_endValue_map.Text = "endValue";
+            txt_endValue_map.Text = "End Value";
             txt_endValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
 
             txt_property_map.Text = "Property";
