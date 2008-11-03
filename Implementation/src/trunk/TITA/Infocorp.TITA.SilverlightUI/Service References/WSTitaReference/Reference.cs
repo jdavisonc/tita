@@ -1674,14 +1674,14 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         public string contractId;
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
-        public string workpackageId;
+        public string workpackageName;
         
         public GetIssuesWPRequestBody() {
         }
         
-        public GetIssuesWPRequestBody(string contractId, string workpackageId) {
+        public GetIssuesWPRequestBody(string contractId, string workpackageName) {
             this.contractId = contractId;
-            this.workpackageId = workpackageId;
+            this.workpackageName = workpackageName;
         }
     }
     
@@ -4267,11 +4267,11 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        private System.IAsyncResult BeginGetIssuesWP(string contractId, string workpackageId, System.AsyncCallback callback, object asyncState) {
+        private System.IAsyncResult BeginGetIssuesWP(string contractId, string workpackageName, System.AsyncCallback callback, object asyncState) {
             Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPRequest();
             inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesWPRequestBody();
             inValue.Body.contractId = contractId;
-            inValue.Body.workpackageId = workpackageId;
+            inValue.Body.workpackageName = workpackageName;
             return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginGetIssuesWP(inValue, callback, asyncState);
         }
         
@@ -4288,8 +4288,8 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         private System.IAsyncResult OnBeginGetIssuesWP(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string contractId = ((string)(inValues[0]));
-            string workpackageId = ((string)(inValues[1]));
-            return this.BeginGetIssuesWP(contractId, workpackageId, callback, asyncState);
+            string workpackageName = ((string)(inValues[1]));
+            return this.BeginGetIssuesWP(contractId, workpackageName, callback, asyncState);
         }
         
         private object[] OnEndGetIssuesWP(System.IAsyncResult result) {
@@ -4305,11 +4305,11 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             }
         }
         
-        public void GetIssuesWPAsync(string contractId, string workpackageId) {
-            this.GetIssuesWPAsync(contractId, workpackageId, null);
+        public void GetIssuesWPAsync(string contractId, string workpackageName) {
+            this.GetIssuesWPAsync(contractId, workpackageName, null);
         }
         
-        public void GetIssuesWPAsync(string contractId, string workpackageId, object userState) {
+        public void GetIssuesWPAsync(string contractId, string workpackageName, object userState) {
             if ((this.onBeginGetIssuesWPDelegate == null)) {
                 this.onBeginGetIssuesWPDelegate = new BeginOperationDelegate(this.OnBeginGetIssuesWP);
             }
@@ -4321,7 +4321,7 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             }
             base.InvokeAsync(this.onBeginGetIssuesWPDelegate, new object[] {
                         contractId,
-                        workpackageId}, this.onEndGetIssuesWPDelegate, this.onGetIssuesWPCompletedDelegate, userState);
+                        workpackageName}, this.onEndGetIssuesWPDelegate, this.onGetIssuesWPCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

@@ -545,11 +545,14 @@ namespace Infocorp.TITA.SharePointUtilities
                     ndViewFields.InnerXml += "<FieldRef Name='" + dtField.InternalName + "' />";
                 }
                 XmlNode xmlListItems;
+                
                 using (ListsWebServiceReference.Lists listsWS = new ListsWebServiceReference.Lists())
                 {
                     listsWS.Url = CheckCorrectUrlFromat(urlSite) + _wsListsSuf;
                     listsWS.Credentials = System.Net.CredentialCache.DefaultCredentials;
-                    xmlListItems = listsWS.GetListItems(listName, string.Empty, null, ndViewFields, string.Empty, null);
+                    XmlNode camlNode = String.IsNullOrEmpty(CAMLQuery) ? null : StringToXmlNode(CAMLQuery);
+
+                    xmlListItems = listsWS.GetListItems(listName, string.Empty, camlNode, ndViewFields, string.Empty, null);
                 }
                 foreach (XmlNode nodeWP in xmlListItems.ChildNodes)
                 {
