@@ -242,7 +242,7 @@ public class WSTita : System.Web.Services.WebService
     public void ExportDesWP(List<DTWorkPackageReport> lst)
     {
         IFabricControllerReportPersistence frp = new FabricControllerReportPersistence();
-        IReportPersistenceCSV irp= frp.GetReportPersistenceCSV();
+        IReportPersistenceCSV irp= frp.GetIReportPersistenceCSV();
         irp.ReportDesvWorkPackageToCSV(lst);
     }
 
@@ -250,7 +250,7 @@ public class WSTita : System.Web.Services.WebService
     public void ExportISSUES(List<DTReportedItem> lst)
     {
         IFabricControllerReportPersistence frp = new FabricControllerReportPersistence();
-        IReportPersistenceCSV irp = frp.GetReportPersistenceCSV();
+        IReportPersistenceCSV irp = frp.GetIReportPersistenceCSV();
         //irp.IssuesReportToCSV(lst);
     }
 
