@@ -439,13 +439,10 @@ namespace Infocorp.TITA.SilverlightUI
             DTContract contract;
             contract = (DTContract)lstContratos.SelectedItem;
             url = contract.ContractId;
-            //lblConectContract.Text = "Se ha conectado a " + contract.Site;
             cbx_contrat_up.SelectedItem = contract;
-            //lblConectContract.Visibility = Visibility.Visible;
             lblacceder_error.Text = "Se ha conectado a " + contract.Site;
             lblacceder_error.Visibility = Visibility.Visible;
 
-            //DTContract contract = (DTContract)lstContratos.SelectedItem;
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
             ws.IsContractAvailableCompleted += new EventHandler<IsContractAvailableCompletedEventArgs>(ws_IsContractAvailableCompleted);
             ws.IsContractAvailableAsync(contract.ContractId);        
@@ -457,19 +454,14 @@ namespace Infocorp.TITA.SilverlightUI
             DTContract contract = (DTContract)lstContratos.SelectedItem;
             if (e.Result)
             {
-                //lblConectContract.Text = "Se ha conectado a " + contract.Site;
                 cbx_contrat_up.SelectedItem = contract;
-                //lblConectContract.Visibility = Visibility.Visible;
                 url = contract.ContractId;
                 my_con = contract;
             }
             else 
             {
-                //lblConectContract.Text = "Error en la coneccion con " + contract.Site;
-                //lblConectContract.Visibility = Visibility.Visible;
                 lblacceder_error.Text = "Error en la conexion con " + contract.Site;
                 lblacceder_error.Visibility = Visibility.Visible;
-
             }
         }
 
@@ -641,7 +633,6 @@ namespace Infocorp.TITA.SilverlightUI
         void ws_GetWorkPackagesCompleted(object sender, GetWorkPackagesCompletedEventArgs e)
         {
             lstItem = e.Result;
-            //Dispatcher.BeginInvoke(LoadWPS(e.Result));
             UIThread.Run(delegate() { LoadWPS(e.Result);});
         }
 
@@ -689,11 +680,6 @@ namespace Infocorp.TITA.SilverlightUI
                 }
                 lstWP.Add(wp);
             }
-            //grd_WP.ItemsSource = lstWP;
-            //if (grd_WP.Columns.Count != 0)
-            //{
-            //    grd_WP.Columns[0].Visibility = Visibility.Collapsed;
-            //}
             grd_WP.IsReadOnly = true;
             grd_WP.CanUserResizeColumns = false;
             PnlOption_WP.Visibility = Visibility.Visible;
@@ -709,7 +695,6 @@ namespace Infocorp.TITA.SilverlightUI
             PnlOption_WP.Visibility = Visibility.Collapsed;
             PnlForm_WP.Visibility = Visibility.Visible;
             progress.play();
-            //PnlForm_WP.Children.Add(progress);
             LoadFormsWP();
         }
 
@@ -864,7 +849,6 @@ namespace Infocorp.TITA.SilverlightUI
                 WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
                 ws.GetIssuesWPCompleted += new EventHandler<GetIssuesWPCompletedEventArgs>(ws_GetIssuesWPCompleted);
                 ws.GetIssuesWPAsync(url, wp.Title);
-                //ws.GetIssuesWPAsync(url, wp.Title);
             }
 
         }
@@ -872,7 +856,6 @@ namespace Infocorp.TITA.SilverlightUI
         void ws_GetIssuesWPCompleted(object sender, GetIssuesWPCompletedEventArgs e)
         {
             isIssueWP = true;
-            //Dispatcher.BeginInvoke(LoadIncidents(e.Result));
             UIThread.Run(delegate() { LoadIncidents(e.Result);});
         }
 
@@ -905,14 +888,12 @@ namespace Infocorp.TITA.SilverlightUI
         void ws_GetIssuesCompleted(object sender, Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesCompletedEventArgs e)
         {
             lstItem = e.Result;
-            //Dispatcher.BeginInvoke(LoadIncidents(e.Result));
             UIThread.Run(delegate() {LoadIncidents(e.Result);});
         }
 
         private Delegate LoadIncidents(List<DTItem> list)
         {
             Issue i;
-            //List<Issue> lstIssue = new List<Issue>();
             lstIssue = new List<Issue>();
 
             foreach (DTItem issue in list)
@@ -1318,10 +1299,11 @@ namespace Infocorp.TITA.SilverlightUI
                             txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
-                            Calendar cal = new Calendar();
+                            //Calendar cal = new Calendar();
+                            DatePicker cal = new DatePicker();
                             cal.SetValue(NameProperty, "cal_" + field.Name);
-                            cal.Width = 280;
-                            cal.Height = 200;
+                            cal.Width = 150;
+                            cal.Height = 20;
                             cal.SelectedDate = DateTime.Today;
                             cal.SetValue(Grid.ColumnProperty, 1);
 
@@ -1496,7 +1478,7 @@ namespace Infocorp.TITA.SilverlightUI
                         }
                         else if (field is DTFieldAtomicDateTime)
                         {
-                            Calendar cal = (Calendar)my_pnl.FindName("cal_" + field.Name);
+                            DatePicker cal = (DatePicker)my_pnl.FindName("cal_" + field.Name);
                             TextBlock txt = (TextBlock)my_pnl.FindName("txt_" + field.Name);
                             if ((field.Required) && (cal.SelectedDate.Value.ToShortDateString().ToString() == ""))
                             {
@@ -1749,10 +1731,10 @@ namespace Infocorp.TITA.SilverlightUI
                             txt.Width = width;
                             txt.SetValue(Grid.ColumnProperty, 0);
 
-                            Calendar cal = new Calendar();
+                            DatePicker cal = new DatePicker();
                             cal.SetValue(NameProperty, "cal_" + field.Name);
-                            cal.Width = 280;
-                            cal.Height = 200;
+                            cal.Width = 150;
+                            cal.Height = 20;
                             cal.SelectedDate = ((DTFieldAtomicDateTime)field).Value;
                             cal.DisplayDate = cal.SelectedDate.Value;
                             cal.SetValue(Grid.ColumnProperty, 1);
