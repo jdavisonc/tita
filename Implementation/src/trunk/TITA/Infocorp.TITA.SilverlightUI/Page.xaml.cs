@@ -110,7 +110,7 @@ namespace Infocorp.TITA.SilverlightUI
             pager_incident_wp.ItemsSource = lstIssue;
             pager_wp.ItemsSource = my_lstWP;
             pager_contratos.ItemsSource = my_contract;
-            pager_contractsReport.ItemsSource = my_contract;
+            //pager_contractsReport.ItemsSource = my_contract;
             pager_tasks.ItemsSource = my_lstTask;
             pager_grd_REPORT_DESWP.ItemsSource = my_lstReport_deswp;
             pager_grd_REPORT_ISSUES.ItemsSource = my_lstReport_issues;
@@ -305,15 +305,10 @@ namespace Infocorp.TITA.SilverlightUI
                 pager_contratos.ItemsSource = my_contract;
                 if (forReport)
                 {
-                    pager_contractsReport.ItemsControl = contractsReport;
-                    pager_contractsReport.ItemsSource = my_contract;
-                    if (contractsReport.Columns.Count != 0)
-                    {
-                        contractsReport.Columns[0].Visibility = Visibility.Collapsed;
-                    }
                     contractsReport.Visibility = Visibility.Visible;
-                    contractsReport.IsReadOnly = true;
-                    contractsReport.CanUserResizeColumns = false;
+                    contractsReport.ItemsSource = my_contract;
+                    contractsReport.DisplayMemberPath = "Site";
+                    contractsReport.SelectedIndex = 0;    
                 }
                 else
                 {
@@ -2184,6 +2179,10 @@ namespace Infocorp.TITA.SilverlightUI
             if (isOneContract)
             {
                 GetContract();
+            }
+            else
+            {
+                txt_contratoRepo.Visibility = Visibility.Collapsed;
             }
             BtnGenerateReport_ISSUES.Visibility = Visibility.Visible;
         }
