@@ -251,7 +251,7 @@ public class WSTita : System.Web.Services.WebService
     {
         IFabricControllerReportPersistence frp = new FabricControllerReportPersistence();
         IReportPersistenceCSV irp = frp.GetIReportPersistenceCSV();
-        //irp.IssuesReportToCSV(lst);
+        irp.IssuesReportToCSV(lst);
     }
 
     #endregion
