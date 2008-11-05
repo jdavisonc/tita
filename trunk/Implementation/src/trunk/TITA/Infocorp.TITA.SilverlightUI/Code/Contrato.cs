@@ -20,13 +20,7 @@ namespace Infocorp.TITA.SilverlightUI.Code
             get { return _id; }
             set { _id = value; }
         }
-        private string _nombre;
-
-        public string Nombre
-        {
-            get { return _nombre; }
-            set { _nombre = value; }
-        }
+       
         private string _url;
 
         public string Url

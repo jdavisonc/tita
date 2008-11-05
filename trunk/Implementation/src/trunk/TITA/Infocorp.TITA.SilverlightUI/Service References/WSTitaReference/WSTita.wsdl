@@ -586,6 +586,20 @@
       <s:element name="SiteMapPropertyValueTasksResponse">
         <s:complexType />
       </s:element>
+      <s:element name="AquireContractWritePermission">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="contractId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AquireContractWritePermissionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AquireContractWritePermissionResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="ExtendedDTSSoapIn">
@@ -786,6 +800,12 @@
   <wsdl:message name="SiteMapPropertyValueTasksSoapOut">
     <wsdl:part name="parameters" element="tns:SiteMapPropertyValueTasksResponse" />
   </wsdl:message>
+  <wsdl:message name="AquireContractWritePermissionSoapIn">
+    <wsdl:part name="parameters" element="tns:AquireContractWritePermission" />
+  </wsdl:message>
+  <wsdl:message name="AquireContractWritePermissionSoapOut">
+    <wsdl:part name="parameters" element="tns:AquireContractWritePermissionResponse" />
+  </wsdl:message>
   <wsdl:portType name="WSTitaSoap">
     <wsdl:operation name="ExtendedDTS">
       <wsdl:input message="tns:ExtendedDTSSoapIn" />
@@ -918,6 +938,10 @@
     <wsdl:operation name="SiteMapPropertyValueTasks">
       <wsdl:input message="tns:SiteMapPropertyValueTasksSoapIn" />
       <wsdl:output message="tns:SiteMapPropertyValueTasksSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AquireContractWritePermission">
+      <wsdl:input message="tns:AquireContractWritePermissionSoapIn" />
+      <wsdl:output message="tns:AquireContractWritePermissionSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSTitaSoap" type="tns:WSTitaSoap">
@@ -1219,6 +1243,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AquireContractWritePermission">
+      <soap:operation soapAction="http://tempuri.org/AquireContractWritePermission" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="WSTitaSoap12" type="tns:WSTitaSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -1512,6 +1545,15 @@
     </wsdl:operation>
     <wsdl:operation name="SiteMapPropertyValueTasks">
       <soap12:operation soapAction="http://tempuri.org/SiteMapPropertyValueTasks" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AquireContractWritePermission">
+      <soap12:operation soapAction="http://tempuri.org/AquireContractWritePermission" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
