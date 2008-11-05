@@ -385,7 +385,7 @@
                     <Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Ver Incidentes" Canvas.Left="336" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnViewIncidentsWP" Click="BtnViewIncidentsWP_Click" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
         		</StackPanel>
         		<StackPanel  x:Name="PnlForm_WP" Margin="20,0,0,10" Width="auto" Height="auto"  Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Top">
-        			<Grid x:Name="grdForm_WP" Background="Transparent" VerticalAlignment="Top" Height="auto" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,0,10"/>
+                    <Grid x:Name="grdForm_WP" Background="Transparent" VerticalAlignment="Top" Width="900" Height="150" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,0,10"/>
         		</StackPanel>   
         		<StackPanel  x:Name="PnlAction_WP" Width="auto" Visibility="Collapsed" VerticalAlignment="Top" Orientation="Horizontal" Height="91" HorizontalAlignment="Left" Margin="20,0,0,10" d:LayoutOverrides="Width">
         			<Button  Content="Aceptar" Click="BtnAcceptWP_Click" Width="112" Height="26" x:Name="BtnEditActionWP" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
@@ -402,21 +402,19 @@
                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_contratos" Margin="300,10,0,0" VerticalAlignment="Bottom" PageSize="5"/>
                 <TextBlock Margin="18,60,0,0" x:Name="lblConectContract" Visibility="Collapsed"/>            
                 <StackPanel  x:Name="PnlbtnsContrato" Background="White" Width="auto" Visibility="Visible" Orientation="Horizontal">
-                    <Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Nuevo" Click="BtnNuevoContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                    <Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnModificarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnModificarContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                    <Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnEliminarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEliminarContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                    <Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Conectar" Canvas.Left="326" Click="BtnConectarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnConectarContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                    <Button Margin="18,60,0,0" VerticalAlignment="Top" Content="Nuevo" Click="BtnNuevoContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                    <Button Margin="18,60,0,0" VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnModificarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnModificarContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                    <Button Margin="18,60,0,0" VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnEliminarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEliminarContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                    <!--<Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Conectar" Canvas.Left="326" Click="BtnConectarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnConectarContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>-->
                 </StackPanel>
                 <StackPanel  x:Name="pnlEditContrato" Visibility="Collapsed" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,5">
                     <StackPanel VerticalAlignment="Top" Margin="0,15,0,0">
-                        <TextBlock x:Name="contName" Text="Nombre" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="140"/>
                         <TextBlock x:Name="contSite" Text="Site" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="140"/>
                         <TextBlock x:Name="contLstIssue" Text="Lista de Incidentes" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="140"/>
                         <TextBlock x:Name="contLstWP" Text="Lista de WorkPackage" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="140"/>
                         <TextBlock x:Name="contLstTsk" Text="Lista de Tareas" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="140"/>
                     </StackPanel>
                     <StackPanel VerticalAlignment="Top" Margin="0,15,0,0">
-                        <TextBox x:Name="txtNombre" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
                         <TextBox x:Name="txtSite" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
                         <TextBox x:Name="txtIssuesList" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
                         <TextBox x:Name="txtWorkPackageList" Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="200"/>
@@ -536,9 +534,10 @@
         </Canvas>
         
         <Canvas x:Name="cnv_current_contract" Width="500" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,1.233,0,0">
-            <TextBlock Height="20" HorizontalAlignment="Right" Canvas.Left="122" VerticalAlignment="Top" Width="100" Text="TextBlock" TextWrapping="Wrap" x:Name="lbl_Contrat" Canvas.Top="22"/>
-            <ComboBox x:Name="cbx_contrat_up" Width="190" Canvas.Top="22" Canvas.Left="228"/>
-            <HyperlinkButton Content="acceder" x:Name="lnk_acceder" Click="lnk_acceder_click" Canvas.Top="22" Canvas.Left="422"/>
+            <TextBlock Height="20" HorizontalAlignment="Right" Canvas.Left="22" VerticalAlignment="Top" Width="100" Text="TextBlock" TextWrapping="Wrap" x:Name="lbl_Contrat" Canvas.Top="22"/>
+            <ComboBox x:Name="cbx_contrat_up" Width="190" Canvas.Top="22" Canvas.Left="128"/>
+            <CheckBox x:Name="chk_write" Content="escribir" Canvas.Top="22" Canvas.Left="322"></CheckBox>
+            <HyperlinkButton Content="acceder" x:Name="lnk_acceder" Click="lnk_acceder_click" Canvas.Top="22" Canvas.Left="400"/>
             <TextBlock Height="20" Visibility="Visible" HorizontalAlignment="Center" Canvas.Left="122" VerticalAlignment="Top" Width="350" Text="" TextWrapping="Wrap" x:Name="lblacceder_error" Canvas.Top="70"/>
         </Canvas>
 
