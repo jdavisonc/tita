@@ -239,11 +239,14 @@ public class WSTita : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void ExportDesWP(List<DTWorkPackageReport> lst)
+    public string ExportDesWP(List<DTWorkPackageReport> lst)
     {
         IFabricControllerReportPersistence frp = new FabricControllerReportPersistence();
         IReportPersistenceCSV irp= frp.GetIReportPersistenceCSV();
+
         irp.ReportDesvWorkPackageToCSV(lst);
+
+        return "";
     }
 
     [WebMethod]
