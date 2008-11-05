@@ -2538,10 +2538,17 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
     public partial class ExportDesWPResponseBody {
         
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string ExportDesWPResult;
+        
         public ExportDesWPResponseBody() {
+        }
+        
+        public ExportDesWPResponseBody(string ExportDesWPResult) {
+            this.ExportDesWPResult = ExportDesWPResult;
         }
     }
     
@@ -3232,6 +3239,25 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    public partial class ExportDesWPCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public ExportDesWPCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
     public partial class HasPendingChangesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -3559,7 +3585,7 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         public event System.EventHandler<IssuesReportCompletedEventArgs> IssuesReportCompleted;
         
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ExportDesWPCompleted;
+        public event System.EventHandler<ExportDesWPCompletedEventArgs> ExportDesWPCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ExportISSUESCompleted;
         
@@ -5177,8 +5203,9 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        private void EndExportDesWP(System.IAsyncResult result) {
+        private string EndExportDesWP(System.IAsyncResult result) {
             Infocorp.TITA.SilverlightUI.WSTitaReference.ExportDesWPResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndExportDesWP(result);
+            return retVal.Body.ExportDesWPResult;
         }
         
         private System.IAsyncResult OnBeginExportDesWP(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -5187,14 +5214,15 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
         
         private object[] OnEndExportDesWP(System.IAsyncResult result) {
-            this.EndExportDesWP(result);
-            return null;
+            string retVal = this.EndExportDesWP(result);
+            return new object[] {
+                    retVal};
         }
         
         private void OnExportDesWPCompleted(object state) {
             if ((this.ExportDesWPCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.ExportDesWPCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+                this.ExportDesWPCompleted(this, new ExportDesWPCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         

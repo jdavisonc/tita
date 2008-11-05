@@ -14,6 +14,7 @@ using Infocorp.TITA.SilverlightUI.WSTitaReference;
 using Infocorp.TITA.SilverlightUI.UserControls;
 using System.Reflection;
 using Cooper.Silverlight.Controls;
+using System.Windows.Browser;
 
 namespace Infocorp.TITA.SilverlightUI
 {
@@ -237,6 +238,7 @@ namespace Infocorp.TITA.SilverlightUI
             BtnExportar_DESWP.Visibility = Visibility.Collapsed;
             pager_grd_REPORT_DESWP.Visibility = Visibility.Collapsed;
             pager_grd_REPORT_ISSUES.Visibility = Visibility.Collapsed;
+            
         }
 
         public void ShowError(string msg, bool show)
@@ -2089,6 +2091,7 @@ namespace Infocorp.TITA.SilverlightUI
             forReport = true;
             GetContract();
             BtnGenerateReport_DESWP.Visibility = Visibility.Visible;        
+
         }
         
         private void BtnGenerateReportClick_DESWP(object sender, RoutedEventArgs e)
@@ -2127,6 +2130,9 @@ namespace Infocorp.TITA.SilverlightUI
         {
             if (e.Result != null)
             {
+
+                
+
                 grd_REPORT.Columns.Clear();
                 grd_REPORT.Visibility = Visibility.Visible;
                 pager_grd_REPORT_DESWP.ItemsControl = grd_REPORT;
@@ -2143,12 +2149,20 @@ namespace Infocorp.TITA.SilverlightUI
             //List<DTWorkPackageReport> lst = (List<DTWorkPackageReport>)grd_REPORT.ItemsSource;
             List<DTWorkPackageReport> lst = (List<DTWorkPackageReport>)pager_grd_REPORT_DESWP.ItemsSource;
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-            ws.ExportDesWPCompleted +=new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ExportDesWPCompleted);
+            ws.ExportDesWPCompleted += new EventHandler<ExportDesWPCompletedEventArgs>(ws_ExportDesWPCompleted);
             ws.ExportDesWPAsync(lst);
         }
 
-        void ws_ExportDesWPCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {}
+        void ws_ExportDesWPCompleted(object sender, ExportDesWPCompletedEventArgs e)
+        {
+            HtmlDocument doc = HtmlPage.Document;
+            HtmlElement downloadData = doc.GetElementById("downloadData");
+            downloadData.SetAttribute("value", e.Result);
+
+            HtmlElement fileName = doc.GetElementById("fileName");
+            fileName.SetAttribute("value", "myFile.txt");
+            doc.Submit("generateFileForm");
+        }
 
         #endregion
 

@@ -21,7 +21,7 @@ namespace Infocorp.TITA.ReportPersistence
         
         #region IReportPersistenceCSV Members
 
-        public void ReportDesvWorkPackageToCSV(List<DTWorkPackageReport> reportData)
+        public string ReportDesvWorkPackageToCSV(List<DTWorkPackageReport> reportData)
         {
 
             string reportName = "desvWorkPackage" + DateTime.Now.ToString("yyyyMMddHHmm") + this._EXTENSION;
@@ -30,8 +30,10 @@ namespace Infocorp.TITA.ReportPersistence
             {
                 this.WriteUserInfo(item, ref strb);
             }
-            this.CreateReportToCVS(reportName, StrToByteArray(strb.ToString()));
-                
+            
+            //this.CreateReportToCVS(reportName, StrToByteArray(strb.ToString()));
+
+            return strb.ToString();
         }
 
         private void WriteUserInfo(DTWorkPackageReport item, ref StringBuilder strb)
@@ -51,7 +53,8 @@ namespace Infocorp.TITA.ReportPersistence
                     
                     this.WriteUserInfo(item, ref strb);
                 }
-                this.CreateReportToCVS(reportName, StrToByteArray(strb.ToString()));
+                
+            this.CreateReportToCVS(reportName, StrToByteArray(strb.ToString()));
                 
         }
 
@@ -77,17 +80,12 @@ namespace Infocorp.TITA.ReportPersistence
         {
             try
             {
-                HttpContext.Current.Response.ClearHeaders();
-                HttpContext.Current.Response.Clear();
-                HttpContext.Current.Response.AddHeader("Content-Disposition", "inline; filename=" + filename);
-                HttpContext.Current.Response.ContentType = "text/csv";
-                HttpContext.Current.Response.BinaryWrite(bytesData);
-                HttpContext.Current.Response.End();
+                
             }
             catch (Exception)
             {
-            }
-            
+
+            }            
         }
 
         
