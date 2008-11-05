@@ -33,14 +33,11 @@ namespace Infocorp.TITA.SilverlightUI
         private string url = null;
         private DTItem item = new DTItem();
         List<DTItem> lstItem = new List<DTItem>();
-        //List<DTItem> lstIssue = new List<DTItem>();
-
         List<Issue> lstIssue = new List<Issue>();
         List<DTReportedItem> my_lstReport_issues = new List<DTReportedItem>();
         List<DTWorkPackageReport> my_lstReport_deswp = new List<DTWorkPackageReport>();
 
         private DTItem resulItem = new DTItem();
-        //private Progress progress = new Progress();
         private bool isEdit;
         private string map = "";
         private bool writeacces = false;
@@ -51,7 +48,6 @@ namespace Infocorp.TITA.SilverlightUI
         private List<Task> my_lstTask = new List<Task>();
         private List<DTContract> my_contract = new List<DTContract>();
         private DTContract my_con = null;
-        private List<string> ColumnsToShow = null;// new List<string>() { "id", "title", "status", "priority", "category", "Reported Date", "Work Package", "Reported by", "Order", "Resolution", "IsLocal" };
         
         public Page()
         {
@@ -69,8 +65,6 @@ namespace Infocorp.TITA.SilverlightUI
             {
                 ViewPendingChanges();
             }
-
-            //grd_INCIDENT.AutoGeneratingColumn += new EventHandler<DataGridAutoGeneratingColumnEventArgs>(grd_INCIDENT_AutoGeneratingColumn);
         }
 
         void GetGrilla(object sender, RoutedEventArgs e)
@@ -333,7 +327,7 @@ namespace Infocorp.TITA.SilverlightUI
                   cbx_contrat_up.ItemsSource = my_contract;
                   cbx_contrat_up.DisplayMemberPath = "Site";
                   cnv_current_contract.Visibility = Visibility.Visible;
-                  cbx_contrat_up.SelectedIndex = -1;
+                  cbx_contrat_up.SelectedIndex = 0;
                 }
 
             }
@@ -594,7 +588,8 @@ namespace Infocorp.TITA.SilverlightUI
             }
             else
             {
-                ShowError("Debe conectarse previamente a un contrato.", true);
+                lblacceder_error.Visibility = Visibility.Visible;
+                lblacceder_error.Text = "Debe conectarse previamente a un contrato.";
             }
         }
         
@@ -671,6 +666,8 @@ namespace Infocorp.TITA.SilverlightUI
             PnlOption_WP.Visibility = Visibility.Collapsed;
             PnlForm_WP.Visibility = Visibility.Visible;
             grdForm_WP.Visibility = Visibility.Collapsed;
+            grd_INCIDENT_WP.Visibility = Visibility.Collapsed;
+            pager_incident_wp.Visibility = Visibility.Collapsed;
             progress.play();
             LoadFormsWP();
         }
@@ -693,6 +690,8 @@ namespace Infocorp.TITA.SilverlightUI
         {
             WorkPackage wp = (WorkPackage)grd_WP.SelectedItem;
             int id = wp.Id;
+            grd_INCIDENT_WP.Visibility = Visibility.Collapsed;
+            pager_incident_wp.Visibility = Visibility.Collapsed;
             MessageBoxResult msg = MessageBox.Show("Esta seguro que desea eliminar este Workpackage?", "Workpackage", MessageBoxButton.OKCancel);
             if (msg == MessageBoxResult.OK)
             {
@@ -725,6 +724,8 @@ namespace Infocorp.TITA.SilverlightUI
             string strMy_pnl = "PnlForm_" + Option.WP;
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
             PnlOption_WP.Visibility = Visibility.Collapsed;
+            pager_incident_wp.Visibility = Visibility.Collapsed;
+            grd_INCIDENT_WP.Visibility = Visibility.Collapsed;
             if (item.Fields == null)
             {
                 WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
@@ -797,6 +798,8 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnApplyWP_Click(object sender, RoutedEventArgs e)
         {
+            grd_INCIDENT_WP.Visibility = Visibility.Collapsed;
+            pager_incident_wp.Visibility = Visibility.Collapsed;
             if (writeacces)
             {
                 try
@@ -854,7 +857,8 @@ namespace Infocorp.TITA.SilverlightUI
             }
             else
             {
-                ShowError("Debe conectarse previamente a un contrato.", true);
+                lblacceder_error.Text = "Debe conectarse previamente a un contrato.";
+                lblacceder_error.Visibility = Visibility.Visible;
             }
         }
 
@@ -1842,7 +1846,8 @@ namespace Infocorp.TITA.SilverlightUI
             }
             else
             {
-                ShowError("Debe conectarse previamente a un contrato.", true);
+                lblacceder_error.Text = "Debe conectarse previamente a un contrato.";
+                lblacceder_error.Visibility = Visibility.Visible;
             }
         }
     
@@ -2236,6 +2241,7 @@ namespace Infocorp.TITA.SilverlightUI
         private void lnk_acceder_click(object sender, RoutedEventArgs e)
         {
             DTContract contract = (DTContract)cbx_contrat_up.SelectedItem;
+            progress.play();
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
             ws.IsContractAvailableCompleted += new EventHandler<IsContractAvailableCompletedEventArgs>(ws_IsContractAvailableCompleted2);
             ws.IsContractAvailableAsync(contract.ContractId);
@@ -2253,6 +2259,7 @@ namespace Infocorp.TITA.SilverlightUI
             BtnApplyTASK.IsEnabled = writeacces;
             BtnApplyWP.IsEnabled = writeacces;
             BtnMap.IsEnabled = writeacces;
+            progress.stop();
         }
 
         void ws_IsContractAvailableCompleted2(object sender, IsContractAvailableCompletedEventArgs e)
@@ -2272,6 +2279,7 @@ namespace Infocorp.TITA.SilverlightUI
                 lblacceder_error.Text = "Error en la conexion con " + contract.Site;
                 lblacceder_error.Visibility = Visibility.Visible;
             }
+            progress.stop();
         }
 
         #region Por Impactar

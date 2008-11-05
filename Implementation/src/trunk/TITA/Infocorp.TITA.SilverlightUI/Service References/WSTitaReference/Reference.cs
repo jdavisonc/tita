@@ -895,6 +895,11 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         System.IAsyncResult BeginSiteMapPropertyValueTasks(Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksRequest request, System.AsyncCallback callback, object asyncState);
         
         Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksResponse EndSiteMapPropertyValueTasks(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/AquireContractWritePermission", ReplyAction="*")]
+        System.IAsyncResult BeginAquireContractWritePermission(Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionRequest request, System.AsyncCallback callback, object asyncState);
+        
+        Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionResponse EndAquireContractWritePermission(System.IAsyncResult result);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -2929,6 +2934,70 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class AquireContractWritePermissionRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="AquireContractWritePermission", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionRequestBody Body;
+        
+        public AquireContractWritePermissionRequest() {
+        }
+        
+        public AquireContractWritePermissionRequest(Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class AquireContractWritePermissionRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string contractId;
+        
+        public AquireContractWritePermissionRequestBody() {
+        }
+        
+        public AquireContractWritePermissionRequestBody(string contractId) {
+            this.contractId = contractId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class AquireContractWritePermissionResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="AquireContractWritePermissionResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionResponseBody Body;
+        
+        public AquireContractWritePermissionResponse() {
+        }
+        
+        public AquireContractWritePermissionResponse(Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class AquireContractWritePermissionResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool AquireContractWritePermissionResult;
+        
+        public AquireContractWritePermissionResponseBody() {
+        }
+        
+        public AquireContractWritePermissionResponseBody(bool AquireContractWritePermissionResult) {
+            this.AquireContractWritePermissionResult = AquireContractWritePermissionResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
     public interface WSTitaSoapChannel : Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap, System.ServiceModel.IClientChannel {
     }
@@ -3182,6 +3251,25 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    public partial class AquireContractWritePermissionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public AquireContractWritePermissionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
     public partial class WSTitaSoapClient : System.ServiceModel.ClientBase<Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap>, Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap {
         
         private BeginOperationDelegate onBeginExtendedDTSDelegate;
@@ -3382,6 +3470,12 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         private System.Threading.SendOrPostCallback onSiteMapPropertyValueTasksCompletedDelegate;
         
+        private BeginOperationDelegate onBeginAquireContractWritePermissionDelegate;
+        
+        private EndOperationDelegate onEndAquireContractWritePermissionDelegate;
+        
+        private System.Threading.SendOrPostCallback onAquireContractWritePermissionCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -3478,6 +3572,8 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> SiteMapPropertyValueIssuesCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> SiteMapPropertyValueTasksCompleted;
+        
+        public event System.EventHandler<AquireContractWritePermissionCompletedEventArgs> AquireContractWritePermissionCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -5500,6 +5596,66 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
                         endValue}, this.onEndSiteMapPropertyValueTasksDelegate, this.onSiteMapPropertyValueTasksCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.BeginAquireContractWritePermission(Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAquireContractWritePermission(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private System.IAsyncResult BeginAquireContractWritePermission(string contractId, System.AsyncCallback callback, object asyncState) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionRequest inValue = new Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionRequest();
+            inValue.Body = new Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionRequestBody();
+            inValue.Body.contractId = contractId;
+            return ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).BeginAquireContractWritePermission(inValue, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionResponse Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap.EndAquireContractWritePermission(System.IAsyncResult result) {
+            return base.Channel.EndAquireContractWritePermission(result);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private bool EndAquireContractWritePermission(System.IAsyncResult result) {
+            Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndAquireContractWritePermission(result);
+            return retVal.Body.AquireContractWritePermissionResult;
+        }
+        
+        private System.IAsyncResult OnBeginAquireContractWritePermission(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string contractId = ((string)(inValues[0]));
+            return this.BeginAquireContractWritePermission(contractId, callback, asyncState);
+        }
+        
+        private object[] OnEndAquireContractWritePermission(System.IAsyncResult result) {
+            bool retVal = this.EndAquireContractWritePermission(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnAquireContractWritePermissionCompleted(object state) {
+            if ((this.AquireContractWritePermissionCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.AquireContractWritePermissionCompleted(this, new AquireContractWritePermissionCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void AquireContractWritePermissionAsync(string contractId) {
+            this.AquireContractWritePermissionAsync(contractId, null);
+        }
+        
+        public void AquireContractWritePermissionAsync(string contractId, object userState) {
+            if ((this.onBeginAquireContractWritePermissionDelegate == null)) {
+                this.onBeginAquireContractWritePermissionDelegate = new BeginOperationDelegate(this.OnBeginAquireContractWritePermission);
+            }
+            if ((this.onEndAquireContractWritePermissionDelegate == null)) {
+                this.onEndAquireContractWritePermissionDelegate = new EndOperationDelegate(this.OnEndAquireContractWritePermission);
+            }
+            if ((this.onAquireContractWritePermissionCompletedDelegate == null)) {
+                this.onAquireContractWritePermissionCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAquireContractWritePermissionCompleted);
+            }
+            base.InvokeAsync(this.onBeginAquireContractWritePermissionDelegate, new object[] {
+                        contractId}, this.onEndAquireContractWritePermissionDelegate, this.onAquireContractWritePermissionCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -6001,6 +6157,19 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
             public Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksResponse EndSiteMapPropertyValueTasks(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.SiteMapPropertyValueTasksResponse)(base.EndInvoke("SiteMapPropertyValueTasks", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginAquireContractWritePermission(Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("AquireContractWritePermission", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionResponse EndAquireContractWritePermission(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionResponse _result = ((Infocorp.TITA.SilverlightUI.WSTitaReference.AquireContractWritePermissionResponse)(base.EndInvoke("AquireContractWritePermission", _args, result)));
                 return _result;
             }
         }
