@@ -43,6 +43,7 @@ namespace Infocorp.TITA.SilverlightUI
         //private Progress progress = new Progress();
         private bool isEdit;
         private string map = "";
+        private bool writeacces = false;
         private bool isIssueWP;
         private bool oneContract;
         private bool forReport = false;
@@ -114,6 +115,12 @@ namespace Infocorp.TITA.SilverlightUI
             pager_tasks.ItemsSource = my_lstTask;
             pager_grd_REPORT_DESWP.ItemsSource = my_lstReport_deswp;
             pager_grd_REPORT_ISSUES.ItemsSource = my_lstReport_issues;
+
+            writeacces = false;
+            BtnApplyINCIDENT.IsEnabled = writeacces;
+            BtnApplyTASK.IsEnabled = writeacces;
+            BtnApplyWP.IsEnabled = writeacces;
+            BtnMap.IsEnabled = writeacces;
         }
 
         void acc_ItemSelect(object sender, Infocorp.TITA.Controls.Silverlight.V2.ItemEventArgs e)
@@ -283,7 +290,6 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void GetContract()
         {
-
             try
             {
                 WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
@@ -316,6 +322,7 @@ namespace Infocorp.TITA.SilverlightUI
                     if (lstContratos.Columns.Count != 0)
                     {
                         lstContratos.Columns[0].Visibility = Visibility.Collapsed;
+                        lstContratos.Columns[4].Visibility = Visibility.Collapsed;
                     }
                     lstContratos.Visibility = Visibility.Visible;
                     lstContratos.IsReadOnly = true;
@@ -346,7 +353,6 @@ namespace Infocorp.TITA.SilverlightUI
             if (lstContratos.SelectedItem != null)
             {
                 DTContract cont = (DTContract)lstContratos.SelectedItem;
-                txtNombre.Text = cont.UserName;
                 txtSite.Text = cont.Site;
                 txtIssuesList.Text = cont.issuesList;
                 txtWorkPackageList.Text = cont.workPackageList;
@@ -362,9 +368,6 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void CleanPanelContract()
         {
-            contName.Text = "Nombre";
-            contName.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
-            txtNombre.Text = "";
             contSite.Text = "Site";
             txtSite.Text = "";
             contSite.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
@@ -381,16 +384,6 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void ShowErrorContract()
         {
-            if (txtNombre.Text == "")
-            {
-                contName.Text = "Nombre *";
-                contName.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
-            }
-            else 
-            {
-                contName.Text = "Nombre";
-                contName.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
-            }
             if (txtSite.Text == "")
             {
                 contSite.Text = "Site *";
@@ -431,21 +424,6 @@ namespace Infocorp.TITA.SilverlightUI
                 contLstWP.Text = "Lista de WorkPackage";
                 contLstWP.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
             }
-
-        }
-
-        private void BtnConectarContrato_Click(object sender, RoutedEventArgs e)
-        {
-            DTContract contract;
-            contract = (DTContract)lstContratos.SelectedItem;
-            url = contract.ContractId;
-            cbx_contrat_up.SelectedItem = contract;
-            lblacceder_error.Text = "Se ha conectado a " + contract.Site;
-            lblacceder_error.Visibility = Visibility.Visible;
-
-            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-            ws.IsContractAvailableCompleted += new EventHandler<IsContractAvailableCompletedEventArgs>(ws_IsContractAvailableCompleted);
-            ws.IsContractAvailableAsync(contract.ContractId);        
 
         }
 
@@ -523,7 +501,6 @@ namespace Infocorp.TITA.SilverlightUI
             {
                 DTContract cont = new DTContract
                 {
-                    UserName = txtNombre.Text,
                     Site = txtSite.Text,
                     issuesList = txtIssuesList.Text,
                     workPackageList = txtWorkPackageList.Text,
@@ -554,7 +531,6 @@ namespace Infocorp.TITA.SilverlightUI
                 DTContract c = new DTContract();
                 c.ContractId = cont.ContractId.Trim();
                 c.Site = txtSite.Text;
-                c.UserName = txtNombre.Text;
                 c.taskList = txtTaskList.Text;
                 c.workPackageList = txtWorkPackageList.Text;
                 c.issuesList = txtIssuesList.Text;
@@ -694,6 +670,7 @@ namespace Infocorp.TITA.SilverlightUI
             isEdit = false;
             PnlOption_WP.Visibility = Visibility.Collapsed;
             PnlForm_WP.Visibility = Visibility.Visible;
+            grdForm_WP.Visibility = Visibility.Collapsed;
             progress.play();
             LoadFormsWP();
         }
@@ -820,15 +797,18 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnApplyWP_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (writeacces)
             {
-                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-                ws.ApplyChangesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ApplyChangesWPCompleted);
-                ws.ApplyChangesAsync(url, ItemType.WORKPACKAGE);
-            }
-            catch (Exception exp)
-            {
-                ShowError("Error al impactar cambios:" + exp.Message, true);
+                try
+                {
+                    WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                    ws.ApplyChangesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ApplyChangesWPCompleted);
+                    ws.ApplyChangesAsync(url, ItemType.WORKPACKAGE);
+                }
+                catch (Exception exp)
+                {
+                    ShowError("Error al impactar cambios:" + exp.Message, true);
+                }
             }
         }
 
@@ -845,6 +825,7 @@ namespace Infocorp.TITA.SilverlightUI
             }
             else
             {
+                //titulo_wp_issue.Visibility = Visibility;
                 WorkPackage wp = (WorkPackage)grd_WP.SelectedItem;
                 WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
                 ws.GetIssuesWPCompleted += new EventHandler<GetIssuesWPCompletedEventArgs>(ws_GetIssuesWPCompleted);
@@ -1827,10 +1808,20 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnApplyINCIDENT_Click(object sender, RoutedEventArgs e)
         {
-            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-            ws.ApplyChangesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ApplyChangesINCIDENTCompleted);
-            ws.ApplyChangesAsync(url, ItemType.ISSUE);
-        }
+            if (writeacces)
+            {
+                try
+                {
+                    WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                    ws.ApplyChangesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ApplyChangesINCIDENTCompleted);
+                    ws.ApplyChangesAsync(url, ItemType.ISSUE);
+                }
+                catch (Exception exp)
+                {
+                    ShowError("Error al impactar cambios:" + exp.Message, true);
+                }
+            }
+         }
 
         void ws_ApplyChangesINCIDENTCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
@@ -2057,11 +2048,20 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnApplyTASK_Click(object sender, RoutedEventArgs e)
         {
-            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-            ws.ApplyChangesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ApplyChangesTASKCompleted);
-            ws.ApplyChangesAsync(url, ItemType.TASK);
+            if (writeacces)
+            {
+                try
+                {
+                    WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                    ws.ApplyChangesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ApplyChangesTASKCompleted);
+                    ws.ApplyChangesAsync(url, ItemType.TASK);
+                }
+                catch (Exception exp)
+                {
+                    ShowError("Error al impactar cambios:" + exp.Message, true);
+                }
+            }
         }
-
         void ws_ApplyChangesTASKCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             GetTask();
@@ -2239,6 +2239,20 @@ namespace Infocorp.TITA.SilverlightUI
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
             ws.IsContractAvailableCompleted += new EventHandler<IsContractAvailableCompletedEventArgs>(ws_IsContractAvailableCompleted2);
             ws.IsContractAvailableAsync(contract.ContractId);
+            if (chk_write.IsChecked.Value)
+            {
+                ws.AquireContractWritePermissionCompleted += new EventHandler<AquireContractWritePermissionCompletedEventArgs>(ws_AquireContractWritePermissionCompleted);
+                ws.AquireContractWritePermissionAsync(contract.ContractId);
+            }
+        }
+
+        void ws_AquireContractWritePermissionCompleted(object sender, AquireContractWritePermissionCompletedEventArgs e)
+        {
+            writeacces = e.Result;
+            BtnApplyINCIDENT.IsEnabled = writeacces;
+            BtnApplyTASK.IsEnabled = writeacces;
+            BtnApplyWP.IsEnabled = writeacces;
+            BtnMap.IsEnabled = writeacces;
         }
 
         void ws_IsContractAvailableCompleted2(object sender, IsContractAvailableCompletedEventArgs e)
@@ -2420,52 +2434,55 @@ namespace Infocorp.TITA.SilverlightUI
         
         private void BtnMap_Click(object sender, RoutedEventArgs e)
         {
-            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-            DTContract c = (DTContract)cbx_contrat_up.SelectedItem;
-            DTField f = (DTField)cmbx_property_map.SelectedItem;
-            string v = (string)cmbx_initialValue_map.SelectedItem;
-            txt_endValue_map.Text = "End Value";
-            txt_endValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
-
-            txt_property_map.Text = "Property";
-            txt_property_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
-
-            txt_initialValue_map.Text = "Initial Value";
-            txt_initialValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
-
-
-            if (c != null && f != null && v != null && bx_endValue_map.Text != "")
+            if (writeacces)
             {
-                if (map == "Issue")
+                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                DTContract c = (DTContract)cbx_contrat_up.SelectedItem;
+                DTField f = (DTField)cmbx_property_map.SelectedItem;
+                string v = (string)cmbx_initialValue_map.SelectedItem;
+                txt_endValue_map.Text = "End Value";
+                txt_endValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
+
+                txt_property_map.Text = "Property";
+                txt_property_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
+
+                txt_initialValue_map.Text = "Initial Value";
+                txt_initialValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
+
+
+                if (c != null && f != null && v != null && bx_endValue_map.Text != "")
                 {
-                    ws.SiteMapPropertyValueIssuesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_SiteMapPropertyValueIssuesCompleted);
-                    ws.SiteMapPropertyValueIssuesAsync(c.ContractId, f.Name, v, bx_endValue_map.Text);
+                    if (map == "Issue")
+                    {
+                        ws.SiteMapPropertyValueIssuesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_SiteMapPropertyValueIssuesCompleted);
+                        ws.SiteMapPropertyValueIssuesAsync(c.ContractId, f.Name, v, bx_endValue_map.Text);
+                    }
+                    else if (map == "Task")
+                    {
+                        ws.SiteMapPropertyValueTasksCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_SiteMapPropertyValueTasksCompleted);
+                        ws.SiteMapPropertyValueTasksAsync(c.ContractId, f.Name, v, bx_endValue_map.Text);
+                    }
+                    else if (map == "WP")
+                    {
+                        ws.SiteMapPropertyValueWorkPackagesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_SiteMapPropertyValueWorkPackagesCompleted);
+                        ws.SiteMapPropertyValueWorkPackagesAsync(c.ContractId, f.Name, v, bx_endValue_map.Text);
+                    }
                 }
-                else if (map == "Task")
+                else if (bx_endValue_map.Text == "")
                 {
-                    ws.SiteMapPropertyValueTasksCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_SiteMapPropertyValueTasksCompleted);
-                    ws.SiteMapPropertyValueTasksAsync(c.ContractId, f.Name, v, bx_endValue_map.Text);
+                    txt_endValue_map.Text = txt_endValue_map.Text + "*";
+                    txt_endValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                 }
-                else if (map == "WP")
+                else if (f == null)
                 {
-                    ws.SiteMapPropertyValueWorkPackagesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_SiteMapPropertyValueWorkPackagesCompleted);
-                    ws.SiteMapPropertyValueWorkPackagesAsync(c.ContractId, f.Name, v, bx_endValue_map.Text);
+                    txt_property_map.Text = txt_property_map.Text + "*";
+                    txt_property_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
                 }
-            }
-            else if (bx_endValue_map.Text == "")
-            {
-                txt_endValue_map.Text = txt_endValue_map.Text + "*";
-                txt_endValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
-            }
-            else if (f == null)
-            {
-                txt_property_map.Text = txt_property_map.Text + "*";
-                txt_property_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
-            }
-            else if (v == null)
-            {
-                txt_initialValue_map.Text = txt_initialValue_map.Text + "*";
-                txt_initialValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
+                else if (v == null)
+                {
+                    txt_initialValue_map.Text = txt_initialValue_map.Text + "*";
+                    txt_initialValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Red));
+                }
             }
         }
 
