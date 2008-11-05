@@ -299,5 +299,16 @@ public class WSTita : System.Web.Services.WebService
 
     #endregion
 
+    #region WriteContrat
+
+    [WebMethod]
+    public bool AquireContractWritePermission(string contractId)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        return witInstance.AquireContractWritePermission(contractId);
+    }
+
+
+    #endregion
 
 }
