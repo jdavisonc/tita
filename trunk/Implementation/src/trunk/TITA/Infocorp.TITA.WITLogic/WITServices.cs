@@ -260,7 +260,7 @@ namespace Infocorp.TITA.WITLogic
             return result;
         }
 
-        public List<DTCommandInfo> ApplyChanges(string contractId, ItemType itemType)
+        public List<DTItem> ApplyChanges(string contractId, ItemType itemType)
         {            
             List<DTCommandInfo> commands = WITCommandState.Instance().GetCommands(contractId);
             ISharePoint spu = _sharepoint;
@@ -336,8 +336,15 @@ namespace Infocorp.TITA.WITLogic
             }
 
             WITCommandState.Instance().ClearCommands(contractId);
-            
-            return commandsNotExecuted;
+
+
+            List<DTItem> items = new List<DTItem>();
+            foreach (DTCommandInfo info in commandsNotExecuted){
+                items.Add(info.Item);
+            }
+
+            //return commandsNotExecuted;
+            return items;
         }
 
         public bool HasPendingChanges(string contractId)
