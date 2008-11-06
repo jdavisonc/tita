@@ -23,13 +23,6 @@ namespace Infocorp.TITA.DataTypes
             get { return _site; }
             set { _site = value == null ? value : value.Trim(); }
         }
-        private string _userName;
-        [DataMember]
-        public string UserName
-        {
-            get { return _userName; }
-            set { _userName = value == null ? value : value.Trim(); }
-        }
         private string _issuesList;
         [DataMember]
         public string issuesList
