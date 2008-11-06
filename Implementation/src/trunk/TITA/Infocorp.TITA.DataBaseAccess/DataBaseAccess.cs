@@ -273,7 +273,7 @@ namespace Infocorp.TITA.DataBaseAccess
             DTContract contract = GetContract(contractId);
             if (contract != null)
             {
-                if (contract.UserName == null)
+                if (String.IsNullOrEmpty(contract.UserName))
                 {
                     contract.UserName = userName;
                     AddContract(contract);
