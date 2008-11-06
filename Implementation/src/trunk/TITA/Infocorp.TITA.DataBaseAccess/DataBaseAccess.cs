@@ -25,7 +25,6 @@ namespace Infocorp.TITA.DataBaseAccess
                     aux.issues_list = c.issuesList;
                     aux.task_list = c.taskList;
                     aux.workpackage_list = c.workPackageList;
-                    aux.user = c.UserName;
                 }
                 
                 dc.SubmitChanges();
@@ -33,7 +32,6 @@ namespace Infocorp.TITA.DataBaseAccess
             else
             {
                 contract.site = c.Site;
-                contract.user = c.UserName;
                 contract.issues_list = c.issuesList;
                 contract.workpackage_list = c.workPackageList;
                 contract.task_list = c.taskList;
@@ -83,7 +81,6 @@ namespace Infocorp.TITA.DataBaseAccess
                 DTContract dtContract = new DTContract();
                 dtContract.ContractId = contract.id_contract.ToString();
                 dtContract.Site = contract.site;
-                dtContract.UserName = contract.user;
                 dtContract.issuesList = contract.issues_list;
                 dtContract.workPackageList = contract.workpackage_list;
                 dtContract.taskList = contract.task_list;
@@ -117,7 +114,6 @@ namespace Infocorp.TITA.DataBaseAccess
             if (contract.Count() > 0)
             {
                 contract.First().site = c.Site;
-                contract.First().user = c.UserName;
                 contract.First().issues_list = c.issuesList;
                 contract.First().workpackage_list = c.workPackageList;
                 contract.First().task_list = c.taskList;
@@ -136,7 +132,6 @@ namespace Infocorp.TITA.DataBaseAccess
             {
                 contractData.ContractId = idContract;
                 contractData.Site = contract.First().site;
-                contractData.UserName = contract.First().user;
                 contractData.issuesList = contract.First().issues_list;
                 contractData.workPackageList = contract.First().workpackage_list;
                 contractData.taskList = contract.First().task_list;
@@ -225,25 +220,20 @@ namespace Infocorp.TITA.DataBaseAccess
             DTContract contract = GetContract(contractId);
             if (contract != null)
             {
-                if (contract.UserName == null)
-                    return false;
 
-                else
+                //me fijo si ese usuario expiro
+                var current = from u in dc.Currents
+                              where (u.site == contract.Site)
+                              select u;
+                if (current.Count() > 0)
                 {
-
-                    //me fijo si ese usuario expiro
-                    var current = from u in dc.Currents
-                                  where (u.current_user == contract.UserName) && (u.site == contract.Site)
-                                  select u;
                     DateTime d1 = Convert.ToDateTime(current.First().last_modification);
                     DateTime d2 = Convert.ToDateTime(current.First().logged_date);
                     var time = (d1 - d2);
-                    
+
                     if (time.Seconds > maxTime)
                     {
                         //remover usuario
-                        contract.UserName = null;
-                        AddContract(contract);
                         DeleteCurrent(contract.Site);
                         return false;
                     }
@@ -251,6 +241,7 @@ namespace Infocorp.TITA.DataBaseAccess
                         return true;
 
                 }
+                else return false;
 
             }
             else
@@ -273,10 +264,37 @@ namespace Infocorp.TITA.DataBaseAccess
             DTContract contract = GetContract(contractId);
             if (contract != null)
             {
-                if (String.IsNullOrEmpty(contract.UserName))
+
+                var current = from u in dc.Currents
+                              where (u.site == contract.Site)
+                              select u;
+                if (current.Count() > 0)
+
                 {
-                    contract.UserName = userName;
-                    AddContract(contract);
+                    DateTime d1 = Convert.ToDateTime(current.First().last_modification);
+                    DateTime d2 = Convert.ToDateTime(current.First().logged_date);
+                    var time = (d1 - d2);
+
+                    if (time.Seconds > maxTime)
+                    {
+                        //remover usuario
+                        dc.Currents.DeleteOnSubmit(current.First());
+                        dc.SubmitChanges();
+                        DTCurrentUser newCurrent = new DTCurrentUser();
+                        newCurrent.CurrentUser = userName;
+                        newCurrent.Site = contract.Site.Trim();
+                        newCurrent.LoggedDate = DateTime.Now.ToString();
+                        newCurrent.LastModification = DateTime.Now.ToString();
+                        AddCurrentUser(newCurrent);
+                        return true;
+                    }
+                    else
+                        return false;
+
+                }
+                else
+                {
+                    
                     Current newCurrent = new Current();
                     newCurrent.current_user = userName;
                     newCurrent.site = contract.Site.Trim();
@@ -284,39 +302,9 @@ namespace Infocorp.TITA.DataBaseAccess
                     newCurrent.last_modification = DateTime.Now.ToString();
                     dc.Currents.InsertOnSubmit(newCurrent);
                     dc.SubmitChanges();
-
                     return true;
                 }
-                else
-                {
-
-                    //me fijo si ese usuario no expiro
-                    var current = from u in dc.Currents
-                                  where (u.current_user == contract.UserName) && (u.site == contract.Site)
-                                  select u;
-                    DateTime d1 = Convert.ToDateTime(current.First().last_modification);
-                    DateTime d2 = Convert.ToDateTime(current.First().logged_date);
-                    var time = (d1 - d2);
-
-                    if (time.Seconds > maxTime) 
-                    {
-                        //remover usuario
-                        contract.UserName = null;
-                        AddContract(contract);
-                        dc.Currents.DeleteOnSubmit(current.First());
-                        dc.SubmitChanges();
-                        DTCurrentUser newCurrent = new DTCurrentUser();
-                        newCurrent.CurrentUser  = userName;
-                        newCurrent.Site = contract.Site.Trim();
-                        newCurrent.LoggedDate = DateTime.Now.ToString();
-                        newCurrent.LastModification = DateTime.Now.ToString();
-                        AddCurrentUser(newCurrent);
-                        return true;
-                    }
-                    else 
-                        return false;
                 
-               }
             }
             else
             {
@@ -337,13 +325,11 @@ namespace Infocorp.TITA.DataBaseAccess
             DTContract contract = GetContract(contractId);
             if (contract != null)
             {
-                contract.UserName = null;
-                AddContract(contract);
                 DeleteCurrent(contract.Site);
             }
             else
             {
-                throw new ArgumentException("No existe el contrato que desea");
+                throw new ArgumentException("No existe el contrato que desea liberar");
              
             }
             
@@ -361,17 +347,14 @@ namespace Infocorp.TITA.DataBaseAccess
             DTContract contract = GetContract(contractId);
             if (contract != null)
             {
-                if (contract.UserName != userName)
-                    return false;
-
-                else
+                var current = from u in dc.Currents
+                              where (u.site == contract.Site)
+                              select u;
+                if (current.Count() > 0)
                 {
-
-                    //me fijo si ese usuario expiro
-                    var current = from u in dc.Currents
-                                  where (u.current_user == contract.UserName) && (u.site == contract.Site)
-                                  select u;
-                    if (current.Count() > 0)
+                    if (current.First().current_user.Trim() != userName)
+                        return false;
+                    else
                     {
                         DateTime d1 = Convert.ToDateTime(current.First().last_modification);
                         DateTime d2 = Convert.ToDateTime(current.First().logged_date);
@@ -387,10 +370,9 @@ namespace Infocorp.TITA.DataBaseAccess
                         else
                             return true;
                     }
-                    else
-                        return false;
-                }   
-
+                }
+                else
+                    return false;
             }
             else
             {
@@ -409,7 +391,7 @@ namespace Infocorp.TITA.DataBaseAccess
             LinqDataContext dc = new LinqDataContext();
             DTContract contract = GetContract(contractId);
             var current = (from u in dc.Currents
-                          where (u.current_user == contract.UserName) && (u.site == contract.Site)
+                          where (u.current_user == userName) && (u.site == contract.Site)
                           select u);
            
             current.First().last_modification = DateTime.Now.ToString();
