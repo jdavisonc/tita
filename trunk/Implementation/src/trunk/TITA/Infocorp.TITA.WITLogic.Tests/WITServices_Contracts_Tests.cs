@@ -51,7 +51,6 @@ namespace Infocorp.TITA.WITLogic.Tests
             contract.issuesList = string.Empty;
             contract.Site = string.Empty;
             contract.taskList = string.Empty;
-            contract.UserName = string.Empty;
             contract.workPackageList = string.Empty;
 
             DTContract contract2 = new DTContract();
@@ -59,7 +58,6 @@ namespace Infocorp.TITA.WITLogic.Tests
             contract2.issuesList = string.Empty;
             contract2.Site = string.Empty;
             contract2.taskList = string.Empty;
-            contract2.UserName = string.Empty;
             contract2.workPackageList = string.Empty;
 
             List<DTContract> contracts = new List<DTContract>() { contract, contract2 };
