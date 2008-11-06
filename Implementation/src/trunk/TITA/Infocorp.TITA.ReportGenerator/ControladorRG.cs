@@ -17,7 +17,7 @@ namespace Infocorp.TITA.ReportGenerator
         {
             try
             {
-                ISharePoint sp = new SharePoint2003();
+                ISharePoint sp = new SharePoint2003WS();
                 String format = "yyyy-MM-ddThh:mm:ssZ";
                 DataBaseAccess.DataBaseAccess db = new DataBaseAccess.DataBaseAccess();
                 string site = db.ContractSite(contractId).Trim();
@@ -93,7 +93,7 @@ namespace Infocorp.TITA.ReportGenerator
         {
             try
             {
-                ISharePoint sp = new SharePoint2003();
+                ISharePoint sp = new SharePoint2003WS();
                 String format = "yyyy-MM-ddThh:mm:ssZ";
                 DataBaseAccess.DataBaseAccess db = new DataBaseAccess.DataBaseAccess();
                 String str = initialDate.ToString(format);
