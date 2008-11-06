@@ -271,63 +271,70 @@ namespace Infocorp.TITA.WITLogic
 
             foreach (DTCommandInfo command in commands)
             {
-                command.Item.Fields.RemoveAll(delegate(DTField f) { return f.Name == "IsLocal"; });
-                switch (command.CommandType)
+                try
                 {
-                    case CommandType.ADD:
-                        switch (command.CommandItemType)
-                        {
-                            case ItemType.ISSUE:
-                                result = spu.AddIssue(contractId, command.Item);
-                                break;
-                            case ItemType.TASK:
-                                result = spu.AddTask(contractId, command.Item);
-                                break;
-                            case ItemType.WORKPACKAGE:
-                                result = spu.AddWorkPackage(contractId, command.Item);
-                                break;
-                            default:
-                                break;
-                        }
-                        
-                        break;
-                    case CommandType.MODIFY:
-                        switch (command.CommandItemType)
-                        {
-                            case ItemType.ISSUE:
-                                result = spu.UpdateIssue(contractId, command.Item);
-                                break;
-                            case ItemType.TASK:
-                                result = spu.UpdateTask(contractId, command.Item);
-                                break;
-                            case ItemType.WORKPACKAGE:
-                                result = spu.UpdateWorkPackage(contractId, command.Item);
-                                break;
-                            default:
-                                break;
-                        }
-                        
-                        break;
-                    case CommandType.DELETE:
-                        int issueId = Convert.ToInt32((command.Item.Fields.Find(delegate(DTField f) { return f.Name.ToLower() == "id"; }) as DTFieldCounter).Value);
-                        switch (command.CommandItemType)
-                        {
-                            case ItemType.ISSUE:
-                                result = spu.DeleteIssue(contractId, issueId);
-                                break;
-                            case ItemType.TASK:
-                                result = spu.DeleteTask(contractId, issueId);
-                                break;
-                            case ItemType.WORKPACKAGE: 
-                                result = spu.DeleteWorkPackage(contractId, issueId);
-                                break;
-                            default:
-                                break;
-                        }
-                        
-                        break;
-                    default:
-                        break;
+                    command.Item.Fields.RemoveAll(delegate(DTField f) { return f.Name == "IsLocal"; });
+                    switch (command.CommandType)
+                    {
+                        case CommandType.ADD:
+                            switch (command.CommandItemType)
+                            {
+                                case ItemType.ISSUE:
+                                    result = spu.AddIssue(contractId, command.Item);
+                                    break;
+                                case ItemType.TASK:
+                                    result = spu.AddTask(contractId, command.Item);
+                                    break;
+                                case ItemType.WORKPACKAGE:
+                                    result = spu.AddWorkPackage(contractId, command.Item);
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            break;
+                        case CommandType.MODIFY:
+                            switch (command.CommandItemType)
+                            {
+                                case ItemType.ISSUE:
+                                    result = spu.UpdateIssue(contractId, command.Item);
+                                    break;
+                                case ItemType.TASK:
+                                    result = spu.UpdateTask(contractId, command.Item);
+                                    break;
+                                case ItemType.WORKPACKAGE:
+                                    result = spu.UpdateWorkPackage(contractId, command.Item);
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            break;
+                        case CommandType.DELETE:
+                            int issueId = Convert.ToInt32((command.Item.Fields.Find(delegate(DTField f) { return f.Name.ToLower() == "id"; }) as DTFieldCounter).Value);
+                            switch (command.CommandItemType)
+                            {
+                                case ItemType.ISSUE:
+                                    result = spu.DeleteIssue(contractId, issueId);
+                                    break;
+                                case ItemType.TASK:
+                                    result = spu.DeleteTask(contractId, issueId);
+                                    break;
+                                case ItemType.WORKPACKAGE:
+                                    result = spu.DeleteWorkPackage(contractId, issueId);
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                catch (Exception exc)
+                {
+                    result = false;
                 }
                 if (!result)
                 {
@@ -441,19 +448,49 @@ namespace Infocorp.TITA.WITLogic
         #region IWITServices Members
 
 
-        public void SiteMapPropertyValueWorkPackages(string idContract, string property, string initialValue, string endValue)
+        public bool SiteMapPropertyValueWorkPackages(string idContract, string property, string initialValue, string endValue)
         {
+            bool result = true;
+            try
+            {
             _sharepoint.SiteMapPropertyValueWorkPackages(idContract, property, initialValue, endValue);
+            }
+            catch (Exception exc)
+            {
+                result = false;
+            }
+
+            return result;
         }
 
-        public void SiteMapPropertyValueIssues(string idContract, string property, string initialValue, string endValue)
+        public bool SiteMapPropertyValueIssues(string idContract, string property, string initialValue, string endValue)
         {
+            bool result = true;
+            try
+            {
             _sharepoint.SiteMapPropertyValueIssues(idContract, property, initialValue, endValue);
+            }
+            catch (Exception exc)
+            {
+                result = false;
+            }
+
+            return result;
         }
 
-        public void SiteMapPropertyValueTasks(string idContract, string property, string initialValue, string endValue)
+        public bool SiteMapPropertyValueTasks(string idContract, string property, string initialValue, string endValue)
         {
-            _sharepoint.SiteMapPropertyValueTasks(idContract, property, initialValue, endValue);
+            bool result = true;
+            try
+            {
+                _sharepoint.SiteMapPropertyValueTasks(idContract, property, initialValue, endValue);
+            }
+            catch (Exception exc)
+            {
+                result = false;
+            }
+
+            return result;
         }
 
         public bool IsContractAvailable(string contractId)

@@ -25,7 +25,7 @@ namespace Infocorp.TITA.WITLogic
 
         void UpdateWorkPackage(DTItem workPackage, string contractId);
 
-        void SiteMapPropertyValueWorkPackages(string idContract, string property, string initialValue, string endValue);
+        bool SiteMapPropertyValueWorkPackages(string idContract, string property, string initialValue, string endValue);
 
         #endregion
 
@@ -43,7 +43,7 @@ namespace Infocorp.TITA.WITLogic
 
         void DeleteIssue(int issueId, string contractId);
 
-        void SiteMapPropertyValueIssues(string idContract, string property, string initialValue, string endValue);
+        bool SiteMapPropertyValueIssues(string idContract, string property, string initialValue, string endValue);
 
         #endregion
 
@@ -61,7 +61,7 @@ namespace Infocorp.TITA.WITLogic
 
         void UpdateTask(DTItem task, string contractId);
 
-        void SiteMapPropertyValueTasks(string idContract, string property, string initialValue, string endValue);
+        bool SiteMapPropertyValueTasks(string idContract, string property, string initialValue, string endValue);
 
         #endregion
 
