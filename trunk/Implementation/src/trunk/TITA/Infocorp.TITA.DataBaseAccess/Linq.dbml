@@ -1,22 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Database Name="baseLocal" Class="LinqDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=TITAVM\SQLEXPRESS;Initial Catalog=baseLocal;Integrated Security=True" SettingsObjectName="Infocorp.TITA.DataBaseAccess.Properties.Settings" SettingsPropertyName="baseLocalConnectionString1" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.Contracts" Member="Contracts">
-    <Type Name="Contract">
-      <Column Name="id_contract" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="site" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
-      <Column Name="[user]" Member="user" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
-      <Column Name="issues_list" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
-      <Column Name="workpackage_list" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
-      <Column Name="task_list" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.[Current]" Member="Currents">
     <Type Name="Current">
       <Column Name="site" Type="System.String" DbType="NChar(40) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="[current_user]" Member="current_user" Type="System.String" DbType="NChar(40) NOT NULL" CanBeNull="false" />
       <Column Name="logged_date" Type="System.String" DbType="NChar(40) NOT NULL" CanBeNull="false" />
       <Column Name="last_modification" Type="System.String" DbType="NChar(40) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Contracts" Member="Contracts">
+    <Type Name="Contract">
+      <Column Name="id_contract" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="site" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
+      <Column Name="issues_list" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
+      <Column Name="workpackage_list" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
+      <Column Name="task_list" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

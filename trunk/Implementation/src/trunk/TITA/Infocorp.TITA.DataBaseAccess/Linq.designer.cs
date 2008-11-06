@@ -30,12 +30,12 @@ namespace Infocorp.TITA.DataBaseAccess
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertContract(Contract instance);
-    partial void UpdateContract(Contract instance);
-    partial void DeleteContract(Contract instance);
     partial void InsertCurrent(Current instance);
     partial void UpdateCurrent(Current instance);
     partial void DeleteCurrent(Current instance);
+    partial void InsertContract(Contract instance);
+    partial void UpdateContract(Contract instance);
+    partial void DeleteContract(Contract instance);
     #endregion
 		
 		public LinqDataContext() : 
@@ -68,14 +68,6 @@ namespace Infocorp.TITA.DataBaseAccess
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Contract> Contracts
-		{
-			get
-			{
-				return this.GetTable<Contract>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Current> Currents
 		{
 			get
@@ -83,186 +75,12 @@ namespace Infocorp.TITA.DataBaseAccess
 				return this.GetTable<Current>();
 			}
 		}
-	}
-	
-	[Table(Name="dbo.Contracts")]
-	public partial class Contract : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id_contract;
-		
-		private string _site;
-		
-		private string _user;
-		
-		private string _issues_list;
-		
-		private string _workpackage_list;
-		
-		private string _task_list;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onid_contractChanging(int value);
-    partial void Onid_contractChanged();
-    partial void OnsiteChanging(string value);
-    partial void OnsiteChanged();
-    partial void OnuserChanging(string value);
-    partial void OnuserChanged();
-    partial void Onissues_listChanging(string value);
-    partial void Onissues_listChanged();
-    partial void Onworkpackage_listChanging(string value);
-    partial void Onworkpackage_listChanged();
-    partial void Ontask_listChanging(string value);
-    partial void Ontask_listChanged();
-    #endregion
-		
-		public Contract()
-		{
-			OnCreated();
-		}
-		
-		[Column(Storage="_id_contract", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id_contract
+		public System.Data.Linq.Table<Contract> Contracts
 		{
 			get
 			{
-				return this._id_contract;
-			}
-			set
-			{
-				if ((this._id_contract != value))
-				{
-					this.Onid_contractChanging(value);
-					this.SendPropertyChanging();
-					this._id_contract = value;
-					this.SendPropertyChanged("id_contract");
-					this.Onid_contractChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_site", DbType="NChar(40)")]
-		public string site
-		{
-			get
-			{
-				return this._site;
-			}
-			set
-			{
-				if ((this._site != value))
-				{
-					this.OnsiteChanging(value);
-					this.SendPropertyChanging();
-					this._site = value;
-					this.SendPropertyChanged("site");
-					this.OnsiteChanged();
-				}
-			}
-		}
-		
-		[Column(Name="[user]", Storage="_user", DbType="NChar(40)")]
-		public string user
-		{
-			get
-			{
-				return this._user;
-			}
-			set
-			{
-				if ((this._user != value))
-				{
-					this.OnuserChanging(value);
-					this.SendPropertyChanging();
-					this._user = value;
-					this.SendPropertyChanged("user");
-					this.OnuserChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_issues_list", DbType="NChar(40)")]
-		public string issues_list
-		{
-			get
-			{
-				return this._issues_list;
-			}
-			set
-			{
-				if ((this._issues_list != value))
-				{
-					this.Onissues_listChanging(value);
-					this.SendPropertyChanging();
-					this._issues_list = value;
-					this.SendPropertyChanged("issues_list");
-					this.Onissues_listChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_workpackage_list", DbType="NChar(40)")]
-		public string workpackage_list
-		{
-			get
-			{
-				return this._workpackage_list;
-			}
-			set
-			{
-				if ((this._workpackage_list != value))
-				{
-					this.Onworkpackage_listChanging(value);
-					this.SendPropertyChanging();
-					this._workpackage_list = value;
-					this.SendPropertyChanged("workpackage_list");
-					this.Onworkpackage_listChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_task_list", DbType="NChar(40)")]
-		public string task_list
-		{
-			get
-			{
-				return this._task_list;
-			}
-			set
-			{
-				if ((this._task_list != value))
-				{
-					this.Ontask_listChanging(value);
-					this.SendPropertyChanging();
-					this._task_list = value;
-					this.SendPropertyChanged("task_list");
-					this.Ontask_listChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+				return this.GetTable<Contract>();
 			}
 		}
 	}
@@ -376,6 +194,164 @@ namespace Infocorp.TITA.DataBaseAccess
 					this._last_modification = value;
 					this.SendPropertyChanged("last_modification");
 					this.Onlast_modificationChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="dbo.Contracts")]
+	public partial class Contract : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id_contract;
+		
+		private string _site;
+		
+		private string _issues_list;
+		
+		private string _workpackage_list;
+		
+		private string _task_list;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onid_contractChanging(int value);
+    partial void Onid_contractChanged();
+    partial void OnsiteChanging(string value);
+    partial void OnsiteChanged();
+    partial void Onissues_listChanging(string value);
+    partial void Onissues_listChanged();
+    partial void Onworkpackage_listChanging(string value);
+    partial void Onworkpackage_listChanged();
+    partial void Ontask_listChanging(string value);
+    partial void Ontask_listChanged();
+    #endregion
+		
+		public Contract()
+		{
+			OnCreated();
+		}
+		
+		[Column(Storage="_id_contract", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id_contract
+		{
+			get
+			{
+				return this._id_contract;
+			}
+			set
+			{
+				if ((this._id_contract != value))
+				{
+					this.Onid_contractChanging(value);
+					this.SendPropertyChanging();
+					this._id_contract = value;
+					this.SendPropertyChanged("id_contract");
+					this.Onid_contractChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_site", DbType="NChar(40)")]
+		public string site
+		{
+			get
+			{
+				return this._site;
+			}
+			set
+			{
+				if ((this._site != value))
+				{
+					this.OnsiteChanging(value);
+					this.SendPropertyChanging();
+					this._site = value;
+					this.SendPropertyChanged("site");
+					this.OnsiteChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_issues_list", DbType="NChar(40)")]
+		public string issues_list
+		{
+			get
+			{
+				return this._issues_list;
+			}
+			set
+			{
+				if ((this._issues_list != value))
+				{
+					this.Onissues_listChanging(value);
+					this.SendPropertyChanging();
+					this._issues_list = value;
+					this.SendPropertyChanged("issues_list");
+					this.Onissues_listChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_workpackage_list", DbType="NChar(40)")]
+		public string workpackage_list
+		{
+			get
+			{
+				return this._workpackage_list;
+			}
+			set
+			{
+				if ((this._workpackage_list != value))
+				{
+					this.Onworkpackage_listChanging(value);
+					this.SendPropertyChanging();
+					this._workpackage_list = value;
+					this.SendPropertyChanged("workpackage_list");
+					this.Onworkpackage_listChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_task_list", DbType="NChar(40)")]
+		public string task_list
+		{
+			get
+			{
+				return this._task_list;
+			}
+			set
+			{
+				if ((this._task_list != value))
+				{
+					this.Ontask_listChanging(value);
+					this.SendPropertyChanging();
+					this._task_list = value;
+					this.SendPropertyChanged("task_list");
+					this.Ontask_listChanged();
 				}
 			}
 		}
