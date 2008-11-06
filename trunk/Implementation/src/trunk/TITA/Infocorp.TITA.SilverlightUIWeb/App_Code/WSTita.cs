@@ -244,9 +244,9 @@ public class WSTita : System.Web.Services.WebService
         IFabricControllerReportPersistence frp = new FabricControllerReportPersistence();
         IReportPersistenceCSV irp= frp.GetIReportPersistenceCSV();
 
-        irp.ReportDesvWorkPackageToCSV(lst);
+        return irp.ReportDesvWorkPackageToCSV(lst);
 
-        return "";
+        
     }
 
     [WebMethod]
