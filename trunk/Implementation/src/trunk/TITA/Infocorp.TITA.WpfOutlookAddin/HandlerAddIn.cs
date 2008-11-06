@@ -90,8 +90,8 @@ namespace Infocorp.TITA.WpfOutlookAddin
                     _oIssueWindow.SendIssueButton.Click += new RoutedEventHandler(SendIssueButton_Click);
                     _oIssueWindow.Show();
                 }
-                catch {
-                    MessageBox.Show("Verifique parametros en el archivo de configuracion contracts.xml", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                catch (System.Exception ex){
+                    MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
