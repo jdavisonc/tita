@@ -2160,7 +2160,7 @@ namespace Infocorp.TITA.SilverlightUI
             downloadData.SetAttribute("value", e.Result);
 
             HtmlElement fileName = doc.GetElementById("fileName");
-            fileName.SetAttribute("value", "myFile.txt");
+            fileName.SetAttribute("value", "myFile.csv");
             doc.Submit("generateFileForm");
         }
 
