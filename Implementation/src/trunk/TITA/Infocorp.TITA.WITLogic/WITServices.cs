@@ -268,7 +268,8 @@ namespace Infocorp.TITA.WITLogic
             commands.Sort();
             bool result = true;
             List<DTCommandInfo> commandsNotExecuted = new List<DTCommandInfo>();
-
+            string eMail = _sharepoint.GetCurrentUserEmail(contractId);
+            eMail = String.IsNullOrEmpty(eMail) ? "grupopis08@gmail.com" : eMail;
             foreach (DTCommandInfo command in commands)
             {
                 try
@@ -339,6 +340,22 @@ namespace Infocorp.TITA.WITLogic
                 if (!result)
                 {
                     commandsNotExecuted.Add(command);
+                }
+                else
+                {
+                    
+                        if (command.CommandItemType == ItemType.TASK)
+                        {
+                            try
+                            {
+                                EMailSender.SendTaskNotification(command, eMail);
+                            }
+                            catch (Exception exc)
+                            {
+                                string msg = exc.Message;
+                            }
+                        }
+                    
                 }
             }
 
