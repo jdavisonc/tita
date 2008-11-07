@@ -5,6 +5,8 @@ using System.Text;
 using NUnit.Framework;
 using System.Net.Mail;
 using System.Net;
+using Infocorp.TITA.DataTypes;
+using System.Reflection;
 
 namespace Infocorp.TITA.WITLogic.Tests
 {
@@ -31,5 +33,33 @@ namespace Infocorp.TITA.WITLogic.Tests
                 Assert.Fail(exc.Message);
             }
         }
+
+        [Test]
+        public void GetValue()
+        {
+            DTItem item = new DTItem();
+            item.Fields = new List<DTField>();
+            item.Fields.Add(new DTFieldAtomicString("name", "internal", true, false, false, "valor"));
+
+            MethodInfo[] methods = item.Fields[0].GetType().GetMethods();
+
+            MethodInfo method = null;
+            foreach (MethodInfo info in methods)
+            {
+                if (info.Name == "get_Value")
+                {
+                    method = info;
+                    break;
+                }
+            }
+
+            object result = method.Invoke(item.Fields[0], null);
+
+            Assert.AreEqual(result.GetType(), typeof(string));
+            Assert.AreEqual((result as string), "valor");
+        }
     }
 }
+
+
+
