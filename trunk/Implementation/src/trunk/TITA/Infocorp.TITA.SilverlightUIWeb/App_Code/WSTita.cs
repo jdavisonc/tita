@@ -256,15 +256,29 @@ public class WSTita : System.Web.Services.WebService
     [WebMethod]
     public List<DTWorkPackageReport> ReportDesvWorkPackage(String idContract, DateTime fch_inicial, DateTime fch_final)
     {
-        IReportGenerator reportInstance = FactoryReport.GetInstance().GetIReportGenerator();
-        return reportInstance.ReportDesvWorkPackage(idContract, fch_inicial, fch_final);
+        try
+        {
+            IReportGenerator reportInstance = FactoryReport.GetInstance().GetIReportGenerator();
+            return reportInstance.ReportDesvWorkPackage(idContract, fch_inicial, fch_final);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     [WebMethod]
     public List<DTReportedItem> IssuesReport(String idContract, DateTime fch_inicial, DateTime fch_final)
     {
-        IReportGenerator reportInstance = FactoryReport.GetInstance().GetIReportGenerator();
-        return reportInstance.IssuesReport(idContract, fch_inicial, fch_final);
+        try
+        {
+            IReportGenerator reportInstance = FactoryReport.GetInstance().GetIReportGenerator();
+            return reportInstance.IssuesReport(idContract, fch_inicial, fch_final);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     [WebMethod]
@@ -279,11 +293,11 @@ public class WSTita : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void ExportISSUES(List<DTReportedItem> lst)
+    public String ExportISSUES(List<DTReportedItem> lst)
     {
         IFabricControllerReportPersistence frp = new FabricControllerReportPersistence();
         IReportPersistenceCSV irp = frp.GetIReportPersistenceCSV();
-        irp.IssuesReportToCSV(lst);
+        return irp.IssuesReportToCSV(lst);
     }
 
     #endregion
