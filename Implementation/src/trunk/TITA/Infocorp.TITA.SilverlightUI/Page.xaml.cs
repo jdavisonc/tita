@@ -255,6 +255,8 @@ namespace Infocorp.TITA.SilverlightUI
 
         public void ClearReport()
         {
+            scroll_REPORT.Visibility = Visibility.Collapsed;
+            CanvasREPORT.Visibility = Visibility.Collapsed;
             contractsReport.Visibility = Visibility.Collapsed;
             PnlOptionREPORT.Visibility = Visibility.Collapsed;
             grd_REPORT.Visibility = Visibility.Collapsed;
@@ -653,21 +655,27 @@ namespace Infocorp.TITA.SilverlightUI
                                 wp.Id = int.Parse(((DTFieldCounter)field).Value.ToString());
                                 break;
                             case "Title":
+                            case "Título":
                                 wp.Title = ((DTFieldAtomicString)field).Value;
                                 break;
                             case "Start Date":
+                            case "Fecha Inicio":
                                 wp.StartDate = ((DTFieldAtomicDateTime)field).Value;
                                 break;
                             case "End Date":
+                            case "Fecha Fin":
                                 wp.EndDate = ((DTFieldAtomicDateTime)field).Value;
                                 break;
                             case "Proposed End Date":
+                            case "Fecha Estimada Fin":
                                 wp.ProposedEndDate = ((DTFieldAtomicDateTime)field).Value;
                                 break;
                             case "Status":
+                            case "Estado":
                                 wp.Status = ((DTFieldChoice)field).Value;
                                 break;
                             case "Estimation":
+                            case "Estimacion":
                                 wp.Estimation = ((DTFieldAtomicNumber)field).Value;
                                 break;
                             case "IsLocal":
@@ -955,34 +963,44 @@ namespace Infocorp.TITA.SilverlightUI
                                 i.Id = int.Parse(((DTFieldCounter)field).Value.ToString());
                                 break;
                             case "Title":
+                            case "Título":
                                 i.Title = ((DTFieldAtomicString)field).Value;
                                 break;
                             case "Status":
+                            case "Estado":
                                 i.Status = ((DTFieldChoice)field).Value;
                                 break;
                             case "Priority":
+                            case "Prioridad":
                                 i.Priority = ((DTFieldChoice)field).Value;
                                 break;
                             case "Category":
+                            case "Categoría":
                                 i.Category = ((DTFieldChoice)field).Value;
                                 break;
                             case "Reported Date":
+                            case "Fecha Propuesto":
                                 i.ReportedDate = ((DTFieldAtomicDateTime)field).Value;
                                 break;
+                            case "Due Date":
+                            case "Fecha Cierre":
+                                i.DueDate = ((DTFieldAtomicDateTime)field).Value;
+                                break;
                             case "Work Package":
+                            case "Paquete de Trabajo":
                                 i.WorkPackage = ((DTFieldChoiceLookup)field).Value;
                                 break;
                             case "Reported by":
+                            case "Reportado por":
                                 i.ReportedBy = ((DTFieldChoice)field).Value;
                                 break;
                             case "Assigned To":
+                            case "Asignado a":
                                 i.AssignedTo = ((DTFieldChoice)field).Value;
                                 break;
                             case "Priority Order":
+                            case "Orden Prioridad":
                                 i.PriorityOrder = double.Parse(((DTFieldAtomicNumber)field).Value.ToString());
-                                break;
-                            case "Resolution":
-                                i.Resolution = ((DTFieldAtomicNote)field).Value;
                                 break;
                             case "IsLocal":
                                 i.IsLocal = ((DTFieldAtomicBoolean)field).Value;
@@ -1991,27 +2009,35 @@ namespace Infocorp.TITA.SilverlightUI
                                     t.Id = int.Parse(((DTFieldCounter)field).Value.ToString());
                                     break;
                                 case "Title":
+                                case "Título":
                                     t.Title = ((DTFieldAtomicString)field).Value;
                                     break;
                                 case "Issue":
+                                case "Incidente":
                                     t.IdIncident = ((DTFieldAtomicString)field).Value;
                                     break;
                                 case "Status":
+                                case "Estado":
                                     t.Status = ((DTFieldChoice)field).Value;
                                     break;
                                 case "Priority":
+                                case "Prioridad":
                                     t.Priority = ((DTFieldChoice)field).Value;
                                     break;
                                 case "% Complete":
+                                case "% completado":
                                     t.PorComplete = ((DTFieldAtomicNumber)field).Value;
                                     break;
                                 case "Assigned To":
+                                case "Asignado a":
                                     t.AssignedTo = ((DTFieldChoice)field).Value;
                                     break;
                                 case "Start Date":
+                                case "Fecha de comienzo":
                                     t.StartDate = ((DTFieldAtomicDateTime)field).Value;
                                     break;
                                 case "Due Date":
+                                case "Fecha de vencimiento":
                                     t.DueDate = ((DTFieldAtomicDateTime)field).Value;
                                     break;
                                 case "IsLocal":
@@ -2299,7 +2325,6 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnExportar_Click_DESWP(object sender, RoutedEventArgs e)
         {
-            //List<DTWorkPackageReport> lst = (List<DTWorkPackageReport>)grd_REPORT.ItemsSource;
             List<DTWorkPackageReport> lst = (List<DTWorkPackageReport>)pager_grd_REPORT_DESWP.ItemsSource;
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
             ws.ExportDesWPCompleted += new EventHandler<ExportDesWPCompletedEventArgs>(ws_ExportDesWPCompleted);
@@ -2308,13 +2333,8 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_ExportDesWPCompleted(object sender, ExportDesWPCompletedEventArgs e)
         {
-            HtmlDocument doc = HtmlPage.Document;
-            HtmlElement downloadData = doc.GetElementById("downloadData");
-            downloadData.SetAttribute("value", e.Result);
-
-            HtmlElement fileName = doc.GetElementById("fileName");
-            fileName.SetAttribute("value", "myFile.csv");
-            doc.Submit("generateFileForm");
+            string nameFile = "DesvWorkPackage_" + DateTime.Now.ToString("ddMMyyyy") + ".csv";
+            ExportCvs(e.Result,nameFile);
         }
 
         #endregion
@@ -2401,15 +2421,29 @@ namespace Infocorp.TITA.SilverlightUI
         {
             List<DTReportedItem> lst = (List<DTReportedItem>)pager_grd_REPORT_ISSUES.ItemsSource;
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-            ws.ExportISSUESCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ExportISSUESCompleted);
+            ws.ExportISSUESCompleted += new EventHandler<ExportISSUESCompletedEventArgs>(ws_ExportISSUESCompleted);
             ws.ExportISSUESAsync(lst);
         }
 
-        void ws_ExportISSUESCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {}
+        void ws_ExportISSUESCompleted(object sender, ExportISSUESCompletedEventArgs e)
+        {
+            string nameFile = "ReporteIncidentes" + DateTime.Now.ToString("ddMMyyyy") + ".csv";
+            ExportCvs(e.Result,nameFile); 
+        }
 
-       
         #endregion
+
+        private void ExportCvs(String str, String nameFile) 
+        {
+            HtmlDocument doc = HtmlPage.Document;
+            HtmlElement downloadData = doc.GetElementById("downloadData");
+            downloadData.SetAttribute("value", str);
+
+            HtmlElement fileName = doc.GetElementById("fileName");
+            fileName.SetAttribute("value", nameFile);
+
+            doc.Submit("generateFileForm");
+        }
 
         #endregion
 
@@ -2720,9 +2754,6 @@ namespace Infocorp.TITA.SilverlightUI
         }
 
         #endregion
-
-        
-
 
     }
  
