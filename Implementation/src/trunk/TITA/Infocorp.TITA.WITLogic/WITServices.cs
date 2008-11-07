@@ -274,7 +274,7 @@ namespace Infocorp.TITA.WITLogic
             {
                 try
                 {
-                    command.Item.Fields.RemoveAll(delegate(DTField f) { return f.Name == "IsLocal"; });
+                    
                     switch (command.CommandType)
                     {
                         case CommandType.ADD:
@@ -332,6 +332,7 @@ namespace Infocorp.TITA.WITLogic
                         default:
                             break;
                     }
+                    command.Item.Fields.RemoveAll(delegate(DTField f) { return f.Name == "IsLocal"; });
                 }
                 catch (Exception exc)
                 {
