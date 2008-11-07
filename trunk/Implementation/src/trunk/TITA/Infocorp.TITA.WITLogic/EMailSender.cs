@@ -9,33 +9,58 @@ namespace Infocorp.TITA.WITLogic
     class EMailSender
     {
 
-        public static void SendNotification(DTItem task, ItemType itemType)
+        public static void SendTaskNotification(DTCommandInfo command, string email)
         {
-            switch (itemType)
-            {
-                case ItemType.ISSUE:
-                    break;
-                case ItemType.TASK:
-                    break;
-                case ItemType.WORKPACKAGE:
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public static void SendTaskNotification(DTItem task)
-        {
-            string address = string.Empty;
-
             MailMessage mail = new MailMessage();
-            mail.To.Add(new MailAddress(address));
-            mail.Subject = "algo";
-            mail.Body = "body";
+            mail.To.Add(new MailAddress(email));
+            mail.Subject = GetSubject(command.CommandItemType, command.CommandType);
+            mail.Body = GetBody(command);
 
             SmtpClient client = new SmtpClient();
             client.EnableSsl = true;
             client.Send(mail);
+        }
+
+        private static string GetBody(DTCommandInfo command)
+        {
+            return "Aca va el body";
+        }
+
+        private static string GetSubject(ItemType itemType, CommandType commandType)
+        {
+            string subject = string.Empty;
+            switch (commandType)
+            {
+                case CommandType.ADD:
+                    subject = "Alta de ";
+                    break;
+                case CommandType.MODIFY:
+                    subject = "Mofificación de ";
+                    break;
+                case CommandType.DELETE:
+                    subject = "Eliminación de ";
+                    break;
+                default:
+                    break;
+            }
+
+            switch (itemType)
+            {
+                case ItemType.ISSUE:
+                    subject += "incidente";
+                    break;
+                case ItemType.TASK:
+                    subject += "tarea";
+                    break;
+                case ItemType.WORKPACKAGE:
+                    subject += "workpackage";
+                    break;
+                default:
+                    break;
+            }
+
+
+            return subject;
         }
 
     }
