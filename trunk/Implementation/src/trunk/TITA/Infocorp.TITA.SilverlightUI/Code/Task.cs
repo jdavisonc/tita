@@ -36,6 +36,14 @@ namespace Infocorp.TITA.SilverlightUI.Code
             set { priority = value; }
         }
 
+        private string idIncident;
+
+        public string IdIncident
+        {
+            get { return idIncident; }
+            set { idIncident = value; }
+        }
+
         private string status;
 
         public string Status
