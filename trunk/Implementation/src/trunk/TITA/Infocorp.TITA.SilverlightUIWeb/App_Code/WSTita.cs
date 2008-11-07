@@ -50,8 +50,15 @@ public class WSTita : System.Web.Services.WebService
     [WebMethod]
     public List<DTItem> GetIssues(string idContract)
     {
-        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
-        return witInstance.GetIssues(idContract);
+        try
+        {
+            IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+            return witInstance.GetIssues(idContract);
+        }
+        catch(Exception)
+        {
+            return null;
+        }
     }
 
     [WebMethod]
@@ -69,6 +76,14 @@ public class WSTita : System.Web.Services.WebService
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
         return witInstance.GetIssueTemplate(idContract);
     }
+
+    [WebMethod]
+    public List<DTItem> GetTasksIncident(string contractId, string issueId)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        return witInstance.GetTasks(contractId, issueId);
+    }
+   
 
     [WebMethod]
     public void ModifyIssue(DTItem issue, string url)
@@ -148,8 +163,15 @@ public class WSTita : System.Web.Services.WebService
     [WebMethod]
     public List<DTItem> GetWorkPackages(string url)
     {
-        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
-        return witInstance.GetWorkPackages(url);
+        try
+        {
+            IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+            return witInstance.GetWorkPackages(url);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     [WebMethod]
@@ -188,8 +210,15 @@ public class WSTita : System.Web.Services.WebService
     [WebMethod]
     public List<DTItem> GetTasks(string url)
     {
-        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
-        return witInstance.GetTasks(url);
+        try
+        {
+            IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+            return witInstance.GetTasks(url);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     [WebMethod]
@@ -262,10 +291,18 @@ public class WSTita : System.Web.Services.WebService
     #region Apply
 
     [WebMethod]
-    public void ApplyChanges(string url, ItemType itemType)
+    public List<DTItem> ApplyChanges(string url, ItemType itemType)
     {
         IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
-        witInstance.ApplyChanges(url, itemType);
+        try
+        {
+            List<DTItem> lst = witInstance.ApplyChanges(url, itemType);
+            return lst;
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
     }
 
     [WebMethod]
@@ -311,6 +348,12 @@ public class WSTita : System.Web.Services.WebService
         return witInstance.AquireContractWritePermission(contractId);
     }
 
+    [WebMethod]
+    public void ReleaseContractWritePermission(string contractId)
+    {
+        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+        witInstance.ReleaseContractWritePermission(contractId);
+    }
 
     #endregion
 
