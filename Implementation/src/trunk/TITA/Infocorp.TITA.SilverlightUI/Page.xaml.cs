@@ -29,20 +29,28 @@ namespace Infocorp.TITA.SilverlightUI
             CONTRACT,
             TASK,
             REPORT,
+            PORIMPACTAR,
         }
 
         private string url = null;
         private DTItem item = new DTItem();
-        List<DTItem> lstItem = new List<DTItem>();
-        List<Issue> lstIssue = new List<Issue>();
-        List<DTReportedItem> my_lstReport_issues = new List<DTReportedItem>();
-        List<DTWorkPackageReport> my_lstReport_deswp = new List<DTWorkPackageReport>();
+        private List<DTItem> lstItem = new List<DTItem>();
+        private List<Issue> lstIssue = new List<Issue>();
+        private List<WorkPackage> lstWP = new List<WorkPackage>();
+        private List<Task> lstTask = new List<Task>();
+        private List<DTItem> lstPorApplyIncident = new List<DTItem>();
+        private List<DTItem> lstPorApplyTask = new List<DTItem>();
+        private List<DTItem> lstPorApplyWP = new List<DTItem>();
+        private List<DTReportedItem> my_lstReport_issues = new List<DTReportedItem>();
+        private List<DTWorkPackageReport> my_lstReport_deswp = new List<DTWorkPackageReport>();
 
         private DTItem resulItem = new DTItem();
         private bool isEdit;
         private string map = "";
         private bool writeacces = false;
         private bool isIssueWP;
+        private bool isTaskIssue;
+        private bool isPorApply;
         private bool oneContract;
         private bool forReport = false;
         private List<WorkPackage> my_lstWP = new List<WorkPackage>();
@@ -101,21 +109,23 @@ namespace Infocorp.TITA.SilverlightUI
 
             acc.ItemSelect += new Infocorp.TITA.Controls.Silverlight.V2.Accordion.ItemSelectEvent(acc_ItemSelect);
 
-            //pager.ItemsSource = lstItem;
             pager.ItemsSource = lstIssue;
             pager_incident_wp.ItemsSource = lstIssue;
             pager_wp.ItemsSource = my_lstWP;
             pager_contratos.ItemsSource = my_contract;
-            //pager_contractsReport.ItemsSource = my_contract;
             pager_tasks.ItemsSource = my_lstTask;
             pager_grd_REPORT_DESWP.ItemsSource = my_lstReport_deswp;
             pager_grd_REPORT_ISSUES.ItemsSource = my_lstReport_issues;
+            pager_TASK_INCIDENT.ItemsSource = lstTask;
+            pager_PorImpactarIssue.ItemsSource = lstIssue;
+            pager_PorImpactarWP.ItemsSource = lstWP;
+            pager_PorImpactarTask.ItemsSource = lstTask;
 
-            writeacces = false;
-            BtnApplyINCIDENT.IsEnabled = writeacces;
-            BtnApplyTASK.IsEnabled = writeacces;
-            BtnApplyWP.IsEnabled = writeacces;
-            BtnMap.IsEnabled = writeacces;
+            //writeacces = false;
+            //BtnApplyINCIDENT.IsEnabled = writeacces;
+            //BtnApplyTASK.IsEnabled = writeacces;
+            //BtnApplyWP.IsEnabled = writeacces;
+            //BtnMap.IsEnabled = writeacces;
         }
 
         void acc_ItemSelect(object sender, Infocorp.TITA.Controls.Silverlight.V2.ItemEventArgs e)
@@ -174,9 +184,13 @@ namespace Infocorp.TITA.SilverlightUI
         {
             isEdit = false;
             isIssueWP = false;
+            isPorApply = false;
+            isTaskIssue = false;
             ShowError("", false);
             lblConectContract.Text = "";
+            CanvasPorImpactar.Visibility = Visibility.Collapsed;
             grd_INCIDENT_WP.Visibility = Visibility.Collapsed;
+            titulo_INCIDENT_WP.Visibility = Visibility.Collapsed;
             lblacceder_error.Visibility = Visibility.Collapsed;
             lblConectContract.Visibility = Visibility.Collapsed;
             CanvasIncident.Visibility = Visibility.Collapsed;
@@ -191,6 +205,8 @@ namespace Infocorp.TITA.SilverlightUI
             contractsReport.Visibility = Visibility.Collapsed;
             lstContratos.Visibility = Visibility.Collapsed;
             CanvasMap.Visibility = Visibility.Collapsed;
+            scroll_PorImpactar.Visibility = Visibility.Collapsed;
+            CanvasPorImpactar.Visibility = Visibility.Collapsed;
             ClearReport();
             if (PnlForm_WP.Children != null)
                 PnlForm_WP.Children.Clear();
@@ -204,10 +220,12 @@ namespace Infocorp.TITA.SilverlightUI
                 case Option.WP:
                     CanvasWP.Visibility = Visibility.Visible;
                     scroll_WP.Visibility = Visibility.Visible;
+                    BtnApplyWP.IsEnabled = writeacces;
                     break;
                 case Option.INCIDENT:
                     CanvasIncident.Visibility = Visibility.Visible;
                     scroll_INCIDENT.Visibility = Visibility.Visible;
+                    BtnApplyINCIDENT.IsEnabled = writeacces;
                     break;
                 case Option.CONTRACT:
                     pnl_Contrato.Visibility = Visibility.Visible;
@@ -217,11 +235,17 @@ namespace Infocorp.TITA.SilverlightUI
                 case Option.TASK:
                     CanvasTASK.Visibility = Visibility.Visible;
                     scroll_TASK.Visibility = Visibility.Visible;
+                    BtnApplyTASK.IsEnabled = writeacces;
                     break;
                 case Option.REPORT:
                     scroll_REPORT.Visibility = Visibility.Visible;
                     CanvasREPORT.Visibility = Visibility.Visible;
                     PnlOptionREPORT.Visibility = Visibility.Visible;
+                    break;
+                case Option.PORIMPACTAR:
+                    scroll_PorImpactar.Visibility = Visibility.Visible;
+                    CanvasPorImpactar.Visibility = Visibility.Visible;
+                    titulo_PorImpactar.Visibility = Visibility.Visible;
                     break;
                 default:
                     logo.Visibility = Visibility.Visible;
@@ -238,7 +262,8 @@ namespace Infocorp.TITA.SilverlightUI
             BtnExportar_DESWP.Visibility = Visibility.Collapsed;
             pager_grd_REPORT_DESWP.Visibility = Visibility.Collapsed;
             pager_grd_REPORT_ISSUES.Visibility = Visibility.Collapsed;
-            
+            lbl_report_error.Visibility = Visibility.Collapsed;
+            titulo_result_report.Visibility = Visibility.Collapsed;
         }
 
         public void ShowError(string msg, bool show)
@@ -318,7 +343,6 @@ namespace Infocorp.TITA.SilverlightUI
                     if (lstContratos.Columns.Count != 0)
                     {
                         lstContratos.Columns[0].Visibility = Visibility.Collapsed;
-                        lstContratos.Columns[4].Visibility = Visibility.Collapsed;
                     }
                     lstContratos.Visibility = Visibility.Visible;
                     lstContratos.IsReadOnly = true;
@@ -487,7 +511,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         bool ValidarCampos(DTContract cont)
         {
-            return ((cont.UserName != "") && (cont.Site != "") && (cont.workPackageList != "") &&
+            return ((cont.Site != "") && (cont.workPackageList != "") &&
                     (cont.taskList != "") && (cont.issuesList != ""));
         }
 
@@ -605,14 +629,17 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_GetWorkPackagesCompleted(object sender, GetWorkPackagesCompletedEventArgs e)
         {
-            lstItem = e.Result;
-            UIThread.Run(delegate() { LoadWPS(e.Result);});
+            if (e.Result != null)
+            {
+                lstItem = e.Result;
+                UIThread.Run(delegate() { LoadWPS(e.Result); });
+            }
         }
 
         private Delegate LoadWPS(List<DTItem> list)
         {
             WorkPackage wp;
-            List<WorkPackage> lstWP = new List<WorkPackage>();
+            lstWP = new List<WorkPackage>();
             foreach (DTItem w in list)
             {
                 wp = new WorkPackage();
@@ -653,12 +680,28 @@ namespace Infocorp.TITA.SilverlightUI
                 }
                 lstWP.Add(wp);
             }
-            grd_WP.IsReadOnly = true;
-            grd_WP.CanUserResizeColumns = false;
-            PnlOption_WP.Visibility = Visibility.Visible;
-            pager_wp.ItemsControl = grd_WP;
-            pager_wp.ItemsSource = lstWP;
-            my_lstWP = lstWP;
+            if (isPorApply)
+            {
+                if (grd_PorImpactar.Columns.Count != 0)
+                {
+                    grd_PorImpactar.Columns[0].Visibility = Visibility.Collapsed;
+                }
+                grd_PorImpactar.IsReadOnly = true;
+                grd_PorImpactar.CanUserResizeColumns = false;
+                grd_PorImpactar.Visibility = Visibility.Visible;
+                pager_PorImpactarWP.ItemsControl = grd_PorImpactar;
+                pager_PorImpactarWP.ItemsSource = lstWP;
+                pager_PorImpactarWP.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                grd_WP.IsReadOnly = true;
+                grd_WP.CanUserResizeColumns = false;
+                PnlOption_WP.Visibility = Visibility.Visible;
+                pager_wp.ItemsControl = grd_WP;
+                pager_wp.ItemsSource = lstWP;
+                my_lstWP = lstWP;
+            }
             return null;
         }
 
@@ -669,6 +712,7 @@ namespace Infocorp.TITA.SilverlightUI
             PnlForm_WP.Visibility = Visibility.Visible;
             grdForm_WP.Visibility = Visibility.Collapsed;
             grd_INCIDENT_WP.Visibility = Visibility.Collapsed;
+            titulo_INCIDENT_WP.Visibility = Visibility.Collapsed;
             pager_incident_wp.Visibility = Visibility.Collapsed;
             progress.play();
             LoadFormsWP();
@@ -693,6 +737,7 @@ namespace Infocorp.TITA.SilverlightUI
             WorkPackage wp = (WorkPackage)grd_WP.SelectedItem;
             int id = wp.Id;
             grd_INCIDENT_WP.Visibility = Visibility.Collapsed;
+            titulo_INCIDENT_WP.Visibility = Visibility.Collapsed;
             pager_incident_wp.Visibility = Visibility.Collapsed;
             MessageBoxResult msg = MessageBox.Show("Esta seguro que desea eliminar este Workpackage?", "Workpackage", MessageBoxButton.OKCancel);
             if (msg == MessageBoxResult.OK)
@@ -728,6 +773,7 @@ namespace Infocorp.TITA.SilverlightUI
             PnlOption_WP.Visibility = Visibility.Collapsed;
             pager_incident_wp.Visibility = Visibility.Collapsed;
             grd_INCIDENT_WP.Visibility = Visibility.Collapsed;
+            titulo_INCIDENT_WP.Visibility = Visibility.Collapsed;
             if (item.Fields == null)
             {
                 WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
@@ -801,13 +847,14 @@ namespace Infocorp.TITA.SilverlightUI
         private void BtnApplyWP_Click(object sender, RoutedEventArgs e)
         {
             grd_INCIDENT_WP.Visibility = Visibility.Collapsed;
+            titulo_INCIDENT_WP.Visibility = Visibility.Collapsed;
             pager_incident_wp.Visibility = Visibility.Collapsed;
             if (writeacces)
             {
                 try
                 {
                     WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-                    ws.ApplyChangesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ApplyChangesWPCompleted);
+                    ws.ApplyChangesCompleted += new EventHandler<ApplyChangesCompletedEventArgs>(ws_ApplyChangesWPCompleted);
                     ws.ApplyChangesAsync(url, ItemType.WORKPACKAGE);
                 }
                 catch (Exception exp)
@@ -817,9 +864,17 @@ namespace Infocorp.TITA.SilverlightUI
             }
         }
 
-        void ws_ApplyChangesWPCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        void ws_ApplyChangesWPCompleted(object sender, ApplyChangesCompletedEventArgs e)
         {
-            GetWPS();
+            try
+            {
+                lstPorApplyWP = e.Result;
+                GetWPS();
+            }
+            catch (Exception)
+            {
+                lblacceder_error.Text = "Error en la conexion.";     
+            }
         }
 
         private void BtnViewIncidentsWP_Click(object sender, RoutedEventArgs e)
@@ -874,8 +929,11 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_GetIssuesCompleted(object sender, Infocorp.TITA.SilverlightUI.WSTitaReference.GetIssuesCompletedEventArgs e)
         {
-            lstItem = e.Result;
-            UIThread.Run(delegate() {LoadIncidents(e.Result);});
+            if (e.Result != null)
+            {
+                lstItem = e.Result;
+                UIThread.Run(delegate() { LoadIncidents(e.Result); });
+            }
         }
 
         private Delegate LoadIncidents(List<DTItem> list)
@@ -946,10 +1004,23 @@ namespace Infocorp.TITA.SilverlightUI
                 grd_INCIDENT_WP.IsReadOnly = true;
                 grd_INCIDENT_WP.CanUserResizeColumns = false;
                 grd_INCIDENT_WP.Visibility = Visibility.Visible;
-
+                titulo_INCIDENT_WP.Visibility = Visibility.Visible;
                 pager_incident_wp.ItemsControl = grd_INCIDENT_WP;
                 pager_incident_wp.ItemsSource = lstIssue;
                 pager_incident_wp.Visibility = Visibility.Visible;
+            }
+            else if (isPorApply) 
+            {
+                if (grd_PorImpactar.Columns.Count != 0)
+                {
+                    grd_PorImpactar.Columns[0].Visibility = Visibility.Collapsed;
+                }
+                grd_PorImpactar.IsReadOnly = true;
+                grd_PorImpactar.CanUserResizeColumns = false;
+                grd_PorImpactar.Visibility = Visibility.Visible;
+                pager_PorImpactarIssue.ItemsControl = grd_PorImpactar;
+                pager_PorImpactarIssue.ItemsSource = lstIssue;
+                pager_PorImpactarIssue.Visibility = Visibility.Visible;
             }
             else
             {
@@ -1819,7 +1890,7 @@ namespace Infocorp.TITA.SilverlightUI
                 try
                 {
                     WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-                    ws.ApplyChangesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ApplyChangesINCIDENTCompleted);
+                    ws.ApplyChangesCompleted += new EventHandler<ApplyChangesCompletedEventArgs>(ws_ApplyChangesINCIDENTCompleted);
                     ws.ApplyChangesAsync(url, ItemType.ISSUE);
                 }
                 catch (Exception exp)
@@ -1829,9 +1900,39 @@ namespace Infocorp.TITA.SilverlightUI
             }
          }
 
-        void ws_ApplyChangesINCIDENTCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        void ws_ApplyChangesINCIDENTCompleted(object sender, ApplyChangesCompletedEventArgs e)
         {
-            GetIncidents();
+            try
+            {
+                lstPorApplyIncident = e.Result;
+                GetIncidents();
+            }
+            catch(Exception)
+            {
+                lblacceder_error.Text = "Error en la conexion.";
+                lblacceder_error.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void BtnViewTaskIncidents_Click(object sender, RoutedEventArgs e)
+        {
+            if (grd_INCIDENT.SelectedItem == null)
+            {
+                MessageBoxResult msg = MessageBox.Show("Debe seleccionar un Incidente.", "ERROR", MessageBoxButton.OK);
+            }
+            else
+            {
+                Issue i = (Issue)grd_INCIDENT.SelectedItem;
+                WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                ws.GetTasksIncidentCompleted += new EventHandler<GetTasksIncidentCompletedEventArgs>(ws_GetTasksIncidentCompleted);
+                ws.GetTasksIncidentAsync(url, i.Title);
+            }
+        }
+
+        void ws_GetTasksIncidentCompleted(object sender, GetTasksIncidentCompletedEventArgs e)
+        {
+            isTaskIssue = true;
+            UIThread.Run(delegate() { LoadTask(e.Result); });
         }
 
         #endregion
@@ -1863,69 +1964,108 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_GetTasksCompleted(object sender, GetTasksCompletedEventArgs e)
         {
-            lstItem = e.Result;
-            //Dispatcher.BeginInvoke(LoadTask(e.Result));
-            UIThread.Run(delegate() { LoadTask(e.Result); });
+            if (e.Result != null)
+            {
+                lstItem = e.Result;
+                UIThread.Run(delegate() { LoadTask(e.Result); });
+            }
         }
 
         private Delegate LoadTask(List<DTItem> list)
         {
             Task t;
-            List<Task> lstTask = new List<Task>();
-            foreach (DTItem task in list)
+            lstTask = new List<Task>();
+            if (list != null)
             {
-                t = new Task();
-
-                foreach (DTField field in task.Fields)
+                foreach (DTItem task in list)
                 {
-                    if ((!field.Hidden) || (field.Name == "ID" && field.Hidden))  
+                    t = new Task();
+
+                    foreach (DTField field in task.Fields)
                     {
-                        switch (field.Name)
+                        if ((!field.Hidden) || (field.Name == "ID" && field.Hidden))
                         {
-                            case "ID":
-                                t.Id = int.Parse(((DTFieldCounter)field).Value.ToString());
-                                break;
-                            case "Title":
-                                t.Title = ((DTFieldAtomicString)field).Value;
-                                break;
-                            case "Status":
-                                t.Status = ((DTFieldChoice)field).Value;
-                                break;
-                            case "Priority":
-                                t.Priority = ((DTFieldChoice)field).Value;
-                                break;
-                            case "% Complete":
-                                t.PorComplete = ((DTFieldAtomicNumber)field).Value;
-                                break;
-                            case "Assigned To":
-                                t.AssignedTo = ((DTFieldChoice)field).Value;
-                                break;
-                            case "Start Date":
-                                t.StartDate = ((DTFieldAtomicDateTime)field).Value;
-                                break;
-                            case "Due Date":
-                                t.DueDate = ((DTFieldAtomicDateTime)field).Value;
-                                break;
-                            case "IsLocal":
-                                t.IsLocal = ((DTFieldAtomicBoolean)field).Value;
-                                break;
-                            default:
-                                break;
+                            switch (field.Name)
+                            {
+                                case "ID":
+                                    t.Id = int.Parse(((DTFieldCounter)field).Value.ToString());
+                                    break;
+                                case "Title":
+                                    t.Title = ((DTFieldAtomicString)field).Value;
+                                    break;
+                                case "Issue":
+                                    t.IdIncident = ((DTFieldAtomicString)field).Value;
+                                    break;
+                                case "Status":
+                                    t.Status = ((DTFieldChoice)field).Value;
+                                    break;
+                                case "Priority":
+                                    t.Priority = ((DTFieldChoice)field).Value;
+                                    break;
+                                case "% Complete":
+                                    t.PorComplete = ((DTFieldAtomicNumber)field).Value;
+                                    break;
+                                case "Assigned To":
+                                    t.AssignedTo = ((DTFieldChoice)field).Value;
+                                    break;
+                                case "Start Date":
+                                    t.StartDate = ((DTFieldAtomicDateTime)field).Value;
+                                    break;
+                                case "Due Date":
+                                    t.DueDate = ((DTFieldAtomicDateTime)field).Value;
+                                    break;
+                                case "IsLocal":
+                                    t.IsLocal = ((DTFieldAtomicBoolean)field).Value;
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
+                    lstTask.Add(t);
                 }
-                lstTask.Add(t);
+                if (isTaskIssue)
+                {
+                    if (grd_TASK_INCIDENT.Columns.Count != 0)
+                    {
+                        grd_TASK_INCIDENT.Columns[0].Visibility = Visibility.Collapsed;
+                    }
+                    grd_TASK_INCIDENT.IsReadOnly = true;
+                    grd_TASK_INCIDENT.CanUserResizeColumns = false;
+                    grd_TASK_INCIDENT.Visibility = Visibility.Visible;
+                    titulo_TASK_INCIDENT.Visibility = Visibility.Visible;
+                    pager_TASK_INCIDENT.ItemsControl = grd_TASK_INCIDENT;
+                    pager_TASK_INCIDENT.ItemsSource = lstTask;
+                    pager_TASK_INCIDENT.Visibility = Visibility.Visible;
+
+                }
+                else if (isPorApply)
+                {
+                    if (grd_PorImpactar.Columns.Count != 0)
+                    {
+                        grd_PorImpactar.Columns[0].Visibility = Visibility.Collapsed;
+                    }
+                    grd_PorImpactar.IsReadOnly = true;
+                    grd_PorImpactar.CanUserResizeColumns = false;
+                    grd_PorImpactar.Visibility = Visibility.Visible;
+                    pager_PorImpactarTask.ItemsControl = grd_PorImpactar;
+                    pager_PorImpactarTask.ItemsSource = lstTask;
+                    pager_PorImpactarTask.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    //grd_TASK.ItemsSource = lstTask;
+                    pager_tasks.ItemsControl = grd_TASK;
+                    pager_tasks.ItemsSource = lstTask;
+                    my_lstTask = lstTask;
+                    if (grd_TASK.Columns.Count != 0)
+                    {
+                        grd_TASK.Columns[0].Visibility = Visibility.Collapsed;
+                    }
+                    grd_TASK.IsReadOnly = true;
+                    grd_TASK.CanUserResizeColumns = false;
+                }
             }
-            //grd_TASK.ItemsSource = lstTask;
-            pager_tasks.ItemsControl = grd_TASK;
-            pager_tasks.ItemsSource = lstTask;
-            my_lstTask = lstTask;
-            if (grd_TASK.Columns.Count != 0)
-            {
-                grd_TASK.Columns[0].Visibility = Visibility.Collapsed;
-            }
-            grd_TASK.IsReadOnly = true;
-            grd_TASK.CanUserResizeColumns = false;
             return null;
         }
 
@@ -2060,7 +2200,7 @@ namespace Infocorp.TITA.SilverlightUI
                 try
                 {
                     WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
-                    ws.ApplyChangesCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ApplyChangesTASKCompleted);
+                    ws.ApplyChangesCompleted += new EventHandler<ApplyChangesCompletedEventArgs>(ws_ApplyChangesTASKCompleted);
                     ws.ApplyChangesAsync(url, ItemType.TASK);
                 }
                 catch (Exception exp)
@@ -2069,9 +2209,18 @@ namespace Infocorp.TITA.SilverlightUI
                 }
             }
         }
-        void ws_ApplyChangesTASKCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+
+        void ws_ApplyChangesTASKCompleted(object sender, ApplyChangesCompletedEventArgs e)
         {
-            GetTask();
+            try
+            {
+                lstPorApplyTask = e.Result;
+                GetTask();
+            }
+            catch(Exception)
+            {
+                lblacceder_error.Text = "Error en la conexion";
+            }
         }
 
         #endregion
@@ -2101,7 +2250,7 @@ namespace Infocorp.TITA.SilverlightUI
                 cal_final.SelectedDate == null) || 
                 (contractsReport.SelectedItem == null))
             {
-                ShowError("Debe ingresar todos los datos.", true);
+                lbl_report_error.Visibility = Visibility.Visible;
             }
             else
             {
@@ -2128,11 +2277,8 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_ReportDesvWorkPackageCompleted(object sender, ReportDesvWorkPackageCompletedEventArgs e)
         {
-            if (e.Result != null)
+            if (e.Result != null && e.Result.Count > 0)
             {
-
-                
-
                 grd_REPORT.Columns.Clear();
                 grd_REPORT.Visibility = Visibility.Visible;
                 pager_grd_REPORT_DESWP.ItemsControl = grd_REPORT;
@@ -2141,6 +2287,13 @@ namespace Infocorp.TITA.SilverlightUI
                 my_lstReport_deswp = e.Result;
                 PnlExportar_REPORT.Visibility = Visibility.Visible;
                 BtnExportar_DESWP.Visibility = Visibility.Visible;
+                titulo_result_report.Visibility = Visibility.Visible;
+                lbl_report_error.Visibility = Visibility.Collapsed;
+            }
+            else 
+            {
+                lbl_report_error.Text = "No se obtuvieron resultados.";
+                lbl_report_error.Visibility = Visibility.Visible;
             }
         }
 
@@ -2195,7 +2348,7 @@ namespace Infocorp.TITA.SilverlightUI
                 cal_final.SelectedDate == null) ||
                 (oneContract &&(contractsReport.SelectedItem == null)))
             {
-                ShowError("Debe ingresar todos los datos.", true);
+                lbl_report_error.Visibility = Visibility.Visible;
             }
             else
             {
@@ -2224,7 +2377,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_IssuesReportCompleted(object sender, IssuesReportCompletedEventArgs e)
         {
-            if (e.Result != null)
+            if (e.Result != null && e.Result.Count > 0)
             {
                 grd_REPORT.Columns.Clear();
                 grd_REPORT.Visibility = Visibility.Visible;
@@ -2234,12 +2387,19 @@ namespace Infocorp.TITA.SilverlightUI
                 my_lstReport_issues = e.Result;
                 PnlExportar_REPORT.Visibility = Visibility.Visible;
                 BtnExportar_ISSUES.Visibility = Visibility.Visible;
+                titulo_result_report.Visibility = Visibility.Visible;
+                lbl_report_error.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                lbl_report_error.Text = "No se obtuvieron resultados.";
+                lbl_report_error.Visibility = Visibility.Visible;
             }
         }
 
         private void BtnExportar_Click_ISSUES(object sender, RoutedEventArgs e)
         {
-            List<DTReportedItem> lst = (List<DTReportedItem>)grd_REPORT.ItemsSource;
+            List<DTReportedItem> lst = (List<DTReportedItem>)pager_grd_REPORT_ISSUES.ItemsSource;
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
             ws.ExportISSUESCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ExportISSUESCompleted);
             ws.ExportISSUESAsync(lst);
@@ -2247,7 +2407,8 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_ExportISSUESCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {}
-        
+
+       
         #endregion
 
         #endregion
@@ -2296,19 +2457,53 @@ namespace Infocorp.TITA.SilverlightUI
             progress.stop();
         }
 
+        private void lnk_salir_click(object sender, RoutedEventArgs e)
+        {
+            DTContract contract = (DTContract)cbx_contrat_up.SelectedItem;
+            progress.play();
+            WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+            ws.ReleaseContractWritePermissionCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(ws_ReleaseContractWritePermissionCompleted);
+            ws.ReleaseContractWritePermissionAsync(contract.ContractId);
+        }
+
+        void ws_ReleaseContractWritePermissionCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            chk_write.IsChecked = false;
+            writeacces = false;
+            BtnApplyINCIDENT.IsEnabled = writeacces;
+            BtnApplyTASK.IsEnabled = writeacces;
+            BtnApplyWP.IsEnabled = writeacces;
+            BtnMap.IsEnabled = writeacces;
+            progress.stop();
+        }
+
         #region Por Impactar
         
         public void ViewIncidentesPorAplicar()
-        { 
-
+        {
+            EnableOption(Option.PORIMPACTAR);
+            titulo_PorImpactar.Text = "Incidentes por Impactar";
+            isPorApply = true;
+            if (lstPorApplyIncident.Count > 0)
+                LoadIncidents(lstPorApplyIncident);
         }
 
         public void ViewWorkpakagePorAplicar()
         {
+            EnableOption(Option.PORIMPACTAR);
+            titulo_PorImpactar.Text = "Work Packages por Impactar";
+            isPorApply = true;
+            if (lstPorApplyWP.Count > 0)
+                LoadWPS(lstPorApplyWP);
         }
 
         public void ViewTasksPorAplicar()
         {
+            EnableOption(Option.PORIMPACTAR);
+            titulo_PorImpactar.Text = "Tasks por Impactar";
+            isPorApply = true;
+            if (lstPorApplyTask.Count > 0)
+                LoadTask(lstPorApplyTask);
         }
 
         #endregion
@@ -2321,6 +2516,7 @@ namespace Infocorp.TITA.SilverlightUI
             scroll_Map.Visibility = Visibility.Visible;
             CanvasMap.Visibility = Visibility.Visible;
             PnlActionMap.Visibility = Visibility.Visible;
+            BtnMap.IsEnabled = writeacces;
             DTContract c = (DTContract)cbx_contrat_up.SelectedItem;
             txt_endValue_map.Text = "End Value";
             txt_endValue_map.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.Black));
@@ -2524,6 +2720,8 @@ namespace Infocorp.TITA.SilverlightUI
         }
 
         #endregion
+
+        
 
 
     }
