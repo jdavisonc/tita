@@ -9,7 +9,7 @@ namespace Infocorp.TITA.ReportPersistence
     public interface IReportPersistenceCSV
     {
         string ReportDesvWorkPackageToCSV(List<DTWorkPackageReport> reportData);
-        void IssuesReportToCSV(List<DTReportedItem> reportData);
+        string IssuesReportToCSV(List<DTReportedItem> reportData);
     }
 
 }
