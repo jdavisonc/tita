@@ -44,7 +44,7 @@ namespace Infocorp.TITA.ReportPersistence
             AddLastFieldElement(item.Desviation, strb);
         }
 
-        public void IssuesReportToCSV(List<DTReportedItem> reportData)
+        public String IssuesReportToCSV(List<DTReportedItem> reportData)
         {
             string reportName = "reporteIncidentes" + DateTime.Now.ToString("yyyyMMddHHmm") + this._EXTENSION;
             StringBuilder strb = new StringBuilder();
@@ -54,7 +54,9 @@ namespace Infocorp.TITA.ReportPersistence
                     this.WriteUserInfo(item, ref strb);
                 }
                 
-            this.CreateReportToCVS(reportName, StrToByteArray(strb.ToString()));
+            //this.CreateReportToCVS(reportName, StrToByteArray(strb.ToString()));
+
+            return strb.ToString();
                 
         }
 
