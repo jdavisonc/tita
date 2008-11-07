@@ -51,6 +51,15 @@ namespace Infocorp.TITA.SilverlightUI.Code
             get { return reportedDate; }
             set { reportedDate = value; }
         }
+
+        private DateTime dueDate;
+
+        public DateTime DueDate
+        {
+            get { return dueDate; }
+            set { dueDate = value; }
+        }
+
         private string workPackage;
 
         public string WorkPackage
@@ -87,14 +96,6 @@ namespace Infocorp.TITA.SilverlightUI.Code
             get { return status; }
             set { status = value; }
         }
-        private string resolution;
-
-        public string Resolution
-        {
-            get { return resolution; }
-            set { resolution = value; }
-        }
-
         private bool isLocal = false;
 
         public bool IsLocal
