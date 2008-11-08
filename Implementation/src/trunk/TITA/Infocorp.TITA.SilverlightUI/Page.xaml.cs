@@ -327,7 +327,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_GetContractsCompleted(object sender, GetContractsCompletedEventArgs e)
         {
-            if (e.Result != null)
+            if ((e.Result != null) && (e.Error == null))
             {
                 my_contract = e.Result;
                 pager_contratos.ItemsControl = lstContratos;
@@ -874,12 +874,12 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_ApplyChangesWPCompleted(object sender, ApplyChangesCompletedEventArgs e)
         {
-            try
+            if(e.Error == null)
             {
                 lstPorApplyWP = e.Result;
                 GetWPS();
             }
-            catch (Exception)
+            else
             {
                 lblacceder_error.Text = "Error en la conexion.";     
             }
@@ -982,25 +982,9 @@ namespace Infocorp.TITA.SilverlightUI
                             case "Fecha Propuesto":
                                 i.ReportedDate = ((DTFieldAtomicDateTime)field).Value;
                                 break;
-                            case "Due Date":
-                            case "Fecha Cierre":
-                                i.DueDate = ((DTFieldAtomicDateTime)field).Value;
-                                break;
                             case "Work Package":
                             case "Paquete de Trabajo":
                                 i.WorkPackage = ((DTFieldChoiceLookup)field).Value;
-                                break;
-                            case "Reported by":
-                            case "Reportado por":
-                                i.ReportedBy = ((DTFieldChoice)field).Value;
-                                break;
-                            case "Assigned To":
-                            case "Asignado a":
-                                i.AssignedTo = ((DTFieldChoice)field).Value;
-                                break;
-                            case "Priority Order":
-                            case "Orden Prioridad":
-                                i.PriorityOrder = double.Parse(((DTFieldAtomicNumber)field).Value.ToString());
                                 break;
                             case "IsLocal":
                                 i.IsLocal = ((DTFieldAtomicBoolean)field).Value;
@@ -1076,6 +1060,10 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnNuevo_Click(object sender, RoutedEventArgs e)
         {
+            titulo_TASK_INCIDENT.Visibility = Visibility.Collapsed;
+            grd_TASK_INCIDENT.Visibility = Visibility.Collapsed;
+            pager_TASK_INCIDENT.Visibility = Visibility.Collapsed;
+
             isEdit = false;
             PnlOption_INCIDENT.Visibility = Visibility.Collapsed;
             PnlForm_INCIDENT.Visibility = Visibility.Visible;
@@ -1142,6 +1130,10 @@ namespace Infocorp.TITA.SilverlightUI
         
         private void BtnChange_Click(object sender, RoutedEventArgs e)
         {
+            titulo_TASK_INCIDENT.Visibility = Visibility.Collapsed;
+            grd_TASK_INCIDENT.Visibility = Visibility.Collapsed;
+            pager_TASK_INCIDENT.Visibility = Visibility.Collapsed;
+
             isEdit = true;
             string strMy_pnl = "PnlForm_" + Option.INCIDENT;
             StackPanel my_pnl = (StackPanel)GridPrincipal.FindName(strMy_pnl);
@@ -1903,6 +1895,10 @@ namespace Infocorp.TITA.SilverlightUI
 
         private void BtnApplyINCIDENT_Click(object sender, RoutedEventArgs e)
         {
+            titulo_TASK_INCIDENT.Visibility = Visibility.Collapsed;
+            grd_TASK_INCIDENT.Visibility = Visibility.Collapsed;
+            pager_TASK_INCIDENT.Visibility = Visibility.Collapsed;
+
             if (writeacces)
             {
                 try
@@ -1920,12 +1916,13 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_ApplyChangesINCIDENTCompleted(object sender, ApplyChangesCompletedEventArgs e)
         {
-            try
+            if (e.Error == null)
             {
+
                 lstPorApplyIncident = e.Result;
                 GetIncidents();
             }
-            catch(Exception)
+            else
             {
                 lblacceder_error.Text = "Error en la conexion.";
                 lblacceder_error.Visibility = Visibility.Visible;
@@ -1982,7 +1979,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_GetTasksCompleted(object sender, GetTasksCompletedEventArgs e)
         {
-            if (e.Result != null)
+            if ((e.Result != null) && (e.Error == null))
             {
                 lstItem = e.Result;
                 UIThread.Run(delegate() { LoadTask(e.Result); });
@@ -2041,10 +2038,6 @@ namespace Infocorp.TITA.SilverlightUI
                                 case "Start Date":
                                 case "Fecha de comienzo":
                                     t.StartDate = ((DTFieldAtomicDateTime)field).Value;
-                                    break;
-                                case "Due Date":
-                                case "Fecha de vencimiento":
-                                    t.DueDate = ((DTFieldAtomicDateTime)field).Value;
                                     break;
                                 case "IsLocal":
                                     t.IsLocal = ((DTFieldAtomicBoolean)field).Value;
@@ -2244,12 +2237,12 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_ApplyChangesTASKCompleted(object sender, ApplyChangesCompletedEventArgs e)
         {
-            try
+            if(e.Error == null)
             {
                 lstPorApplyTask = e.Result;
                 GetTask();
             }
-            catch(Exception)
+            else
             {
                 lblacceder_error.Text = "Error en la conexion";
             }
@@ -2309,7 +2302,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_ReportDesvWorkPackageCompleted(object sender, ReportDesvWorkPackageCompletedEventArgs e)
         {
-            if (e.Result != null && e.Result.Count > 0)
+            if (e.Result != null && e.Result.Count > 0 && e.Error == null)
             {
                 grd_REPORT.Columns.Clear();
                 grd_REPORT.Visibility = Visibility.Visible;
@@ -2403,7 +2396,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         void ws_IssuesReportCompleted(object sender, IssuesReportCompletedEventArgs e)
         {
-            if (e.Result != null && e.Result.Count > 0)
+            if (e.Result != null && e.Result.Count > 0 && e.Error == null)
             {
                 grd_REPORT.Columns.Clear();
                 grd_REPORT.Visibility = Visibility.Visible;
@@ -2482,7 +2475,7 @@ namespace Infocorp.TITA.SilverlightUI
         {
             DTContract contract = (DTContract)cbx_contrat_up.SelectedItem;
             url = contract.ContractId;
-            if (e.Result)
+            if (e.Result && (e.Error == null))
             {
                 cbx_contrat_up.SelectedItem = contract;
                 my_con = contract;
