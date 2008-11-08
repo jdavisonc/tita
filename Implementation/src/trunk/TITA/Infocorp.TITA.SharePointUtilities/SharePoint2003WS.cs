@@ -6,6 +6,8 @@ using Infocorp.TITA.DataTypes;
 using System.Xml;
 using System.IO;
 using System.Globalization;
+using System.Security.Principal;
+using System.Xml.Linq;
 
 namespace Infocorp.TITA.SharePointUtilities
 {
@@ -255,29 +257,47 @@ namespace Infocorp.TITA.SharePointUtilities
 
         public string GetCurrentUserEmail(string idContract)
         {
+            //DTContract dtContract = _dbAccess.GetContract(idContract);
+            //XmlNode node;
+            //using (UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup())
+            //{
+            //    userGroup.Url = CheckCorrectUrlFromat(dtContract.Site) + _wsUserGroupSuf;
+            //    userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
+            //    node = userGroup.GetAllUserCollectionFromWeb();
+                
+            //}
+            //string username = System.Net.CredentialCache.DefaultNetworkCredentials.UserName;
+            //string email = string.Empty;
+            //foreach (XmlNode xmlNodeChild in node.ChildNodes)
+            //{
+            //    foreach (XmlNode userNode in xmlNodeChild)
+            //    {
+            //        if ((userNode.Attributes != null) &&
+            //            (userNode.Attributes.GetNamedItem("Name") != null) &&
+            //            (userNode.Attributes.GetNamedItem("Name").Value.CompareTo(username) == 0))
+            //        {
+            //            email = userNode.Attributes.GetNamedItem("EMail").Value;
+            //            break;
+            //        }
+            //    }
+            //}
+            //return email;
+
             DTContract dtContract = _dbAccess.GetContract(idContract);
             XmlNode node;
+            string email = string.Empty;
             using (UserGroupWebServiceReference.UserGroup userGroup = new UserGroupWebServiceReference.UserGroup())
             {
                 userGroup.Url = CheckCorrectUrlFromat(dtContract.Site) + _wsUserGroupSuf;
                 userGroup.Credentials = System.Net.CredentialCache.DefaultCredentials;
                 node = userGroup.GetAllUserCollectionFromWeb();
+                WindowsIdentity s = System.Security.Principal.WindowsIdentity.GetCurrent();
+                
+                node = userGroup.GetAllUserCollectionFromWeb();
+                XmlNode userInfo = userGroup.GetUserInfo(s.Name);
+                email = ((XmlElement)(userInfo).FirstChild).Attributes["Email"].Value;
             }
-            string username = System.Net.CredentialCache.DefaultNetworkCredentials.UserName;
-            string email = string.Empty;
-            foreach (XmlNode xmlNodeChild in node.ChildNodes)
-            {
-                foreach (XmlNode userNode in xmlNodeChild)
-                {
-                    if ((userNode.Attributes != null) &&
-                        (userNode.Attributes.GetNamedItem("Name") != null) &&
-                        (userNode.Attributes.GetNamedItem("Name").Value.CompareTo(username) == 0))
-                    {
-                        email = userNode.Attributes.GetNamedItem("EMail").Value;
-                        break;
-                    }
-                }
-            }
+
             return email;
         }
 
