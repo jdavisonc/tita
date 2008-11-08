@@ -2665,10 +2665,17 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
     public partial class ExportISSUESResponseBody {
         
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string ExportISSUESResult;
+        
         public ExportISSUESResponseBody() {
+        }
+        
+        public ExportISSUESResponseBody(string ExportISSUESResult) {
+            this.ExportISSUESResult = ExportISSUESResult;
         }
     }
     
@@ -3404,6 +3411,25 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    public partial class ExportISSUESCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public ExportISSUESCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
     public partial class ApplyChangesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -3766,7 +3792,7 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         public event System.EventHandler<ExportDesWPCompletedEventArgs> ExportDesWPCompleted;
         
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ExportISSUESCompleted;
+        public event System.EventHandler<ExportISSUESCompletedEventArgs> ExportISSUESCompleted;
         
         public event System.EventHandler<ApplyChangesCompletedEventArgs> ApplyChangesCompleted;
         
@@ -5507,8 +5533,9 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        private void EndExportISSUES(System.IAsyncResult result) {
+        private string EndExportISSUES(System.IAsyncResult result) {
             Infocorp.TITA.SilverlightUI.WSTitaReference.ExportISSUESResponse retVal = ((Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoap)(this)).EndExportISSUES(result);
+            return retVal.Body.ExportISSUESResult;
         }
         
         private System.IAsyncResult OnBeginExportISSUES(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -5517,14 +5544,15 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         }
         
         private object[] OnEndExportISSUES(System.IAsyncResult result) {
-            this.EndExportISSUES(result);
-            return null;
+            string retVal = this.EndExportISSUES(result);
+            return new object[] {
+                    retVal};
         }
         
         private void OnExportISSUESCompleted(object state) {
             if ((this.ExportISSUESCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.ExportISSUESCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+                this.ExportISSUESCompleted(this, new ExportISSUESCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         

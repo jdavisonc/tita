@@ -561,7 +561,7 @@
             <ComboBox x:Name="cbx_contrat_up" Width="190" Canvas.Top="22" Canvas.Left="128"/>
             <CheckBox x:Name="chk_write" Content="escribir" Canvas.Top="22" Canvas.Left="322"></CheckBox>
             <HyperlinkButton Content="acceder" x:Name="lnk_acceder" Click="lnk_acceder_click" Canvas.Top="22" Canvas.Left="400"/>
-            <HyperlinkButton Content="salir" x:Name="lnk_salir" Click="lnk_salir_click" Canvas.Top="22" Canvas.Left="450"/>
+            <HyperlinkButton Content="salir" x:Name="lnk_salir" Click="lnk_salir_click" Canvas.Top="22" Canvas.Left="450" Visibility="Collapsed"/>
             <TextBlock Height="20" Visibility="Visible" HorizontalAlignment="Center" Canvas.Left="122" VerticalAlignment="Top" Width="350" Text="" TextWrapping="Wrap" x:Name="lblacceder_error" Canvas.Top="70"/>
         </Canvas>
 
