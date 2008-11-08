@@ -2464,6 +2464,7 @@ namespace Infocorp.TITA.SilverlightUI
         void ws_AquireContractWritePermissionCompleted(object sender, AquireContractWritePermissionCompletedEventArgs e)
         {
             writeacces = e.Result;
+            lnk_salir.Visibility = Visibility.Visible;
             BtnApplyINCIDENT.IsEnabled = writeacces;
             BtnApplyTASK.IsEnabled = writeacces;
             BtnApplyWP.IsEnabled = writeacces;
@@ -2504,6 +2505,7 @@ namespace Infocorp.TITA.SilverlightUI
         {
             chk_write.IsChecked = false;
             writeacces = false;
+            lnk_salir.Visibility = Visibility.Collapsed;
             BtnApplyINCIDENT.IsEnabled = writeacces;
             BtnApplyTASK.IsEnabled = writeacces;
             BtnApplyWP.IsEnabled = writeacces;
