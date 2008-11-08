@@ -56,7 +56,7 @@ namespace Infocorp.TITA.WITLogic
 
             result = result.FindAll(delegate(DTItem item)
             {
-                DTFieldChoiceLookup wpField = (DTFieldChoiceLookup)item.Fields.Find(delegate(DTField field) { return field.Name == "Work Package"; });
+                DTFieldChoiceLookup wpField = (DTFieldChoiceLookup)item.Fields.Find(delegate(DTField field) { return (field.Name == "Work Package" || field.Name == "Paquete de Trabajo"); });
                 return wpField.Value.Trim() == workpackageName.Trim();
 
             });
@@ -131,18 +131,18 @@ namespace Infocorp.TITA.WITLogic
 
         public List<DTItem> GetTasks(string contractId, string issueId)
         {
-            //List<DTItem> tasks = this.GetTasks(contractId);
+            List<DTItem> tasks = this.GetTasks(contractId);
 
-            //List<DTItem> result = tasks.FindAll(delegate(DTItem item)
-            //{
-            //    DTFieldChoiceLookup wpField = (DTFieldChoiceLookup)item.Fields.Find(delegate(DTField field) { return field.Name.ToLower() == "issue"; });
-            //    return wpField.Value == issueId;
+            List<DTItem> result = tasks.FindAll(delegate(DTItem item)
+            {
+                DTFieldChoiceLookup wpField = (DTFieldChoiceLookup)item.Fields.Find(delegate(DTField field) { return (field.Name.ToLower() == "issue" || field.Name.ToLower() == "incidente"); });
+                return wpField.Value == issueId;
 
-            //});
+            });
 
-            //return result;
+            return result;
 
-            return null;
+            //return null;
         }
 
         public void AddTask( DTItem task, string contractId)
