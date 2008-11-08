@@ -2013,16 +2013,22 @@ namespace Infocorp.TITA.SilverlightUI
                                     t.Title = ((DTFieldAtomicString)field).Value;
                                     break;
                                 case "Issue":
-                                case "Incidente":
                                     t.IdIncident = ((DTFieldAtomicString)field).Value;
                                     break;
+                                case "Incidente":
+                                    t.IdIncident = ((DTFieldChoiceLookup)field).Value;
+                                    break;
                                 case "Status":
-                                case "Estado":
                                     t.Status = ((DTFieldChoice)field).Value;
                                     break;
+                                case "Estado":
+                                    t.Status = ((DTFieldAtomicString)field).Value;
+                                    break;
                                 case "Priority":
-                                case "Prioridad":
                                     t.Priority = ((DTFieldChoice)field).Value;
+                                    break;
+                                case "Prioridad":
+                                    t.Priority = ((DTFieldAtomicString)field).Value;
                                     break;
                                 case "% Complete":
                                 case "% completado":
