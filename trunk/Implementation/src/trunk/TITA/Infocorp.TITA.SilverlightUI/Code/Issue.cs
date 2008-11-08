@@ -29,21 +29,6 @@ namespace Infocorp.TITA.SilverlightUI.Code
             set { title = value; }
         }
 
-        private string assignedTo;
-
-        public string AssignedTo
-        {
-            get { return assignedTo; }
-            set { assignedTo = value; }
-        }
-
-        private string reportedBy;
-
-        public string ReportedBy
-        {
-            get { return reportedBy; }
-            set { reportedBy = value; }
-        }
         private DateTime reportedDate;
 
         public DateTime ReportedDate
@@ -52,27 +37,12 @@ namespace Infocorp.TITA.SilverlightUI.Code
             set { reportedDate = value; }
         }
 
-        private DateTime dueDate;
-
-        public DateTime DueDate
-        {
-            get { return dueDate; }
-            set { dueDate = value; }
-        }
-
         private string workPackage;
 
         public string WorkPackage
         {
             get { return workPackage; }
             set { workPackage = value; }
-        }
-        private double priorityOrder;
-
-        public double PriorityOrder
-        {
-            get { return priorityOrder; }
-            set { priorityOrder = value; }
         }
 
         private string priority;

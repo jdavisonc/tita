@@ -76,14 +76,6 @@ namespace Infocorp.TITA.SilverlightUI.Code
             set { startDate = value; }
         }
 
-        private DateTime dueDate;
-
-        public DateTime DueDate
-        {
-            get { return dueDate; }
-            set { dueDate = value; }
-        }
-
         private bool isLocal;
 
         public bool IsLocal
