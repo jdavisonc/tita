@@ -268,8 +268,17 @@ namespace Infocorp.TITA.WITLogic
             commands.Sort();
             bool result = true;
             List<DTCommandInfo> commandsNotExecuted = new List<DTCommandInfo>();
-            string eMail = _sharepoint.GetCurrentUserEmail(contractId);
-            eMail = String.IsNullOrEmpty(eMail) ? "grupopis08@gmail.com" : eMail;
+            string eMail = string.Empty;
+            try
+            {
+                eMail = _sharepoint.GetCurrentUserEmail(contractId);
+                eMail = String.IsNullOrEmpty(eMail) ? "grupopis08@gmail.com" : eMail;
+            }
+            catch (Exception exc)
+            {
+                //No se pudo obtener el email por alguna razón
+            }
+
             foreach (DTCommandInfo command in commands)
             {
                 try
