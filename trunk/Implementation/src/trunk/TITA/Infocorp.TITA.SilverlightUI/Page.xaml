@@ -353,7 +353,7 @@
     	</Grid.RowDefinitions>
 
         <!--CABEZAL-->
-        <Rectangle Height="80" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Fill="#FFFBFAFA" Stroke="#FF000000" x:Name="cabezal" StrokeThickness="0"/>
+        <Rectangle Height="80" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Fill="White" Stroke="#FF000000" x:Name="cabezal" StrokeThickness="0"/>
         <Image Source="imgs/logo.jpg" x:Name="img_cabezal" Margin="-1.286,21,0,0" Width="275.428" VerticalAlignment="Top" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment" Height="64.267"  />
  
         <Grid Width="222" HorizontalAlignment="Left" VerticalAlignment="Stretch"  RenderTransformOrigin="0.5,0.5" Margin="-5,85,0,-65">
