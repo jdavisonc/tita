@@ -374,11 +374,11 @@
         	<StackPanel x:Name="CanvasWP" Background="White"  Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
         		<TextBlock x:Name="titulo_wp" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Workpackage" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <my:DataGrid x:Name="grd_WP" BorderThickness="0,0,0,0" AutoGenerateColumns="True" Width="870" Height="150"/>
-                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_wp" Margin="400,10,0,0" PageSize="5"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_wp" Margin="400,10,0,0" PageSize="10"/>
                 
                 <TextBlock x:Name="titulo_INCIDENT_WP" Margin="20,15,0,5" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Incidentes para el Workpackage seleccionado" FontSize="15" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <my:DataGrid x:Name="grd_INCIDENT_WP" Visibility="Collapsed" BorderThickness="0,0,0,0" Margin="0,20,0,0" AutoGenerateColumns="True" Width="870" Height="150"/>
-                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_incident_wp" Margin="400,10,0,0" PageSize="5"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_incident_wp" Margin="400,10,0,0" PageSize="10"/>
                 
                 <StackPanel  x:Name="PnlOption_WP" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Horizontal">
         			<Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Nuevo" Click="BtnNuevoWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
@@ -387,6 +387,7 @@
                     <Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Ver Incidentes" Canvas.Left="336" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnViewIncidentsWP" Click="BtnViewIncidentsWP_Click" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Aplicar" Canvas.Left="336" Click="BtnApplyWP_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnApplyWP"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
         		</StackPanel>
+                <TextBlock x:Name="lblFields_error_WP" Margin="20,5,0,10" VerticalAlignment="Top" Visibility="Collapsed"  HorizontalAlignment="Left" Text="Campos en rojo invalidos" FontSize="15" FontFamily="Georgia" Foreground="Red"/>
         		<StackPanel  x:Name="PnlForm_WP" Margin="20,0,0,10" Width="auto" Height="auto"  Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <Grid x:Name="grdForm_WP" Background="Transparent" VerticalAlignment="Top" Width="900" Height="150" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,0,10"/>
         		</StackPanel>   
@@ -402,13 +403,12 @@
             <StackPanel x:Name="pnl_Contrato" Background="White" Width="auto" Height="auto"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
                <TextBlock x:Name="titulo_Contratos" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Contratos" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                <my:DataGrid x:Name="lstContratos" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,5" BorderThickness="0,0,0,0" AutoGenerateColumns="True" Visibility="Collapsed" Width="575" Height="150"/>
-               <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_contratos" Margin="300,10,0,0" VerticalAlignment="Bottom" PageSize="5"/>
+               <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_contratos" Margin="300,10,0,0" VerticalAlignment="Bottom" PageSize="10"/>
                 <TextBlock Margin="18,60,0,0" x:Name="lblConectContract" Visibility="Collapsed"/>            
                 <StackPanel  x:Name="PnlbtnsContrato" Background="White" Width="auto" Visibility="Visible" Orientation="Horizontal">
                     <Button Margin="18,60,0,0" VerticalAlignment="Top" Content="Nuevo" Click="BtnNuevoContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button Margin="18,60,0,0" VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnModificarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnModificarContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button Margin="18,60,0,0" VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnEliminarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEliminarContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                    <!--<Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Conectar" Canvas.Left="326" Click="BtnConectarContrato_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnConectarContrato"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>-->
                 </StackPanel>
                 <StackPanel  x:Name="pnlEditContrato" Visibility="Collapsed" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,5">
                     <StackPanel VerticalAlignment="Top" Margin="0,15,0,0">
@@ -436,11 +436,11 @@
             <StackPanel x:Name="CanvasIncident" Visibility="Collapsed" Background="White" Width="auto" Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
                 <TextBlock x:Name="titulo_Incidentes" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Incidentes" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <my:DataGrid x:Name="grd_INCIDENT" Margin="20,0,0,5"  VerticalAlignment="Top"  HorizontalAlignment="Left" BorderThickness="0,0,0,0" AutoGenerateColumns="True" Width="870" Height="170"/>
-                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager" Margin="400,10,0,0" VerticalAlignment="Bottom" PageSize="5"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager" Margin="400,10,0,0" VerticalAlignment="Bottom" PageSize="10"/>
 
                 <TextBlock x:Name="titulo_TASK_INCIDENT" Margin="20,15,0,5" VerticalAlignment="Top"  Visibility="Collapsed" HorizontalAlignment="Left" Text="Tasks para el Issue seleccionado" FontSize="15" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <my:DataGrid x:Name="grd_TASK_INCIDENT" Visibility="Collapsed" BorderThickness="0,0,0,0" Margin="0,20,0,0" AutoGenerateColumns="True" Width="870" Height="150"/>
-                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_TASK_INCIDENT" Margin="400,10,0,0" PageSize="5"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_TASK_INCIDENT" Margin="400,10,0,0" PageSize="10"/>
 
                 <StackPanel  x:Name="PnlbtnEdits" Background="White" Width="auto" Visibility="Collapsed">
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Click="BtnEdit_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnEdit" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
@@ -450,9 +450,10 @@
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top"  Content="Nuevo" Click="BtnNuevo_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevo"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnChange_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnChange"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnDelete_Action_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDelete_Action"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
-                    <Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Ver Tasks" Canvas.Left="336" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnViewTaskIncidents" Click="BtnViewTaskIncidents_Click" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
+                    <Button Margin="18,166,0,0" VerticalAlignment="Top" Content="Ver Tareas" Canvas.Left="336" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnViewTaskIncidents" Click="BtnViewTaskIncidents_Click" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Aplicar" Canvas.Left="336" Click="BtnApplyINCIDENT_Click"  Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnApplyINCIDENT"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                 </StackPanel>
+                <TextBlock x:Name="lblFields_error_Incident" Margin="20,5,0,10" VerticalAlignment="Top" Visibility="Collapsed"  HorizontalAlignment="Left" Text="Campos en rojo invalidos" FontSize="15" FontFamily="Georgia" Foreground="Red"/>
                 <StackPanel  x:Name="PnlForm_INCIDENT" Margin="20,0,0,10" Width="auto" Height="auto"  Visibility="Visible" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <Grid x:Name="grdForm_INCIDENT" Background="Transparent" VerticalAlignment="Top" Height="auto" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
                </StackPanel>   
@@ -466,15 +467,16 @@
         <!--TASKS -->
         <ScrollViewer Margin="-4.286,106,4.286,1" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" x:Name="scroll_TASK" BorderThickness="0,0,0,0">
             <StackPanel x:Name="CanvasTASK" Background="White" Width="auto" Height="auto" Visibility="Collapsed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
-                <TextBlock x:Name="titulo_Task" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Tasks" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
+                <TextBlock x:Name="titulo_Task" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Tareas" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <my:DataGrid x:Name="grd_TASK" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="20,0,0,5" BorderThickness="0,0,0,0" AutoGenerateColumns="True" Width="800" Height="160"/>
-                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_tasks" Margin="400,10,0,0" PageSize="5"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Visible" x:Name="pager_tasks" Margin="400,10,0,0" PageSize="10"/>
                 <StackPanel  x:Name="PnlOption_TASK" Width="auto" Height="auto" Visibility="Visible" Orientation="Horizontal">
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top"  Content="Nuevo" Click="BtnNuevoTASK_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnNuevoTASK"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Modificar" Canvas.Left="112" Click="BtnChangeTASK_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnChangeTASK"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Eliminar" Canvas.Left="224" Click="BtnDeleteTASK_Action_Click" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnDeleteTASK"  Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                     <Button Margin="18,166,0,0"  VerticalAlignment="Top" Content="Aplicar" Canvas.Left="336" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnApplyTASK" Click="BtnApplyTASK_Click" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
                 </StackPanel>
+                <TextBlock x:Name="lblFields_error_Task" Margin="20,5,0,10" VerticalAlignment="Top" Visibility="Collapsed"  HorizontalAlignment="Left" Text="Campos en rojo invalidos" FontSize="15" FontFamily="Georgia" Foreground="Red"/>
                 <StackPanel  x:Name="PnlForm_TASK" Margin="20,0,0,10" Width="auto" Height="auto"  Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <Grid x:Name="grdForm_TASK" Background="Transparent" VerticalAlignment="Top" Height="auto" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,0,10"/>
                 </StackPanel>   
@@ -488,7 +490,7 @@
         <!--Reports--> 
         <ScrollViewer x:Name="scroll_REPORT" Margin="-4.286,106,4.286,1" d:LayoutOverrides="HorizontalAlignment" Visibility="Collapsed" Opacity="1" BorderThickness="0,0,0,0" HorizontalAlignment="Stretch">
             <StackPanel x:Name="CanvasREPORT" Background="White" Width="auto" Height="auto" Margin="260,0,0,0">
-                <TextBlock x:Name="titulo_Reporte" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" Text="Reportes" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
+                <TextBlock x:Name="titulo_Reporte" Margin="20,0,0,10" VerticalAlignment="Top" Visibility="Collapsed"  HorizontalAlignment="Left" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <StackPanel x:Name="PnlOptionREPORT" Visibility="Collapsed" Margin="20,0,0,15" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top">
                      <StackPanel VerticalAlignment="Top" Margin="0,15,0,0">
                          <TextBlock x:Name="txt_contratoRepo" Text="Contrato: " Margin="0,0,0,8" HorizontalAlignment="Left" Height="22" Width="140"/>
@@ -508,8 +510,8 @@
                 
                 <TextBlock x:Name="titulo_result_report" Text="Resultado obtenido" Margin="20,10,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="15" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <my:DataGrid x:Name="grd_REPORT" Margin="20,0,0,5" BorderThickness="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" AutoGenerateColumns="True" Visibility="Collapsed" Width="auto" Height="170"/>
-                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_grd_REPORT_DESWP" Margin="200,5,0,0" PageSize="5"/>
-                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_grd_REPORT_ISSUES" Margin="100,5,0,0" PageSize="5"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_grd_REPORT_DESWP" Margin="200,5,0,0" PageSize="10"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_grd_REPORT_ISSUES" Margin="100,5,0,0" PageSize="10"/>
                 
                 <StackPanel  x:Name="PnlExportar_REPORT" Visibility="Collapsed" Margin="20,10,0,15" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top">
                     <Button Visibility="Collapsed" Content="Exportar" VerticalAlignment="Center" Click="BtnExportar_Click_DESWP" Width="112" HorizontalAlignment="Left" Height="26" x:Name="BtnExportar_DESWP" Background="#FF0B97F9" Style="{StaticResource ButtonStyle1}" Foreground="#FFFFFFFF"/>
@@ -545,9 +547,9 @@
             <StackPanel x:Name="CanvasPorImpactar" Background="White" Width="auto" Height="auto" Visibility="Collapsed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="260,0,0,0">
                 <TextBlock x:Name="titulo_PorImpactar" Margin="20,0,0,10" VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="20" FontFamily="Georgia" Foreground="#FF0B1F75"/>
                 <my:DataGrid x:Name="grd_PorImpactar" BorderThickness="0,0,0,0" AutoGenerateColumns="True" Width="870" Height="150"/>  
-                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_PorImpactarIssue" Margin="200,5,0,0" PageSize="5"/>
-                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_PorImpactarTask" Margin="200,5,0,0" PageSize="5"/>
-                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_PorImpactarWP" Margin="200,5,0,0" PageSize="5"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_PorImpactarIssue" Margin="200,5,0,0" PageSize="10"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_PorImpactarTask" Margin="200,5,0,0" PageSize="10"/>
+                <Infocorp_TITA_Controls_Silverlight_V21:Pager Visibility="Collapsed" x:Name="pager_PorImpactarWP" Margin="200,5,0,0" PageSize="10"/>
             </StackPanel>
         </ScrollViewer>
 
