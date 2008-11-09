@@ -369,6 +369,19 @@ namespace Infocorp.TITA.WITLogic
                 }
             }
 
+            try
+            {
+                if (commands.Count != commandsNotExecuted.Count)
+                {
+                    //Si apliqué alguno actualizo la base
+                    UpdateLastAccess(contractId);
+                }
+            }
+            catch (Exception exc)
+            {
+                //Problemas en el acceso a la base
+            }
+
             WITCommandState.Instance().ClearCommands(contractId);
 
 
@@ -450,7 +463,7 @@ namespace Infocorp.TITA.WITLogic
 
         public bool AquireContractWritePermission(string contractId)
         {
-            string userName = string.Empty;
+            string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             return _db.AquireContract(contractId, userName);
         }
 
@@ -461,12 +474,13 @@ namespace Infocorp.TITA.WITLogic
 
         private bool IsContractAquiredByMe(string contractId)
         {
-            string userName  = string.Empty;
+            string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             return _db.IsContractAquiredByUser(contractId, userName);
         }
 
-        private void UpdateLastAccess(string contractId, string userName)
+        private void UpdateLastAccess(string contractId)
         {
+            string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             _db.UpdateLastAccess(contractId, userName);
         }
 
