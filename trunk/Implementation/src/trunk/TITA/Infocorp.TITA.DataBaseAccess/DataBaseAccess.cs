@@ -238,8 +238,16 @@ namespace Infocorp.TITA.DataBaseAccess
                         return false;
                     }
                     else
-                        return true;
-
+                    {        
+                        var difTime = DateTime.Now - d1;
+                        if (difTime.Seconds > maxTime)
+                        {
+                            DeleteCurrent(contract.Site);
+                            return false;
+                        }
+                        else
+                            return true;
+                    }
                 }
                 else return false;
 
@@ -288,8 +296,26 @@ namespace Infocorp.TITA.DataBaseAccess
                         AddCurrentUser(newCurrent);
                         return true;
                     }
+                    /*else
+                        return false;*/
                     else
-                        return false;
+                    {
+                        var difTime = DateTime.Now - d1;
+                        if (difTime.Seconds > maxTime)
+                        {
+                            dc.Currents.DeleteOnSubmit(current.First());
+                            dc.SubmitChanges();
+                            DTCurrentUser newCurrent = new DTCurrentUser();
+                            newCurrent.CurrentUser = userName;
+                            newCurrent.Site = contract.Site.Trim();
+                            newCurrent.LoggedDate = DateTime.Now.ToString();
+                            newCurrent.LastModification = DateTime.Now.ToString();
+                            AddCurrentUser(newCurrent);
+                            return true;
+                        }
+                        else
+                            return false;
+                    }
 
                 }
                 else
