@@ -182,6 +182,7 @@ namespace Infocorp.TITA.SilverlightUI
 
         public void EnableOption(Option o)
         {
+            grd_PorImpactar.Columns.Clear();
             isEdit = false;
             isIssueWP = false;
             isPorApply = false;
@@ -2537,6 +2538,7 @@ namespace Infocorp.TITA.SilverlightUI
             EnableOption(Option.PORIMPACTAR);
             titulo_PorImpactar.Text = "Tasks por Impactar";
             isPorApply = true;
+
             if (lstPorApplyTask.Count > 0)
                 LoadTask(lstPorApplyTask);
         }
