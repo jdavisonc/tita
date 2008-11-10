@@ -110,7 +110,7 @@ namespace Infocorp.TITA.DataTypes
         {
             DTField field = obj as DTField;
 
-            return field.Name.ToLower() == this.Name.ToLower();
+            return field.Name.ToLower().Replace(".", "") == this.Name.ToLower().Replace(".", "");
         }
     }
 }

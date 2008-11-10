@@ -321,7 +321,7 @@ namespace Infocorp.TITA.WITLogic
 
                             break;
                         case CommandType.DELETE:
-                            int issueId = Convert.ToInt32((command.Item.Fields.Find(delegate(DTField f) { return f.Name.ToLower() == "id"; }) as DTFieldCounter).Value);
+                            int issueId = Convert.ToInt32((command.Item.Fields.Find(delegate(DTField f) { return f.Name.ToLower().Replace(".","") == "id"; }) as DTFieldCounter).Value);
                             switch (command.CommandItemType)
                             {
                                 case ItemType.ISSUE:
