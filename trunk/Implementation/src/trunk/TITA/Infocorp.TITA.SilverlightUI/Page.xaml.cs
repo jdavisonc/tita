@@ -30,6 +30,7 @@ namespace Infocorp.TITA.SilverlightUI
             TASK,
             REPORT,
             PORIMPACTAR,
+            MAPEAR,
         }
 
         private string url = null;
@@ -205,6 +206,10 @@ namespace Infocorp.TITA.SilverlightUI
             lblFields_error_Incident.Visibility = Visibility.Collapsed;
             lblFields_error_Task.Visibility = Visibility.Collapsed;
             lblFields_error_WP.Visibility = Visibility.Collapsed;
+            BtnMap.Visibility = Visibility.Collapsed;
+            scroll_Map.Visibility = Visibility.Collapsed;
+            CanvasMap.Visibility = Visibility.Collapsed;
+            PnlActionMap.Visibility = Visibility.Collapsed;
             ClearReport();
             if (PnlForm_WP.Children != null)
                 PnlForm_WP.Children.Clear();
@@ -244,6 +249,12 @@ namespace Infocorp.TITA.SilverlightUI
                     scroll_PorImpactar.Visibility = Visibility.Visible;
                     CanvasPorImpactar.Visibility = Visibility.Visible;
                     titulo_PorImpactar.Visibility = Visibility.Visible;
+                    break;
+                case Option.MAPEAR:
+                    BtnMap.Visibility = Visibility.Visible;
+                    scroll_Map.Visibility = Visibility.Visible;
+                    CanvasMap.Visibility = Visibility.Visible;
+                    PnlActionMap.Visibility = Visibility.Visible;
                     break;
                 default:
                     logo.Visibility = Visibility.Visible;
@@ -2554,10 +2565,11 @@ namespace Infocorp.TITA.SilverlightUI
 
         public void ViewMap()
         {
-            BtnMap.Visibility = Visibility.Visible;
-            scroll_Map.Visibility = Visibility.Visible;
-            CanvasMap.Visibility = Visibility.Visible;
-            PnlActionMap.Visibility = Visibility.Visible;
+            //BtnMap.Visibility = Visibility.Visible;
+            //scroll_Map.Visibility = Visibility.Visible;
+            //CanvasMap.Visibility = Visibility.Visible;
+            //PnlActionMap.Visibility = Visibility.Visible;
+            EnableOption(Option.MAPEAR);
             BtnMap.IsEnabled = writeacces;
             DTContract c = (DTContract)cbx_contrat_up.SelectedItem;
             txt_endValue_map.Text = "End Value";
