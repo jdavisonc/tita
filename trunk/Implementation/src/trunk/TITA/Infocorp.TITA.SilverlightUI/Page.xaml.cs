@@ -1467,6 +1467,7 @@ namespace Infocorp.TITA.SilverlightUI
                             resultField.Value = info.IsChecked.Value;
                             resultField.Name = field.Name;
                             resultField.InternalName = field.InternalName;
+                            resultField.Required = field.Required;
                             resulItem.Fields.Add(resultField);
                         }
                         else if (field is DTFieldChoiceLookup)
@@ -1487,6 +1488,7 @@ namespace Infocorp.TITA.SilverlightUI
                                 resultField.LookupList = ((DTFieldChoiceLookup)field).LookupList;
                                 resultField.Choices = ((DTFieldChoiceLookup)field).Choices;
                                 resultField.Name = field.Name;
+                                resultField.Required = field.Required;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
                                 txt.Text = field.Name;
@@ -1509,6 +1511,7 @@ namespace Infocorp.TITA.SilverlightUI
                                 resultField.Value = chuser.SelectedItem.ToString();
                                 resultField.Choices = ((DTFieldChoiceUser)field).Choices;
                                 resultField.Name = field.Name;
+                                resultField.Required = field.Required;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
                                 txt.Text = field.Name;
@@ -1531,6 +1534,7 @@ namespace Infocorp.TITA.SilverlightUI
                                 resultField.Value = lst.SelectedItem.ToString();
                                 resultField.Choices = ((DTFieldChoice)field).Choices;
                                 resultField.Name = field.Name;
+                                resultField.Required = field.Required;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
                                 txt.Text = field.Name;
@@ -1551,6 +1555,7 @@ namespace Infocorp.TITA.SilverlightUI
                             {
                                 DTFieldAtomicDateTime resultField = new DTFieldAtomicDateTime();
                                 resultField.Value = cal.SelectedDate.Value;
+                                resultField.Required = field.Required;
                                 resultField.Name = field.Name;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
@@ -1572,6 +1577,7 @@ namespace Infocorp.TITA.SilverlightUI
                             {
                                 DTFieldAtomicNote resultField = new DTFieldAtomicNote();
                                 resultField.Value = nt.Text;
+                                resultField.Required = field.Required;
                                 resultField.Name = field.Name;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
@@ -1589,7 +1595,9 @@ namespace Infocorp.TITA.SilverlightUI
 
                                 DTFieldAtomicNumber resultField = new DTFieldAtomicNumber();
                                 resultField.Value = value;
+                                resultField.Percentage = (field as DTFieldAtomicNumber).Percentage;
                                 resultField.Name = field.Name;
+                                resultField.Required = field.Required;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
                                 txt.Text = field.Name;
@@ -1625,6 +1633,7 @@ namespace Infocorp.TITA.SilverlightUI
 
                                 DTFieldCounter resultField = new DTFieldCounter();
                                 resultField.Value = value;
+                                resultField.Required = field.Required;
                                 resultField.Name = field.Name;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
@@ -1666,6 +1675,7 @@ namespace Infocorp.TITA.SilverlightUI
                                 DTFieldAtomicString resultField = new DTFieldAtomicString();
                                 resultField.Value = txt.Text;
                                 resultField.Name = field.Name;
+                                resultField.Required = field.Required;
                                 resultField.InternalName = field.InternalName;
                                 resulItem.Fields.Add(resultField);
                                 t.Text = field.Name;
@@ -1677,6 +1687,7 @@ namespace Infocorp.TITA.SilverlightUI
                     {
                         DTFieldCounter resultField = new DTFieldCounter();
                         resultField = ((DTFieldCounter)field);
+                        resultField.Required = field.Required;
                         resulItem.Fields.Add(resultField);
                     }
                 }
