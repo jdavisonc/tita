@@ -10,24 +10,29 @@ namespace Infocorp.TITA.DataTypes
     public class DTFieldAtomicNumber : DTFieldAtomic
     {
         private double _value = 0;
+        private bool _percentage = false;
 
         public DTFieldAtomicNumber() : base()
         {}
 
-        public DTFieldAtomicNumber(string name, string internalName, bool required, bool hidden, bool isReadOnly)
+        public DTFieldAtomicNumber(string name, string internalName, bool required, bool hidden, bool isReadOnly, bool percentage)
             : base(name, internalName, required, hidden, isReadOnly)
-        {}
+        {
+            _percentage = percentage;
+        }
 
-        public DTFieldAtomicNumber(string name, string internalName, bool required, bool hidden, bool isReadOnly, double value)
+        public DTFieldAtomicNumber(string name, string internalName, bool required, bool hidden, bool isReadOnly, bool percentage, double value)
             : base(name, internalName, required, hidden, isReadOnly)
         {
             _value = value;
+            _percentage = percentage;
         }
 
         public DTFieldAtomicNumber(DTFieldAtomicNumber dtFieldAtomicInteger)
             : base((DTFieldAtomic)dtFieldAtomicInteger)
         {
             _value = dtFieldAtomicInteger.Value;
+            _percentage = dtFieldAtomicInteger.Percentage;
         }
 
         public override DTField.Types GetCustomType()
@@ -40,6 +45,13 @@ namespace Infocorp.TITA.DataTypes
         {
             get { return _value; }
             set { _value = value; }
+        }
+        
+        [DataMember]
+        public bool Percentage
+        {
+            get { return _percentage; }
+            set { _percentage = value; }
         }
     }
 }
