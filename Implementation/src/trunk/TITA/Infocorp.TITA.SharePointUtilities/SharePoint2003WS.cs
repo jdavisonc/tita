@@ -396,7 +396,7 @@ namespace Infocorp.TITA.SharePointUtilities
                             innerText += "<Field Name='" + field.InternalName + "'>";
                             if (((DTFieldAtomicNumber)field).Percentage)
                             {
-                                innerText += (((DTFieldAtomicNumber)field).Value / 100).ToString();
+                                innerText += (((DTFieldAtomicNumber)field).Value / 100).ToString(CultureInfo.InvariantCulture.NumberFormat);
                             }
                             else
                             {
@@ -598,7 +598,11 @@ namespace Infocorp.TITA.SharePointUtilities
                                          switch (field.GetCustomType())
                                          {
                                              case DTField.Types.Number:
-                                                 ((DTFieldAtomicNumber)field).Value = double.Parse(attr.Value,CultureInfo.InvariantCulture.NumberFormat);
+                                                 ((DTFieldAtomicNumber)field).Value = double.Parse(attr.Value, CultureInfo.InvariantCulture.NumberFormat);
+                                                 if (((DTFieldAtomicNumber)field).Percentage)
+                                                 {
+                                                     ((DTFieldAtomicNumber)field).Value = ((DTFieldAtomicNumber)field).Value * 100;
+                                                 }
                                                  break;
                                              case DTField.Types.String:
                                                  ((DTFieldAtomicString)field).Value = attr.Value;
