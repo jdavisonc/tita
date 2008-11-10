@@ -1025,7 +1025,8 @@ namespace Infocorp.TITA.SilverlightUI
                 pager_incident_wp.ItemsControl = grd_INCIDENT_WP;
                 pager_incident_wp.ItemsSource = lstIssue;
                 pager_incident_wp.Visibility = Visibility.Visible;
-                grd_INCIDENT_WP.Columns[0].Visibility = Visibility.Collapsed;
+                if (lstIssue.Count > 0)
+                    grd_INCIDENT_WP.Columns[0].Visibility = Visibility.Collapsed;
                     
             }
             else if (isPorApply) 
@@ -1036,7 +1037,8 @@ namespace Infocorp.TITA.SilverlightUI
                 pager_PorImpactarIssue.ItemsControl = grd_PorImpactar;
                 pager_PorImpactarIssue.ItemsSource = lstIssue;
                 pager_PorImpactarIssue.Visibility = Visibility.Visible;
-                grd_PorImpactar.Columns[0].Visibility = Visibility.Collapsed;
+                if (lstIssue.Count > 0)
+                    grd_PorImpactar.Columns[0].Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -2565,10 +2567,6 @@ namespace Infocorp.TITA.SilverlightUI
 
         public void ViewMap()
         {
-            //BtnMap.Visibility = Visibility.Visible;
-            //scroll_Map.Visibility = Visibility.Visible;
-            //CanvasMap.Visibility = Visibility.Visible;
-            //PnlActionMap.Visibility = Visibility.Visible;
             EnableOption(Option.MAPEAR);
             BtnMap.IsEnabled = writeacces;
             DTContract c = (DTContract)cbx_contrat_up.SelectedItem;
