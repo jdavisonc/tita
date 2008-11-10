@@ -306,6 +306,8 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
         
         private double ValueField;
         
+        private bool PercentageField;
+        
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
         public double Value {
             get {
@@ -315,6 +317,19 @@ namespace Infocorp.TITA.SilverlightUI.WSTitaReference {
                 if ((this.ValueField.Equals(value) != true)) {
                     this.ValueField = value;
                     this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=1)]
+        public bool Percentage {
+            get {
+                return this.PercentageField;
+            }
+            set {
+                if ((this.PercentageField.Equals(value) != true)) {
+                    this.PercentageField = value;
+                    this.RaisePropertyChanged("Percentage");
                 }
             }
         }
