@@ -696,7 +696,8 @@ namespace Infocorp.TITA.SilverlightUI
                 pager_PorImpactarWP.ItemsControl = grd_PorImpactar;
                 pager_PorImpactarWP.ItemsSource = lstWP;
                 pager_PorImpactarWP.Visibility = Visibility.Visible;
-                grd_PorImpactar.Columns[0].Visibility = Visibility.Collapsed;
+                if (lstWP.Count > 0)
+                    grd_PorImpactar.Columns[0].Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -706,7 +707,8 @@ namespace Infocorp.TITA.SilverlightUI
                 pager_wp.ItemsControl = grd_WP;
                 pager_wp.ItemsSource = lstWP;
                 my_lstWP = lstWP;
-                grd_WP.Columns[0].Visibility = Visibility.Collapsed;
+                if (lstWP.Count > 0)
+                    grd_WP.Columns[0].Visibility = Visibility.Collapsed;
             }
             return null;
         }
@@ -1031,7 +1033,8 @@ namespace Infocorp.TITA.SilverlightUI
                 grd_INCIDENT.CanUserResizeColumns = false;
                 pager.ItemsControl = grd_INCIDENT;
                 pager.ItemsSource = lstIssue;
-                grd_INCIDENT.Columns[0].Visibility = Visibility.Collapsed;
+                if (lstIssue.Count > 0)
+                    grd_INCIDENT.Columns[0].Visibility = Visibility.Collapsed;
 
             }
             return null;
@@ -1290,7 +1293,7 @@ namespace Infocorp.TITA.SilverlightUI
                             {
                                 chlkp.SelectedIndex = -1;
                             }
-                            else
+                            else if (chlkp.Items.Count > 0)
                             {
                                 chlkp.SelectedIndex = 0;
                                 chlkp.UpdateLayout();
@@ -1483,7 +1486,8 @@ namespace Infocorp.TITA.SilverlightUI
                             else
                             {
                                 DTFieldChoiceLookup resultField = new DTFieldChoiceLookup();
-                                resultField.Value = chlkp.SelectedItem.ToString();
+                                if (chlkp.Items.Count > 0)
+                                    resultField.Value = chlkp.SelectedItem.ToString();
                                 resultField.LookupField = ((DTFieldChoiceLookup)field).LookupField;
                                 resultField.LookupList = ((DTFieldChoiceLookup)field).LookupList;
                                 resultField.Choices = ((DTFieldChoiceLookup)field).Choices;
@@ -2056,7 +2060,8 @@ namespace Infocorp.TITA.SilverlightUI
                     pager_TASK_INCIDENT.ItemsControl = grd_TASK_INCIDENT;
                     pager_TASK_INCIDENT.ItemsSource = lstTask;
                     pager_TASK_INCIDENT.Visibility = Visibility.Visible;
-                    grd_TASK_INCIDENT.Columns[0].Visibility = Visibility.Collapsed;
+                    if (lstTask.Count > 0)
+                        grd_TASK_INCIDENT.Columns[0].Visibility = Visibility.Collapsed;
 
                 }
                 else if (isPorApply)
@@ -2067,7 +2072,8 @@ namespace Infocorp.TITA.SilverlightUI
                     pager_PorImpactarTask.ItemsControl = grd_PorImpactar;
                     pager_PorImpactarTask.ItemsSource = lstTask;
                     pager_PorImpactarTask.Visibility = Visibility.Visible;
-                    grd_PorImpactar.Columns[0].Visibility = Visibility.Collapsed;
+                    if (lstTask.Count > 0)
+                        grd_PorImpactar.Columns[0].Visibility = Visibility.Collapsed;
                 }
                 else
                 {
@@ -2076,7 +2082,8 @@ namespace Infocorp.TITA.SilverlightUI
                     my_lstTask = lstTask;
                     grd_TASK.IsReadOnly = true;
                     grd_TASK.CanUserResizeColumns = false;
-                    //grd_TASK.Columns[0].Visibility = Visibility.Collapsed;
+                    if(lstTask.Count > 0)
+                        grd_TASK.Columns[0].Visibility = Visibility.Collapsed;
                 }
             }
             return null;
