@@ -382,7 +382,7 @@ namespace Infocorp.TITA.WITLogic
                 //Problemas en el acceso a la base
             }
 
-            WITCommandState.Instance().ClearCommands(contractId);
+            WITCommandState.Instance().ClearCommands(contractId, itemType);
 
 
             List<DTItem> items = new List<DTItem>();
