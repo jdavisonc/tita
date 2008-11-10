@@ -394,8 +394,15 @@ namespace Infocorp.TITA.SharePointUtilities
                     {
                         case DTField.Types.Number:
                             innerText += "<Field Name='" + field.InternalName + "'>";
-                            innerText += ((DTFieldAtomicNumber)field).Value.ToString();
-                            innerText += "</Field>";
+                            if (((DTFieldAtomicNumber)field).Percentage)
+                            {
+                                innerText += (((DTFieldAtomicNumber)field).Value / 100).ToString();
+                            }
+                            else
+                            {
+                                innerText += ((DTFieldAtomicNumber)field).Value.ToString();
+                            }
+                            innerText += "</Field>";                             
                             break;
                         case DTField.Types.String:
                             innerText += "<Field Name='" + field.InternalName + "'>";
@@ -693,6 +700,7 @@ namespace Infocorp.TITA.SharePointUtilities
                             bool isDateOnly = false;
                             string lookupList = string.Empty;
                             string lookupField = string.Empty;
+                            bool percentage = false;
                             DTField.Types type = DTField.Types.Default;
 
                             foreach (XmlAttribute attr in fieldNode.Attributes)
@@ -725,6 +733,10 @@ namespace Infocorp.TITA.SharePointUtilities
                                 else if (attr.Name.CompareTo("ShowField") == 0)
                                 {
                                     lookupField = attr.Value;
+                                }
+                                else if (attr.Name.CompareTo("Percentage") == 0)
+                                {
+                                    percentage = bool.Parse(attr.Value);
                                 }
                                 else if (attr.Name.CompareTo("Format") == 0)
                                 {
@@ -781,7 +793,7 @@ namespace Infocorp.TITA.SharePointUtilities
                                 switch (type)
                                 {
                                     case DTField.Types.Number:
-                                        fieldsCollection.Add(new DTFieldAtomicNumber(name,internalName,required,hidden,isReadOnly));
+                                        fieldsCollection.Add(new DTFieldAtomicNumber(name,internalName,required,hidden,isReadOnly,percentage));
                                         break;
                                     case DTField.Types.String:
                                         fieldsCollection.Add(new DTFieldAtomicString(name, internalName, required, hidden, isReadOnly));
