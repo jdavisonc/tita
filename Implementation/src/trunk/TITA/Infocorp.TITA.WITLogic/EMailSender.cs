@@ -30,9 +30,12 @@ namespace Infocorp.TITA.WITLogic
             foreach (DTField field in item.Fields)
             {
                 string name = field.Name;
-                string fieldValue = GetFieldValue(field);
+                if (name.ToLower().Replace(".", "").Trim() != "id")
+                {
+                    string fieldValue = GetFieldValue(field);
 
-                body += String.Format("<div style= \"width:10%;float:left\"><b>{0}:</b></div><div style=\"width:20%;float:left\">{1}</div><br/>", name, fieldValue);
+                    body += String.Format("<div style= \"width:10%;float:left\"><b>{0}:</b></div><div style=\"width:20%;float:left\">{1}</div><br/>", name, fieldValue);
+                }
             }
 
             return body;
