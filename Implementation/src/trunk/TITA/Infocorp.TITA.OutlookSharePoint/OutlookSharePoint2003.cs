@@ -200,7 +200,8 @@ namespace Infocorp.TITA.OutlookSharePoint
                                     fieldsCollection.Add(new DTFieldAtomicNote(name, internalName, required, hidden, isReadOnly));
                                     break;
                                 case SPFieldType.Number:
-                                    fieldsCollection.Add(new DTFieldAtomicNumber(name, internalName, required, hidden, isReadOnly));
+                                    bool percentage = ((SPFieldNumber)field).ShowAsPercentage;
+                                    fieldsCollection.Add(new DTFieldAtomicNumber(name, internalName, required, hidden, isReadOnly, percentage));
                                     break;
                                 case SPFieldType.Recurrence:
                                     break;
