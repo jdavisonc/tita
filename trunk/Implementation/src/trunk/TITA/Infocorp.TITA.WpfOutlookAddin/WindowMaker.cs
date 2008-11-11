@@ -68,7 +68,7 @@ namespace Infocorp.TITA.WpfOutlookAddIn
         private Control InsertTextBox(string text)
         {
             TextBox textBox = new TextBox();
-            textBox.Text = text;
+            textBox.Text = text.Trim();
             return textBox;
         }
 
