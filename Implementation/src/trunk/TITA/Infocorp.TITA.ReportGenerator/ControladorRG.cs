@@ -24,8 +24,8 @@ namespace Infocorp.TITA.ReportGenerator
                 String str = initialDate.ToString(format);
                 String str2 = finalDate.ToString(format);
                 string caml = @"<Query>
-            <Where><Lt><FieldRef Name='End_x0020_Date' /><Value Type='DateTime'>2009-12-25T12:00:00Z</Value></Lt></Where></Query>";
-                List<DTItem> workPackageList = sp.GetWorkPackages(contractId, caml);
+                <Where><Lt><FieldRef Name='End_x0020_Date' /><Value Type='DateTime'>2009-12-25T12:00:00Z</Value></Lt></Where></Query>";
+                List<DTItem> workPackageList = sp.GetWorkPackages(contractId, "");
                 List<DTWorkPackageReport> workPackageDesviation = new List<DTWorkPackageReport>();
                 foreach (var workPackage in workPackageList)
                 {
@@ -38,7 +38,7 @@ namespace Infocorp.TITA.ReportGenerator
                     bool isValid = true;
                     foreach (var fields in listFields)
                     {
-                        if (fields.Name.Equals("End Date"))
+                        if (fields.Name.Equals("End Date") || fields.Name.Equals("Fecha Fin"))
                             if ((((DTFieldAtomicDateTime)fields).Value > finalDate) || ((DTFieldAtomicDateTime)fields).Value < initialDate)
                             {
                                 isValid = false;
@@ -50,22 +50,22 @@ namespace Infocorp.TITA.ReportGenerator
                         foreach (var fields in listFields)
                         {
 
-                            if (fields.Name.Equals("ID"))
+                            if (fields.Name.Equals("ID") || fields.Name.Equals("Id."))
                             {
                                 id = ((DTFieldCounter)fields).Value;
                             }
                             else
-                                if (fields.Name.Equals("Title"))
+                                if (fields.Name.Equals("Title") || fields.Name.Equals("Título"))
                                 {
                                     title = ((DTFieldAtomicString)fields).Value;
                                 }
                                 else
-                                    if (fields.Name.Equals("End Date"))
+                                    if (fields.Name.Equals("End Date") || fields.Name.Equals("Fecha Fin"))
                                     {
                                         init = ((DTFieldAtomicDateTime)fields).Value;
                                     }
                                     else
-                                        if (fields.Name.Equals("Proposed End Date"))
+                                        if (fields.Name.Equals("Proposed End Date")|| fields.Name.Equals("Fecha Estimada Fin"))
                                         {
                                             final = ((DTFieldAtomicDateTime)fields).Value;
 
@@ -107,12 +107,12 @@ namespace Infocorp.TITA.ReportGenerator
                     foreach (var data in issueDataFileds)
                     {
 
-                        if (data.Name.Equals("Category"))
+                        if (data.Name.Equals("Category") || data.Name.Equals("Categoría"))
                         {
                             categories = ((DTFieldChoice)data).Choices;
                         }
                         else
-                            if (data.Name.Equals("Status"))
+                            if (data.Name.Equals("Status") || data.Name.Equals("Estado"))
                             {
                                 status = ((DTFieldChoice)data).Choices;
                             }
@@ -141,7 +141,7 @@ namespace Infocorp.TITA.ReportGenerator
                             string stateIssue = null;
                             foreach (var fieldsIncident in fields)
                             {
-                                if (fieldsIncident.Name.Equals("Due Date"))
+                                if (fieldsIncident.Name.Equals("Due Date") || fieldsIncident.Name.Equals("Fecha Propuesto"))
                                     if ((((DTFieldAtomicDateTime)fieldsIncident).Value > finalDate) || ((DTFieldAtomicDateTime)fieldsIncident).Value < initialDate)
                                     {
                                         isValid = false;
@@ -152,12 +152,12 @@ namespace Infocorp.TITA.ReportGenerator
                             {
                                 foreach (var fieldsOfIncident in fields)
                                 {
-                                    if (fieldsOfIncident.Name.Equals("Category"))
+                                    if (fieldsOfIncident.Name.Equals("Category") || fieldsOfIncident.Name.Equals("Categoría"))
                                     {
                                         categoryIssue = ((DTFieldChoice)fieldsOfIncident).Value;
                                     }
                                     else
-                                        if (fieldsOfIncident.Name.Equals("Status"))
+                                        if (fieldsOfIncident.Name.Equals("Status") || fieldsOfIncident.Name.Equals("Estado"))
                                         {
                                             stateIssue = ((DTFieldChoice)fieldsOfIncident).Value;
                                         }
@@ -190,12 +190,12 @@ namespace Infocorp.TITA.ReportGenerator
                         foreach (var data in issueDataFileds)
                         {
 
-                            if (data.Name.Equals("Category"))
+                            if (data.Name.Equals("Category") || data.Name.Equals("Categoría"))
                             {
                                 categories = ((DTFieldChoice)data).Choices;
                             }
                             else
-                                if (data.Name.Equals("Status"))
+                                if (data.Name.Equals("Status") || data.Name.Equals("Estado"))
                                 {
                                     status = ((DTFieldChoice)data).Choices;
                                 }
@@ -234,17 +234,17 @@ namespace Infocorp.TITA.ReportGenerator
                                 string stateIssue = null;
                                 foreach (var fieldsIncident in fields)
                                 {
-                                    if (fieldsIncident.Name.Equals("Category"))
+                                    if (fieldsIncident.Name.Equals("Category") || fieldsIncident.Name.Equals("Categoría"))
                                     {
                                         categoryIssue = ((DTFieldChoice)fieldsIncident).Value;
                                     }
                                     else
-                                        if (fieldsIncident.Name.Equals("Status"))
+                                        if (fieldsIncident.Name.Equals("Status") || fieldsIncident.Name.Equals("Estado"))
                                         {
                                             stateIssue = ((DTFieldChoice)fieldsIncident).Value;
                                         }
                                         else
-                                            if (fieldsIncident.Name.Equals("Due Date"))
+                                            if (fieldsIncident.Name.Equals("Due Date") || fieldsIncident.Name.Equals("Fecha Propuesto"))
                                                 if ((((DTFieldAtomicDateTime)fieldsIncident).Value > finalDate) || ((DTFieldAtomicDateTime)fieldsIncident).Value < initialDate)
                                                 {
                                                     isValid = false;
@@ -253,11 +253,7 @@ namespace Infocorp.TITA.ReportGenerator
                                 }
                                 if (isValid)
                                 {
-                                    /*foreach (var fieldsOfIncident in fields)
-                                    {*/
-
-
-                                    //}
+                                    
                                     if (categoryIssue.Equals(dataPair.GetCategory()) && stateIssue.Equals(dataPair.GetStatus()))
                                     {
                                         dataPair.AddReportFounded();
