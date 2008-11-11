@@ -107,78 +107,84 @@ namespace Infocorp.TITA.WpfOutlookAddin
             bool isRequiredOK = true;
             Dictionary<DTField,Control> dictionaryElements = _oIssueWindow.MapElements;
             var keyElements = dictionaryElements.Keys;
-            foreach (DTField item in keyElements)
+            try
             {
-                
-                switch (item.GetCustomType())
-	            {
-		            case DTField.Types.Number:
-                        if (((TextBox)dictionaryElements[item]).Text.Length == 0 && item.Required)
-                        {
-                            isRequiredOK = false;
-                        }
-                        else if (((TextBox)dictionaryElements[item]).Text.Length > 0)
-                        {
-                            ((DTFieldAtomicNumber)item).Value = int.Parse(((TextBox)dictionaryElements[item]).Text);
-                        }
-                        break;
-                    case DTField.Types.String:
-                        if (((TextBox)dictionaryElements[item]).Text.Length == 0 && item.Required)
-                        {
-                            isRequiredOK = false;
-                        }
-                        else
-                        {
-                            ((DTFieldAtomicString)item).Value = ((TextBox)dictionaryElements[item]).Text;
-                        }
-                        break;
-                    case DTField.Types.Note:
-                        if (((TextBox)dictionaryElements[item]).Text.Length == 0 && item.Required)
-                        {
-                            isRequiredOK = false;
-                        }
-                        else
-                        {
-                            ((DTFieldAtomicNote)item).Value = ((TextBox)dictionaryElements[item]).Text;
-                        }
-                        break;
-                    case DTField.Types.Choice:
-                        ((DTFieldChoice)item).Value = ((ComboBox)dictionaryElements[item]).SelectedValue.ToString();
-                        break;
-                    case DTField.Types.Boolean:
-                        if (((ComboBox)dictionaryElements[item]).SelectedValue.ToString().CompareTo("True") == 0)
-                        {
-                            ((DTFieldAtomicBoolean)item).Value = true;
-                        }
-                        else
-                        {
-                            ((DTFieldAtomicBoolean)item).Value = false;
-                        }
-                        break;
-                    case DTField.Types.User:
-                        ((DTFieldChoiceUser)item).Value = ((ComboBox)dictionaryElements[item]).SelectedValue.ToString();                        
-                        break;
-                    case DTField.Types.DateTime:
-                        ((DTFieldAtomicDateTime)item).Value = ((DatePicker)dictionaryElements[item]).CurrentlySelectedDate;                        
-                        break;
-                    case DTField.Types.Lookup:
-                        ((DTFieldChoiceLookup)item).Value = ((ComboBox)dictionaryElements[item]).SelectedValue.ToString();
-                        break;
-                    case DTField.Types.Default:
-                    default:
-                        break;
-	            }
+                foreach (DTField item in keyElements)
+                {
 
-            }
-            if (isRequiredOK)
+                    switch (item.GetCustomType())
+                    {
+                        case DTField.Types.Number:
+                            if (((TextBox)dictionaryElements[item]).Text.Length == 0 && item.Required)
+                            {
+                                isRequiredOK = false;
+                            }
+                            else if (((TextBox)dictionaryElements[item]).Text.Length > 0)
+                            {
+                                ((DTFieldAtomicNumber)item).Value = int.Parse(((TextBox)dictionaryElements[item]).Text);
+                            }
+                            break;
+                        case DTField.Types.String:
+                            if (((TextBox)dictionaryElements[item]).Text.Length == 0 && item.Required)
+                            {
+                                isRequiredOK = false;
+                            }
+                            else
+                            {
+                                ((DTFieldAtomicString)item).Value = ((TextBox)dictionaryElements[item]).Text;
+                            }
+                            break;
+                        case DTField.Types.Note:
+                            if (((TextBox)dictionaryElements[item]).Text.Length == 0 && item.Required)
+                            {
+                                isRequiredOK = false;
+                            }
+                            else
+                            {
+                                ((DTFieldAtomicNote)item).Value = ((TextBox)dictionaryElements[item]).Text;
+                            }
+                            break;
+                        case DTField.Types.Choice:
+                            ((DTFieldChoice)item).Value = ((ComboBox)dictionaryElements[item]).SelectedValue.ToString();
+                            break;
+                        case DTField.Types.Boolean:
+                            if (((ComboBox)dictionaryElements[item]).SelectedValue.ToString().CompareTo("True") == 0)
+                            {
+                                ((DTFieldAtomicBoolean)item).Value = true;
+                            }
+                            else
+                            {
+                                ((DTFieldAtomicBoolean)item).Value = false;
+                            }
+                            break;
+                        case DTField.Types.User:
+                            ((DTFieldChoiceUser)item).Value = ((ComboBox)dictionaryElements[item]).SelectedValue.ToString();
+                            break;
+                        case DTField.Types.DateTime:
+                            ((DTFieldAtomicDateTime)item).Value = ((DatePicker)dictionaryElements[item]).CurrentlySelectedDate;
+                            break;
+                        case DTField.Types.Lookup:
+                            ((DTFieldChoiceLookup)item).Value = ((ComboBox)dictionaryElements[item]).SelectedValue.ToString();
+                            break;
+                        case DTField.Types.Default:
+                        default:
+                            break;
+                    }
+
+                }
+                if (isRequiredOK)
+                {
+                    List<DTField> oList = new List<DTField>(dictionaryElements.Keys);
+                    BuildIssue(oList);
+                    _oIssueWindow.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Faltan campos obligatorios por completar", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }catch(System.Exception ex)
             {
-                List<DTField> oList = new List<DTField>(dictionaryElements.Keys);
-                BuildIssue(oList);
-                _oIssueWindow.Close();
-            }
-            else
-            {
-                MessageBox.Show("Faltan campos obligatorios por completar", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
