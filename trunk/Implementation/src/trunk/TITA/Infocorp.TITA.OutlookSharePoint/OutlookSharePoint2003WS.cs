@@ -29,9 +29,16 @@ namespace Infocorp.TITA.OutlookSharePoint
                     {
                         case DTField.Types.Number:
                             innerText += "<Field Name='" + field.InternalName + "'>";
-                            innerText += ((DTFieldAtomicNumber)field).Value.ToString();
+                            if (((DTFieldAtomicNumber)field).Percentage)
+                            {
+                                innerText += (((DTFieldAtomicNumber)field).Value / 100).ToString();
+                            }
+                            else
+                            {
+                                innerText += ((DTFieldAtomicNumber)field).Value.ToString();
+                            }
                             innerText += "</Field>";
-                            break;
+                            break; 
                         case DTField.Types.String:
                             innerText += "<Field Name='" + field.InternalName + "'>";
                             innerText += ((DTFieldAtomicString)field).Value;
@@ -144,6 +151,7 @@ namespace Infocorp.TITA.OutlookSharePoint
                             string lookupList = string.Empty;
                             string lookupField = string.Empty;
                             DTField.Types type = DTField.Types.Default;
+                            bool percentage = false;
 
                             foreach (XmlAttribute attr in fieldNode.Attributes)
                             {
@@ -151,6 +159,10 @@ namespace Infocorp.TITA.OutlookSharePoint
                                 if (attr.Name.CompareTo("DisplayName") == 0)
                                 {
                                     name = attr.Value;
+                                }
+                                else if (attr.Name.CompareTo("Percentage") == 0)
+                                {
+                                    percentage = bool.Parse(attr.Value);
                                 }
                                 else if (attr.Name.CompareTo("Name") == 0)
                                 {
@@ -231,7 +243,7 @@ namespace Infocorp.TITA.OutlookSharePoint
                                 switch (type)
                                 {
                                     case DTField.Types.Number:
-                                        fieldsCollection.Add(new DTFieldAtomicNumber(name, internalName, required, hidden, isReadOnly));
+                                        fieldsCollection.Add(new DTFieldAtomicNumber(name, internalName, required, hidden, isReadOnly,percentage));
                                         break;
                                     case DTField.Types.String:
                                         fieldsCollection.Add(new DTFieldAtomicString(name, internalName, required, hidden, isReadOnly));
