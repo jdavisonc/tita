@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Infocorp.TITA.OutlookSharePoint.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Infocorp_TITA_OutlookSharePoint_ListsWebServiceReference_Lists" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost/_vti_bin/Lists.asmx</Value>
+    </Setting>
+    <Setting Name="Infocorp_TITA_OutlookSharePoint_UserGroupWebServiceReference_UserGroup" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost/_vti_bin/UserGroup.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
