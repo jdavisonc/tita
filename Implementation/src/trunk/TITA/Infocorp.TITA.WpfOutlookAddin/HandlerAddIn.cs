@@ -10,6 +10,8 @@ using System.Windows;
 using System.Windows.Controls;
 using AC.AvalonControlsLibrary.Controls;
 using Microsoft.Office.Interop.Outlook;
+using System.IO;
+using System.Security.AccessControl;
 
 
 
@@ -189,39 +191,88 @@ namespace Infocorp.TITA.WpfOutlookAddin
 
         }
 
+        private void createXMLExample(string pathd, string fileName)
+        {
+
+
+            if (!Directory.Exists(pathd))
+            {
+                Directory.CreateDirectory(pathd);
+            }
+            string text = @"<?xml version='1.0' encoding='utf-8' ?>
+<Contracts> <!--
+  <Contract Name='Infocorp' Url='http://localhost/infocorp>
+    <IssueList Name='Issues'/>
+    <TitleField Name='Title'/>
+    <MailField Name='Description'/>
+  </Contract>
+  <Contract Name='Infocorp ESP' Url='http://localhost/infocorp_es'>
+      <IssueList Name='Incidentes'/>
+      <TitleField Name='Título'/>
+      <MailField Name='Descripción'/>
+  </Contract> -->
+</Contracts>";
+            
+            StringBuilder contents = new StringBuilder();
+            contents.Append(text);
+            File.WriteAllText(pathd+"\\"+fileName, contents.ToString());
+        }
+
         public List<DTUrl> GetUrlContracts()
         {
             List<DTUrl> oListDataUrl = new List<DTUrl>();
             XmlDocument doc = new XmlDocument();
-            string path = string.Empty;
+            string pathd = string.Empty;
+            string fileName = string.Empty;
             try
             {
-                path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\TITA Soft\\Contracts.xml";
-                doc.Load(path);
+                string sAbsolutePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\TITA Soft" + "\\Contracts.xml";
+                pathd = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\TITA Soft";
+                fileName = "Contracts.xml";
+                
+                if (File.Exists(sAbsolutePath))
+                {
+                    doc.Load(sAbsolutePath);
+                }
+                else
+                {
+                    createXMLExample(pathd, fileName);
+                    MessageBox.Show("Debe configurar los sitios de los contratos vigentes en Contracts.xml.\n\n" +
+                "El archivo se encuentra en " + pathd, "AVISO", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
             catch (System.Exception e)
             {
                 MessageBox.Show("No se ha podido acceder al archivo Contracts.xml.\n\n" +
-                "Verifique que el archivo se encuentre en " + path, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                "Verifique que el archivo se encuentre en " + pathd, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 throw e;
             }
             try
             {
                 XmlNodeList bookList = doc.GetElementsByTagName("Contract");
-                foreach (XmlNode node in bookList)
+                if (bookList.Count>0)
                 {
-                    XmlElement bookElement = (XmlElement)node;
-                    string title = string.Empty;
-                    string url = string.Empty;
-                    if (bookElement.HasAttributes)
+                    foreach (XmlNode node in bookList)
                     {
-                        XmlElement issueListElement = (XmlElement)bookElement.GetElementsByTagName("IssueList")[0];
-                        XmlElement titleFieldElement = (XmlElement)bookElement.GetElementsByTagName("TitleField")[0];
-                        XmlElement mailBodyFieldElement = (XmlElement)bookElement.GetElementsByTagName("MailField")[0];
-                        DTUrl oElementUrl = new DTUrl(bookElement.Attributes["Name"].InnerText, bookElement.Attributes["Url"].InnerText,
-                            issueListElement.Attributes["Name"].InnerText, titleFieldElement.Attributes["Name"].InnerText, mailBodyFieldElement.Attributes["Name"].InnerText);
-                        oListDataUrl.Add(oElementUrl);
+                        XmlElement bookElement = (XmlElement)node;
+                        string title = string.Empty;
+                        string url = string.Empty;
+                        if (bookElement.HasAttributes)
+                        {
+                            XmlElement issueListElement = (XmlElement)bookElement.GetElementsByTagName("IssueList")[0];
+                            XmlElement titleFieldElement = (XmlElement)bookElement.GetElementsByTagName("TitleField")[0];
+                            XmlElement mailBodyFieldElement = (XmlElement)bookElement.GetElementsByTagName("MailField")[0];
+                            DTUrl oElementUrl = new DTUrl(bookElement.Attributes["Name"].InnerText, bookElement.Attributes["Url"].InnerText,
+                                issueListElement.Attributes["Name"].InnerText, titleFieldElement.Attributes["Name"].InnerText, mailBodyFieldElement.Attributes["Name"].InnerText);
+                            oListDataUrl.Add(oElementUrl);
+                        }
                     }
+                }
+                else
+                {
+                    MessageBox.Show("Debe configurar los sitios de los contratos vigentes en Contracts.xml.\n\n" +
+"El archivo se encuentra en " + pathd, "AVISO", MessageBoxButton.OK, MessageBoxImage.Warning);
+
                 }
             }
             catch (System.Exception e)
