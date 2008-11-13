@@ -9,7 +9,7 @@ namespace Infocorp.TITA.DataBaseAccess
     
     public class DataBaseAccess : IDataBaseAccess
     {
-        private static int maxTime = 10;
+        private static int maxTime = 2000;
         #region ABM CONTRACTS
         public void AddContract(DTContract c)
         {
