@@ -238,9 +238,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\WSTitaReference\WSTita.wsdl" />
-    <None Include="Service References\WSTitaReference\WSTita.disco" />
     <Resource Include="imgs\logo.jpg" />
+    <None Include="Service References\WSTitaReference\WSTita1.disco" />
+    <None Include="Service References\WSTitaReference\WSTita1.wsdl" />
     <Content Include="ServiceReferences.ClientConfig" />
     <Resource Include="UserControls\imgTita.png" />
   </ItemGroup>
