@@ -92,8 +92,8 @@ namespace Infocorp.TITA.SilverlightUI
             acc.AddItem("Tareas", "", "Utilidades Sharepoint", "Tasks", this.Resources["ItemStyle1"] as Style);
 
             acc.AddItem("Desviacion WP", "", "Reportes", "Desviacion WP", this.Resources["ItemStyle1"] as Style);
-            acc.AddItem("Estadistica", "", "Reportes", "Issue", this.Resources["ItemStyle1"] as Style);
-            acc.AddItem("Estadistica Global", "", "Reportes", "Todos Issue", this.Resources["ItemStyle1"] as Style);
+            acc.AddItem("Cant. Incidentes", "", "Reportes", "Issue", this.Resources["ItemStyle1"] as Style);
+            acc.AddItem("Cant. Incidentes Global", "", "Reportes", "Todos Issue", this.Resources["ItemStyle1"] as Style);
 
             acc.AddItem("Incidentes", "", "Impactos Fallidos", "Incidentes_aplicar", this.Resources["ItemStyle1"] as Style);
             acc.AddItem("Workpackages", "", "Impactos Fallidos", "Workpakage_aplicar", this.Resources["ItemStyle1"] as Style);
@@ -188,16 +188,19 @@ namespace Infocorp.TITA.SilverlightUI
             CanvasPorImpactar.Visibility = Visibility.Collapsed;
             grd_INCIDENT_WP.Visibility = Visibility.Collapsed;
             titulo_INCIDENT_WP.Visibility = Visibility.Collapsed;
-            lblacceder_error.Visibility = Visibility.Collapsed;
+            //lblacceder_error.Visibility = Visibility.Collapsed;
             lblConectContract.Visibility = Visibility.Collapsed;
             CanvasIncident.Visibility = Visibility.Collapsed;
             scroll_INCIDENT.Visibility = Visibility.Collapsed;
+            PnlAction_INCIDENT.Visibility = Visibility.Collapsed;
             pnl_Contrato.Visibility = Visibility.Collapsed;
             scroll_CONTRACT.Visibility = Visibility.Collapsed;
             CanvasTASK.Visibility = Visibility.Collapsed;
             scroll_TASK.Visibility = Visibility.Collapsed;
+            PnlAction_TASK.Visibility = Visibility.Collapsed;
             CanvasWP.Visibility = Visibility.Collapsed;
             scroll_WP.Visibility = Visibility.Collapsed;
+            PnlAction_WP.Visibility = Visibility.Collapsed;
             scroll_REPORT.Visibility = Visibility.Collapsed;
             contractsReport.Visibility = Visibility.Collapsed;
             lstContratos.Visibility = Visibility.Collapsed;
@@ -229,11 +232,13 @@ namespace Infocorp.TITA.SilverlightUI
                     CanvasWP.Visibility = Visibility.Visible;
                     scroll_WP.Visibility = Visibility.Visible;
                     BtnApplyWP.IsEnabled = writeacces;
+                    PnlOption_WP.Visibility = Visibility.Visible;
                     break;
                 case Option.INCIDENT:
                     CanvasIncident.Visibility = Visibility.Visible;
                     scroll_INCIDENT.Visibility = Visibility.Visible;
                     BtnApplyINCIDENT.IsEnabled = writeacces;
+                    PnlOption_INCIDENT.Visibility = Visibility.Visible;
                     break;
                 case Option.CONTRACT:
                     pnl_Contrato.Visibility = Visibility.Visible;
@@ -244,6 +249,7 @@ namespace Infocorp.TITA.SilverlightUI
                     CanvasTASK.Visibility = Visibility.Visible;
                     scroll_TASK.Visibility = Visibility.Visible;
                     BtnApplyTASK.IsEnabled = writeacces;
+                    PnlOption_TASK.Visibility = Visibility.Visible;
                     break;
                 case Option.REPORT:
                     scroll_REPORT.Visibility = Visibility.Visible;
@@ -367,12 +373,15 @@ namespace Infocorp.TITA.SilverlightUI
                 }
                 if ((my_contract.Count > 0) && (my_con == null))
                 {
-                  cbx_contrat_up.ItemsSource = my_contract;
-                  cbx_contrat_up.DisplayMemberPath = "Site";
-                  cnv_current_contract.Visibility = Visibility.Visible;
-                  cbx_contrat_up.SelectedIndex = 0;
+                    cbx_contrat_up.ItemsSource = my_contract;
+                    cbx_contrat_up.DisplayMemberPath = "Site";
+                    cnv_current_contract.Visibility = Visibility.Visible;
+                    cbx_contrat_up.SelectedIndex = 0;
                 }
-
+            }
+            else 
+            { 
+                ShowError("No se pudo obtener los contratos", true);
             }
         }
 
@@ -603,12 +612,10 @@ namespace Infocorp.TITA.SilverlightUI
         }
 
         void ws_ModifyContractCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-        }
+        {}
 
         void ws_AddNewContractCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-        }
+        {}
 
         private void BtnCancelarContrato_Click(object sender, RoutedEventArgs e)
         {
@@ -2503,35 +2510,41 @@ namespace Infocorp.TITA.SilverlightUI
             WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
             ws.IsContractAvailableCompleted += new EventHandler<IsContractAvailableCompletedEventArgs>(ws_IsContractAvailableCompleted2);
             ws.IsContractAvailableAsync(contract.ContractId);
-            if (chk_write.IsChecked.Value)
-            {
-                ws.AquireContractWritePermissionCompleted += new EventHandler<AquireContractWritePermissionCompletedEventArgs>(ws_AquireContractWritePermissionCompleted);
-                ws.AquireContractWritePermissionAsync(contract.ContractId);
-            }
+            //if (chk_write.IsChecked.Value)
+            //{
+            //    ws.AquireContractWritePermissionCompleted += new EventHandler<AquireContractWritePermissionCompletedEventArgs>(ws_AquireContractWritePermissionCompleted);
+            //    ws.AquireContractWritePermissionAsync(contract.ContractId);
+            //}
         }
 
         void ws_AquireContractWritePermissionCompleted(object sender, AquireContractWritePermissionCompletedEventArgs e)
         {
             writeacces = e.Result;
-            lnk_salir.Visibility = Visibility.Visible;
             BtnApplyINCIDENT.IsEnabled = writeacces;
             BtnApplyTASK.IsEnabled = writeacces;
             BtnApplyWP.IsEnabled = writeacces;
             BtnMap.IsEnabled = writeacces;
             progress.stop();
+            lnk_salir.Visibility = Visibility.Visible;
         }
 
         void ws_IsContractAvailableCompleted2(object sender, IsContractAvailableCompletedEventArgs e)
         {
             DTContract contract = (DTContract)cbx_contrat_up.SelectedItem;
-            url = contract.ContractId;
             if (e.Result && (e.Error == null))
             {
+                url = contract.ContractId;
                 cbx_contrat_up.SelectedItem = contract;
                 my_con = contract;
                 lblacceder_error.Text = "Se ha conectado a " + contract.Site;
                 url = contract.ContractId;
                 lblacceder_error.Visibility = Visibility.Visible;
+                if (chk_write.IsChecked.Value)
+                {
+                    WSTitaReference.WSTitaSoapClient ws = new Infocorp.TITA.SilverlightUI.WSTitaReference.WSTitaSoapClient();
+                    ws.AquireContractWritePermissionCompleted += new EventHandler<AquireContractWritePermissionCompletedEventArgs>(ws_AquireContractWritePermissionCompleted);
+                    ws.AquireContractWritePermissionAsync(contract.ContractId);
+                }
             }
             else 
             {
@@ -2617,23 +2630,47 @@ namespace Infocorp.TITA.SilverlightUI
 
         public void ViewIssueMap()
         {
-            titulo_Map.Text = "Mapeo de Valores para Incidentes";
-            map = "Issue";
-            ViewMap();
+            if (url != null)
+            {
+                titulo_Map.Text = "Mapeo de Valores para Incidentes";
+                map = "Issue";
+                ViewMap();
+            }
+            else 
+            {
+                lblacceder_error.Visibility = Visibility.Visible;
+                lblacceder_error.Text = "Debe conectarse previamente a un contrato.";
+            }
         }
 
         public void ViewTaskMap()
         {
-            titulo_Map.Text = "Mapeo de Valores para Tareas";
-            map = "Task";
-            ViewMap();
+            if (url != null)
+            {
+                titulo_Map.Text = "Mapeo de Valores para Tareas";
+                map = "Task";
+                ViewMap();
+            }
+            else
+            {
+                lblacceder_error.Visibility = Visibility.Visible;
+                lblacceder_error.Text = "Debe conectarse previamente a un contrato.";
+            }
         }
 
         public void ViewWorkpackageMap()
         {
-            titulo_Map.Text = "Mapeo de Valores para Workpackage";
-            map = "WP";
-            ViewMap();
+            if (url != null)
+            {
+                titulo_Map.Text = "Mapeo de Valores para Workpackage";
+                map = "WP";
+                ViewMap();
+            }
+            else 
+            {
+                lblacceder_error.Visibility = Visibility.Visible;
+                lblacceder_error.Text = "Debe conectarse previamente a un contrato.";
+            }
         }
 
         void BusacrTempletes(DTContract c)
