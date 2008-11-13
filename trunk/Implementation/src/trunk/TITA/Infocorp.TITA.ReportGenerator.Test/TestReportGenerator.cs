@@ -20,7 +20,6 @@ namespace Test
             contract.issuesList = "Issues";
             contract.Site = "http://localhost/infocorp";
             contract.taskList = "Tasks";
-            contract.UserName = "developer1";
             contract.workPackageList = "Work Packages";
             DataBaseAccess db = new DataBaseAccess();
             db.AddContract(contract);
@@ -28,7 +27,6 @@ namespace Test
             contractNew.issuesList = "Issues";
             contractNew.Site = "http://localhost/pepe";
             contractNew.taskList = "Tasks";
-            contractNew.UserName = "developer2";
             contractNew.workPackageList = "Work Packages";
        
             db.AddContract(contractNew);
