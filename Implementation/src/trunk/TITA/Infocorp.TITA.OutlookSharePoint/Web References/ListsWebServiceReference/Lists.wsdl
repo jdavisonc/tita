@@ -533,7 +533,7 @@
   </binding>
   <service name="Lists">
     <port name="ListsSoap" binding="s0:ListsSoap">
-      <soap:address location="http://localhost/_vti_bin/Lists.asmx" />
+      <soap:address location="http://titavm.tita.pis/_vti_bin/Lists.asmx" />
     </port>
   </service>
 </definitions>

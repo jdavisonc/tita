@@ -2523,8 +2523,16 @@ namespace Infocorp.TITA.SilverlightUI
             BtnApplyTASK.IsEnabled = writeacces;
             BtnApplyWP.IsEnabled = writeacces;
             BtnMap.IsEnabled = writeacces;
+            if (!writeacces)
+            {
+                chk_write.IsChecked = false;
+                lblacceder_error.Text += "\nAdvertencia: Solo con permisos de lectura";
+            }
+            else 
+            {
+                lnk_salir.Visibility = Visibility.Visible;
+            }
             progress.stop();
-            lnk_salir.Visibility = Visibility.Visible;
         }
 
         void ws_IsContractAvailableCompleted2(object sender, IsContractAvailableCompletedEventArgs e)
