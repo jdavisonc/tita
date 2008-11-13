@@ -1053,7 +1053,6 @@ namespace Infocorp.TITA.SilverlightUI
                 pager_incident_wp.Visibility = Visibility.Visible;
                 if (lstIssue.Count > 0)
                     grd_INCIDENT_WP.Columns[0].Visibility = Visibility.Collapsed;
-                    
             }
             else if (isPorApply) 
             {
