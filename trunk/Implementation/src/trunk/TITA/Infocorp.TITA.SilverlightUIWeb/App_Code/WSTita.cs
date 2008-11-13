@@ -132,8 +132,15 @@ public class WSTita : System.Web.Services.WebService
     [WebMethod]
     public List<DTContract> GetContracts()
     {
-        IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
-        return witInstance.GetContracts();
+        try
+        {
+            IWITServices witInstance = WITFactory.Instance().WITServicesInstance();
+            return witInstance.GetContracts();
+        }
+        catch(Exception)
+        {
+            return null;
+        }
     }
 
     [WebMethod]
