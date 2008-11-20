@@ -20,6 +20,7 @@ namespace Infocorp.TITA.DataBaseAccess
 	using System.Linq.Expressions;
 	using System.ComponentModel;
 	using System;
+    using System.Configuration;
 	
 	
 	[System.Data.Linq.Mapping.DatabaseAttribute(Name="baseLocal")]
@@ -39,7 +40,7 @@ namespace Infocorp.TITA.DataBaseAccess
     #endregion
 		
 		public LinqDataContext() : 
-				base(global::Infocorp.TITA.DataBaseAccess.Properties.Settings.Default.baseLocalConnectionString1, mappingSource)
+				base(ConfigurationManager.ConnectionStrings["Infocorp.TITA.DataBasesAcces.Properties.Settings.baseLocalConnectionString1"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
